@@ -31,8 +31,7 @@ jobs:
         env:
           CDSE_USERNAME: ${{ secrets.CDSE_USERNAME }}
           CDSE_PASSWORD: ${{ secrets.CDSE_PASSWORD }}
-          CDSE_ID: ${{ secrets.CDSE_ID }}
-          CDSE_SECRET: ${{ secrets.CDSE_SECRET }}
+        
 
           OPENWEATHER_KEY: ${{ secrets.OPENWEATHER_KEY }}
           WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
