@@ -1,0 +1,47 @@
+name: AQ26 S5P 07b
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-07b:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install papermill nbformat pyarrow pyyaml requests pandas
+
+      - name: Ensure outputs folder exists
+        run: mkdir -p outputs/s5p
+
+      - name: Run 07b notebook
+        env:
+          CDSE_USERNAME: ${{ secrets.CDSE_USERNAME }}
+          CDSE_USER: ${{ secrets.CDSE_USER }}
+          CDSE_PASSWORD: ${{ secrets.CDSE_PASSWORD }}
+          AQ26_SITE_ID: NHV
+          AQ26_SITE_NAME: Newhaven ERF
+          AQ26_LAT: "50.80208"
+          AQ26_LON: "0.04961"
+        run: |
+          python -m papermill Notebooks/07b_s5p_cdse_window_extract.ipynb outputs/07b_s5p_cdse_window_extract.out.ipynb
+
+      - name: Upload outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-s5p-07b-outputs
+          path: |
+            outputs/07b_s5p_cdse_window_extract.out.ipynb
+            outputs/s5p/**
+          if-no-files-found: warn
