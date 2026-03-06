@@ -35,7 +35,7 @@ jobs:
           AQ26_LAT: "50.80208"
           AQ26_LON: "0.04961"
         run: |
-          python -m papermill Notebooks/07b_s5p_cdse_window_extract.ipynb outputs/07b_s5p_cdse_window_extract.out.ipynb
+          python -m papermill notebooks/07b_s5p_cdse_window_extract.ipynb outputs/07b_s5p_cdse_window_extract.out.ipynb
 
       - name: Upload outputs
         uses: actions/upload-artifact@v4
