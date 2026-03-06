@@ -1,0 +1,80 @@
+name: AQ26 Notebooks (01-10)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  run-notebooks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps + Jupyter kernel
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install ipykernel jupyter_client nbformat
+          python -m ipykernel install --user --name python3 --display-name "Python 3"
+          python -m jupyter kernelspec list
+
+      - name: Execute notebooks 01-10
+        env:
+          CDSE_USERNAME: ${{ secrets.CDSE_USERNAME }}
+          CDSE_PASSWORD: ${{ secrets.CDSE_PASSWORD }}
+          CDSE_ID: ${{ secrets.CDSE_ID }}
+          CDSE_SECRET: ${{ secrets.CDSE_SECRET }}
+
+          OPENWEATHER_KEY: ${{ secrets.OPENWEATHER_KEY }}
+          WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
+
+          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+          NEWS_DATA_IO_KEY: ${{ secrets.NEWS_DATA_IO_KEY }}
+
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+
+          MET_OFFICE_KEY: ${{ secrets.MET_OFFICE_KEY }}
+          METOFFICE_API_KEY: ${{ secrets.METOFFICE_API_KEY }}
+
+          IQ_AIR_QUALITY_KEY: ${{ secrets.IQ_AIR_QUALITY_KEY }}
+          GETAMBEE_AIR_QUALITY_KEY: ${{ secrets.GETAMBEE_AIR_QUALITY_KEY }}
+
+        run: |
+          mkdir -p executed
+                    for nb in notebooks/01_secrets_smoketest.ipynb \
+                    notebooks/02_config_and_sites.ipynb \
+                    notebooks/03_news_context.ipynb \
+                    notebooks/04_ground_aq_providers.ipynb \
+                    notebooks/05_metoffice_datahub_weather.ipynb \
+                    notebooks/06_ukair_catalogue_discovery.ipynb \
+                    notebooks/07_s5p_cdse_plan.ipynb \
+                    notebooks/08_gemini_neutral_summary.ipynb \
+                    notebooks/09_compile_step_manifest.ipynb \
+                    notebooks/10_report_builder.ipynb
+          do
+            echo "Running $nb"
+            python -m nbconvert --to notebook --execute "$nb" \
+              --ExecutePreprocessor.kernel_name=python3 \
+              --output "$(basename $nb)" --output-dir executed
+          done
+
+      - name: Upload outputs as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26_outputs
+          path: |
+            outputs
+            executed
+            README_NOTEBOOKS.md
+            configs/run.yml
