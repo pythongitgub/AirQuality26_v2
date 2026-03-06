@@ -20,10 +20,17 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install papermill nbformat pyarrow pyyaml requests pandas
+          pip install papermill nbformat nbclient ipykernel pyarrow pyyaml requests pandas
 
-      - name: Ensure outputs folder exists
-        run: mkdir -p outputs/s5p
+      - name: Ensure output folders exist
+        run: |
+          mkdir -p outputs
+          mkdir -p outputs/s5p
+
+      - name: Debug repo contents
+        run: |
+          pwd
+          ls -R
 
       - name: Run 07b notebook
         env:
@@ -35,7 +42,7 @@ jobs:
           AQ26_LAT: "50.80208"
           AQ26_LON: "0.04961"
         run: |
-          python -m papermill notebooks/07b_s5p_cdse_window_extract.ipynb outputs/07b_s5p_cdse_window_extract.out.ipynb
+          python -m papermill --kernel python3 notebooks/07b_s5p_cdse_window_extract.ipynb outputs/07b_s5p_cdse_window_extract.out.ipynb
 
       - name: Upload outputs
         uses: actions/upload-artifact@v4
