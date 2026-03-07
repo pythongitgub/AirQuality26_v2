@@ -1,0 +1,46 @@
+name: AQ26 Experiments
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-experiments:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install papermill
+
+      - name: Run coastal gradient
+        run: |
+          python -m papermill notebooks/20_coastal_gradient_experiment.ipynb outputs/20_coastal_gradient.out.ipynb
+
+      - name: Run clear sky snapshot
+        run: |
+          python -m papermill notebooks/21_clear_sky_snapshot.ipynb outputs/21_clear_sky.out.ipynb
+
+      - name: Run wind calm experiment
+        run: |
+          python -m papermill notebooks/22_wind_calm_pollution_accumulation.ipynb outputs/22_wind_calm.out.ipynb
+
+      - name: Run back trajectory
+        run: |
+          python -m papermill notebooks/23_back_trajectory_reconstruction.ipynb outputs/23_back_trajectory.out.ipynb
+
+      - name: Upload outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-experiment-results
+          path: outputs
