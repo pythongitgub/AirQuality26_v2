@@ -20,50 +20,57 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install papermill pandas numpy matplotlib requests pyarrow fastparquet
+          pip install papermill pandas numpy matplotlib requests pyarrow fastparquet nbformat nbclient jupyter ipykernel
+
+      - name: Register Jupyter kernel
+        run: |
+          python -m ipykernel install --user --name python3 --display-name "Python 3"
+          jupyter kernelspec list
 
       - name: Create output folders
         run: |
           mkdir -p outputs
 
-      # ---------- EXPERIMENT PIPELINE ----------
-
       - name: Coastal gradient experiment
         run: |
-          python -m papermill --kernel python3 notebooks/20_coastal_gradient_experiment.ipynb outputs/20_coastal_gradient.out.ipynb
+          python -m papermill -k python3 notebooks/20_coastal_gradient_experiment.ipynb outputs/20_coastal_gradient.out.ipynb
 
       - name: Clear sky snapshot
         run: |
-          python -m papermill --kernel python3 notebooks/21_clear_sky_snapshot.ipynb outputs/21_clear_sky_snapshot.out.ipynb
+          python -m papermill -k python3 notebooks/21_clear_sky_snapshot.ipynb outputs/21_clear_sky_snapshot.out.ipynb
 
       - name: Wind calm accumulation
         run: |
-          python -m papermill --kernel python3 notebooks/22_wind_calm_pollution_accumulation.ipynb outputs/22_wind_calm_pollution.out.ipynb
+          python -m papermill -k python3 notebooks/22_wind_calm_pollution_accumulation.ipynb outputs/22_wind_calm_pollution.out.ipynb
 
       - name: Back trajectory reconstruction
         run: |
-          python -m papermill --kernel python3 notebooks/23_back_trajectory_reconstruction.ipynb outputs/23_back_trajectory.out.ipynb
+          python -m papermill -k python3 notebooks/23_back_trajectory_reconstruction.ipynb outputs/23_back_trajectory.out.ipynb
 
       - name: Event correlation
+        env:
+          NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+          NEWSDATA_KEY: ${{ secrets.NEWSDATA_KEY }}
+          NEWSDATA_IO_KEY: ${{ secrets.NEWSDATA_IO_KEY }}
         run: |
-          python -m papermill --kernel python3 notebooks/24_event_correlation.ipynb outputs/24_event_correlation.out.ipynb
+          python -m papermill -k python3 notebooks/24_event_correlation.ipynb outputs/24_event_correlation.out.ipynb
 
       - name: Plume fingerprinting
         run: |
-          python -m papermill --kernel python3 notebooks/25_satellite_plume_fingerprinting.ipynb outputs/25_plume_fingerprint.out.ipynb
+          python -m papermill -k python3 notebooks/25_satellite_plume_fingerprinting.ipynb outputs/25_plume_fingerprint.out.ipynb
 
       - name: Crosswind plume tomography
         run: |
-          python -m papermill --kernel python3 notebooks/26_crosswind_plume_tomography.ipynb outputs/26_crosswind_tomography.out.ipynb
+          python -m papermill -k python3 notebooks/26_crosswind_plume_tomography.ipynb outputs/26_crosswind_tomography.out.ipynb
 
       - name: Pollution accumulation index
         run: |
-          python -m papermill --kernel python3 notebooks/27_pollution_accumulation_index.ipynb outputs/27_pollution_index.out.ipynb
-
-      # ---------- SAVE RESULTS ----------
+          python -m papermill -k python3 notebooks/27_pollution_accumulation_index.ipynb outputs/27_pollution_index.out.ipynb
 
       - name: Upload experiment artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: aq26-experiment-results
           path: outputs/
+          if-no-files-found: warn
