@@ -29,29 +29,39 @@ jobs:
           mkdir -p outputs/clear_sky_snapshot
           mkdir -p outputs/wind_calm_test
           mkdir -p outputs/back_trajectory
-
-      - name: Debug repository contents
-        run: |
-          pwd
-          ls -R
+          mkdir -p outputs/event_correlation
 
       - name: Run coastal gradient
+        continue-on-error: true
         run: |
           python -m papermill --kernel python3 notebooks/20_coastal_gradient_experiment.ipynb outputs/20_coastal_gradient.out.ipynb
 
       - name: Run clear sky snapshot
+        continue-on-error: true
         run: |
           python -m papermill --kernel python3 notebooks/21_clear_sky_snapshot.ipynb outputs/21_clear_sky.out.ipynb
 
       - name: Run wind calm experiment
+        continue-on-error: true
         run: |
           python -m papermill --kernel python3 notebooks/22_wind_calm_pollution_accumulation.ipynb outputs/22_wind_calm.out.ipynb
 
       - name: Run back trajectory
+        continue-on-error: true
         run: |
           python -m papermill --kernel python3 notebooks/23_back_trajectory_reconstruction.ipynb outputs/23_back_trajectory.out.ipynb
 
+      - name: Run event correlation
+        continue-on-error: true
+        env:
+          NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+          NEWSDATA_KEY: ${{ secrets.NEWSDATA_KEY }}
+          NEWSDATA_IO_KEY: ${{ secrets.NEWSDATA_IO_KEY }}
+        run: |
+          python -m papermill --kernel python3 notebooks/24_event_correlation.ipynb outputs/24_event_correlation.out.ipynb
+
       - name: Upload outputs
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: aq26-experiment-results
@@ -60,17 +70,10 @@ jobs:
             outputs/21_clear_sky.out.ipynb
             outputs/22_wind_calm.out.ipynb
             outputs/23_back_trajectory.out.ipynb
+            outputs/24_event_correlation.out.ipynb
             outputs/gradient/**
             outputs/clear_sky_snapshot/**
             outputs/wind_calm_test/**
             outputs/back_trajectory/**
+            outputs/event_correlation/**
           if-no-files-found: warn
-      - name: Run back trajectory
-        run: |
-          python -m papermill notebooks/23_back_trajectory_reconstruction.ipynb outputs/23_back_trajectory.out.ipynb
-
-      - name: Upload outputs
-        uses: actions/upload-artifact@v4
-        with:
-          name: aq26-experiment-results
-          path: outputs
