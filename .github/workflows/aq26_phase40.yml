@@ -1,0 +1,46 @@
+name: AQ26 Phase40 Notebooks
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-phase40:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pandas numpy matplotlib requests pyyaml nbformat nbconvert
+
+    - name: Run notebook 40
+      run: |
+        jupyter nbconvert --to notebook --execute notebooks/40_target_control_extension.ipynb --output executed_40.ipynb
+
+    - name: Run notebook 41
+      run: |
+        jupyter nbconvert --to notebook --execute notebooks/41_cross_reference_existing_outputs.ipynb --output executed_41.ipynb
+
+    - name: Run notebook 42
+      run: |
+        jupyter nbconvert --to notebook --execute notebooks/42_multi_site_comparison.ipynb --output executed_42.ipynb
+
+    - name: Run notebook 43
+      run: |
+        jupyter nbconvert --to notebook --execute notebooks/43_window_ranking.ipynb --output executed_43.ipynb
+
+    - name: Upload outputs
+      uses: actions/upload-artifact@v4
+      with:
+        name: aq26-phase40-outputs
+        path: outputs/
