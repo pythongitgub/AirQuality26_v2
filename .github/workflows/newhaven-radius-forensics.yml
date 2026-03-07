@@ -1,0 +1,76 @@
+name: Newhaven Radius Forensics
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-newhaven-radius-suite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install papermill pandas numpy matplotlib requests pyarrow fastparquet nbformat jupyter ipykernel
+
+      - name: Register Jupyter kernel
+        run: |
+          python -m ipykernel install --user --name python3 --display-name "Python 3"
+
+      - name: Create output folders
+        run: |
+          mkdir -p outputs/newhaven_radius
+          mkdir -p outputs/newhaven_multi_radius
+          mkdir -p outputs/newhaven_fusion
+          mkdir -p outputs/newhaven_integrated
+          mkdir -p outputs/newhaven_window_selector
+
+      - name: Run Newhaven Radius Framework
+        run: |
+          python -m papermill -k python3 notebooks/30_newhaven_radius_framework.ipynb outputs/newhaven_radius/30_newhaven_radius_framework.out.ipynb
+
+      - name: Run Multi-Radius Satellite Scan
+        env:
+          CDSE_USERNAME: ${{ secrets.CDSE_USERNAME }}
+          CDSE_USER: ${{ secrets.CDSE_USER }}
+          CDSE_PASSWORD: ${{ secrets.CDSE_PASSWORD }}
+        run: |
+          python -m papermill -k python3 notebooks/31_newhaven_multi_radius_satellite_scan.ipynb outputs/newhaven_multi_radius/31_newhaven_multi_radius_satellite_scan.out.ipynb
+
+      - name: Run Weather Ground News Fusion
+        env:
+          NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+          NEWSDATA_KEY: ${{ secrets.NEWSDATA_KEY }}
+          NEWSDATA_IO_KEY: ${{ secrets.NEWSDATA_IO_KEY }}
+        run: |
+          python -m papermill -k python3 notebooks/32_newhaven_weather_ground_news_fusion.ipynb outputs/newhaven_fusion/32_newhaven_weather_ground_news_fusion.out.ipynb
+
+      - name: Run Integrated Radius Comparison
+        run: |
+          python -m papermill -k python3 notebooks/33_newhaven_integrated_radius_comparison.ipynb outputs/newhaven_integrated/33_newhaven_integrated_radius_comparison.out.ipynb
+
+      - name: Run Target Window Selector
+        run: |
+          python -m papermill -k python3 notebooks/34_newhaven_target_window_selector.ipynb outputs/newhaven_window_selector/34_newhaven_target_window_selector.out.ipynb
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newhaven-radius-forensics-results
+          path: |
+            outputs/newhaven_radius/
+            outputs/newhaven_multi_radius/
+            outputs/newhaven_fusion/
+            outputs/newhaven_integrated/
+            outputs/newhaven_window_selector/
+          if-no-files-found: warn
