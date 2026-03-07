@@ -5,36 +5,66 @@ on:
 
 jobs:
   run-experiments:
-
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install papermill
+          pip install papermill nbformat nbclient ipykernel pyarrow pyyaml requests pandas matplotlib
+
+      - name: Ensure outputs folder exists
+        run: |
+          mkdir -p outputs
+          mkdir -p outputs/gradient
+          mkdir -p outputs/clear_sky_snapshot
+          mkdir -p outputs/wind_calm_test
+          mkdir -p outputs/back_trajectory
+
+      - name: Debug repository contents
+        run: |
+          pwd
+          ls -R
 
       - name: Run coastal gradient
         run: |
-          python -m papermill notebooks/20_coastal_gradient_experiment.ipynb outputs/20_coastal_gradient.out.ipynb
+          python -m papermill --kernel python3 notebooks/20_coastal_gradient_experiment.ipynb outputs/20_coastal_gradient.out.ipynb
 
       - name: Run clear sky snapshot
         run: |
-          python -m papermill notebooks/21_clear_sky_snapshot.ipynb outputs/21_clear_sky.out.ipynb
+          python -m papermill --kernel python3 notebooks/21_clear_sky_snapshot.ipynb outputs/21_clear_sky.out.ipynb
 
       - name: Run wind calm experiment
         run: |
-          python -m papermill notebooks/22_wind_calm_pollution_accumulation.ipynb outputs/22_wind_calm.out.ipynb
+          python -m papermill --kernel python3 notebooks/22_wind_calm_pollution_accumulation.ipynb outputs/22_wind_calm.out.ipynb
 
+      - name: Run back trajectory
+        run: |
+          python -m papermill --kernel python3 notebooks/23_back_trajectory_reconstruction.ipynb outputs/23_back_trajectory.out.ipynb
+
+      - name: Upload outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-experiment-results
+          path: |
+            outputs/20_coastal_gradient.out.ipynb
+            outputs/21_clear_sky.out.ipynb
+            outputs/22_wind_calm.out.ipynb
+            outputs/23_back_trajectory.out.ipynb
+            outputs/gradient/**
+            outputs/clear_sky_snapshot/**
+            outputs/wind_calm_test/**
+            outputs/back_trajectory/**
+          if-no-files-found: warn
       - name: Run back trajectory
         run: |
           python -m papermill notebooks/23_back_trajectory_reconstruction.ipynb outputs/23_back_trajectory.out.ipynb
