@@ -1,0 +1,32 @@
+name: Satellite Opportunity Scanner
+
+on:
+workflow_dispatch:
+
+jobs:
+run-scan:
+runs-on: ubuntu-latest
+
+steps:
+  - name: Checkout repository
+    uses: actions/checkout@v4
+
+  - name: Setup Python
+    uses: actions/setup-python@v5
+    with:
+      python-version: "3.11"
+
+  - name: Install dependencies
+    run: |
+      python -m pip install --upgrade pip
+      pip install papermill pandas numpy matplotlib requests pyarrow nbformat fastparquet
+
+  - name: Run Satellite Opportunity Scanner
+    run: |
+      python -m papermill -k python3 notebooks/28_satellite_opportunity_scanner.ipynb outputs/28_satellite_opportunity_scan.out.ipynb
+
+  - name: Upload results
+    uses: actions/upload-artifact@v4
+    with:
+      name: satellite-opportunity-scan-results
+      path: outputs/opportunity_scanner/
