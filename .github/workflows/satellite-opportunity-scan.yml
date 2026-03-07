@@ -19,14 +19,30 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install papermill pandas numpy matplotlib requests pyarrow nbformat fastparquet
+          pip install papermill pandas numpy matplotlib requests pyarrow nbformat fastparquet jupyter ipykernel
+
+      - name: Register Jupyter kernel
+        run: |
+          python -m ipykernel install --user --name python3 --display-name "Python 3"
+          jupyter kernelspec list
 
       - name: Run Satellite Opportunity Scanner
+        env:
+          CDSE_USERNAME: ${{ secrets.CDSE_USERNAME }}
+          CDSE_USER: ${{ secrets.CDSE_USER }}
+          CDSE_PASSWORD: ${{ secrets.CDSE_PASSWORD }}
         run: |
-          python -m papermill -k python3 notebooks/28_satellite_opportunity_scanner.ipynb outputs/28_satellite_opportunity_scan.out.ipynb
+          mkdir -p outputs/opportunity_scanner
+          ls -la
+          ls -la outputs
+          python -m papermill -k python3 \
+            notebooks/28_satellite_opportunity_scanner.ipynb \
+            outputs/opportunity_scanner/28_satellite_opportunity_scan.out.ipynb
 
       - name: Upload results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: satellite-opportunity-scan-results
           path: outputs/opportunity_scanner/
+          if-no-files-found: warn
