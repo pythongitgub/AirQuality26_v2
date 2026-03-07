@@ -1,0 +1,48 @@
+name: AQ26 Secret Smoke Test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoketest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install requests python-dotenv google-generativeai
+
+      - name: Run secret smoke test
+        env:
+          CDSE_USERNAME: ${{ secrets.CDSE_USERNAME }}
+          CDSE_USER: ${{ secrets.CDSE_USER }}
+          CDSE_PASSWORD: ${{ secrets.CDSE_PASSWORD }}
+          SH_CLIENT_ID: ${{ secrets.SH_CLIENT_ID }}
+          SH_CLIENT_SECRET: ${{ secrets.SH_CLIENT_SECRET }}
+          OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
+          WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
+          NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+          NEWSDATA_KEY: ${{ secrets.NEWSDATA_KEY }}
+          NEWSDATA_IO_KEY: ${{ secrets.NEWSDATA_IO_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+          MET_OFFICE_KEY: ${{ secrets.MET_OFFICE_KEY }}
+          AIRQUALITY: ${{ secrets.AIRQUALITY }}
+          IQ_AIR_QUALITY_KEY: ${{ secrets.IQ_AIR_QUALITY_KEY }}
+          GETAMBEE_AIR_QUALITY_KEY: ${{ secrets.GETAMBEE_AIR_QUALITY_KEY }}
+        run: |
+          python scripts/smoketest.py
