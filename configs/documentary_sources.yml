@@ -1,0 +1,41 @@
+site_columns_preference:
+  - site_name
+  - site
+  - facility
+  - operator_site
+year_columns_preference:
+  - year
+  - report_year
+pollutant_columns_preference:
+  - pollutant
+  - parameter
+  - analyte
+value_columns_preference:
+  - value
+  - result
+  - measured_value
+  - annual_mean
+unit_columns_preference:
+  - unit
+  - units
+limit_columns_preference:
+  - limit
+  - permit_limit
+  - elv
+  - emission_limit
+
+site_aliases:
+  newhaven_incinerator:
+    - newhaven erf
+    - newhaven energy recovery facility
+    - veolia newhaven
+  lewes:
+    - lewes
+  eastbourne:
+    - eastbourne
+  brighton:
+    - brighton
+  seaford_control:
+    - seaford
+  peacehaven_control:
+    - peacehaven
