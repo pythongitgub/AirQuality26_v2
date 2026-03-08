@@ -1,0 +1,15 @@
+top_targets_for_colab: 25
+years_back: 10
+
+cdse:
+  product_keys:
+    - NO2
+    - SO2
+  timeliness:
+    - NRTI
+    - OFFL
+
+storage:
+  save_scene_catalog_only: true
+  save_minimal_thumbnails: true
+  save_full_imagery: false

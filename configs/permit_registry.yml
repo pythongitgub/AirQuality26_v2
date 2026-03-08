@@ -1,0 +1,27 @@
+site_registry:
+  newhaven_incinerator:
+    permit_ids: ["BV8067IY", "BV8067iy", "bv8067iy"]
+    aliases:
+      - newhaven
+      - newhaven erf
+      - veolia newhaven
+  marchwood:
+    aliases:
+      - marchwood
+      - veolia marchwood
+  portsmouth:
+    aliases:
+      - portsmouth
+      - portsmouth efw
+  lancing:
+    aliases:
+      - lancing
+      - enviropower lancing
+  isle_of_wight:
+    aliases:
+      - isle of wight
+      - thalia isle of wight
+  fawley:
+    aliases:
+      - fawley
+      - tradebe fawley
