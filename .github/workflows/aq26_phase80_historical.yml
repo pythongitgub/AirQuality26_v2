@@ -1,0 +1,52 @@
+name: AQ26 Phase80 Historical Warehouse
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-phase80:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pandas numpy pyarrow pyyaml nbformat nbconvert jupyter ipykernel
+
+      - name: Install kernel
+        run: |
+          python -m ipykernel install --user --name python3 --display-name "Python 3"
+
+      - name: Run notebooks 80–87
+        shell: bash
+        run: |
+          set -euo pipefail
+          NOTEBOOKS=(
+            notebooks/80_master_permit_registry.ipynb
+            notebooks/81_historical_emissions_warehouse.ipynb
+            notebooks/82_documentary_noncompliance_warehouse.ipynb
+            notebooks/83_historical_site_year_fusion.ipynb
+            notebooks/84_colab_satellite_batch_spec_builder.ipynb
+            notebooks/85_national_priority_matrix.ipynb
+            notebooks/86_forensic_dossier_index.ipynb
+            notebooks/87_phase80_summary.ipynb
+          )
+          for nb in "${NOTEBOOKS[@]}"; do
+            echo "=== RUNNING $nb ==="
+            jupyter nbconvert --to notebook --execute "$nb" --output "executed_$(basename "$nb")"
+          done
+
+      - name: Upload outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-phase80-outputs
+          path: outputs/
