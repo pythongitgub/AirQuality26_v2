@@ -1,0 +1,55 @@
+name: AQ26 Phase70 National Screening
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-phase70:
+    runs-on: ubuntu-latest
+
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pandas numpy pyarrow matplotlib reportlab pyyaml requests nbformat nbconvert jupyter ipykernel
+
+      - name: Install kernel
+        run: |
+          python -m ipykernel install --user --name python3 --display-name "Python 3"
+
+      - name: Run notebooks 70–77
+        shell: bash
+        run: |
+          set -euo pipefail
+          NOTEBOOKS=(
+            notebooks/70_evidence_inventory_plus.ipynb
+            notebooks/71_environmental_documentary_fusion.ipynb
+            notebooks/72_target_control_registry_builder.ipynb
+            notebooks/73_news_satellite_context_pack.ipynb
+            notebooks/74_gemini_25_pro_report_pack.ipynb
+            notebooks/75_initial_national_report_builder.ipynb
+            notebooks/76_gemini_report_appendix.ipynb
+            notebooks/77_phase70_final_index.ipynb
+          )
+          for nb in "${NOTEBOOKS[@]}"; do
+            echo "=== RUNNING $nb ==="
+            jupyter nbconvert --to notebook --execute "$nb" --output "executed_$(basename "$nb")"
+          done
+
+      - name: Upload outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-phase70-outputs
+          path: outputs/
