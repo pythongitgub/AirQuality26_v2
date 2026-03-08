@@ -1,0 +1,76 @@
+name: AQ26 Full Forensic Pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-full-analysis:
+    runs-on: ubuntu-latest
+
+    env:
+      MET_OFFICE_LAND_OBSERVATIONS: ${{ secrets.MET_OFFICE_LAND_OBSERVATIONS }}
+      MET_OFFICE_KEY: ${{ secrets.MET_OFFICE_KEY }}
+      METOFFICE_API_KEY: ${{ secrets.METOFFICE_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+      NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+      GNEWS_API_KEY: ${{ secrets.GNEWS_API_KEY }}
+      NEWS_DATA_IO_KEY: ${{ secrets.NEWS_DATA_IO_KEY }}
+      CDSE_USERNAME: ${{ secrets.CDSE_USERNAME }}
+      CDSE_USER: ${{ secrets.CDSE_USER }}
+      CDSE_PASSWORD: ${{ secrets.CDSE_PASSWORD }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pandas numpy matplotlib requests pyyaml nbformat nbconvert jupyter ipykernel
+
+      - name: Install kernel
+        run: |
+          python -m ipykernel install --user --name python3 --display-name "Python 3"
+
+      - name: Run notebooks 01–10
+        run: |
+          for nb in notebooks/0[1-9]*.ipynb notebooks/10*.ipynb; do
+            jupyter nbconvert --to notebook --execute "$nb" --output "executed_$(basename "$nb")"
+          done
+
+      - name: Run notebooks 20–28
+        run: |
+          for nb in notebooks/2*.ipynb; do
+            jupyter nbconvert --to notebook --execute "$nb" --output "executed_$(basename "$nb")"
+          done
+
+      - name: Run notebooks 30–34
+        run: |
+          for nb in notebooks/3*.ipynb; do
+            jupyter nbconvert --to notebook --execute "$nb" --output "executed_$(basename "$nb")"
+          done
+
+      - name: Run notebooks 40–45
+        run: |
+          for nb in notebooks/4*.ipynb; do
+            jupyter nbconvert --to notebook --execute "$nb" --output "executed_$(basename "$nb")"
+          done
+
+      - name: Run notebooks 50–60
+        run: |
+          for nb in notebooks/5*.ipynb notebooks/60*.ipynb; do
+            jupyter nbconvert --to notebook --execute "$nb" --output "executed_$(basename "$nb")"
+          done
+
+      - name: Upload final outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26_full_forensic_outputs
+          path: outputs/
