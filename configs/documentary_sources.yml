@@ -28,8 +28,39 @@ limit_columns_preference:
 
 prefer_permit_id_as_site_key: true
 
+documentary_adjudication:
+  report_count_norm_denominator: 5
+  documentary_supported_threshold: 1.0
+
 site_aliases:
   newhaven_incinerator:
+    - newhaven
     - newhaven erf
     - newhaven energy recovery facility
     - veolia newhaven
+    - bv8067iy
+  lewes:
+    - lewes
+  eastbourne:
+    - eastbourne
+  brighton:
+    - brighton
+  seaford_control:
+    - seaford
+  peacehaven_control:
+    - peacehaven
+  marchwood:
+    - marchwood
+    - veolia marchwood
+  portsmouth:
+    - portsmouth
+    - portsmouth efw
+  lancing:
+    - lancing
+    - enviropower lancing
+  isle_of_wight:
+    - isle of wight
+    - thalia isle of wight
+  fawley:
+    - fawley
+    - tradebe fawley
