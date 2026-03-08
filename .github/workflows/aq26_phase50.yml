@@ -1,0 +1,39 @@
+name: AQ26 Phase50-60 Hardening
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-phase50:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pandas numpy matplotlib requests pyyaml nbformat nbconvert jupyter ipykernel
+
+      - name: Install Jupyter kernel
+        run: |
+          python -m ipykernel install --user --name python3 --display-name "Python 3"
+
+      - name: Run notebooks 50-60
+        run: |
+          for nb in 50_evidence_inventory 51_station_provenance_validation 52_weather_validation_and_fallback_audit 53_news_relevance_filtering 54_evidence_cube_builder 55_confounder_guardrails 56_site_adjudication 57_contradictions_red_team_audit 58_gemini_evidence_led_adjudication 59_verified_forensic_bundle_builder 60_final_integrity_report; do
+            jupyter nbconvert --to notebook --execute "notebooks/${nb}.ipynb" --output "executed_${nb}.ipynb"
+          done
+
+      - name: Upload outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-phase50-outputs
+          path: outputs/
