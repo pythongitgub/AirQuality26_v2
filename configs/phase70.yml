@@ -1,0 +1,10 @@
+top_target_count: 10
+control_location: "Seaford (control)"
+
+ai:
+  provider: gemini
+  model: "gemini-2.5-pro"
+
+report:
+  title: "AQ26 Phase 70 Initial National Screening Report"
+  subtitle: "Integrated documentary and environmental screening"
