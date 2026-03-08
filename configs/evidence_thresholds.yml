@@ -1,0 +1,10 @@
+weather:
+  min_hourly_rows: 24
+  min_temporal_coverage_pct: 50
+
+confidence:
+  low_max_confounder_score: 0.60
+  medium_max_confounder_score: 0.35
+
+adjudication:
+  min_days_for_readiness: 5

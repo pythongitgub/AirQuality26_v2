@@ -1,0 +1,36 @@
+include_terms:
+  - incinerator
+  - energy recovery facility
+  - erf
+  - air quality
+  - emissions
+  - permit
+  - pollution
+  - stack
+  - plume
+  - smoke
+  - fire
+  - outage
+  - shutdown
+  - veolia
+  - newhaven
+
+geo_terms:
+  - newhaven
+  - east sussex
+  - lewes
+  - seaford
+  - brighton
+  - eastbourne
+  - peacehaven
+
+exclude_terms:
+  - stock
+  - shares
+  - football
+  - celebrity
+  - gaming
+  - crypto
+  - entertainment
+
+minimum_relevance_score: 2

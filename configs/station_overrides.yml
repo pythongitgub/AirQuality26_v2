@@ -1,0 +1,5 @@
+validation:
+  max_station_distance_km: 25
+  allow_shared_station_ids: false
+
+overrides: {}

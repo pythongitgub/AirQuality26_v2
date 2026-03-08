@@ -1,0 +1,15 @@
+analysis:
+  description: "Phase 50-60 forensic hardening and adjudication layer"
+  require_upstream_outputs: true
+  use_existing_repo_outputs: true
+
+ai:
+  provider: gemini
+  model: gemini-1.5-flash
+
+additional_sites:
+  - id: peacehaven_control
+    name: "Peacehaven"
+    role: control
+    lat: 50.792
+    lon: -0.007
