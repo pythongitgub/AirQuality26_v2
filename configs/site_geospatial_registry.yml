@@ -1,0 +1,54 @@
+sites:
+  newhaven_incinerator:
+    permit_id: BV8067IY
+    facility_name: Newhaven ERF
+    lat: 50.7909
+    lon: 0.0548
+    nearest_town: Newhaven
+    nearest_city: Brighton
+    nearby_towns:
+      - Lewes
+      - Seaford
+      - Peacehaven
+      - Eastbourne
+    site_type: erf
+    control_site: false
+
+  seaford_control:
+    facility_name: Seaford (control)
+    lat: 50.7700
+    lon: 0.1000
+    nearest_town: Seaford
+    nearest_city: Brighton
+    nearby_towns:
+      - Newhaven
+      - Peacehaven
+      - Lewes
+    site_type: control
+    control_site: true
+
+  peacehaven_control:
+    facility_name: Peacehaven (control)
+    lat: 50.7923
+    lon: -0.0060
+    nearest_town: Peacehaven
+    nearest_city: Brighton
+    nearby_towns:
+      - Newhaven
+      - Lewes
+      - Seaford
+    site_type: control
+    control_site: true
+
+  lewes:
+    facility_name: Lewes
+    lat: 50.8730
+    lon: 0.0117
+    nearest_town: Lewes
+    nearest_city: Brighton
+    nearby_towns:
+      - Newhaven
+      - Seaford
+      - Peacehaven
+    site_type: target_context
+    control_site: false

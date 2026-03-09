@@ -1,0 +1,11 @@
+radius_miles: 25
+incident_terms:
+  - fire
+  - odour
+  - smoke
+  - pollution
+  - complaint
+  - ash
+  - emissions
+  - breach
+  - shutdown
