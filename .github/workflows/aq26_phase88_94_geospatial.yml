@@ -1,0 +1,51 @@
+name: AQ26 Phase88-94 Geospatial Cross-Reference
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-phase88-94:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pandas numpy pyarrow pyyaml nbformat nbconvert jupyter ipykernel
+
+      - name: Install kernel
+        run: |
+          python -m ipykernel install --user --name python3 --display-name "Python 3"
+
+      - name: Run notebooks 88–94
+        shell: bash
+        run: |
+          set -euo pipefail
+          NOTEBOOKS=(
+            notebooks/88_site_coordinate_registry.ipynb
+            notebooks/89_ground_monitor_radius_linkage.ipynb
+            notebooks/90_meteorology_radius_linkage.ipynb
+            notebooks/91_news_radius_context.ipynb
+            notebooks/92_population_settlement_linkage.ipynb
+            notebooks/93_health_context_layer.ipynb
+            notebooks/94_site_geospatial_fusion.ipynb
+          )
+          for nb in "${NOTEBOOKS[@]}"; do
+            echo "=== RUNNING $nb ==="
+            jupyter nbconvert --to notebook --execute "$nb" --output "executed_$(basename "$nb")"
+          done
+
+      - name: Upload outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-phase88-94-geospatial-outputs
+          path: outputs/
