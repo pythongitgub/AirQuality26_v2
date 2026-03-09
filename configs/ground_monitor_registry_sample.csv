@@ -1,0 +1,4 @@
+monitor_name,monitor_lat,monitor_lon,pollutant_coverage
+Lewes Roadside Example,50.8750,0.0150,NO2|PM10
+Eastbourne Urban Example,50.7680,0.2900,NO2|PM10|PM2.5
+Brighton Centre Example,50.8270,-0.1370,NO2|PM10|PM2.5
