@@ -1,0 +1,17 @@
+dataset_name: UK_Pollution_Inventory
+
+years:
+  - 2019
+  - 2020
+  - 2021
+  - 2022
+  - 2023
+  - 2024
+
+download_urls:
+  2024: https://environment.data.gov.uk/dataset/pollution-inventory-2024.zip
+  2023: https://environment.data.gov.uk/dataset/pollution-inventory-2023.zip
+  2022: https://environment.data.gov.uk/dataset/pollution-inventory-2022.zip
+  2021: https://environment.data.gov.uk/dataset/pollution-inventory-2021.zip
+  2020: https://environment.data.gov.uk/dataset/pollution-inventory-2020.zip
+  2019: https://environment.data.gov.uk/dataset/pollution-inventory-2019.zip
