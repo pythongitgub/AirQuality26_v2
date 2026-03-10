@@ -1,0 +1,44 @@
+
+name: AQ26 Phase95 Pollution Inventory
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-phase95:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install pandas requests pyyaml pyarrow
+
+      - name: Download Pollution Inventory
+        run: |
+          python scripts/download_pollution_inventory.py
+
+      - name: Normalise dataset
+        run: |
+          python scripts/normalise_pollution_inventory.py
+
+      - name: Detect emission anomalies
+        run: |
+          python scripts/emission_anomaly_detection.py
+
+      - name: Select investigation sites
+        run: |
+          python scripts/site_selector.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26_phase95_outputs
+          path: outputs/
