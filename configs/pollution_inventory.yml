@@ -1,17 +1,21 @@
 dataset_name: UK_Pollution_Inventory
 
-years:
-  - 2019
-  - 2020
-  - 2021
-  - 2022
-  - 2023
-  - 2024
-
 download_urls:
-  2024: https://environment.data.gov.uk/dataset/pollution-inventory-2024.zip
-  2023: https://environment.data.gov.uk/dataset/pollution-inventory-2023.zip
-  2022: https://environment.data.gov.uk/dataset/pollution-inventory-2022.zip
-  2021: https://environment.data.gov.uk/dataset/pollution-inventory-2021.zip
-  2020: https://environment.data.gov.uk/dataset/pollution-inventory-2020.zip
-  2019: https://environment.data.gov.uk/dataset/pollution-inventory-2019.zip
+
+  2024: https://environment.data.gov.uk/api/file/download?fileDataSetId=4faa4a52-7df2-4047-bc3f-877dd04222d8&fileName=2024%20Pollution%20Inventory%20Dataset.zip
+
+  2023: https://environment.data.gov.uk/api/file/download?fileDataSetId=4faa4a52-7df2-4047-bc3f-877dd04222d8&fileName=2023%20Pollution%20Inventory%20Dataset%20V2.zip
+
+  2022: https://environment.data.gov.uk/api/file/download?fileDataSetId=4faa4a52-7df2-4047-bc3f-877dd04222d8&fileName=2022%20Pollution%20Inventory%20Dataset%20v2.zip
+
+  2021: https://environment.data.gov.uk/api/file/download?fileDataSetId=4faa4a52-7df2-4047-bc3f-877dd04222d8&fileName=2021%20Pollution%20Inventory%20Dataset.zip
+
+  2020: https://environment.data.gov.uk/api/file/download?fileDataSetId=4faa4a52-7df2-4047-bc3f-877dd04222d8&fileName=2020_Pollution_Inventory_Dataset_v2.zip
+
+  2019: https://environment.data.gov.uk/api/file/download?fileDataSetId=4faa4a52-7df2-4047-bc3f-877dd04222d8&fileName=2019%20Pollution%20Inventory%20Dataset%20v2.zip
+
+  2018: https://environment.data.gov.uk/api/file/download?fileDataSetId=4faa4a52-7df2-4047-bc3f-877dd04222d8&fileName=2018_Pollution_Inventory_Version_1.zip
+
+  2017: https://environment.data.gov.uk/api/file/download?fileDataSetId=4faa4a52-7df2-4047-bc3f-877dd04222d8&fileName=2017_Pollution_Inventory_Dataset.zip
+
+  2016: https://environment.data.gov.uk/api/file/download?fileDataSetId=4faa4a52-7df2-4047-bc3f-877dd04222d8&fileName=2016_Pollution_Inventory_dataset_-_version_2.zip
