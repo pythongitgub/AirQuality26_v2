@@ -5,55 +5,40 @@ project:
     Automated controlled-review evidence harvest. This is not a claim of endorsement
     by WHO, UNEP, EEA, C40 Cities, or any named expert. Causal attribution is not
     asserted unless explicit evidence gates support it.
-
+methods_registry:
+  methodological_principles:
+    - {id: dominici_causal_big_data, label: "Causal inference / big-data epidemiology", implementation: "Guarded causal language, confounder notes, exposure windows and exposure-response readiness."}
+    - {id: martin_satellite_ground_fusion, label: "Satellite remote sensing + ground monitoring fusion", implementation: "Catalogue Sentinel-5P products, retain QA metadata, use satellite as context until extraction and ground validation pass."}
+    - {id: brauer_gbd_integrated_exposure, label: "Integrated exposure and health-burden framing", implementation: "Combine ground, satellite, meteorology and official records into exposure-screening tables without burden attribution."}
+    - {id: anenberg_no2_emissions_health, label: "NO2 / emissions / health-impact tracking", implementation: "Prioritise NO2, SO2, CO, HCHO, O3, CH4, AER_AI and PM indicators with source/wind controls."}
+    - {id: damoulas_urban_digital_twin, label: "Urban digital twin / spatiotemporal ML", implementation: "Maintain target-control site graph, date completeness, anomaly scoring and backfill queue."}
 sites:
-  - id: newhaven_incinerator
-    label: "Newhaven Energy Recovery Facility / incinerator focus"
-    lat: 50.796
-    lon: 0.055
-    role: source_focus
-  - id: lewes
-    label: "Lewes control / context"
-    lat: 50.873
-    lon: 0.008
-    role: control
-  - id: eastbourne
-    label: "Eastbourne coastal control / context"
-    lat: 50.768
-    lon: 0.290
-    role: control
-  - id: brighton
-    label: "Brighton urban coastal context"
-    lat: 50.822
-    lon: -0.137
-    role: urban_context
-  - id: seaford_control
-    label: "Seaford coastal control / context"
-    lat: 50.772
-    lon: 0.102
-    role: control
-
+  - {id: newhaven_incinerator, label: "Newhaven Energy Recovery Facility / incinerator focus", lat: 50.796, lon: 0.055, role: source_focus, expected_streams: [waqi, openweather, metoffice, satellite, official_filings, news]}
+  - {id: lewes, label: "Lewes control / context", lat: 50.873, lon: 0.008, role: control, expected_streams: [waqi, openweather, news]}
+  - {id: eastbourne, label: "Eastbourne coastal control / context", lat: 50.768, lon: 0.290, role: control, expected_streams: [waqi, openweather, news]}
+  - {id: brighton, label: "Brighton urban coastal context", lat: 50.822, lon: -0.137, role: urban_context, expected_streams: [waqi, openweather, news]}
+  - {id: seaford_control, label: "Seaford coastal control / context", lat: 50.772, lon: 0.102, role: control, expected_streams: [waqi, openweather, news]}
 official_queries:
   - "Newhaven Energy Recovery Facility annual monitoring report"
   - "Newhaven incinerator annual monitoring report"
   - "Veolia Newhaven annual monitoring report"
   - "BV8067IL Newhaven"
+  - "BV8067 Newhaven permit"
   - "Newhaven energy recovery permit variation"
   - "Environment Agency Newhaven energy recovery facility"
+  - "Environment Agency public register Newhaven incinerator"
   - "Newhaven incinerator emissions"
   - "incinerator annual monitoring reporting data.gov.uk"
   - "UK PRTR Newhaven Veolia waste incineration"
-
+  - "Newhaven ERF dioxins furans heavy metals"
+  - "Newhaven Energy Recovery Facility breach enforcement notice"
+  - "Newhaven Veolia emissions monitoring spreadsheet"
 watch_urls:
-  - name: "GOV.UK UK PRTR"
-    url: "https://www.gov.uk/guidance/uk-pollutant-release-and-transfer-register-prtr-data-sets"
-  - name: "GOV.UK waste guidance"
-    url: "https://www.gov.uk/guidance/waste"
-  - name: "Veolia UK"
-    url: "https://www.veolia.co.uk/"
-  - name: "data.gov.uk package search incinerator monitoring"
-    url: "https://www.data.gov.uk/search?q=incinerator+annual+monitoring+reporting"
-
+  - {name: "GOV.UK UK PRTR", url: "https://www.gov.uk/guidance/uk-pollutant-release-and-transfer-register-prtr-data-sets"}
+  - {name: "GOV.UK waste guidance", url: "https://www.gov.uk/guidance/waste"}
+  - {name: "Environment Agency organisation page", url: "https://www.gov.uk/government/organisations/environment-agency"}
+  - {name: "data.gov.uk package search incinerator monitoring", url: "https://www.data.gov.uk/search?q=incinerator+annual+monitoring+reporting"}
+  - {name: "Veolia UK", url: "https://www.veolia.co.uk/"}
 news_queries:
   - "Newhaven incinerator emissions"
   - "Newhaven Energy Recovery Facility Veolia"
@@ -62,44 +47,16 @@ news_queries:
   - "Newhaven incinerator permit"
   - "East Sussex incinerator emissions"
   - "Newhaven air quality waste incinerator"
-
+  - "Newhaven ERF enforcement notice"
+  - "Newhaven Energy Recovery Facility plume"
 satellite:
   bbox: [-0.15, 50.68, 0.35, 50.95]
   collections:
-    odata_products:
-      - L2__NO2___
-      - L2__SO2___
-      - L2__CO____
-      - L2__HCHO__
-      - L2__O3____
-      - L2__CH4___
-      - L2__AER_AI
+    odata_products: [L2__NO2___, L2__SO2___, L2__CO____, L2__HCHO__, L2__O3____, L2__CH4___, L2__AER_AI]
   max_records_per_product: 50
-
 thresholds:
   anomaly:
-    news_minimum_attention_terms:
-      - enforcement
-      - breach
-      - permit
-      - variation
-      - emission
-      - exceedance
-      - complaint
-      - plume
-      - incident
-      - dioxin
-      - particulate
-      - nitrogen dioxide
-      - sulphur dioxide
-    official_relevance_terms:
-      - newhaven
-      - veolia
-      - bv8067
-      - incinerator
-      - energy recovery
-      - environment agency
-      - permit
-      - annual monitoring
-      - emissions
-      - waste
+    official_relevance_terms: [newhaven, veolia, bv8067, bv8067il, incinerator, energy recovery, environment agency, permit, annual monitoring, emissions, waste, dioxin, furan, metals, exceedance, enforcement, variation]
+  scoring:
+    high_relevance_terms: [bv8067, bv8067il, newhaven energy recovery facility, veolia newhaven, annual monitoring report, environment agency, permit variation, enforcement notice]
+    pollutant_terms: [pm2.5, pm10, no2, nitrogen dioxide, so2, sulphur dioxide, sulfur dioxide, co, carbon monoxide, ozone, o3, hcho, formaldehyde, ch4, methane, aerosol, dioxin, furan, mercury, cadmium, heavy metals]
