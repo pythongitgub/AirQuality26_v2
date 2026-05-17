@@ -1,0 +1,69 @@
+project_name: SCCNEXUS AirQuality26
+run_timezone: Europe/London
+lookback_days_default: 14
+max_download_mb: 20
+user_agent: "AQ26-GitHub-Weekly-Report/1.0 (controlled review evidence harvester)"
+controlled_use_boundary: |
+  This is an automated evidence-harvest and controlled-review bundle for independent scrutiny.
+  It is not a claim of endorsement by WHO, UNEP, EEA, C40 Cities, or any named expert.
+  Causal attribution must remain guarded unless source-apportionment, meteorology, controls and QA support it.
+
+sites:
+  - site_id: NHV
+    name: Newhaven Energy Recovery Facility
+    operator_keywords: [Veolia, Newhaven ERF, Newhaven Energy Recovery Facility, Newhaven incinerator]
+    lat: 50.80208
+    lon: 0.04961
+    radius_m: 25000
+    country: GB
+    local_authority_keywords: [Lewes, East Sussex, Newhaven]
+    permit_keywords: [BV8067IL, EPR, permit variation, annual monitoring report, emissions]
+
+pollutants:
+  core_air_quality: [pm25, pm10, no2, o3, so2, co]
+  satellite_relevant: [NO2, SO2, CO, CH4, O3, AER_AI]
+  incinerator_context: [NOx, particulate matter, hydrogen chloride, sulphur dioxide, carbon monoxide, dioxins, furans, metals, mercury]
+
+news_queries:
+  - 'Newhaven incinerator emissions'
+  - 'Newhaven Energy Recovery Facility Veolia'
+  - 'Veolia Newhaven annual monitoring report'
+  - 'BV8067IL Newhaven'
+  - 'Environment Agency Newhaven incinerator permit'
+  - 'DEFRA UK air quality Newhaven'
+  - 'incinerator emissions Environment Agency annual monitoring report'
+  - 'waste incinerator permit variation emissions UK'
+
+official_queries:
+  - 'Newhaven Energy Recovery Facility annual monitoring report'
+  - 'Newhaven incinerator Environment Agency permit BV8067IL'
+  - 'Veolia Newhaven ERF emissions monitoring'
+  - 'Incinerator Annual Monitoring Reporting'
+  - 'DEFRA UK-AIR Newhaven air quality'
+  - 'Environment Agency public register Newhaven incinerator'
+
+official_watchlist_urls:
+  - label: data.gov.uk incinerator annual monitoring reporting search
+    url: 'https://www.data.gov.uk/search?q=Incinerator+Annual+Monitoring+Reporting'
+    source_type: official_search
+  - label: GOV.UK Environment Agency search Newhaven incinerator
+    url: 'https://www.gov.uk/search/all?keywords=Newhaven+incinerator+Environment+Agency'
+    source_type: official_search
+  - label: UK-AIR DEFRA data portal
+    url: 'https://uk-air.defra.gov.uk/data/'
+    source_type: official_portal
+  - label: Environment Agency public register
+    url: 'https://environment.data.gov.uk/public-register/view/search-all'
+    source_type: official_portal
+  - label: Veolia South Downs/Newhaven page search landing
+    url: 'https://www.veolia.co.uk/'
+    source_type: operator_portal
+
+apis:
+  gdelt_doc_api: 'https://api.gdeltproject.org/api/v2/doc/doc'
+  govuk_search_api: 'https://www.gov.uk/api/search.json'
+  datagovuk_package_search: 'https://www.data.gov.uk/api/3/action/package_search'
+  openaq_v3_base: 'https://api.openaq.org/v3'
+  openweather_base: 'https://api.openweathermap.org/data/2.5'
+  waqi_geo_base: 'https://api.waqi.info/feed/geo:'
+  copernicus_stac_search: 'https://catalogue.dataspace.copernicus.eu/stac/search'

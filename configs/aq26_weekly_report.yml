@@ -2,16 +2,22 @@ project_name: "SCCNEXUS AirQuality26"
 timezone: "Europe/London"
 recipient_default: "scottchowen@gmail.com"
 controlled_use_boundary: |
-  This report is an evidence pack for independent review. It is not a claim of endorsement by WHO, UNEP, EEA, C40 Cities, or any named expert unless a written endorsement is separately obtained.
+  This report is an evidence pack for independent review. It is not a claim of endorsement by WHO, UNEP, EEA, C40 Cities, or any named expert unless written endorsement is separately obtained.
+  It distinguishes evidence presence, automated quality checks, screening signals and causal claims. Causal attribution is not asserted unless the evidence gates explicitly support it.
 provenance_rules:
   require_sha256: true
   require_run_manifest: true
   record_environment: true
   redact_secret_values: true
+  record_live_harvest_manifest: true
 quality_gates:
   fail_on_execution_error: false
   fail_on_missing_outputs: false
   min_expected_notebooks: 1
+pdf_reports:
+  create_executive_pdf: true
+  create_provenance_pdf: true
+  create_notebook_index_pdf: true
 email:
-  subject_prefix: "AQ26 weekly validated report"
+  subject_prefix: "AQ26 weekly comprehensive validated report"
   max_attachment_mb: 24
