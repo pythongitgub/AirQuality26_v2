@@ -146,6 +146,7 @@ jobs:
             outputs/00_live_harvest/LATEST_HARVEST.json
             outputs/99_integrity/redaction_audit.json
             outputs/99_integrity/AQ26_SHA256_LEDGER.csv
+            outputs/99_integrity/AQ26_FINAL_ZIP_LEDGER.csv
             outputs/source_history/source_index.jsonl
           if-no-files-found: warn
           retention-days: 30
