@@ -1,0 +1,130 @@
+project:
+  name: "SCCNEXUS AirQuality26 WeeklyV2"
+  timezone: "Europe/London"
+  controlled_use_boundary: >
+    WeeklyV2 is a controlled-review evidence harvester. It does not claim endorsement
+    by WHO, UNEP, EEA, C40 Cities, or any named expert. It does not assert causal
+    attribution unless explicit evidence gates pass.
+
+sites:
+  - id: newhaven_incinerator
+    label: "Newhaven Energy Recovery Facility / incinerator focus"
+    lat: 50.796
+    lon: 0.055
+    role: source_focus
+  - id: lewes
+    label: "Lewes control / context"
+    lat: 50.873
+    lon: 0.008
+    role: control
+  - id: eastbourne
+    label: "Eastbourne coastal control / context"
+    lat: 50.768
+    lon: 0.290
+    role: control
+  - id: brighton
+    label: "Brighton urban coastal context"
+    lat: 50.822
+    lon: -0.137
+    role: urban_context
+  - id: seaford_control
+    label: "Seaford coastal control / context"
+    lat: 50.772
+    lon: 0.102
+    role: control
+
+news_queries:
+  - "Newhaven Energy Recovery Facility Veolia"
+  - "Newhaven incinerator emissions"
+  - "BV8067IL Newhaven"
+  - "Newhaven incinerator permit variation"
+  - "Environment Agency Newhaven Energy Recovery Facility"
+  - "Newhaven ERF annual monitoring report"
+
+official_queries:
+  - "Newhaven Energy Recovery Facility annual monitoring report"
+  - "BV8067IL Newhaven"
+  - "Veolia Newhaven annual monitoring report"
+  - "Environment Agency Newhaven energy recovery facility"
+  - "incinerator annual monitoring reporting data.gov.uk"
+  - "UK PRTR Newhaven Veolia waste incineration"
+
+watch_urls:
+  - name: "UK PRTR"
+    url: "https://www.gov.uk/guidance/uk-pollutant-release-and-transfer-register-prtr-data-sets"
+  - name: "Environment Agency"
+    url: "https://www.gov.uk/government/organisations/environment-agency"
+  - name: "data.gov.uk incinerator search"
+    url: "https://www.data.gov.uk/search?q=incinerator+annual+monitoring+reporting"
+  - name: "Veolia UK"
+    url: "https://www.veolia.co.uk/"
+
+openaq:
+  enabled: true
+  base_url: "https://api.openaq.org"
+  max_requests_per_run: 8
+  min_seconds_between_requests: 8
+  radius_m: 25000
+  limit: 100
+  user_agent: "AQ26-WeeklyV2-controlled-review/1.0 (low-rate provenance harvest)"
+  notes: >
+    OpenAQ is queried with strict caps, long spacing, and no aggressive pagination.
+    If OpenAQ returns 401/403/429, the workflow records the error and stops OpenAQ
+    for this run rather than retrying repeatedly.
+
+cams:
+  enabled: true
+  max_requests_per_run: 3
+  min_seconds_between_requests: 10
+  variables:
+    - nitrogen_dioxide
+    - sulphur_dioxide
+    - carbon_monoxide
+    - ozone
+    - particulate_matter_2.5um
+    - particulate_matter_10um
+
+satellite:
+  bbox: [-0.15, 50.68, 0.35, 50.95]
+  odata_products:
+    - L2__NO2___
+    - L2__SO2___
+    - L2__CO____
+    - L2__HCHO__
+    - L2__O3____
+    - L2__CH4___
+    - L2__AER_AI
+  max_records_per_product: 50
+
+scoring:
+  high_terms:
+    - bv8067
+    - bv8067il
+    - newhaven energy recovery facility
+    - veolia newhaven
+    - annual monitoring report
+    - environment agency
+    - permit variation
+    - enforcement notice
+  pollutant_terms:
+    - pm2.5
+    - pm10
+    - no2
+    - nitrogen dioxide
+    - so2
+    - sulphur dioxide
+    - sulfur dioxide
+    - co
+    - carbon monoxide
+    - ozone
+    - o3
+    - hcho
+    - formaldehyde
+    - ch4
+    - methane
+    - aerosol
+    - dioxin
+    - furan
+    - mercury
+    - cadmium
+    - heavy metals
