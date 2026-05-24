@@ -1,0 +1,22 @@
+# Add or merge this section into configs/aq26_weekly_v2_sources.yml
+
+serpapi:
+  enabled: true
+  provider: "SerpAPI Google Search"
+  monthly_free_allowance: 250
+  max_requests_per_run: 4
+  min_seconds_between_requests: 3
+  stop_on_http_status:
+    - 401
+    - 403
+    - 429
+  usage_policy: >
+    SerpAPI is quota-limited to 250 free searches/month. WeeklyV2 must use it only
+    for high-value official/regulatory discovery searches, not broad news scraping.
+    With max_requests_per_run=4 and weekly scheduling, expected baseline use is
+    approximately 16-20 searches/month, leaving quota for manual reruns.
+  queries:
+    - "site:gov.uk Newhaven Energy Recovery Facility BV8067IL"
+    - "site:data.gov.uk incinerator annual monitoring reporting Newhaven"
+    - "site:gov.uk Environment Agency Newhaven incinerator permit variation"
+    - "Veolia Newhaven Energy Recovery Facility annual monitoring report"
