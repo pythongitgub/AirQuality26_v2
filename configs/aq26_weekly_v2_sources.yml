@@ -128,3 +128,40 @@ scoring:
     - mercury
     - cadmium
     - heavy metals
+
+
+optional_sources:
+  purpleair:
+    enabled: true
+    base_url: "https://api.purpleair.com/v1/sensors"
+    max_requests_per_run: 1
+    notes: >
+      PurpleAir is treated as contextual low-cost sensor data unless station metadata,
+      siting and calibration checks are validated.
+  serpapi:
+    enabled: true
+    base_url: "https://serpapi.com/search.json"
+    max_requests_per_run: 3
+    queries:
+      - "Newhaven Energy Recovery Facility emissions"
+      - "BV8067IL Newhaven Environment Agency"
+      - "Veolia Newhaven annual monitoring report"
+  earthdata:
+    enabled: true
+    cmr_base_url: "https://cmr.earthdata.nasa.gov/search/granules.json"
+    max_requests_per_run: 2
+    short_names:
+      - "MCD19A2"
+      - "MOD04_L2"
+    notes: >
+      Earthdata/CMR is used for discovery/readiness only. Download/extraction is a later stage.
+  gemini:
+    enabled: true
+    max_input_records: 25
+    notes: >
+      Gemini receives only metadata counts and readiness summaries, never API keys or raw evidence.
+  cdse_auth:
+    enabled: true
+    token_url: "https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token"
+    notes: >
+      CDSE auth probe records token readiness only. It does not download products in WeeklyV2.
