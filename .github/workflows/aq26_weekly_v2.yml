@@ -70,6 +70,18 @@ jobs:
       CAMS_API_KEY: ${{ secrets.CAMS_API_KEY }}
       CAMS_BASE_URL: ${{ secrets.CAMS_BASE_URL }}
 
+      EARTH_DATA_API_KEY: ${{ secrets.EARTH_DATA_API_KEY }}
+      EARTHDATA_API_KEY: ${{ secrets.EARTH_DATA_API_KEY }}
+      NASA_EARTHDATA_TOKEN: ${{ secrets.EARTH_DATA_API_KEY }}
+
+      PURPLE_AIR_API_KEY: ${{ secrets.PURPLE_AIR_API_KEY }}
+      PURPLEAIR_API_KEY: ${{ secrets.PURPLE_AIR_API_KEY }}
+
+      SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
+
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+
       GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
       GDRIVE_SERVICE_ACCOUNT_JSON: ${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}
       GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
@@ -115,11 +127,17 @@ jobs:
           for name in [
             "WAQI_TOKEN","OPENWEATHER_KEY","MET_OFFICE_API_KEY","NEWS_API_KEY","NEWS_DATA_IO_KEY",
             "OPENAQ_API_KEY","CAMS_API_KEY","CAMS_BASE_URL","CDSE_ID","CDSE_SECRET",
+            "EARTH_DATA_API_KEY","PURPLE_AIR_API_KEY","SERPAPI_API_KEY","GEMINI_API_KEY","GEMINI_MODEL",
             "GDRIVE_SERVICE_ACCOUNT","GDRIVE_FOLDER_ID","SMTP_HOST","MAIL_TO"
           ]:
               v = os.getenv(name, "")
               print(f"{name}: {'SET length '+str(len(v)) if v else 'EMPTY'}")
           PY
+
+
+      - name: WeeklyV2 repository tidy audit
+        run: |
+          python scripts/aq26_repo_tidy_audit.py --output-root outputs
 
       - name: WeeklyV2 controlled evidence harvest
         run: |
@@ -164,6 +182,9 @@ jobs:
             outputs/04_ground_aq_providers/openaq_safety_manifest.json
             outputs/03_news_context/news_provider_warnings.json
             outputs/09_cams/cams_readiness.json
+            outputs/13_repo_tidy/
+            outputs/14_ai/
+            outputs/15_optional_sources/
           if-no-files-found: warn
           retention-days: 30
 
