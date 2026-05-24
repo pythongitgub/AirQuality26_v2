@@ -520,8 +520,207 @@ def harvest_gdrive(out):
         add_record("Google Drive recursive inventory", "gdrive", f"gdrive://{folder_id}", "recursive", "error", None, p, 0, repr(e))
 
 
+
+def harvest_purpleair(cfg, out):
+    pcfg = cfg.get("optional_sources", {}).get("purpleair", {})
+    key = env_first("PURPLE_AIR_API_KEY", "PURPLEAIR_API_KEY")
+    if not pcfg.get("enabled", True):
+        add_record("PurpleAir readiness", "low_cost_sensor_context", "purpleair://disabled", "readiness", "skipped", None, None, 0, notes="disabled in config")
+        return
+    if not key:
+        p = write_json(out / "15_optional_sources" / "purpleair_readiness.json", {
+            "run_ts": RUN_TS, "purpleair_key_present": False, "purpleair_data_ready": False,
+            "notes": "PURPLE_AIR_API_KEY missing."
+        })
+        add_record("PurpleAir readiness", "low_cost_sensor_context", "purpleair://missing-key", "readiness", "skipped", None, p, 1, notes="PURPLE_AIR_API_KEY missing")
+        return
+    url = pcfg.get("base_url", "https://api.purpleair.com/v1/sensors")
+    # Conservative metadata-only regional query. If PurpleAir changes API semantics, failure is recorded but not critical.
+    params = {
+        "fields": "sensor_index,name,latitude,longitude,last_seen,pm2.5_atm,pm2.5_cf_1",
+        "location_type": 0,
+        "nwlng": -0.20, "nwlat": 50.98, "selng": 0.40, "selat": 50.65,
+        "max_age": 604800,
+    }
+    headers = {"X-API-Key": key, "Accept": "application/json"}
+    data, hs, content, err, _ = request_get(url, params=params, headers=headers, timeout=35)
+    p = write_bytes(out / "15_optional_sources" / f"purpleair_sensors_{RUN_TS}.json", content)
+    status = "ok" if hs and hs < 400 else "warning"
+    if status == "warning":
+        add_warning("PurpleAir sensors", "regional_context", hs, err, "Optional low-cost sensor provider warning.")
+    add_record("PurpleAir sensors regional context", "low_cost_sensor_context", full_url(url, params), "regional_context", status, hs, p, count_records(data), err, notes="optional; contextual only, not reference-grade")
+
+
+def harvest_serpapi(cfg, out):
+    scfg = cfg.get("optional_sources", {}).get("serpapi", {})
+    key = env_first("SERPAPI_API_KEY")
+    if not scfg.get("enabled", True):
+        add_record("SerpAPI readiness", "web_search_context", "serpapi://disabled", "readiness", "skipped", None, None, 0, notes="disabled in config")
+        return
+    if not key:
+        p = write_json(out / "15_optional_sources" / "serpapi_readiness.json", {
+            "run_ts": RUN_TS, "serpapi_key_present": False, "serpapi_data_ready": False,
+            "notes": "SERPAPI_API_KEY missing."
+        })
+        add_record("SerpAPI readiness", "web_search_context", "serpapi://missing-key", "readiness", "skipped", None, p, 1, notes="SERPAPI_API_KEY missing")
+        return
+    raw = mkdir(out / "15_optional_sources" / "serpapi_raw")
+    url = scfg.get("base_url", "https://serpapi.com/search.json")
+    max_req = int(scfg.get("max_requests_per_run", 3))
+    for i, q in enumerate(scfg.get("queries", [])[:max_req], start=1):
+        params = {"engine": "google", "q": q, "api_key": key, "num": 10}
+        data, hs, content, err, _ = request_get(url, params=params, timeout=35)
+        p = write_bytes(raw / f"serpapi_{slug(q)}_{RUN_TS}.json", content)
+        status = "ok" if hs and hs < 400 else "warning"
+        if status == "warning":
+            add_warning("SerpAPI Google search", q, hs, err, "Optional web discovery provider warning.")
+        add_record("SerpAPI Google search", "web_search_context", full_url(url, params), q, status, hs, p, count_records(data), err, notes=f"optional search context {i}/{max_req}")
+
+
+def harvest_earthdata(cfg, out, start_date, end_date):
+    ecfg = cfg.get("optional_sources", {}).get("earthdata", {})
+    token = env_first("EARTH_DATA_API_KEY", "EARTHDATA_API_KEY", "NASA_EARTHDATA_TOKEN")
+    if not ecfg.get("enabled", True):
+        add_record("NASA Earthdata CMR readiness", "satellite_metadata", "earthdata://disabled", "readiness", "skipped", None, None, 0, notes="disabled in config")
+        return
+    raw = mkdir(out / "15_optional_sources" / "earthdata_raw")
+    readiness = {
+        "run_ts": RUN_TS,
+        "earthdata_key_present": bool(token),
+        "earthdata_cmr_ready": False,
+        "date_window": {"start": start_date, "end": end_date},
+        "notes": "CMR discovery only. No Earthdata file download/extraction in WeeklyV2."
+    }
+    url = ecfg.get("cmr_base_url", "https://cmr.earthdata.nasa.gov/search/granules.json")
+    headers = {"Accept": "application/json"}
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    total_records = 0
+    for short_name in ecfg.get("short_names", [])[: int(ecfg.get("max_requests_per_run", 2))]:
+        params = {
+            "short_name": short_name,
+            "temporal": f"{start_date}T00:00:00Z,{end_date}T23:59:59Z",
+            "bounding_box": "-0.15,50.68,0.35,50.95",
+            "page_size": 10,
+        }
+        data, hs, content, err, _ = request_get(url, params=params, headers=headers, timeout=35)
+        p = write_bytes(raw / f"earthdata_cmr_{slug(short_name)}_{RUN_TS}.json", content)
+        c = count_records(data)
+        total_records += c
+        status = "ok" if hs and hs < 400 else "warning"
+        if status == "warning":
+            add_warning("NASA Earthdata CMR", short_name, hs, err, "Optional NASA CMR discovery warning.")
+        add_record("NASA Earthdata CMR granules", "satellite_metadata", full_url(url, params), short_name, status, hs, p, c, err, notes="optional discovery only")
+    readiness["earthdata_cmr_ready"] = total_records > 0
+    readiness["record_count"] = total_records
+    write_json(out / "15_optional_sources" / "earthdata_readiness.json", readiness)
+
+
+def harvest_cdse_auth_readiness(cfg, out):
+    ccfg = cfg.get("optional_sources", {}).get("cdse_auth", {})
+    if not ccfg.get("enabled", True):
+        add_record("CDSE auth readiness", "satellite_auth", "cdse://disabled", "readiness", "skipped", None, None, 0, notes="disabled in config")
+        return
+    username = env_first("CDSE_USERNAME")
+    password = env_first("CDSE_PASSWORD")
+    client_id = env_first("CDSE_ID")
+    client_secret = env_first("CDSE_SECRET")
+    token_url = ccfg.get("token_url", "https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token")
+    readiness = {
+        "run_ts": RUN_TS,
+        "cdse_username_present": bool(username),
+        "cdse_password_present": bool(password),
+        "cdse_client_id_present": bool(client_id),
+        "cdse_client_secret_present": bool(client_secret),
+        "cdse_token_ready": False,
+        "token_probe_attempted": False,
+        "http_status": None,
+        "notes": "No token value is stored. WeeklyV2 does not download CDSE products."
+    }
+    if username and password:
+        # Public CDSE password-flow client is commonly cdse-public. If user has a client id, prefer it.
+        data = {
+            "grant_type": "password",
+            "username": username,
+            "password": password,
+            "client_id": client_id or "cdse-public",
+        }
+        try:
+            r = requests.post(token_url, data=data, timeout=30)
+            readiness["token_probe_attempted"] = True
+            readiness["http_status"] = r.status_code
+            if r.ok:
+                js = r.json()
+                readiness["cdse_token_ready"] = bool(js.get("access_token"))
+                readiness["expires_in"] = js.get("expires_in")
+            else:
+                readiness["error"] = redact(r.text[:500])
+        except Exception as exc:
+            readiness["token_probe_attempted"] = True
+            readiness["error"] = redact(repr(exc))
+    p = write_json(out / "15_optional_sources" / "cdse_auth_readiness.json", readiness)
+    add_record("CDSE auth readiness", "satellite_auth", token_url, "token_probe", "ok" if readiness.get("cdse_token_ready") else "warning", readiness.get("http_status"), p, 1, readiness.get("error", ""), notes="token readiness only; access token not stored")
+
+
+def harvest_gemini_summary(cfg, out):
+    gcfg = cfg.get("optional_sources", {}).get("gemini", {})
+    key = env_first("GEMINI_API_KEY")
+    model = env_first("GEMINI_MODEL") or "gemini-1.5-flash"
+    summary_input = {
+        "run_ts": RUN_TS,
+        "records": len(RECORDS),
+        "ok": sum(1 for r in RECORDS if r.get("status") == "ok"),
+        "warning": sum(1 for r in RECORDS if r.get("status") == "warning"),
+        "error": sum(1 for r in RECORDS if r.get("status") == "error"),
+        "source_types": sorted(set(r.get("source_type", "") for r in RECORDS)),
+        "controlled_use_boundary": "Neutral metadata-only summary. No raw evidence, no API keys, no causal attribution.",
+    }
+    if not gcfg.get("enabled", True):
+        add_record("Gemini neutral metadata summary", "ai_summary", "gemini://disabled", "summary", "skipped", None, None, 0, notes="disabled in config")
+        return
+    if not key:
+        p = write_json(out / "14_ai" / "gemini_summary.json", {
+            "run_ts": RUN_TS, "gemini_key_present": False, "gemini_summary_ready": False,
+            "input_summary": summary_input
+        })
+        add_record("Gemini neutral metadata summary", "ai_summary", "gemini://missing-key", "summary", "skipped", None, p, 1, notes="GEMINI_API_KEY missing")
+        return
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+    prompt = (
+        "Produce a concise neutral controlled-review metadata summary for an air-quality evidence harvest. "
+        "Do not claim causation, endorsement, or external validation. Metadata only:\n"
+        + json.dumps(summary_input, ensure_ascii=False)
+    )
+    payload = {"contents": [{"parts": [{"text": prompt}]}]}
+    params = {"key": key}
+    try:
+        r = requests.post(url, params=params, json=payload, timeout=45)
+        result = {
+            "run_ts": RUN_TS, "gemini_key_present": True, "gemini_model": model,
+            "gemini_summary_ready": bool(r.ok), "http_status": r.status_code,
+            "input_summary": summary_input
+        }
+        if r.ok:
+            js = r.json()
+            text = ""
+            try:
+                text = js["candidates"][0]["content"]["parts"][0]["text"]
+            except Exception:
+                text = ""
+            result["summary_text"] = text[:5000]
+        else:
+            result["error"] = redact(r.text[:1000])
+        p = write_json(out / "14_ai" / "gemini_summary.json", result)
+        add_record("Gemini neutral metadata summary", "ai_summary", full_url(url, params), "metadata_summary", "ok" if r.ok else "warning", r.status_code, p, 1, result.get("error", ""), notes="metadata-only AI summary; no raw evidence or secrets")
+    except Exception as exc:
+        p = write_json(out / "14_ai" / "gemini_summary.json", {
+            "run_ts": RUN_TS, "gemini_key_present": True, "gemini_summary_ready": False,
+            "gemini_model": model, "error": redact(repr(exc)), "input_summary": summary_input
+        })
+        add_record("Gemini neutral metadata summary", "ai_summary", "gemini://exception", "metadata_summary", "warning", None, p, 1, repr(exc), notes="metadata-only AI summary exception")
+
 def build_backfill_and_gates(cfg, out, start_date, end_date):
-    expected = ["news_api", "ground_aq", "weather", "official_search", "official_watch_url", "satellite_metadata", "gdrive", "atmospheric_model"]
+    expected = ["news_api", "ground_aq", "weather", "official_search", "official_watch_url", "satellite_metadata", "gdrive", "atmospheric_model", "low_cost_sensor_context", "web_search_context", "satellite_auth", "ai_summary"]
     observed = {k: any(r.get("source_type") == k and r.get("status") == "ok" for r in RECORDS) for k in expected}
     cams_readiness = {}
     cams_path = out / "09_cams" / "cams_readiness.json"
@@ -531,6 +730,18 @@ def build_backfill_and_gates(cfg, out, start_date, end_date):
     drive_path = out / "08_gdrive_snapshot" / "gdrive_recursive_inventory.json"
     if drive_path.exists():
         drive_inventory = json.loads(drive_path.read_text(encoding="utf-8"))
+    earthdata_readiness = {}
+    earthdata_path = out / "15_optional_sources" / "earthdata_readiness.json"
+    if earthdata_path.exists():
+        earthdata_readiness = json.loads(earthdata_path.read_text(encoding="utf-8"))
+    cdse_auth = {}
+    cdse_path = out / "15_optional_sources" / "cdse_auth_readiness.json"
+    if cdse_path.exists():
+        cdse_auth = json.loads(cdse_path.read_text(encoding="utf-8"))
+    gemini_summary = {}
+    gemini_path = out / "14_ai" / "gemini_summary.json"
+    if gemini_path.exists():
+        gemini_summary = json.loads(gemini_path.read_text(encoding="utf-8"))
     gates = {
         "automation_ready": True,
         "provenance_ready": True,
@@ -547,6 +758,12 @@ def build_backfill_and_gates(cfg, out, start_date, end_date):
         "official_filings_ready": observed["official_search"],
         "drive_ready": observed["gdrive"],
         "drive_inventory_truncated": bool(drive_inventory.get("drive_inventory_truncated")),
+        "purpleair_context_ready": observed["low_cost_sensor_context"],
+        "serpapi_context_ready": observed["web_search_context"],
+        "earthdata_key_present": bool(earthdata_readiness.get("earthdata_key_present")),
+        "earthdata_cmr_ready": bool(earthdata_readiness.get("earthdata_cmr_ready")),
+        "cdse_auth_ready": bool(cdse_auth.get("cdse_token_ready")),
+        "gemini_summary_ready": bool(gemini_summary.get("gemini_summary_ready")),
         "backfill_ready": True,
         "external_submission_ready": False,
         "blocking_reasons": [
@@ -563,7 +780,8 @@ def build_backfill_and_gates(cfg, out, start_date, end_date):
             "martin": "Satellite catalogue supports remote-sensing context; extraction and ground-fusion next.",
             "brauer": "Multi-source exposure-screening registry; no health-burden attribution yet.",
             "anenberg": "NO2/SO2/CO/HCHO/O3/CH4/AER_AI trace-gas families prioritised.",
-            "damoulas": "Target/control graph, Drive inventory, gaps and alerts support digital-twin readiness."
+            "damoulas": "Target/control graph, Drive inventory, gaps and alerts support digital-twin readiness.",
+            "optional_sources": "PurpleAir, SerpAPI, Earthdata CMR, CDSE auth and Gemini are integrated as cautious optional metadata/readiness streams."
         }
     })
 
@@ -608,9 +826,14 @@ def main():
     harvest_ground_weather(cfg, out)
     harvest_openaq(cfg, out)
     harvest_cams(cfg, out, start_date, end_date)
+    harvest_purpleair(cfg, out)
+    harvest_serpapi(cfg, out)
+    harvest_earthdata(cfg, out, start_date, end_date)
+    harvest_cdse_auth_readiness(cfg, out)
     harvest_official(cfg, out)
     harvest_satellite(cfg, out, start_date, end_date)
     harvest_gdrive(out)
+    harvest_gemini_summary(cfg, out)
     build_backfill_and_gates(cfg, out, start_date, end_date)
     finish(out, cfg, start_date, end_date)
     print(json.dumps({
