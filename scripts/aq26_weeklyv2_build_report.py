@@ -89,10 +89,7 @@ def main():
     openaq = load(root / "04_ground_aq_providers" / "openaq_safety_manifest.json")
     cams = load(root / "09_cams" / "cams_readiness.json")
     warnings = load(root / "03_news_context" / "news_provider_warnings.json")
-    purpleair = load(root / "15_optional_sources" / "purpleair_readiness.json")
-    earthdata = load(root / "15_optional_sources" / "earthdata_readiness.json")
-    cdse_auth = load(root / "15_optional_sources" / "cdse_auth_readiness.json")
-    gemini = load(root / "14_ai" / "gemini_summary.json")
+    cdse = load(root / "15_optional_sources" / "cdse_auth_readiness.json")
 
     md = rdir / f"AQ26_WEEKLYV2_REPORT_{ts}.md"
     md.write_text("\n".join([
@@ -127,13 +124,12 @@ def main():
         f"- CAMS endpoint configured: `{cams.get('cams_endpoint_configured')}`",
         f"- CAMS data ready: `{cams.get('cams_data_ready')}`",
         "",
-        "## Optional new-key integrations",
-        f"- PurpleAir context ready: `{gates.get('purpleair_context_ready')}`",
-        f"- Earthdata key present: `{gates.get('earthdata_key_present')}`",
-        f"- Earthdata CMR ready: `{gates.get('earthdata_cmr_ready')}`",
-        f"- CDSE auth ready: `{gates.get('cdse_auth_ready')}`",
-        f"- Gemini summary ready: `{gates.get('gemini_summary_ready')}`",
-        f"- SerpAPI context ready: `{gates.get('serpapi_context_ready')}`",
+        "## CDSE readiness",
+        f"- CDSE catalogue ready: `{gates.get('cdse_catalogue_ready')}`",
+        f"- CDSE OData username/password ready: `{gates.get('cdse_odata_username_password_ready')}`",
+        f"- CDSE Sentinel Hub client credentials ready: `{gates.get('cdse_sentinelhub_client_credentials_ready')}`",
+        f"- CDSE download ready: `{gates.get('cdse_download_ready')}`",
+        f"- CDSE auth recommendation: `{cdse.get('recommendation', '')}`",
         "",
         "## News provider warnings",
         f"- News warning count: `{warnings.get('warning_count', 0)}`",
@@ -151,11 +147,6 @@ def main():
         f"- Satellite extraction ready: `{gates.get('satellite_extraction_ready')}`",
         f"- Official filings ready: `{gates.get('official_filings_ready')}`",
         f"- Drive ready: `{gates.get('drive_ready')}`",
-        f"- PurpleAir context ready: `{gates.get('purpleair_context_ready')}`",
-        f"- SerpAPI context ready: `{gates.get('serpapi_context_ready')}`",
-        f"- Earthdata CMR ready: `{gates.get('earthdata_cmr_ready')}`",
-        f"- CDSE auth ready: `{gates.get('cdse_auth_ready')}`",
-        f"- Gemini summary ready: `{gates.get('gemini_summary_ready')}`",
         f"- External submission ready: `{gates.get('external_submission_ready')}`",
         "",
         "## Methods alignment",
@@ -169,7 +160,7 @@ def main():
     pdf_path = rdir / f"AQ26_WEEKLYV2_REPORT_{ts}.pdf"
     pdf(md, pdf_path)
     led = ledger(root)
-    manifest = {"run_ts": ts, "report_md": str(md), "report_pdf": str(pdf_path), "sha256_ledger": str(led), "latest": str(root / "00_weeklyv2" / "LATEST_WEEKLYV2.json"), "redaction_audit": str(root / "99_integrity" / "redaction_audit.json")}
+    manifest = {"run_ts": ts, "report_md": str(md), "report_pdf": str(pdf_path), "sha256_ledger": str(led), "latest": str(root / "00_weeklyv2" / "LATEST_WEEKLYV2.json"), "redaction_audit": str(root / "99_integrity" / "redaction_audit.json"), "cdse_auth_readiness": str(root / "15_optional_sources" / "cdse_auth_readiness.json")}
     (rdir / f"AQ26_WEEKLYV2_MASTER_MANIFEST_{ts}.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     led = ledger(root)
 
@@ -178,8 +169,8 @@ def main():
         root / "00_weeklyv2", root / "00_live_harvest", root / "03_news_context",
         root / "04_ground_aq_providers", root / "05_weather", root / "05_metoffice_datahub_weather",
         root / "06_official_filings", root / "07_satellite_cdse", root / "08_gdrive_snapshot",
-        root / "09_cams", root / "11_backfill", root / "12_scoring", root / "99_integrity",
-        root / "source_history", root / "13_repo_tidy", root / "14_ai", root / "15_optional_sources", rdir
+        root / "09_cams", root / "11_backfill", root / "12_scoring", root / "15_optional_sources",
+        root / "99_integrity", root / "source_history", rdir
     ]
 
     def build_zip():
