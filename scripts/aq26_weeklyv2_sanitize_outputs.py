@@ -3,14 +3,11 @@
 AQ26 WeeklyV2 output sanitizer.
 
 Purpose:
-- Remove token-like URL parameters and tracking tokens from provider JSON/HTML/CSV/MD outputs before redaction audit.
-- Fixes SerpAPI result URLs that contain benign but secret-looking `token=` query strings.
-- Does not hide the fact that sanitisation occurred: writes a provenance manifest.
+- Remove token-like/API-key-like URL parameters and provider tracking tokens from output files before redaction audit.
+- Covers SerpAPI token= tracking params and OpenWeather appid= params.
+- Writes a provenance manifest with before/after hashes for changed files.
 
-This script is intentionally broad but conservative:
-- It edits text-like files only.
-- It preserves files in place after replacing token-like values with ***REDACTED***.
-- It records SHA256 before/after for each changed file.
+This script edits text-like output files only. It does not alter environment secrets.
 """
 
 from __future__ import annotations
@@ -26,15 +23,38 @@ from typing import Dict, List
 
 TEXT_EXTS = {".json", ".jsonl", ".csv", ".txt", ".md", ".html", ".xml", ".yml", ".yaml", ".log"}
 
-# These are output-only sanitisation patterns. They do not alter environment secrets.
+SENSITIVE_KEYS = {
+    "token", "api_key", "apikey", "key", "client_secret", "password", "access_token",
+    "appid", "app_id", "subscription-key", "subscription_key", "ocp-apim-subscription-key",
+    "x-api-key", "authorization"
+}
+
+SENSITIVE_KEY_PATTERN = (
+    r"token|api_key|apikey|key|client_secret|password|access_token|"
+    r"appid|app_id|subscription-key|subscription_key|ocp-apim-subscription-key|x-api-key|authorization"
+)
+
 INLINE_PATTERNS = [
-    # Query-string or inline key/value forms.
-    (re.compile(r"(?i)([?&](?:token|api_key|apikey|key|client_secret|password|access_token|authuser)=)([^&\s\"'<>]+)"), r"\1***REDACTED***"),
-    (re.compile(r"(?i)(\b(?:token|api_key|apikey|key|client_secret|password|access_token)\s*=\s*)([^&\s\"'<>]+)"), r"\1***REDACTED***"),
-    # JSON fields named token/key/password variants.
-    (re.compile(r'(?i)("(?:token|api_key|apikey|key|client_secret|password|access_token)"\s*:\s*")([^"]+)(")'), r'\1***REDACTED***\3'),
+    # Query-string forms, including &appid= and ?appid=.
+    (
+        re.compile(rf"(?i)([?&](?:{SENSITIVE_KEY_PATTERN})=)([^&\s\"'<>]+)"),
+        r"\1***REDACTED***",
+    ),
+    # Inline key=value forms.
+    (
+        re.compile(rf"(?i)(\b(?:{SENSITIVE_KEY_PATTERN})\s*=\s*)([^&\s\"'<>]+)"),
+        r"\1***REDACTED***",
+    ),
+    # JSON fields.
+    (
+        re.compile(rf'(?i)("(?:{SENSITIVE_KEY_PATTERN})"\s*:\s*")([^"]+)(")'),
+        r'\1***REDACTED***\3',
+    ),
     # Bearer tokens.
-    (re.compile(r"(?i)(Bearer\s+)[A-Za-z0-9_\-.]{8,}"), r"\1***REDACTED***"),
+    (
+        re.compile(r"(?i)(Bearer\s+)[A-Za-z0-9_\-.]{8,}"),
+        r"\1***REDACTED***",
+    ),
 ]
 
 
@@ -43,18 +63,15 @@ def sha_text(text: str) -> str:
 
 
 def sanitize_url_string(value: str) -> str:
-    """Redact sensitive query parameters inside a URL-like string."""
     try:
         parsed = urllib.parse.urlsplit(value)
-        if not parsed.scheme or not parsed.netloc:
-            return value
-        if not parsed.query:
+        if not parsed.scheme or not parsed.netloc or not parsed.query:
             return value
         pairs = urllib.parse.parse_qsl(parsed.query, keep_blank_values=True)
         changed = False
         redacted = []
         for key, val in pairs:
-            if any(term in key.lower() for term in ["token", "api_key", "apikey", "key", "secret", "password", "access_token"]):
+            if key.lower() in SENSITIVE_KEYS or any(term in key.lower() for term in ["token", "key", "secret", "password", "appid"]):
                 redacted.append((key, "***REDACTED***"))
                 changed = True
             else:
@@ -69,20 +86,19 @@ def sanitize_url_string(value: str) -> str:
 def sanitize_text(text: str) -> str:
     out = text
 
-    # First handle normal inline forms.
     for pattern, repl in INLINE_PATTERNS:
         out = pattern.sub(repl, out)
 
-    # Then handle JSON escaped URLs and plain URLs more generally.
-    # This catches SerpAPI organic result URLs with tracking token parameters.
+    # Plain URLs.
     url_pattern = re.compile(r"https?://[^\s\"'<>]+")
     out = url_pattern.sub(lambda m: sanitize_url_string(m.group(0)), out)
 
-    # Also catch escaped JSON url strings where ampersands may be escaped as \u0026
+    # JSON escaped ampersands.
     if "\\u0026" in out:
         deescaped = out.replace("\\u0026", "&")
         for pattern, repl in INLINE_PATTERNS:
             deescaped = pattern.sub(repl, deescaped)
+        deescaped = re.sub(r"https?://[^\s\"'<>]+", lambda m: sanitize_url_string(m.group(0)), deescaped)
         out = deescaped.replace("&", "\\u0026")
 
     return out
@@ -94,17 +110,14 @@ def main() -> None:
     args = parser.parse_args()
 
     root = Path(args.root)
+    root.mkdir(parents=True, exist_ok=True)
+
     changed_files: List[Dict] = []
     scanned = 0
-
-    if not root.exists():
-        root.mkdir(parents=True, exist_ok=True)
 
     for path in sorted(root.rglob("*")):
         if not path.is_file() or path.suffix.lower() not in TEXT_EXTS:
             continue
-
-        # Avoid repeatedly sanitising old sanitisation manifests, but allow all other outputs.
         if path.name == "provider_sanitization_manifest.json":
             continue
 
@@ -125,18 +138,19 @@ def main() -> None:
                 "after_sha256": after_sha,
                 "bytes_before": len(before.encode("utf-8", errors="ignore")),
                 "bytes_after": len(after.encode("utf-8", errors="ignore")),
+                "redaction_scope": "token/api-key/appid-like output text",
             })
 
     manifest = {
         "created_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
-        "purpose": "Sanitize provider output files before redaction audit; particularly SerpAPI result URLs containing token-like tracking parameters.",
+        "purpose": "Sanitize provider output files before redaction audit, including SerpAPI token-like params and OpenWeather appid params.",
         "files_scanned": scanned,
         "files_changed": len(changed_files),
         "changed_files": changed_files,
         "notes": [
             "This does not alter environment secrets.",
-            "It replaces token-like output text with ***REDACTED*** before evidence packaging.",
-            "If files_changed is non-zero, downstream SHA256 ledgers reflect the sanitized files."
+            "It replaces token/API-key/appid-like output text with ***REDACTED*** before evidence packaging.",
+            "Downstream SHA256 ledgers reflect sanitized files."
         ],
     }
 
