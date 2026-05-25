@@ -1,0 +1,5 @@
+index.html
+archive.html
+tables.html
+methods.html
+data/weekly_index.json
