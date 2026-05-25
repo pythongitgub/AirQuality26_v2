@@ -137,8 +137,14 @@ jobs:
             --end-date "$AQ26_HISTORY_END_DATE"
 
       - name: Build SCC Nexus styled AQ26 website
-        run: python scripts/aq26_weeklyv2_build_sccnexus_site.py --output-root outputs --site-root site_public --history-weeks "$AQ26_HISTORY_WEEKS" --asset-root website/assets --remote-subdir "$AQ26_REMOTE_SUBDIR" \
-            --history-end-date "$AQ26_HISTORY_END_DATE"
+        run: |
+          python scripts/aq26_weeklyv2_build_sccnexus_site.py \
+            --output-root outputs \
+            --site-root site_public \
+            --history-weeks "$AQ26_HISTORY_WEEKS" \
+            --history-end-date "$AQ26_HISTORY_END_DATE" \
+            --asset-root website/assets \
+            --remote-subdir "$AQ26_REMOTE_SUBDIR"
       - name: Validate generated website
         run: |
           set -euo pipefail
