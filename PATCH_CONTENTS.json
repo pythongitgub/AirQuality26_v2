@@ -1,0 +1,11 @@
+{
+  "created_at_utc": "2026-05-25T05:54:26.099588+00:00",
+  "purpose": "AQ26 WeeklyV2 website-ready gold patch with static dashboard, history, interactive charts and GitHub Pages publishing",
+  "files": [
+    ".github/workflows/aq26_weekly_v2_website.yml",
+    "scripts/aq26_weeklyv2_build_website.py",
+    "configs/aq26_weekly_v2_website_addendum.yml",
+    "docs/AQ26_WEEKLYV2_WEBSITE_GOLD_README.md",
+    ".github/workflows/README_AQ26_ACTIVE_WORKFLOW_MAP.md"
+  ]
+}
