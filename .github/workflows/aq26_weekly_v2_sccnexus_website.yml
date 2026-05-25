@@ -4,9 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       lookback_days: {description: "Days of evidence to harvest", required: false, default: "14"}
-      history_weeks: {description: "Historical weekly slots", required: false, default: "52"}
+      history_weeks: {description: "Historical weekly slots. 104 = two years", required: false, default: "104"}
+      history_end_date: {description: "Inclusive validated history end date", required: false, default: "2026-05-25"}
       deploy_to_hostinger: {description: "Deploy to Hostinger", required: false, default: "true", type: choice, options: ["true","false"]}
-      remote_subdir: {description: "Remote subdirectory", required: false, default: "airquality26"}
+      remote_subdir: {description: "Remote subdirectory. Use . to deploy to the root of sccwebdesigntest.co.uk", required: false, default: "."}
+      public_base_url: {description: "Public URL to verify after deploy", required: false, default: "https://sccwebdesigntest.co.uk"}
       send_email: {description: "Email final evidence ZIP", required: false, default: "true", type: choice, options: ["true","false"]}
   schedule:
     - cron: "37 6 * * 1"
@@ -25,8 +27,10 @@ jobs:
     timeout-minutes: 160
     env:
       AQ26_LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days || '14' }}
-      AQ26_HISTORY_WEEKS: ${{ github.event.inputs.history_weeks || '52' }}
-      AQ26_REMOTE_SUBDIR: ${{ github.event.inputs.remote_subdir || 'airquality26' }}
+      AQ26_HISTORY_WEEKS: ${{ github.event.inputs.history_weeks || '104' }}
+      AQ26_HISTORY_END_DATE: ${{ github.event.inputs.history_end_date || '2026-05-25' }}
+      AQ26_REMOTE_SUBDIR: ${{ github.event.inputs.remote_subdir || '.' }}
+      AQ26_PUBLIC_BASE_URL: ${{ github.event.inputs.public_base_url || 'https://sccwebdesigntest.co.uk' }}
       WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
       OPENWEATHER_KEY: ${{ secrets.OPENWEATHER_KEY }}
       OW_KEY: ${{ secrets.OW_KEY }}
@@ -99,7 +103,7 @@ jobs:
           BASE_TARGET: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
         run: |
           mkdir -p outputs/website_history
-          TARGET="${BASE_TARGET%/}/${AQ26_REMOTE_SUBDIR}"
+          if [ "$AQ26_REMOTE_SUBDIR" = "." ] || [ -z "$AQ26_REMOTE_SUBDIR" ]; then TARGET="${BASE_TARGET%/}"; else TARGET="${BASE_TARGET%/}/${AQ26_REMOTE_SUBDIR}"; fi
           mkdir -p _remote_history
           sshpass -p "$PASS" rsync -az --timeout=60 -e "ssh -p $PORT -o StrictHostKeyChecking=no -o ConnectTimeout=30" "$USER@$HOST:$TARGET/data/history/" _remote_history/ || true
           cp -R _remote_history/. outputs/website_history/ || true
@@ -124,8 +128,17 @@ jobs:
         run: python scripts/aq26_weeklyv2_update_gates.py --output-root outputs
       - name: Rebuild final bundle including audit and corrected gates
         run: python scripts/aq26_weeklyv2_build_report.py --output-root outputs
+
+      - name: Build two-year validated weekly history index
+        run: |
+          python scripts/aq26_weeklyv2_build_two_year_history.py \
+            --output-root outputs \
+            --history-weeks "$AQ26_HISTORY_WEEKS" \
+            --end-date "$AQ26_HISTORY_END_DATE"
+
       - name: Build SCC Nexus styled AQ26 website
-        run: python scripts/aq26_weeklyv2_build_sccnexus_site.py --output-root outputs --site-root site_public --history-weeks "$AQ26_HISTORY_WEEKS" --asset-root website/assets --remote-subdir "$AQ26_REMOTE_SUBDIR"
+        run: python scripts/aq26_weeklyv2_build_sccnexus_site.py --output-root outputs --site-root site_public --history-weeks "$AQ26_HISTORY_WEEKS" --asset-root website/assets --remote-subdir "$AQ26_REMOTE_SUBDIR" \
+            --history-end-date "$AQ26_HISTORY_END_DATE"
       - name: Validate generated website
         run: |
           set -euo pipefail
@@ -139,6 +152,20 @@ jobs:
           grep -qi "cookie-banner" site_public/index.html
           python -m json.tool site_public/data/weekly_index.json >/dev/null
           python -m json.tool site_public/data/latest_summary.json >/dev/null
+
+      - name: Upload AQ26 pre-deploy website and evidence artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-weeklyv2-predeploy-site-${{ github.run_id }}
+          path: |
+            outputs/weeklyv2_reports/*.zip
+            outputs/00_weeklyv2/LATEST_WEEKLYV2.json
+            outputs/website_history/
+            outputs/99_integrity/
+            site_public/
+          if-no-files-found: warn
+          retention-days: 30
+
       - name: Deploy AQ26 website to Hostinger
         if: ${{ github.event.inputs.deploy_to_hostinger != 'false' }}
         env:
@@ -148,10 +175,31 @@ jobs:
           PASS: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
           BASE_TARGET: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
         run: |
-          TARGET="${BASE_TARGET%/}/${AQ26_REMOTE_SUBDIR}"
+          if [ "$AQ26_REMOTE_SUBDIR" = "." ] || [ -z "$AQ26_REMOTE_SUBDIR" ]; then TARGET="${BASE_TARGET%/}"; else TARGET="${BASE_TARGET%/}/${AQ26_REMOTE_SUBDIR}"; fi
           sshpass -p "$PASS" ssh -p "$PORT" -o StrictHostKeyChecking=no -o ConnectTimeout=30 "$USER@$HOST" "mkdir -p '$TARGET'"
           sshpass -p "$PASS" rsync -az --delete --timeout=180 -e "ssh -p $PORT -o StrictHostKeyChecking=no -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=3" site_public/ "$USER@$HOST:$TARGET/"
+
+      - name: Verify public AQ26 deployment
+        if: ${{ github.event.inputs.deploy_to_hostinger != 'false' }}
+        run: |
+          set -euo pipefail
+          BASE="${AQ26_PUBLIC_BASE_URL%/}"
+          echo "Verifying public deployment at: $BASE"
+          sleep 10
+          curl -fsSL "$BASE/index.html?v=${GITHUB_RUN_ID_VALUE}" -o /tmp/aq26_index.html
+          curl -fsSL "$BASE/privacy.html?v=${GITHUB_RUN_ID_VALUE}" -o /tmp/aq26_privacy.html
+          curl -fsSL "$BASE/cookies.html?v=${GITHUB_RUN_ID_VALUE}" -o /tmp/aq26_cookies.html
+          curl -fsSL "$BASE/data/weekly_index.json?v=${GITHUB_RUN_ID_VALUE}" -o /tmp/aq26_weekly_index.json
+          grep -qi "AQ26 Environmental Intelligence Observatory" /tmp/aq26_index.html
+          grep -qi "air_quality_web.svg" /tmp/aq26_index.html
+          grep -qi "cookie-banner" /tmp/aq26_index.html
+          grep -qi "Privacy" /tmp/aq26_privacy.html
+          grep -qi "Cookies" /tmp/aq26_cookies.html
+          python -m json.tool /tmp/aq26_weekly_index.json >/dev/null
+          echo "Verified AQ26 public deployment at $BASE" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Upload AQ26 website and evidence artifact
+        if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
           name: aq26-weeklyv2-sccnexus-site-${{ github.run_id }}
