@@ -67,7 +67,7 @@ def records(root:Path):
 
 def existing_history(root:Path):
     rows=[]
-    for folder in [root/"website_history",root/"10_historical_backfill"/"history",root/"10_historical_backfill"/"site_history",root/"historical_site"/"history"]:
+    for folder in [root/"website_history",root/"10_historical_backfill"/"history",root/"10_historical_backfill"/"site_history",root/"historical_site"/"history",root/"website_history"/"two_year_validated"]:
         if folder.exists():
             for p in folder.glob("*.json"):
                 if p.name.startswith("weekly_index"): continue
@@ -80,7 +80,7 @@ def existing_history(root:Path):
 
 def history(cur, old, weeks):
     by={str(x.get("run_ts")):x for x in old if x.get("run_ts")}; by[str(cur["run_ts"])]=cur
-    today=dt.datetime.now(dt.timezone.utc).date(); bywin={}
+    today=dt.date.fromisoformat(getattr(history, "end_date", "") or dt.datetime.now(dt.timezone.utc).date().isoformat()); bywin={}
     for r in by.values():
         win=r.get("date_window") or {}
         if win.get("start") and win.get("end"): bywin[(win["start"],win["end"])]=r
@@ -120,7 +120,7 @@ def header(active):
     return f"<header class='header'><div class='header-inner'><a class='brand-link' href='index.html'><img class='logo aq-logo' src='assets/brand/air_quality_web.svg' alt='AQ26 Air Quality'></a><nav class='nav'>{links}</nav></div></header>"
 def footer(s):
     links="".join(f"<a href='{h}'>{l}</a>" for h,l in FOOTER_NAV)
-    return f"<footer class='footer'><div class='footer-inner'><div><strong>AQ26 WeeklyV2</strong><p>Controlled-review evidence dashboard. No external endorsement or causal attribution claimed.</p></div><nav class='footer-nav'>{links}</nav><div class='footer-meta'><span>External submission ready: {esc(s.get('external_submission_ready'))}</span><span>© SCC Nexus / AQ26</span></div></div></footer><div id='cookie-banner' class='cookie-banner' role='dialog'><div><strong>Cookies on AQ26</strong><p>We use essential local-storage preferences for this banner and may load Plotly from CDN for interactive charts. No advertising cookies are intentionally set by this static site.</p></div><div><button class='btn small' onclick='AQ26.acceptCookies()'>Accept</button><a class='btn small ghost-dark' href='cookies.html'>Cookie details</a></div></div>"
+    return f"<footer class='footer'><div class='footer-inner'><div><strong>AQ26 WeeklyV2</strong><p>Controlled-review evidence dashboard prepared for expert and institutional review; no endorsement, representation, regulatory determination or causal attribution is claimed.</p></div><nav class='footer-nav'>{links}</nav><div class='footer-meta'><span>External submission ready: {esc(s.get('external_submission_ready'))}</span><span>© SCC Nexus / AQ26</span></div></div></footer><div id='cookie-banner' class='cookie-banner' role='dialog'><div><strong>Cookies on AQ26</strong><p>We use essential local-storage preferences for this banner and may load Plotly from CDN for interactive charts. No advertising cookies are intentionally set by this static site.</p></div><div><button class='btn small' onclick='AQ26.acceptCookies()'>Accept</button><a class='btn small ghost-dark' href='cookies.html'>Cookie details</a></div></div>"
 def layout(title, active, body, s):
     return f"<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><meta name='robots' content='index,follow'><title>{esc(title)} · AQ26</title><link rel='icon' href='assets/favicon.svg' type='image/svg+xml'><link rel='manifest' href='assets/site.webmanifest'><link rel='stylesheet' href='assets/site.css'><script src='https://cdn.plot.ly/plotly-2.35.2.min.js'></script></head><body>{topbar(s)}{header(active)}{body}{footer(s)}<script src='assets/site.js'></script></body></html>"
 
@@ -131,7 +131,7 @@ def gate(t,v,invert=False):
 def download_card(d): return f"<a class='report-card' href='{esc(d.get('path'))}'><strong>{esc(d.get('name'))}</strong><span>{esc(d.get('type'))} · {n(d.get('bytes')):,} bytes</span><code>{esc(str(d.get('sha256',''))[:16])}...</code></a>"
 
 def hero(s):
-    return f"<section class='hero'><video class='hero-video' autoplay muted loop playsinline poster='assets/banners/desktop_banner_1_web.svg'><source src='assets/banners/desktop_banner_2.webm' type='video/webm'></video><div class='hero-inner'><div><p class='kicker'>AQ26 Environmental Intelligence Observatory</p><h1>Weekly evidence, provenance and target-control air-quality intelligence.</h1><p>Website-ready monitoring around Newhaven Energy Recovery Facility and contextual control sites, with source records, integrity ledgers, readiness gates and historical comparison slots.</p><a class='btn primary' href='archive.html'>View weekly archive</a><a class='btn ghost' href='{esc(s.get('final_zip_relpath') or '#')}'>Download evidence ZIP</a></div><div class='banner-card'><div class='slide active'><h3>Controlled review</h3><p>No external endorsement or causal attribution is claimed. Evidence gates make limitations visible.</p></div><div class='slide'><h3>Integrity ledgers</h3><p>Final ZIP entries, redaction status and source records are bundled for audit-ready weekly review.</p></div><div class='slide'><h3>Historical trajectory</h3><p>Weekly slots and charts support comparison and source-specific historical backfill.</p></div><div class='dots'><span class='dot active'></span><span class='dot'></span><span class='dot'></span></div></div></div></section>"
+    return f"<section class='hero'><video class='hero-video' autoplay muted loop playsinline poster='assets/banners/desktop_banner_1_web.svg'><source src='assets/banners/desktop_banner_2.webm' type='video/webm'></video><div class='hero-inner'><div><p class='kicker'>AQ26 Environmental Intelligence Observatory</p><h1>Weekly evidence, provenance and target-control air-quality intelligence.</h1><p>Website-ready monitoring around Newhaven Energy Recovery Facility and contextual control sites, with source records, integrity ledgers, readiness gates and historical comparison slots.</p><a class='btn primary' href='archive.html'>View weekly archive</a><a class='btn ghost' href='{esc(s.get('final_zip_relpath') or '#')}'>Download evidence ZIP</a></div><div class='banner-card'><div class='slide active'><h3>Controlled review</h3><p>Prepared for controlled expert and institutional review. No WHO, UNEP, EEA, C40 Cities or named-expert endorsement, representation or causal attribution is claimed. Evidence gates make limitations visible.</p></div><div class='slide'><h3>Integrity ledgers</h3><p>Final ZIP entries, redaction status and source records are bundled for audit-ready weekly review.</p></div><div class='slide'><h3>Historical trajectory</h3><p>Weekly slots and charts support comparison and source-specific historical backfill.</p></div><div class='dots'><span class='dot active'></span><span class='dot'></span><span class='dot'></span></div></div></div></section>"
 
 def render_index(site,s,weeks,downloads):
     cards=[metric("Source records",s["source_record_count"],"All source classes"),metric("OK records",s["ok_count"],"Successful harvests","ok"),metric("Warnings",s["warning_count"],"Provider warnings","warn"),metric("Errors",s["error_count"],"Should remain zero","danger" if s["error_count"] else "ok"),metric("Satellite products",s["satellite_product_count"],"Catalogue records"),metric("Drive files",s["drive_file_count"],"Recursive metadata inventory"),metric("Redaction leaks",s["redaction_leak_count"],"Fail-closed audit","danger" if s["redaction_leak_count"] else "ok"),metric("High filings",s["high_priority_filings"],"Official relevance queue")]
@@ -160,7 +160,7 @@ def render_readiness(site,s):
     (site/"readiness.html").write_text(layout("Readiness","readiness.html",body,s),encoding="utf-8")
 def render_methodology(site,s):
     items=[("Maria Neira / WHO framing","Health-protective guideline context and cautious public-health language."),("Frank Kelly-style QA","Station quality, representativeness, averaging periods and traffic/background confounding."),("Helen ApSimon-style source-receptor logic","Wind, dispersion, emissions inventory and uncertainty before attribution."),("Prashant Kumar-style sensor governance","Low-cost sensor provenance, siting, calibration and spatial representativeness."),("Dominici-style causal epidemiology","No causal health inference without confounder control, exposure windows and uncertainty."),("Randall Martin-style satellite fusion","Remote-sensing context requires extraction, QA and ground validation."),("Michael Brauer / GBD integration","Exposure screening is separated from health-burden calculation."),("Susan Anenberg-style emissions-health modelling","Trace-gas and emissions-related indicators are prioritised for screening."),("Theo Damoulas-style digital twin readiness","Weekly historical structure and target/control sites support future spatiotemporal models.")]
-    body="<main><section class='section'><div class='section-title'><h2>Methodology alignment</h2><p>Scientific influences used as design benchmarks, not endorsements.</p></div><div class='grid grid-3'>"+ "".join(f"<div class='card'><h3>{esc(t)}</h3><p>{esc(d)}</p></div>" for t,d in items)+"</div></section></main>"
+    body="<main><section class='section'><div class='section-title'><h2>Methodology alignment</h2><p>Scientific and policy frameworks used as design benchmarks for controlled review, not endorsements or representation.</p></div><div class='grid grid-3'>"+ "".join(f"<div class='card'><h3>{esc(t)}</h3><p>{esc(d)}</p></div>" for t,d in items)+"</div></section></main>"
     (site/"methodology.html").write_text(layout("Methodology","methodology.html",body,s),encoding="utf-8")
 def render_downloads(site,s,downloads):
     body=f"<main><section class='section'><div class='section-title'><h2>Downloads</h2><p>Latest evidence bundles, reports and machine-readable indexes.</p></div><div class='report-list'>{''.join(download_card(d) for d in downloads)}<a class='report-card' href='data/latest_summary.json'><strong>latest_summary.json</strong><span>machine-readable latest run summary</span></a><a class='report-card' href='data/weekly_index.json'><strong>weekly_index.json</strong><span>weekly historical index and backfill slots</span></a></div></section></main>"
@@ -189,12 +189,12 @@ def js():
 
 def main():
     ap=argparse.ArgumentParser()
-    ap.add_argument("--output-root",default="outputs"); ap.add_argument("--site-root",default="site_public"); ap.add_argument("--history-weeks",default="52"); ap.add_argument("--asset-root",default="website/assets"); ap.add_argument("--remote-subdir",default="airquality26")
+    ap.add_argument("--output-root",default="outputs"); ap.add_argument("--site-root",default="site_public"); ap.add_argument("--history-weeks",default="104"); ap.add_argument("--history-end-date",default="2026-05-25"); ap.add_argument("--asset-root",default="website/assets"); ap.add_argument("--remote-subdir",default=".")
     a=ap.parse_args(); root=Path(a.output_root); site=Path(a.site_root)
     if site.exists(): shutil.rmtree(site)
     site.mkdir(parents=True,exist_ok=True)
     copy_assets(Path(a.asset_root),site)
-    s=summary(root,a.remote_subdir); weeks=history(s,existing_history(root),int(a.history_weeks)); dl=copy_downloads(root,site); recs=records(root)
+    s=summary(root,a.remote_subdir); history.end_date=a.history_end_date; weeks=history(s,existing_history(root),int(a.history_weeks)); dl=copy_downloads(root,site); recs=records(root)
     write_data(site,s,weeks,recs)
     render_index(site,s,weeks,dl); render_archive(site,s,weeks); render_comparisons(site,s,weeks); render_source_records(site,s,recs); render_readiness(site,s); render_methodology(site,s); render_downloads(site,s,dl); render_footer_pages(site,s)
     (site/"robots.txt").write_text("User-agent: *\nAllow: /\n",encoding="utf-8")
