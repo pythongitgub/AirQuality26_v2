@@ -1,5 +1,28 @@
+
 # AQ26 active workflow map
 
-Primary active workflow: `.github/workflows/aq26_weekly_v2_website.yml` (`AQ26 WeeklyV2 Website Publish`).
+## Recommended production workflow
 
-Keep `.github/workflows/aq26_weekly_v2.yml` for evidence-only testing. Keep smoke test manual-only after changing secrets. Older weekly workflows should be manual-only or archived to prevent duplicate API use.
+`aq26_weekly_v2_sccnexus_website.yml`
+
+Purpose:
+- WeeklyV2 evidence harvest
+- Redaction/integrity packaging
+- CDSE auth verification
+- SCC Nexus styled website build
+- Hostinger deployment
+- email notification
+
+## Keep for diagnostics
+
+`aq26_weekly_v2.yml`
+
+Evidence-only workflow for debugging.
+
+`smoketest.yml`
+
+Manual-only secret smoke test after changing secrets.
+
+## Recommendation
+
+Make older scheduled workflows manual-only or archive them to prevent duplicate API usage, duplicate emails and noisy Actions history.
