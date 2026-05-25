@@ -1,0 +1,5 @@
+website:
+  title: "AQ26 Weekly Evidence Dashboard"
+  history_weeks_default: 52
+  external_submission_ready_default: false
+  caution_notice: "Controlled-review dashboard; no endorsement or causal attribution claimed."
