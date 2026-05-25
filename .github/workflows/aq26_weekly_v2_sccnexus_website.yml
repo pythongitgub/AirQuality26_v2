@@ -1,4 +1,3 @@
-
 name: AQ26 WeeklyV2 SCC Nexus Website
 
 on:
@@ -13,15 +12,19 @@ on:
         required: false
         default: "52"
       deploy_to_hostinger:
-        description: "Deploy generated website to Hostinger/SCC Nexus"
+        description: "Deploy generated website to Hostinger"
         required: false
         default: "true"
         type: choice
         options: ["true", "false"]
       remote_subdir:
-        description: "Subdirectory under HOSTINGER_PUBLIC_HTML_DIR, e.g. airquality26"
+        description: "Remote subfolder under public_html. Use . for the domain root."
         required: false
-        default: "airquality26"
+        default: "."
+      public_base_url:
+        description: "Expected public URL used for post-deploy verification"
+        required: false
+        default: "https://sccwebdesigntest.co.uk"
       send_email:
         description: "Email final evidence ZIP"
         required: false
@@ -36,18 +39,19 @@ permissions:
   actions: read
 
 concurrency:
-  group: aq26-weeklyv2-sccnexus-website
+  group: aq26-weeklyv2-sccwebdesigntest-website
   cancel-in-progress: false
 
 jobs:
-  weeklyv2-sccnexus-website:
+  weeklyv2-sccwebdesigntest-website:
     runs-on: ubuntu-24.04
     timeout-minutes: 160
 
     env:
       AQ26_LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days || '14' }}
       AQ26_HISTORY_WEEKS: ${{ github.event.inputs.history_weeks || '52' }}
-      AQ26_REMOTE_SUBDIR: ${{ github.event.inputs.remote_subdir || 'airquality26' }}
+      AQ26_REMOTE_SUBDIR: ${{ github.event.inputs.remote_subdir || '.' }}
+      AQ26_PUBLIC_BASE_URL: ${{ github.event.inputs.public_base_url || 'https://sccwebdesigntest.co.uk' }}
 
       WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
       OPENWEATHER_KEY: ${{ secrets.OPENWEATHER_KEY }}
@@ -74,17 +78,23 @@ jobs:
       GDRIVE_SERVICE_ACCOUNT_JSON: ${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}
       GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
       GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+
       SMTP_HOST: ${{ secrets.SMTP_HOST }}
       SMTP_PORT: ${{ secrets.SMTP_PORT }}
       SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
       SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
       MAIL_FROM: ${{ secrets.MAIL_FROM }}
       MAIL_TO: ${{ secrets.MAIL_TO }}
+
+      # Prefer an explicit sccwebdesigntest public_html secret when present.
+      # Fallback to the existing generic Hostinger public_html secret.
+      SCCWEB_DESIGN_TEST_PUBLIC_HTML_DIR: ${{ secrets.SCCWEB_DESIGN_TEST_PUBLIC_HTML_DIR }}
       HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
       SCCNEXUS_SSH_HOST: ${{ secrets.SCCNEXUS_SSH_HOST }}
       SCCNEXUS_SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
       SCCNEXUS_SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
       SCCNEXUS_SSH_USERNAME: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
+
       GITHUB_RUN_ID_VALUE: ${{ github.run_id }}
       GITHUB_REPOSITORY_VALUE: ${{ github.repository }}
       GITHUB_SHA_VALUE: ${{ github.sha }}
@@ -118,25 +128,51 @@ jobs:
         run: |
           set -euo pipefail
           sudo apt-get update
-          sudo apt-get install -y rsync sshpass
+          sudo apt-get install -y rsync sshpass curl
           python -m pip install --upgrade pip
           pip install requests pandas pyyaml reportlab google-api-python-client google-auth python-dateutil
 
-      - name: Safe secret presence summary
+      - name: Safe secret and target presence summary
         run: |
           python - <<'PY'
           import os
-          names = [
-              "WAQI_TOKEN","OPENWEATHER_KEY","MET_OFFICE_API_KEY","NEWS_API_KEY","NEWS_DATA_IO_KEY",
-              "OPENAQ_API_KEY","CAMS_API_KEY","CAMS_BASE_URL","EARTH_DATA_API_KEY","PURPLE_AIR_API_KEY",
-              "SERPAPI_API_KEY","GEMINI_API_KEY","CDSE_ID","CDSE_SECRET","CDSE_USERNAME","CDSE_PASSWORD",
-              "GDRIVE_SERVICE_ACCOUNT","GDRIVE_FOLDER_ID","SMTP_HOST","MAIL_TO",
-              "HOSTINGER_PUBLIC_HTML_DIR","SCCNEXUS_SSH_HOST","SCCNEXUS_SSH_PORT","SCCNEXUS_SSH_USERNAME"
-          ]
-          for name in names:
-              value = os.getenv(name, "")
-              print(f"{name}: {'SET length '+str(len(value)) if value else 'EMPTY'}")
+          for name in [
+            "SCCWEB_DESIGN_TEST_PUBLIC_HTML_DIR","HOSTINGER_PUBLIC_HTML_DIR",
+            "SCCNEXUS_SSH_HOST","SCCNEXUS_SSH_PORT","SCCNEXUS_SSH_USERNAME",
+            "WAQI_TOKEN","OPENWEATHER_KEY","MET_OFFICE_API_KEY","OPENAQ_API_KEY",
+            "CDSE_USERNAME","CDSE_ID","GDRIVE_SERVICE_ACCOUNT","GDRIVE_FOLDER_ID",
+            "SMTP_HOST","MAIL_TO"
+          ]:
+              v = os.getenv(name, "")
+              print(f"{name}: {'SET length '+str(len(v)) if v else 'EMPTY'}")
+          print("AQ26_REMOTE_SUBDIR:", os.getenv("AQ26_REMOTE_SUBDIR", ""))
+          print("AQ26_PUBLIC_BASE_URL:", os.getenv("AQ26_PUBLIC_BASE_URL", ""))
           PY
+
+      - name: Resolve Hostinger deployment target
+        id: target
+        if: ${{ github.event.inputs.deploy_to_hostinger != 'false' }}
+        run: |
+          set -euo pipefail
+          BASE_TARGET="${SCCWEB_DESIGN_TEST_PUBLIC_HTML_DIR:-${HOSTINGER_PUBLIC_HTML_DIR:-}}"
+          test -n "$BASE_TARGET" || (echo "Missing SCCWEB_DESIGN_TEST_PUBLIC_HTML_DIR or HOSTINGER_PUBLIC_HTML_DIR" && exit 1)
+
+          if [ "$AQ26_REMOTE_SUBDIR" = "." ] || [ "$AQ26_REMOTE_SUBDIR" = "/" ] || [ -z "$AQ26_REMOTE_SUBDIR" ]; then
+            TARGET="${BASE_TARGET%/}"
+            PUBLIC_URL="${AQ26_PUBLIC_BASE_URL%/}/"
+          else
+            CLEAN_SUB="${AQ26_REMOTE_SUBDIR#/}"
+            CLEAN_SUB="${CLEAN_SUB%/}"
+            TARGET="${BASE_TARGET%/}/${CLEAN_SUB}"
+            PUBLIC_URL="${AQ26_PUBLIC_BASE_URL%/}/${CLEAN_SUB}/"
+          fi
+
+          echo "target=$TARGET" >> "$GITHUB_OUTPUT"
+          echo "public_url=$PUBLIC_URL" >> "$GITHUB_OUTPUT"
+
+          # Do not print TARGET because it can reveal Hostinger account path.
+          echo "Resolved public URL: $PUBLIC_URL"
+          echo "Remote subdir input: $AQ26_REMOTE_SUBDIR"
 
       - name: Restore existing website history from Hostinger
         if: ${{ github.event.inputs.deploy_to_hostinger != 'false' }}
@@ -145,7 +181,7 @@ jobs:
           PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
           USER: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
           PASS: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
-          BASE_TARGET: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+          TARGET: ${{ steps.target.outputs.target }}
         run: |
           set -euo pipefail
           mkdir -p outputs/website_history
@@ -153,8 +189,7 @@ jobs:
           test -n "$PORT" || (echo "Missing SCCNEXUS_SSH_PORT" && exit 1)
           test -n "$USER" || (echo "Missing SCCNEXUS_SSH_USERNAME" && exit 1)
           test -n "$PASS" || (echo "Missing SCCNEXUS_SSH_PASSWORD" && exit 1)
-          test -n "$BASE_TARGET" || (echo "Missing HOSTINGER_PUBLIC_HTML_DIR" && exit 1)
-          TARGET="${BASE_TARGET%/}/${AQ26_REMOTE_SUBDIR}"
+          test -n "$TARGET" || (echo "Missing resolved TARGET" && exit 1)
           mkdir -p _remote_history
           sshpass -p "$PASS" rsync -az --timeout=60 \
             -e "ssh -p $PORT -o StrictHostKeyChecking=no -o ConnectTimeout=30" \
@@ -207,6 +242,22 @@ jobs:
             --asset-root website/assets \
             --remote-subdir "$AQ26_REMOTE_SUBDIR"
 
+      - name: Add deploy marker
+        run: |
+          python - <<'PY'
+          import json, os, datetime, pathlib
+          p = pathlib.Path("site_public/aq26-deploy-marker.json")
+          p.write_text(json.dumps({
+              "created_at_utc": datetime.datetime.utcnow().isoformat() + "Z",
+              "workflow": "AQ26 WeeklyV2 SCC Nexus Website",
+              "repository": os.getenv("GITHUB_REPOSITORY_VALUE", ""),
+              "run_id": os.getenv("GITHUB_RUN_ID_VALUE", ""),
+              "sha": os.getenv("GITHUB_SHA_VALUE", ""),
+              "remote_subdir": os.getenv("AQ26_REMOTE_SUBDIR", ""),
+              "public_base_url": os.getenv("AQ26_PUBLIC_BASE_URL", "")
+          }, indent=2), encoding="utf-8")
+          PY
+
       - name: Validate generated website
         run: |
           set -euo pipefail
@@ -221,10 +272,12 @@ jobs:
           test -f site_public/assets/site.js
           test -f site_public/data/weekly_index.json
           test -f site_public/data/latest_summary.json
+          test -f site_public/aq26-deploy-marker.json
           grep -qi "AQ26 Environmental Intelligence Observatory" site_public/index.html
           grep -qi "controlled-review" site_public/index.html
           python -m json.tool site_public/data/weekly_index.json >/dev/null
           python -m json.tool site_public/data/latest_summary.json >/dev/null
+          python -m json.tool site_public/aq26-deploy-marker.json >/dev/null
 
       - name: Deploy AQ26 website to Hostinger
         if: ${{ github.event.inputs.deploy_to_hostinger != 'false' }}
@@ -233,34 +286,62 @@ jobs:
           PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
           USER: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
           PASS: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
-          BASE_TARGET: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+          TARGET: ${{ steps.target.outputs.target }}
+          PUBLIC_URL: ${{ steps.target.outputs.public_url }}
         run: |
           set -euo pipefail
           test -n "$HOST" || (echo "Missing SCCNEXUS_SSH_HOST" && exit 1)
           test -n "$PORT" || (echo "Missing SCCNEXUS_SSH_PORT" && exit 1)
           test -n "$USER" || (echo "Missing SCCNEXUS_SSH_USERNAME" && exit 1)
           test -n "$PASS" || (echo "Missing SCCNEXUS_SSH_PASSWORD" && exit 1)
-          test -n "$BASE_TARGET" || (echo "Missing HOSTINGER_PUBLIC_HTML_DIR" && exit 1)
-          TARGET="${BASE_TARGET%/}/${AQ26_REMOTE_SUBDIR}"
+          test -n "$TARGET" || (echo "Missing resolved TARGET" && exit 1)
+
           ssh_cmd=(sshpass -p "$PASS" ssh -p "$PORT" -o StrictHostKeyChecking=no -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=3 "$USER@$HOST")
           for attempt in 1 2 3 4 5; do
             if "${ssh_cmd[@]}" "mkdir -p '$TARGET'"; then break; fi
             if [ "$attempt" = "5" ]; then echo "Hostinger SSH failed after $attempt attempts."; exit 255; fi
+            echo "Hostinger SSH attempt $attempt failed; retrying..."
             sleep 30
           done
+
           for attempt in 1 2 3 4 5; do
             if sshpass -p "$PASS" rsync -az --delete --timeout=180 \
               -e "ssh -p $PORT -o StrictHostKeyChecking=no -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=3" \
               site_public/ "$USER@$HOST:$TARGET/"; then break; fi
             if [ "$attempt" = "5" ]; then echo "Hostinger rsync failed after $attempt attempts."; exit 255; fi
+            echo "Hostinger rsync attempt $attempt failed; retrying..."
             sleep 30
           done
-          echo "AQ26 SCC Nexus website deployed to subdirectory: $AQ26_REMOTE_SUBDIR" >> "$GITHUB_STEP_SUMMARY"
+
+          echo "AQ26 website deployed." >> "$GITHUB_STEP_SUMMARY"
+          echo "Expected URL: $PUBLIC_URL" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Verify deployed public website
+        if: ${{ github.event.inputs.deploy_to_hostinger != 'false' }}
+        env:
+          PUBLIC_URL: ${{ steps.target.outputs.public_url }}
+        run: |
+          set -euo pipefail
+          test -n "$PUBLIC_URL" || (echo "Missing PUBLIC_URL" && exit 1)
+          echo "Verifying $PUBLIC_URL"
+          for attempt in 1 2 3 4 5 6; do
+            sleep 10
+            curl -fsSL -A "AQ26-GitHub-Deploy-Verify/1.0" "$PUBLIC_URL" -o /tmp/aq26-site.html && \
+            grep -qi "AQ26 Environmental Intelligence Observatory" /tmp/aq26-site.html && \
+            grep -qi "controlled-review" /tmp/aq26-site.html && {
+              echo "Verified AQ26 website is live at $PUBLIC_URL" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            }
+            echo "Public verification attempt $attempt failed; retrying..."
+          done
+          echo "Public website verification failed for $PUBLIC_URL"
+          echo "This usually means HOSTINGER_PUBLIC_HTML_DIR points to a different domain, Cloudflare/cache has not updated, or remote_subdir is not the URL you checked."
+          exit 1
 
       - name: Upload AQ26 website and evidence artifact
         uses: actions/upload-artifact@v4
         with:
-          name: aq26-weeklyv2-sccnexus-site-${{ github.run_id }}
+          name: aq26-weeklyv2-sccwebdesigntest-site-${{ github.run_id }}
           path: |
             outputs/weeklyv2_reports/*.zip
             outputs/00_weeklyv2/LATEST_WEEKLYV2.json
