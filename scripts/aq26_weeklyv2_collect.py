@@ -64,17 +64,6 @@ def env_first(*names):
     return ""
 
 
-def env_bool(name: str, default: bool = False) -> bool:
-    v = os.getenv(name, "")
-    if v == "":
-        return bool(default)
-    return str(v).strip().lower() in {"1", "true", "yes", "y", "on"}
-
-
-def is_backfill_mode() -> bool:
-    return env_bool("AQ26_BACKFILL_MODE", False) or bool(os.getenv("AQ26_HISTORY_START_DATE") or os.getenv("AQ26_WINDOW_START_DATE"))
-
-
 def slug(s: str) -> str:
     return re.sub(r"[^A-Za-z0-9_.-]+", "_", str(s)).strip("_")[:120] or "item"
 
@@ -187,31 +176,7 @@ def request_get(url, params=None, headers=None, timeout=30):
         return None, None, json.dumps({"error": repr(e)}).encode(), repr(e), {}
 
 
-def parse_iso_date(value: str):
-    if not value:
-        return None
-    try:
-        return dt.date.fromisoformat(str(value).strip()[:10])
-    except Exception:
-        return None
-
-
-def date_window(days: int, start_date: str = "", end_date: str = ""):
-    """Return the controlled AQ26 date window.
-
-    Normal weekly runs use lookback_days. Historical backfill runs must be date-bound,
-    so explicit CLI dates or AQ26_WINDOW_START_DATE/AQ26_WINDOW_END_DATE win.
-    The end date is treated as the public window label/date upper bound, matching the
-    site archive convention used by AQ26 WeeklyV2.
-    """
-    env_start = os.getenv("AQ26_WINDOW_START_DATE") or os.getenv("AQ26_HISTORY_START_DATE") or os.getenv("AQ26_RUN_DATE_FROM")
-    env_end = os.getenv("AQ26_WINDOW_END_DATE") or os.getenv("AQ26_HISTORY_END_DATE") or os.getenv("AQ26_RUN_DATE_TO")
-    sd = parse_iso_date(start_date) or parse_iso_date(env_start)
-    ed = parse_iso_date(end_date) or parse_iso_date(env_end)
-    if sd and ed:
-        if sd >= ed:
-            raise ValueError(f"Invalid AQ26 date window: start {sd} must be before end {ed}")
-        return sd.isoformat(), ed.isoformat()
+def date_window(days: int):
     end = now_utc().date()
     start = end - dt.timedelta(days=int(days))
     return start.isoformat(), end.isoformat()
@@ -222,41 +187,32 @@ def metoffice_coord(v):
 
 
 def harvest_news(cfg, out, start_date):
-    """Harvest optional news context with backfill-safe rate controls.
-
-    News is useful context but not core scientific evidence. During historical
-    backfill NewsAPI is disabled by default to avoid quota/rate-limit errors
-    contaminating harvested evidence rows. GDELT remains optional, throttled and
-    reduced to a small query set unless explicitly overridden.
-    """
     global LAST_GDELT
     raw = mkdir(out / "03_news_context" / "raw")
     articles = []
-    backfill = is_backfill_mode()
-    newsapi_enabled = env_bool("AQ26_NEWSAPI_ENABLED", default=not backfill)
-    newsdata_enabled = env_bool("AQ26_NEWSDATA_ENABLED", default=not backfill)
-    gdelt_enabled = env_bool("AQ26_GDELT_ENABLED", default=True)
-    query_limit = int(os.getenv("AQ26_BACKFILL_NEWS_QUERY_LIMIT", "3") if backfill else os.getenv("AQ26_NEWS_QUERY_LIMIT", "999"))
-    gdelt_min_seconds = float(os.getenv("AQ26_GDELT_MIN_SECONDS", "6"))
-    gdelt_retry_seconds = float(os.getenv("AQ26_GDELT_RETRY_SECONDS", "20"))
-
-    newsapi = env_first("NEWS_API_KEY", "NEWSAPI_KEY")
-    newsdata = env_first("NEWS_DATA_IO_KEY", "NEWSDATA_API_KEY", "NEWSDATA_KEY", "NEWSDATA_IO_KEY")
-    queries = list(cfg.get("news_queries", []))[:max(0, query_limit)]
-
-    if backfill and not newsapi_enabled:
-        add_record("NewsAPI everything", "news_api", "newsapi://disabled-for-backfill", "historical_backfill", "skipped", None, None, 0, notes="disabled by AQ26_NEWSAPI_ENABLED default during historical backfill")
-    if backfill and not newsdata_enabled:
-        add_record("NewsData.io news", "news_api", "newsdata://disabled-for-backfill", "historical_backfill", "skipped", None, None, 0, notes="disabled by AQ26_NEWSDATA_ENABLED default during historical backfill")
-
+    newsapi_enabled = os.getenv("AQ26_NEWSAPI_ENABLED", "true").strip().lower() in {"1", "true", "yes", "on"}
+    newsdata_enabled = os.getenv("AQ26_NEWSDATA_ENABLED", "true").strip().lower() in {"1", "true", "yes", "on"}
+    gdelt_enabled = os.getenv("AQ26_GDELT_ENABLED", "true").strip().lower() in {"1", "true", "yes", "on"}
+    gdelt_min_seconds = float(os.getenv("AQ26_GDELT_MIN_SECONDS", "8") or "8")
+    query_limit = int(os.getenv("AQ26_BACKFILL_NEWS_QUERY_LIMIT", "0") or "0")
+    queries = list(cfg.get("news_queries", []))
+    if query_limit > 0:
+        queries = queries[:query_limit]
+    newsapi = env_first("NEWSAPI_KEY", "NEWS_API_KEY")
+    newsdata = env_first("NEWSDATA_API_KEY", "NEWS_DATA_IO_KEY")
+    if newsapi and not newsapi_enabled:
+        add_record("NewsAPI everything", "news_api", "newsapi://disabled", "provider_disabled", "skipped", None, None, 0, notes="disabled by AQ26_NEWSAPI_ENABLED")
+    if newsdata and not newsdata_enabled:
+        add_record("NewsData.io news", "news_api", "newsdata://disabled", "provider_disabled", "skipped", None, None, 0, notes="disabled by AQ26_NEWSDATA_ENABLED")
+    if not gdelt_enabled:
+        add_record("GDELT document API", "news_api_warning", "gdelt://disabled", "provider_disabled", "skipped", None, None, 0, notes="disabled by AQ26_GDELT_ENABLED")
     for q in queries:
         if newsapi and newsapi_enabled:
             url = "https://newsapi.org/v2/everything"
-            params = {"q": q, "language": "en", "sortBy": "publishedAt", "pageSize": 25 if backfill else 50, "from": start_date, "apiKey": newsapi}
+            params = {"q": q, "language": "en", "sortBy": "publishedAt", "pageSize": 50, "from": start_date, "apiKey": newsapi}
             data, hs, content, err, _ = request_get(url, params=params)
             p = write_bytes(raw / f"newsapi_{slug(q)}_{RUN_TS}.json", content)
-            status = "ok" if hs and hs < 400 else ("warning" if hs in (401, 403, 429) else "error")
-            add_record("NewsAPI everything", "news_api" if status != "warning" else "news_api_warning", full_url(url, params), q, status, hs, p, count_records(data), err, notes="non-core contextual source; warning is non-blocking")
+            add_record("NewsAPI everything", "news_api", full_url(url, params), q, "ok" if hs and hs < 400 else "error", hs, p, count_records(data), err)
             if isinstance(data, dict) and isinstance(data.get("articles"), list):
                 for item in data["articles"]:
                     item["_aq26_provider"] = "NewsAPI"
@@ -268,8 +224,7 @@ def harvest_news(cfg, out, start_date):
             params = {"apikey": newsdata, "q": q, "language": "en", "size": 10}
             data, hs, content, err, _ = request_get(url, params=params)
             p = write_bytes(raw / f"newsdata_{slug(q)}_{RUN_TS}.json", content)
-            status = "ok" if hs and hs < 400 else ("warning" if hs in (401, 403, 429) else "error")
-            add_record("NewsData.io news", "news_api" if status != "warning" else "news_api_warning", full_url(url, params), q, status, hs, p, count_records(data), err, notes="non-core contextual source; warning is non-blocking")
+            add_record("NewsData.io news", "news_api", full_url(url, params), q, "ok" if hs and hs < 400 else "error", hs, p, count_records(data), err)
             if isinstance(data, dict) and isinstance(data.get("results"), list):
                 for item in data["results"]:
                     item["_aq26_provider"] = "NewsData.io"
@@ -281,21 +236,22 @@ def harvest_news(cfg, out, start_date):
             if elapsed < gdelt_min_seconds:
                 time.sleep(gdelt_min_seconds - elapsed)
             url = "https://api.gdeltproject.org/api/v2/doc/doc"
-            params = {"query": q, "mode": "ArtList", "format": "json", "maxrecords": 25 if backfill else 50, "sort": "HybridRel"}
+            params = {"query": q, "mode": "ArtList", "format": "json", "maxrecords": 50, "sort": "HybridRel"}
             data, hs, content, err, _ = request_get(url, params=params, timeout=35)
             LAST_GDELT = time.time()
             if hs == 429:
-                time.sleep(gdelt_retry_seconds)
+                time.sleep(max(20, gdelt_min_seconds * 2))
                 data, hs, content, err, _ = request_get(url, params=params, timeout=35)
                 LAST_GDELT = time.time()
             p = write_bytes(raw / f"gdelt_{slug(q)}_{RUN_TS}.json", content)
             if hs and hs < 400:
                 add_record("GDELT document API", "news_api", full_url(url, params), q, "ok", hs, p, count_records(data), err)
             else:
-                add_warning("GDELT document API", q, hs, err, "Non-critical contextual provider warning; official/ground/satellite evidence remain primary.")
-                add_record("GDELT document API", "news_api_warning", full_url(url, params), q, "warning", hs, p, count_records(data), err, notes="non-critical warning; throttled contextual source")
+                add_warning("GDELT document API", q, hs, err, "Non-critical news provider warning; contextual provider only.")
+                add_record("GDELT document API", "news_api_warning", full_url(url, params), q, "warning", hs, p, count_records(data), err, notes="non-critical warning")
 
-    write_json(out / "03_news_context" / "news_articles.json", {"run_ts": RUN_TS, "backfill_mode": backfill, "query_count": len(queries), "count": len(articles), "articles": articles})
+
+    write_json(out / "03_news_context" / "news_articles.json", {"run_ts": RUN_TS, "count": len(articles), "articles": articles})
     write_json(out / "03_news_context" / "news_provider_warnings.json", {"run_ts": RUN_TS, "warning_count": len(WARNINGS), "warnings": WARNINGS})
 
 
@@ -396,7 +352,7 @@ def harvest_openaq(cfg, out):
 
 def harvest_cams(cfg, out, start_date, end_date):
     key = env_first("CAMS_API_KEY")
-    base_url = env_first("CAMS_BASE_URL", "CAMS_ENDPOINT")
+    base_url = env_first("CAMS_BASE_URL")
     cams_cfg = cfg.get("cams", {})
     readiness = {
         "run_ts": RUN_TS,
@@ -681,11 +637,6 @@ def harvest_cdse_auth_readiness(cfg, out):
     if not ccfg.get("enabled", True):
         add_record("CDSE auth readiness", "satellite_auth", "cdse://disabled", "readiness", "skipped", None, None, 0, notes="disabled in config")
         return
-
-    # AQ26 V3.2.1: support the repository's existing secret names and the
-    # alternative names used by some Copernicus/CDSE examples. Scott confirmed
-    # CDSE_USERNAME + CDSE_PASSWORD have worked previously, so test that path
-    # first before attempting client-credentials aliases.
     username = env_first("CDSE_USERNAME")
     password = env_first("CDSE_PASSWORD")
     client_id = env_first("CDSE_ID", "CDSE_CLIENT_ID")
@@ -697,69 +648,39 @@ def harvest_cdse_auth_readiness(cfg, out):
         "cdse_password_present": bool(password),
         "cdse_client_id_present": bool(client_id),
         "cdse_client_secret_present": bool(client_secret),
-        "cdse_username_password_ready": False,
-        "cdse_client_credentials_ready": False,
         "cdse_token_ready": False,
         "token_probe_attempted": False,
-        "auth_method_attempted": [],
         "http_status": None,
-        "notes": "No token value is stored. WeeklyV2 probes readiness only; product download/extraction is a later gate."
+        "notes": "No token value is stored. WeeklyV2 does not download CDSE products."
     }
-
-    def _post_token(method_name, data):
-        readiness["token_probe_attempted"] = True
-        readiness["auth_method_attempted"].append(method_name)
+    if username and password:
+        # Public CDSE password-flow client is commonly cdse-public. If user has a client id, prefer it.
+        data = {
+            "grant_type": "password",
+            "username": username,
+            "password": password,
+            "client_id": client_id or "cdse-public",
+        }
         try:
             r = requests.post(token_url, data=data, timeout=30)
+            readiness["token_probe_attempted"] = True
             readiness["http_status"] = r.status_code
             if r.ok:
                 js = r.json()
-                if js.get("access_token"):
-                    readiness["cdse_token_ready"] = True
-                    readiness["expires_in"] = js.get("expires_in")
-                    readiness["auth_method_success"] = method_name
-                    return True
-                readiness["error"] = "Token response did not include access_token"
+                readiness["cdse_token_ready"] = bool(js.get("access_token"))
+                readiness["expires_in"] = js.get("expires_in")
             else:
                 readiness["error"] = redact(r.text[:500])
         except Exception as exc:
+            readiness["token_probe_attempted"] = True
             readiness["error"] = redact(repr(exc))
-        return False
-
-    # 1) Known-good AQ26 path: username/password with public client. Try
-    # cdse-public first; if user supplied CDSE_ID and it differs, try that too.
-    if username and password:
-        client_candidates = []
-        for cid in ["cdse-public", client_id]:
-            if cid and cid not in client_candidates:
-                client_candidates.append(cid)
-        for cid in client_candidates:
-            ok = _post_token("username_password", {
-                "grant_type": "password",
-                "username": username,
-                "password": password,
-                "client_id": cid,
-            })
-            if ok:
-                readiness["cdse_username_password_ready"] = True
-                break
-
-    # 2) Fallback alias path: CDSE_ID/CDSE_SECRET or CDSE_CLIENT_ID/CDSE_CLIENT_SECRET.
-    if not readiness.get("cdse_token_ready") and client_id and client_secret:
-        ok = _post_token("client_credentials", {
-            "grant_type": "client_credentials",
-            "client_id": client_id,
-            "client_secret": client_secret,
-        })
-        readiness["cdse_client_credentials_ready"] = bool(ok)
-
     p = write_json(out / "15_optional_sources" / "cdse_auth_readiness.json", readiness)
-    add_record("CDSE auth readiness", "satellite_auth", token_url, "token_probe", "ok" if readiness.get("cdse_token_ready") else "warning", readiness.get("http_status"), p, 1, readiness.get("error", ""), notes="auth probe order: CDSE_USERNAME/CDSE_PASSWORD then CDSE_ID/CDSE_SECRET aliases; token is not stored")
+    add_record("CDSE auth readiness", "satellite_auth", token_url, "token_probe", "ok" if readiness.get("cdse_token_ready") else "warning", readiness.get("http_status"), p, 1, readiness.get("error", ""), notes="token readiness only; access token not stored")
 
 
 def harvest_gemini_summary(cfg, out):
     gcfg = cfg.get("optional_sources", {}).get("gemini", {})
-    backfill = is_backfill_mode()
+    gemini_enabled = os.getenv("AQ26_GEMINI_ENABLED", "true").strip().lower() in {"1", "true", "yes", "on"}
     key = env_first("GEMINI_API_KEY")
     model = env_first("AQ26_GEMINI_MODEL", "GEMINI_MODEL") or "gemini-3.5-flash"
     summary_input = {
@@ -771,9 +692,8 @@ def harvest_gemini_summary(cfg, out):
         "source_types": sorted(set(r.get("source_type", "") for r in RECORDS)),
         "controlled_use_boundary": "Neutral metadata-only summary. No raw evidence, no API keys, no causal attribution.",
     }
-    enabled = env_bool("AQ26_GEMINI_ENABLED", default=bool(gcfg.get("enabled", False if backfill else True)))
-    if not enabled:
-        add_record("Gemini neutral metadata summary", "ai_summary", "gemini://disabled", "summary", "skipped", None, None, 0, notes="disabled for historical backfill unless AQ26_GEMINI_ENABLED=true")
+    if not gcfg.get("enabled", True):
+        add_record("Gemini neutral metadata summary", "ai_summary", "gemini://disabled", "summary", "skipped", None, None, 0, notes="disabled in config")
         return
     if not key:
         p = write_json(out / "14_ai" / "gemini_summary.json", {
@@ -904,8 +824,8 @@ def finish(out, cfg, start_date, end_date):
     write_json(run_dir / f"AQ26_WEEKLYV2_MANIFEST_{RUN_TS}.json", latest)
     if RECORDS:
         with (run_dir / f"AQ26_WEEKLYV2_SOURCE_RECORDS_{RUN_TS}.csv").open("w", newline="", encoding="utf-8") as f:
-            fieldnames = sorted({k for r in RECORDS for k in r.keys()})
-            w = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore", quoting=csv.QUOTE_ALL)
+            fieldnames = sorted({k for row in RECORDS for k in row.keys()})
+            w = csv.DictWriter(f, fieldnames=fieldnames, quoting=csv.QUOTE_ALL, extrasaction="ignore")
             w.writeheader()
             w.writerows(RECORDS)
 
@@ -915,13 +835,16 @@ def main():
     ap.add_argument("--config", default="configs/aq26_weekly_v2_sources.yml")
     ap.add_argument("--output-root", default="outputs")
     ap.add_argument("--lookback-days", default="14")
-    ap.add_argument("--start-date", default="", help="Explicit historical window start date YYYY-MM-DD. Overrides lookback-days.")
-    ap.add_argument("--end-date", default="", help="Explicit historical window end date YYYY-MM-DD. Overrides lookback-days.")
+    ap.add_argument("--start-date", default="")
+    ap.add_argument("--end-date", default="")
     args = ap.parse_args()
     out = Path(args.output_root)
     mkdir(out)
     cfg = yaml.safe_load(Path(args.config).read_text(encoding="utf-8"))
-    start_date, end_date = date_window(int(args.lookback_days), args.start_date, args.end_date)
+    if args.start_date and args.end_date:
+        start_date, end_date = args.start_date, args.end_date
+    else:
+        start_date, end_date = date_window(int(args.lookback_days))
     harvest_news(cfg, out, start_date)
     harvest_ground_weather(cfg, out)
     harvest_openaq(cfg, out)
