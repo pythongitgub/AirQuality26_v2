@@ -1,0 +1,59 @@
+name: AQ26 UK-AIR SOS Provider Probe
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  ukair-sos-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    env:
+      AQ26_USER_AGENT: "AQ26/3.4 scientific-backfill contact=${{ secrets.MAIL_TO }}"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install requirements
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Probe UK-AIR SOS
+        run: |
+          python scripts/aq26_provider_ukair_sos.py \
+            --repo-root . \
+            --out-root outputs/30_ukair_sos \
+            --site-root site_public/data/providers/ukair_sos
+
+      - name: Upload UK-AIR SOS artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-ukair-sos-provider-probe
+          path: |
+            outputs/30_ukair_sos/**
+            site_public/data/providers/ukair_sos/**
+
+      - name: Commit UK-AIR SOS provider outputs
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add outputs/30_ukair_sos site_public/data/providers/ukair_sos configs/aq26_ukair_sos.yml scripts/aq26_provider_ukair_sos.py .github/workflows/aq26_ukair_sos_probe.yml requirements.txt
+          if git diff --cached --quiet; then
+            echo "No UK-AIR SOS changes to commit"
+          else
+            git commit -m "Add AQ26 UK-AIR SOS provider probe"
+            git push
+          fi
