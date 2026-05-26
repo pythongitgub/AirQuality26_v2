@@ -1,45 +1,62 @@
 provider:
   id: ukair_sos
   name: "Defra UK-AIR Sensor Observation Service"
-  status: beta
+  status: verified_capabilities_provider
   homepage: "https://uk-air.defra.gov.uk/data/about_sos"
-  capabilities_url: "https://uk-air.defra.gov.uk/sos-ukair/api/v1/sos/kvp?service=SOS&request=GetCapabilities"
+  # Verified by first AQ26 run: the /sos endpoint returned HTTP 200 XML capabilities.
+  capabilities_url: "https://uk-air.defra.gov.uk/sos-ukair/sos"
   licence: "Open Government Licence v3.0"
 
 runtime:
   enabled: true
-  timeout_seconds: 45
+  timeout_seconds: 60
   max_retries: 3
   retry_backoff_seconds: 8
-  user_agent: "AQ26/3.4 scientific-backfill contact=scottchowen@gmail.com"
+  user_agent: "AQ26/3.4 ukair-sos scientific-backfill contact=scottchowen@gmail.com"
+  commit_raw_xml: false
+  compress_raw_xml: true
+  max_describe_sensor: 0
+  observation_probe_enabled: false
 
 science:
-  temporal_role: historical_observation
+  temporal_role: historical_observation_provider_capability
   source_confidence: official_regulatory_machine_readable
   provenance_level: official_machine_readable
   external_grade_candidate: true
+  current_context_only: false
 
-pollutants:
-  preferred:
-    - nitrogen dioxide
-    - sulphur dioxide
-    - ozone
-    - PM10 particulate matter
-    - PM2.5 particulate matter
-    - carbon monoxide
-    - benzene
-  aliases:
-    NO2: ["nitrogen dioxide", "Nitrogen dioxide"]
-    SO2: ["sulphur dioxide", "Sulphur dioxide"]
-    O3: ["ozone", "Ozone"]
-    PM10: ["PM10 particulate matter", "PM10"]
-    PM25: ["PM2.5 particulate matter", "PM2.5", "PM25"]
-    CO: ["carbon monoxide", "Carbon monoxide"]
+sos:
+  service: "SOS"
+  version: "2.0.0"
+  response_format: "application/json"
+  preferred_operations:
+    - GetCapabilities
+    - DescribeSensor
+    - GetFeatureOfInterest
+    - GetObservation
+    - GetResult
+    - GetResultTemplate
+    - GetDataAvailability
+
+pollutant_code_hints:
+  # EEA/EIONET AQ pollutant code hints. Keep URI provenance as source of truth.
+  "1": "SO2"
+  "5": "PM10"
+  "7": "O3"
+  "8": "NO2"
+  "9": "NOx"
+  "10": "CO"
+  "20": "Benzene"
+  "38": "PM2.5"
+  "6001": "AQI_or_summary_indicator"
 
 outputs:
   root: "outputs/30_ukair_sos"
   site_root: "site_public/data/providers/ukair_sos"
+  raw_capabilities_gz: "outputs/30_ukair_sos/ukair_sos_capabilities.xml.gz"
+  parsed_capabilities_json: "outputs/30_ukair_sos/ukair_sos_capabilities_parsed.json"
   station_inventory_json: "site_public/data/providers/ukair_sos/station_inventory.json"
   pollutant_inventory_json: "site_public/data/providers/ukair_sos/pollutant_inventory.json"
-  observations_jsonl: "outputs/30_ukair_sos/ukair_sos_observations.jsonl"
+  offering_inventory_json: "site_public/data/providers/ukair_sos/offering_inventory.json"
+  provider_summary_json: "site_public/data/providers/ukair_sos/provider_summary.json"
   source_records_json: "outputs/30_ukair_sos/ukair_sos_source_records.json"
