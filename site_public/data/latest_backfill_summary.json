@@ -1,0 +1,24 @@
+{
+  "run_ts": "20260526T090006Z",
+  "date_window": {
+    "start": "2024-07-15",
+    "end": "2024-07-22"
+  },
+  "project": "SCCNEXUS AirQuality26 WeeklyV2",
+  "controlled_use_boundary": "WeeklyV2 is a controlled-review evidence harvester. It does not claim endorsement by WHO, UNEP, EEA, C40 Cities, or any named expert. It does not assert causal attribution unless explicit evidence gates pass.\n",
+  "source_record_count": 59,
+  "ok_count": 54,
+  "error_count": 0,
+  "warning_count": 2,
+  "skipped_count": 3,
+  "summary_role": "latest_backfill_summary",
+  "backfill_status": "harvested",
+  "redaction_leak_count": 0,
+  "satellite_product_count": 352,
+  "drive_file_count": 5000,
+  "drive_folder_count": 0,
+  "high_priority_filings": 366,
+  "medium_priority_filings": 0,
+  "openaq_request_count": 5,
+  "news_warning_count": 2
+}
