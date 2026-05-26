@@ -1,0 +1,28 @@
+provider:
+  id: nasa_earthdata
+  name: "NASA Earthdata / Common Metadata Repository"
+  status: discovery_beta
+  cmr_base_url: "https://cmr.earthdata.nasa.gov/search"
+
+search:
+  # Newhaven/London-region broad south-east England box for discovery only:
+  # west,south,east,north
+  bounding_box: "-1.1,50.6,0.7,51.8"
+  temporal: "2024-01-01T00:00:00Z,2026-05-26T23:59:59Z"
+  keywords:
+    - "air quality"
+    - "aerosol"
+    - "nitrogen dioxide"
+    - "sulfur dioxide"
+    - "carbon monoxide"
+    - "ozone"
+    - "MERRA-2"
+    - "OMI"
+    - "TROPOMI"
+
+outputs:
+  root: "outputs/32_earthdata"
+  site_root: "site_public/data/providers/earthdata"
+
+science:
+  caveat: "CMR discovery is a catalogue stage only. AQ26 must not treat collection or granule candidates as measured pollutant evidence until product-specific extraction and validation are complete."
