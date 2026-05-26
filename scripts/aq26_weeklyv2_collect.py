@@ -176,7 +176,31 @@ def request_get(url, params=None, headers=None, timeout=30):
         return None, None, json.dumps({"error": repr(e)}).encode(), repr(e), {}
 
 
-def date_window(days: int):
+def parse_iso_date(value: str):
+    if not value:
+        return None
+    try:
+        return dt.date.fromisoformat(str(value).strip()[:10])
+    except Exception:
+        return None
+
+
+def date_window(days: int, start_date: str = "", end_date: str = ""):
+    """Return the controlled AQ26 date window.
+
+    Normal weekly runs use lookback_days. Historical backfill runs must be date-bound,
+    so explicit CLI dates or AQ26_WINDOW_START_DATE/AQ26_WINDOW_END_DATE win.
+    The end date is treated as the public window label/date upper bound, matching the
+    site archive convention used by AQ26 WeeklyV2.
+    """
+    env_start = os.getenv("AQ26_WINDOW_START_DATE") or os.getenv("AQ26_HISTORY_START_DATE") or os.getenv("AQ26_RUN_DATE_FROM")
+    env_end = os.getenv("AQ26_WINDOW_END_DATE") or os.getenv("AQ26_HISTORY_END_DATE") or os.getenv("AQ26_RUN_DATE_TO")
+    sd = parse_iso_date(start_date) or parse_iso_date(env_start)
+    ed = parse_iso_date(end_date) or parse_iso_date(env_end)
+    if sd and ed:
+        if sd >= ed:
+            raise ValueError(f"Invalid AQ26 date window: start {sd} must be before end {ed}")
+        return sd.isoformat(), ed.isoformat()
     end = now_utc().date()
     start = end - dt.timedelta(days=int(days))
     return start.isoformat(), end.isoformat()
@@ -190,8 +214,8 @@ def harvest_news(cfg, out, start_date):
     global LAST_GDELT
     raw = mkdir(out / "03_news_context" / "raw")
     articles = []
-    newsapi = env_first("NEWS_API_KEY")
-    newsdata = env_first("NEWS_DATA_IO_KEY")
+    newsapi = env_first("NEWS_API_KEY", "NEWSAPI_KEY")
+    newsdata = env_first("NEWS_DATA_IO_KEY", "NEWSDATA_API_KEY", "NEWSDATA_KEY", "NEWSDATA_IO_KEY")
     for q in cfg.get("news_queries", []):
         if newsapi:
             url = "https://newsapi.org/v2/everything"
@@ -336,7 +360,7 @@ def harvest_openaq(cfg, out):
 
 def harvest_cams(cfg, out, start_date, end_date):
     key = env_first("CAMS_API_KEY")
-    base_url = env_first("CAMS_BASE_URL")
+    base_url = env_first("CAMS_BASE_URL", "CAMS_ENDPOINT")
     cams_cfg = cfg.get("cams", {})
     readiness = {
         "run_ts": RUN_TS,
@@ -665,7 +689,7 @@ def harvest_cdse_auth_readiness(cfg, out):
 def harvest_gemini_summary(cfg, out):
     gcfg = cfg.get("optional_sources", {}).get("gemini", {})
     key = env_first("GEMINI_API_KEY")
-    model = env_first("GEMINI_MODEL") or "gemini-1.5-flash"
+    model = env_first("GEMINI_MODEL") or "gemini-1.5-flash-latest"
     summary_input = {
         "run_ts": RUN_TS,
         "records": len(RECORDS),
@@ -807,7 +831,8 @@ def finish(out, cfg, start_date, end_date):
     write_json(run_dir / f"AQ26_WEEKLYV2_MANIFEST_{RUN_TS}.json", latest)
     if RECORDS:
         with (run_dir / f"AQ26_WEEKLYV2_SOURCE_RECORDS_{RUN_TS}.csv").open("w", newline="", encoding="utf-8") as f:
-            w = csv.DictWriter(f, fieldnames=list(RECORDS[0].keys()))
+            fieldnames = sorted({k for r in RECORDS for k in r.keys()})
+            w = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore", quoting=csv.QUOTE_ALL)
             w.writeheader()
             w.writerows(RECORDS)
 
@@ -817,11 +842,13 @@ def main():
     ap.add_argument("--config", default="configs/aq26_weekly_v2_sources.yml")
     ap.add_argument("--output-root", default="outputs")
     ap.add_argument("--lookback-days", default="14")
+    ap.add_argument("--start-date", default="", help="Explicit historical window start date YYYY-MM-DD. Overrides lookback-days.")
+    ap.add_argument("--end-date", default="", help="Explicit historical window end date YYYY-MM-DD. Overrides lookback-days.")
     args = ap.parse_args()
     out = Path(args.output_root)
     mkdir(out)
     cfg = yaml.safe_load(Path(args.config).read_text(encoding="utf-8"))
-    start_date, end_date = date_window(int(args.lookback_days))
+    start_date, end_date = date_window(int(args.lookback_days), args.start_date, args.end_date)
     harvest_news(cfg, out, start_date)
     harvest_ground_weather(cfg, out)
     harvest_openaq(cfg, out)
