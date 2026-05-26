@@ -1,14 +1,24 @@
-
+// AQ26 WeeklyV2 science chart loader V3.3
 (function(){
-  async function getJSON(url){ const r=await fetch(url,{cache:'no-store'}); if(!r.ok) throw new Error(url+' '+r.status); return await r.json(); }
-  function traces(feed, type){ const labels=feed.labels||[], series=feed.series||{}; return Object.keys(series).map(k=>({x:labels,y:series[k],type:type,mode:type==='scatter'?'lines+markers':undefined,name:k.replaceAll('_',' '),connectgaps:false})); }
-  function layout(title){ return {title,margin:{t:45,l:55,r:20,b:70},paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',xaxis:{automargin:true},yaxis:{rangemode:'tozero',automargin:true}}; }
-  async function plot(id,url,type,title,barmode){ const el=document.getElementById(id); if(!el||typeof Plotly==='undefined') return; const feed=await getJSON(url); const lay=layout(title); if(barmode) lay.barmode=barmode; Plotly.react(id,traces(feed,type),lay,{responsive:true}); }
-  async function init(){
-    try{ await plot('records-chart','data/charts/weekly_record_counts.json','scatter','Weekly evidence records'); }catch(e){console.warn(e);}
-    try{ await plot('coverage-chart','data/charts/source_coverage_by_week.json','bar','Source coverage by week','group'); }catch(e){console.warn(e);}
-    try{ await plot('readiness-chart','data/charts/readiness_trend.json','scatter','Readiness gates over time'); }catch(e){console.warn(e);}
-    try{ await plot('filings-chart','data/charts/source_coverage_by_week.json','bar','Official filings and coverage','stack'); }catch(e){console.warn(e);}
+  async function getJSON(path){ const r = await fetch(path, {cache:'no-store'}); if(!r.ok) throw new Error(path+': '+r.status); return r.json(); }
+  function el(id){ return document.getElementById(id); }
+  function lineChart(id, data, title){
+    const node = el(id); if(!node || !window.Plotly) return;
+    const labels = data.labels || [];
+    const series = data.series || {};
+    const traces = Object.keys(series).map(k => ({x: labels, y: series[k], mode:'lines+markers', name:k.replaceAll('_',' '), connectgaps:false}));
+    Plotly.newPlot(node, traces, {title:title, margin:{t:45,l:45,r:20,b:80}, legend:{orientation:'h'}}, {responsive:true, displaylogo:false});
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+  function barChart(id, obj, title){
+    const node = el(id); if(!node || !window.Plotly) return;
+    const counts = obj.source_type_counts || obj.source_status_counts || {};
+    Plotly.newPlot(node, [{x:Object.keys(counts), y:Object.values(counts), type:'bar'}], {title:title, margin:{t:45,l:45,r:20,b:110}}, {responsive:true, displaylogo:false});
+  }
+  async function boot(){
+    try { lineChart('aq26-weekly-record-chart', await getJSON('data/charts/weekly_record_counts.json'), 'Weekly source-record quality'); } catch(e){ console.warn(e); }
+    try { lineChart('aq26-source-coverage-chart', await getJSON('data/charts/source_coverage_by_week.json'), 'Source coverage by week'); } catch(e){ console.warn(e); }
+    try { lineChart('aq26-readiness-trend-chart', await getJSON('data/charts/readiness_trend.json'), 'Readiness gates by week'); } catch(e){ console.warn(e); }
+    try { barChart('aq26-source-class-chart', await getJSON('data/charts/source_class_summary_latest.json'), 'Latest source classes'); } catch(e){ console.warn(e); }
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();

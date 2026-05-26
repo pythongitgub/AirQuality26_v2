@@ -1,0 +1,12 @@
+{
+  "run_ts": "20260526T135749Z",
+  "cdse_username_present": true,
+  "cdse_password_present": true,
+  "cdse_client_id_present": true,
+  "cdse_client_secret_present": true,
+  "cdse_token_ready": false,
+  "token_probe_attempted": true,
+  "http_status": 401,
+  "notes": "No token value is stored. WeeklyV2 does not download CDSE products.",
+  "error": "{\"error\":\"unauthorized_client\",\"error_description\":\"Invalid client or Invalid client credentials\"}"
+}

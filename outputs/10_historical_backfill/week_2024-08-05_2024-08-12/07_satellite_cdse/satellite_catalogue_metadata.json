@@ -1,0 +1,99 @@
+{
+  "run_ts": "20260526T140318Z",
+  "bbox": [
+    -0.15,
+    50.68,
+    0.35,
+    50.95
+  ],
+  "start_date": "2024-08-05",
+  "end_date": "2024-08-12",
+  "odata": [
+    {
+      "product": "L2__NO2___",
+      "http_status": 200,
+      "count": 50,
+      "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/outputs/10_historical_backfill/week_2024-08-05_2024-08-12/07_satellite_cdse/raw/copernicus_odata_L2__NO2____20260526T140318Z.json",
+      "bbox_context": [
+        -0.15,
+        50.68,
+        0.35,
+        50.95
+      ]
+    },
+    {
+      "product": "L2__SO2___",
+      "http_status": 200,
+      "count": 50,
+      "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/outputs/10_historical_backfill/week_2024-08-05_2024-08-12/07_satellite_cdse/raw/copernicus_odata_L2__SO2____20260526T140318Z.json",
+      "bbox_context": [
+        -0.15,
+        50.68,
+        0.35,
+        50.95
+      ]
+    },
+    {
+      "product": "L2__CO____",
+      "http_status": 200,
+      "count": 50,
+      "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/outputs/10_historical_backfill/week_2024-08-05_2024-08-12/07_satellite_cdse/raw/copernicus_odata_L2__CO_____20260526T140318Z.json",
+      "bbox_context": [
+        -0.15,
+        50.68,
+        0.35,
+        50.95
+      ]
+    },
+    {
+      "product": "L2__HCHO__",
+      "http_status": 200,
+      "count": 50,
+      "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/outputs/10_historical_backfill/week_2024-08-05_2024-08-12/07_satellite_cdse/raw/copernicus_odata_L2__HCHO___20260526T140318Z.json",
+      "bbox_context": [
+        -0.15,
+        50.68,
+        0.35,
+        50.95
+      ]
+    },
+    {
+      "product": "L2__O3____",
+      "http_status": 200,
+      "count": 50,
+      "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/outputs/10_historical_backfill/week_2024-08-05_2024-08-12/07_satellite_cdse/raw/copernicus_odata_L2__O3_____20260526T140318Z.json",
+      "bbox_context": [
+        -0.15,
+        50.68,
+        0.35,
+        50.95
+      ]
+    },
+    {
+      "product": "L2__CH4___",
+      "http_status": 200,
+      "count": 50,
+      "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/outputs/10_historical_backfill/week_2024-08-05_2024-08-12/07_satellite_cdse/raw/copernicus_odata_L2__CH4____20260526T140318Z.json",
+      "bbox_context": [
+        -0.15,
+        50.68,
+        0.35,
+        50.95
+      ]
+    },
+    {
+      "product": "L2__AER_AI",
+      "http_status": 200,
+      "count": 50,
+      "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/outputs/10_historical_backfill/week_2024-08-05_2024-08-12/07_satellite_cdse/raw/copernicus_odata_L2__AER_AI_20260526T140318Z.json",
+      "bbox_context": [
+        -0.15,
+        50.68,
+        0.35,
+        50.95
+      ]
+    }
+  ],
+  "product_count": 350,
+  "extraction_ready": false
+}

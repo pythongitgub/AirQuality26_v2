@@ -1,0 +1,14 @@
+{
+  "run_ts": "20260526T140525Z",
+  "status": "planned_not_executed",
+  "products": [
+    "L2__NO2___",
+    "L2__SO2___",
+    "L2__CO____",
+    "L2__HCHO__",
+    "L2__O3____",
+    "L2__CH4___",
+    "L2__AER_AI"
+  ],
+  "next_stage": "download selected products, extract NO2/SO2/CO/HCHO/O3/CH4/AER_AI variables, apply QA flags, align with wind sector and ground/control sites"
+}

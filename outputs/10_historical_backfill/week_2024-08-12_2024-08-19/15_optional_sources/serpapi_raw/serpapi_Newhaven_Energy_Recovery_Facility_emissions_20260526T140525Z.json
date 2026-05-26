@@ -1,0 +1,452 @@
+{
+  "search_metadata": {
+    "id": "6a15a758556ce36252104a74",
+    "status": "Success",
+    "json_endpoint": "https://serpapi.com/searches/IQ2QdZ77x8idi6qk1ypP9Q/6a15a758556ce36252104a74.json",
+    "pixel_position_endpoint": "https://serpapi.com/searches/IQ2QdZ77x8idi6qk1ypP9Q/6a15a758556ce36252104a74.json_with_pixel_position",
+    "created_at": "2026-05-26 13:59:52 UTC",
+    "processed_at": "2026-05-26 13:59:52 UTC",
+    "google_url": "https://www.google.com/search?q=Newhaven+Energy+Recovery+Facility+emissions&oq=Newhaven+Energy+Recovery+Facility+emissions&sourceid=chrome&ie=UTF-8",
+    "raw_html_file": "https://serpapi.com/searches/IQ2QdZ77x8idi6qk1ypP9Q/6a15a758556ce36252104a74.html",
+    "total_time_taken": 0.71
+  },
+  "search_parameters": {
+    "engine": "google",
+    "q": "Newhaven Energy Recovery Facility emissions",
+    "google_domain": "google.com",
+    "device": "desktop"
+  },
+  "search_information": {
+    "query_displayed": "Newhaven Energy Recovery Facility emissions",
+    "total_results": 88,
+    "time_taken_displayed": 0.18,
+    "organic_results_state": "Results for exact spelling"
+  },
+  "related_questions": [
+    {
+      "question": "How bad is incineration for the environment?",
+      "type": "featured_snippet",
+      "snippet": "Due to increasing quantities of waste sent to incineration, incinerators will emit more toxins and pollutants that harm local air quality. Incineration makes a more significant negative contribution to local air quality than landfill.",
+      "title": "What are the environmental impacts of waste incineration? - ClientEarth",
+      "link": "https://www.clientearth.org/latest/news/the-environmental-impacts-of-waste-incineration/#:~:text=Due%20to%20increasing%20quantities%20of,local%20air%20quality%20than%20landfill.",
+      "displayed_link": "https://www.clientearth.org › latest › news › the-environ...",
+      "source_logo": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/DPh0CHn1epYUA5zKof-SlQSbnxOT4984o41oksdf1ro.png",
+      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUVzR6TFhsUk1tcG9hV3hoYW5NMWEwVlRVbUpYZDIxdVN6aGxZVlpPWVRjNE1qWkJkV2h5YkZKU1RVeDNMVUl4Yldoek1HTmliVmhwVW1aTmJuQmpVV2R5UlhOeFdVNURSVmRRUnpoSFMwNXNWMWRGZDJGamFVeGtkR2RoWVd4Q1p4SVdWMkZqVm1GeFF6SkNiM0V5Y0hSUlVHeFFZVkJQUVJvaVFVcExURVp0UzFoeE9GTXpNVlUwWVRoa00wVkJZMmQwVmtzelZGWm1UbEpWWnciLCJmY3YiOiIzIiwiZWkiOiJXYWNWYXFDMkJvcTJwdFFQbFBhUE9BIiwicWMiOiJDaXR1Wlhkb1lYWmxiaUJsYm1WeVoza2djbVZqYjNabGNua2dabUZqYVd4cGRIa2daVzFwYzNOcGIyNXpFQUI5SlZjLVB3IiwicXVlc3Rpb24iOiJIb3cgYmFkIGlzIGluY2luZXJhdGlvbiBmb3IgdGhlIGVudmlyb25tZW50PyIsImxrIjoiR2l0b2IzY2dZbUZrSUdseklHbHVZMmx1WlhKaGRHbHZiaUJtYjNJZ2RHaGxJR1Z1ZG1seWIyNXRaVzUwIiwiYnMiOiJjLU5LNE5MeHlDOVhTRXBNVWNnc1Zzak1TODdNU3kxS0xNbk16MU5JeXk5U0tNbElWVWpOSzhzc3lzX0xUYzByc1pkb0ZUUFNsZExPSUY0TFZ4aVhPc2lHbEh5Z2FHcFJlcVZDVVdweWZsbHFVYVZDV21KeVprNW1TV1pxc1VKNWZsRzJ2Y1JtY3lNTktiVU1vbFJ6UlhGcGdzek5MVTNPVUhEMk53SnFBY29rNWlFY0JIUkxRVkYtU21seXFyM0VZVnNqTFNtTkRKajY1SHk4NnJtY3VHUTlpeFhDUTF3VmtsSkxTbEpCbmdLcXpFbk1TMG5Mek1rcHRwZFl4bW9rSnlVRDlINTVTU3AyTlFLTUFBIiwiaWQiOiJmY19XYWNWYXFDMkJvcTJwdFFQbFBhUE9BXzEifQ==",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUVzR6TFhsUk1tcG9hV3hoYW5NMWEwVlRVbUpYZDIxdVN6aGxZVlpPWVRjNE1qWkJkV2h5YkZKU1RVeDNMVUl4Yldoek1HTmliVmhwVW1aTmJuQmpVV2R5UlhOeFdVNURSVmRRUnpoSFMwNXNWMWRGZDJGamFVeGtkR2RoWVd4Q1p4SVdWMkZqVm1GeFF6SkNiM0V5Y0hSUlVHeFFZVkJQUVJvaVFVcExURVp0UzFoeE9GTXpNVlUwWVRoa00wVkJZMmQwVmtzelZGWm1UbEpWWnciLCJmY3YiOiIzIiwiZWkiOiJXYWNWYXFDMkJvcTJwdFFQbFBhUE9BIiwicWMiOiJDaXR1Wlhkb1lYWmxiaUJsYm1WeVoza2djbVZqYjNabGNua2dabUZqYVd4cGRIa2daVzFwYzNOcGIyNXpFQUI5SlZjLVB3IiwicXVlc3Rpb24iOiJIb3cgYmFkIGlzIGluY2luZXJhdGlvbiBmb3IgdGhlIGVudmlyb25tZW50PyIsImxrIjoiR2l0b2IzY2dZbUZrSUdseklHbHVZMmx1WlhKaGRHbHZiaUJtYjNJZ2RHaGxJR1Z1ZG1seWIyNXRaVzUwIiwiYnMiOiJjLU5LNE5MeHlDOVhTRXBNVWNnc1Zzak1TODdNU3kxS0xNbk16MU5JeXk5U0tNbElWVWpOSzhzc3lzX0xUYzByc1pkb0ZUUFNsZExPSUY0TFZ4aVhPc2lHbEh5Z2FHcFJlcVZDVVdweWZsbHFVYVZDV21KeVprNW1TV1pxc1VKNWZsRzJ2Y1JtY3lNTktiVU1vbFJ6UlhGcGdzek5MVTNPVUhEMk53SnFBY29rNWlFY0JIUkxRVkYtU21seXFyM0VZVnNqTFNtTkRKajY1SHk4NnJtY3VHUTlpeFhDUTF3VmtsSkxTbEpCbmdLcXpFbk1TMG5Mek1rcHRwZFl4bW9rSnlVRDlINTVTU3AyTlFLTUFBIiwiaWQiOiJmY19XYWNWYXFDMkJvcTJwdFFQbFBhUE9BXzEifQ%3D%3D"
+    },
+    {
+      "question": "How do energy recovery facilities work?",
+      "type": "featured_snippet",
+      "snippet": "Grate and boiler Air is blown into the bottom of the water‑cooled grate through five computer‑controlled zones. The heat released from burning the waste is used to convert water to super‑heated steam. At high pressure, this steam drives a turbine to generate electricity.",
+      "title": "How energy recovery works - SUEZ Cornwall",
+      "link": "https://suezcornwall.co.uk/what-we-do/energy-recovery/how-energy-recovery-works/#:~:text=Grate%20and%20boiler,a%20turbine%20to%20generate%20electricity.",
+      "displayed_link": "https://suezcornwall.co.uk › what-we-do › how-energy-r...",
+      "source_logo": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/DPh0CHn1epYUA5zKof-SlekqN5Ioy3K7__9bwbC8fsU.png",
+      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUVzR6TFhsUk1tcG9hV3hoYW5NMWEwVlRVbUpYZDIxdVN6aGxZVlpPWVRjNE1qWkJkV2h5YkZKU1RVeDNMVUl4Yldoek1HTmliVmhwVW1aTmJuQmpVV2R5UlhOeFdVNURSVmRRUnpoSFMwNXNWMWRGZDJGamFVeGtkR2RoWVd4Q1p4SVdWMkZqVm1GeFF6SkNiM0V5Y0hSUlVHeFFZVkJQUVJvaVFVcExURVp0UzFoeE9GTXpNVlUwWVRoa00wVkJZMmQwVmtzelZGWm1UbEpWWnciLCJmY3YiOiIzIiwiZWkiOiJXYWNWYXFDMkJvcTJwdFFQbFBhUE9BIiwicWMiOiJDaXR1Wlhkb1lYWmxiaUJsYm1WeVoza2djbVZqYjNabGNua2dabUZqYVd4cGRIa2daVzFwYzNOcGIyNXpFQUI5SlZjLVB3IiwicXVlc3Rpb24iOiJIb3cgZG8gZW5lcmd5IHJlY292ZXJ5IGZhY2lsaXRpZXMgd29yaz8iLCJsayI6IkdpWm9iM2NnWkc4Z1pXNWxjbWQ1SUhKbFkyOTJaWEo1SUdaaFkybHNhWFJwWlhNZ2QyOXlhdyIsImJzIjoiYy1OSzROTHh5QzlYU0VwTVVjZ3NWc2pNUzg3TVN5MUtMTW5NejFOSXl5OVNLTWxJVlVqTks4c3N5c19MVGMwcnNaZG9GVFBTbGRMT0lGNExWeGlYT3NpR2xIeWdhR3BSZXFWQ1VXcHlmbGxxVWFWQ1dtSnlaazVtU1dacXNVSjVmbEcydmNSbWN5TU5LYlVNb2xSelJYRnBnc3pOTFUzT1VIRDJOd0pxQWNvazVpRWNCSFJMUVZGLVNtbHlxcjNFWVZzakxTbU5ESmo2NUh5ODZybWN1R1E5aXhYQ1Exd1ZrbEpMU2xKQm5nS3F6RW5NUzBuTHpNa3B0cGRZeG1va0p5VUQ5SDU1U1NwMk5RS01BQSIsImlkIjoiZmNfV2FjVmFxQzJCb3EycHRRUGxQYVBPQV8xIn0=",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUVzR6TFhsUk1tcG9hV3hoYW5NMWEwVlRVbUpYZDIxdVN6aGxZVlpPWVRjNE1qWkJkV2h5YkZKU1RVeDNMVUl4Yldoek1HTmliVmhwVW1aTmJuQmpVV2R5UlhOeFdVNURSVmRRUnpoSFMwNXNWMWRGZDJGamFVeGtkR2RoWVd4Q1p4SVdWMkZqVm1GeFF6SkNiM0V5Y0hSUlVHeFFZVkJQUVJvaVFVcExURVp0UzFoeE9GTXpNVlUwWVRoa00wVkJZMmQwVmtzelZGWm1UbEpWWnciLCJmY3YiOiIzIiwiZWkiOiJXYWNWYXFDMkJvcTJwdFFQbFBhUE9BIiwicWMiOiJDaXR1Wlhkb1lYWmxiaUJsYm1WeVoza2djbVZqYjNabGNua2dabUZqYVd4cGRIa2daVzFwYzNOcGIyNXpFQUI5SlZjLVB3IiwicXVlc3Rpb24iOiJIb3cgZG8gZW5lcmd5IHJlY292ZXJ5IGZhY2lsaXRpZXMgd29yaz8iLCJsayI6IkdpWm9iM2NnWkc4Z1pXNWxjbWQ1SUhKbFkyOTJaWEo1SUdaaFkybHNhWFJwWlhNZ2QyOXlhdyIsImJzIjoiYy1OSzROTHh5QzlYU0VwTVVjZ3NWc2pNUzg3TVN5MUtMTW5NejFOSXl5OVNLTWxJVlVqTks4c3N5c19MVGMwcnNaZG9GVFBTbGRMT0lGNExWeGlYT3NpR2xIeWdhR3BSZXFWQ1VXcHlmbGxxVWFWQ1dtSnlaazVtU1dacXNVSjVmbEcydmNSbWN5TU5LYlVNb2xSelJYRnBnc3pOTFUzT1VIRDJOd0pxQWNvazVpRWNCSFJMUVZGLVNtbHlxcjNFWVZzakxTbU5ESmo2NUh5ODZybWN1R1E5aXhYQ1Exd1ZrbEpMU2xKQm5nS3F6RW5NUzBuTHpNa3B0cGRZeG1va0p5VUQ5SDU1U1NwMk5RS01BQSIsImlkIjoiZmNfV2FjVmFxQzJCb3EycHRRUGxQYVBPQV8xIn0%3D"
+    },
+    {
+      "question": "How much CO2 does an incinerator produce?",
+      "type": "featured_snippet",
+      "snippet": "The incineration of 1 Mg of municipal waste in MSW incinerators is associated with the production/release of about 0.7 to 1.2 Mg of carbon dioxide (CO2 output). The proportion of carbon of biogenic origin is usually in the range of 33 to 50 percent.",
+      "title": "about 0.7 to 1.2 Mg",
+      "link": "https://www.ipcc-nggip.iges.or.jp/public/gp/bgp/5_3_Waste_Incineration.pdf",
+      "displayed_link": "https://www.ipcc-nggip.iges.or.jp › public › bgp › 5_3_...",
+      "source_logo": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/DPh0CHn1epYUA5zKof-SlWDSxFDKHbz-x2IMB_zcabE.png",
+      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUVzR6TFhsUk1tcG9hV3hoYW5NMWEwVlRVbUpYZDIxdVN6aGxZVlpPWVRjNE1qWkJkV2h5YkZKU1RVeDNMVUl4Yldoek1HTmliVmhwVW1aTmJuQmpVV2R5UlhOeFdVNURSVmRRUnpoSFMwNXNWMWRGZDJGamFVeGtkR2RoWVd4Q1p4SVdWMkZqVm1GeFF6SkNiM0V5Y0hSUlVHeFFZVkJQUVJvaVFVcExURVp0UzFoeE9GTXpNVlUwWVRoa00wVkJZMmQwVmtzelZGWm1UbEpWWnciLCJmY3YiOiIzIiwiZWkiOiJXYWNWYXFDMkJvcTJwdFFQbFBhUE9BIiwicWMiOiJDaXR1Wlhkb1lYWmxiaUJsYm1WeVoza2djbVZqYjNabGNua2dabUZqYVd4cGRIa2daVzFwYzNOcGIyNXpFQUI5SlZjLVB3IiwicXVlc3Rpb24iOiJIb3cgbXVjaCBDTzIgZG9lcyBhbiBpbmNpbmVyYXRvciBwcm9kdWNlPyIsImxrIjoiR2lob2IzY2diWFZqYUNCamJ6SWdaRzlsY3lCaGJpQnBibU5wYm1WeVlYUnZjaUJ3Y205a2RXTmwiLCJicyI6ImMtTks0Tkx4eUM5WFNFcE1VY2dzVnNqTVM4N01TeTFLTE1uTXoxTkl5eTlTS01sSVZVak5LOHNzeXNfTFRjMHJzWmRvRlRQU2xkTE9JRjRMVnhpWE9zaUdsSHlnYUdwUmVxVkNVV3B5ZmxscVVhVkNXbUp5Wms1bVNXWnFzVUo1ZmxHMnZjUm1jeU1OS2JVTW9sUnpSWEZwZ3N6TkxVM09VSEQyTndKcUFjb2s1aUVjQkhSTFFWRi1TbWx5cXIzRVlWc2pMU21OREpqNjVIeTg2cm1jdUdROWl4WENRMXdWa2xKTFNsSkJuZ0txekVuTVMwbkx6TWtwdHBkWXhtb2tKeVVEOUg1NVNTcDJOUUtNQUEiLCJpZCI6ImZjX1dhY1ZhcUMyQm9xMnB0UVBsUGFQT0FfMSJ9",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUVzR6TFhsUk1tcG9hV3hoYW5NMWEwVlRVbUpYZDIxdVN6aGxZVlpPWVRjNE1qWkJkV2h5YkZKU1RVeDNMVUl4Yldoek1HTmliVmhwVW1aTmJuQmpVV2R5UlhOeFdVNURSVmRRUnpoSFMwNXNWMWRGZDJGamFVeGtkR2RoWVd4Q1p4SVdWMkZqVm1GeFF6SkNiM0V5Y0hSUlVHeFFZVkJQUVJvaVFVcExURVp0UzFoeE9GTXpNVlUwWVRoa00wVkJZMmQwVmtzelZGWm1UbEpWWnciLCJmY3YiOiIzIiwiZWkiOiJXYWNWYXFDMkJvcTJwdFFQbFBhUE9BIiwicWMiOiJDaXR1Wlhkb1lYWmxiaUJsYm1WeVoza2djbVZqYjNabGNua2dabUZqYVd4cGRIa2daVzFwYzNOcGIyNXpFQUI5SlZjLVB3IiwicXVlc3Rpb24iOiJIb3cgbXVjaCBDTzIgZG9lcyBhbiBpbmNpbmVyYXRvciBwcm9kdWNlPyIsImxrIjoiR2lob2IzY2diWFZqYUNCamJ6SWdaRzlsY3lCaGJpQnBibU5wYm1WeVlYUnZjaUJ3Y205a2RXTmwiLCJicyI6ImMtTks0Tkx4eUM5WFNFcE1VY2dzVnNqTVM4N01TeTFLTE1uTXoxTkl5eTlTS01sSVZVak5LOHNzeXNfTFRjMHJzWmRvRlRQU2xkTE9JRjRMVnhpWE9zaUdsSHlnYUdwUmVxVkNVV3B5ZmxscVVhVkNXbUp5Wms1bVNXWnFzVUo1ZmxHMnZjUm1jeU1OS2JVTW9sUnpSWEZwZ3N6TkxVM09VSEQyTndKcUFjb2s1aUVjQkhSTFFWRi1TbWx5cXIzRVlWc2pMU21OREpqNjVIeTg2cm1jdUdROWl4WENRMXdWa2xKTFNsSkJuZ0txekVuTVMwbkx6TWtwdHBkWXhtb2tKeVVEOUg1NVNTcDJOUUtNQUEiLCJpZCI6ImZjX1dhY1ZhcUMyQm9xMnB0UVBsUGFQT0FfMSJ9"
+    },
+    {
+      "question": "Is WTE better than landfills?",
+      "type": "featured_snippet",
+      "snippet": "Both Waste-to-Energy and landfills have impacts, however, Waste-to-Energy is a controlled and carefully monitored process that reduces greenhouse gases relative to landfilling and recovers valuable resources. In densely populated regions across the United States, these are benefits that are too big to ignore.",
+      "title": "Is Landfill Disposal or Waste-to-Energy Better for America?",
+      "link": "https://www.reworldwaste.com/news-and-resources/blog/is-landfill-disposal-or-waste-to-energy-better-for-america#:~:text=Both%20Waste%2Dto%2DEnergy%20and,are%20too%20big%20to%20ignore.",
+      "displayed_link": "https://www.reworldwaste.com › blog › is-landfill-dispos...",
+      "source_logo": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/DPh0CHn1epYUA5zKof-SlV5QVtktiRPDfUOCQX9co9E.png",
+      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUVzR6TFhsUk1tcG9hV3hoYW5NMWEwVlRVbUpYZDIxdVN6aGxZVlpPWVRjNE1qWkJkV2h5YkZKU1RVeDNMVUl4Yldoek1HTmliVmhwVW1aTmJuQmpVV2R5UlhOeFdVNURSVmRRUnpoSFMwNXNWMWRGZDJGamFVeGtkR2RoWVd4Q1p4SVdWMkZqVm1GeFF6SkNiM0V5Y0hSUlVHeFFZVkJQUVJvaVFVcExURVp0UzFoeE9GTXpNVlUwWVRoa00wVkJZMmQwVmtzelZGWm1UbEpWWnciLCJmY3YiOiIzIiwiZWkiOiJXYWNWYXFDMkJvcTJwdFFQbFBhUE9BIiwicWMiOiJDaXR1Wlhkb1lYWmxiaUJsYm1WeVoza2djbVZqYjNabGNua2dabUZqYVd4cGRIa2daVzFwYzNOcGIyNXpFQUI5SlZjLVB3IiwicXVlc3Rpb24iOiJJcyBXVEUgYmV0dGVyIHRoYW4gbGFuZGZpbGxzPyIsImxrIjoiR2h4cGN5QjNkR1VnWW1WMGRHVnlJSFJvWVc0Z2JHRnVaR1pwYkd4eiIsImJzIjoiYy1OSzROTHh5QzlYU0VwTVVjZ3NWc2pNUzg3TVN5MUtMTW5NejFOSXl5OVNLTWxJVlVqTks4c3N5c19MVGMwcnNaZG9GVFBTbGRMT0lGNExWeGlYT3NpR2xIeWdhR3BSZXFWQ1VXcHlmbGxxVWFWQ1dtSnlaazVtU1dacXNVSjVmbEcydmNSbWN5TU5LYlVNb2xSelJYRnBnc3pOTFUzT1VIRDJOd0pxQWNvazVpRWNCSFJMUVZGLVNtbHlxcjNFWVZzakxTbU5ESmo2NUh5ODZybWN1R1E5aXhYQ1Exd1ZrbEpMU2xKQm5nS3F6RW5NUzBuTHpNa3B0cGRZeG1va0p5VUQ5SDU1U1NwMk5RS01BQSIsImlkIjoiZmNfV2FjVmFxQzJCb3EycHRRUGxQYVBPQV8xIn0=",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUVzR6TFhsUk1tcG9hV3hoYW5NMWEwVlRVbUpYZDIxdVN6aGxZVlpPWVRjNE1qWkJkV2h5YkZKU1RVeDNMVUl4Yldoek1HTmliVmhwVW1aTmJuQmpVV2R5UlhOeFdVNURSVmRRUnpoSFMwNXNWMWRGZDJGamFVeGtkR2RoWVd4Q1p4SVdWMkZqVm1GeFF6SkNiM0V5Y0hSUlVHeFFZVkJQUVJvaVFVcExURVp0UzFoeE9GTXpNVlUwWVRoa00wVkJZMmQwVmtzelZGWm1UbEpWWnciLCJmY3YiOiIzIiwiZWkiOiJXYWNWYXFDMkJvcTJwdFFQbFBhUE9BIiwicWMiOiJDaXR1Wlhkb1lYWmxiaUJsYm1WeVoza2djbVZqYjNabGNua2dabUZqYVd4cGRIa2daVzFwYzNOcGIyNXpFQUI5SlZjLVB3IiwicXVlc3Rpb24iOiJJcyBXVEUgYmV0dGVyIHRoYW4gbGFuZGZpbGxzPyIsImxrIjoiR2h4cGN5QjNkR1VnWW1WMGRHVnlJSFJvWVc0Z2JHRnVaR1pwYkd4eiIsImJzIjoiYy1OSzROTHh5QzlYU0VwTVVjZ3NWc2pNUzg3TVN5MUtMTW5NejFOSXl5OVNLTWxJVlVqTks4c3N5c19MVGMwcnNaZG9GVFBTbGRMT0lGNExWeGlYT3NpR2xIeWdhR3BSZXFWQ1VXcHlmbGxxVWFWQ1dtSnlaazVtU1dacXNVSjVmbEcydmNSbWN5TU5LYlVNb2xSelJYRnBnc3pOTFUzT1VIRDJOd0pxQWNvazVpRWNCSFJMUVZGLVNtbHlxcjNFWVZzakxTbU5ESmo2NUh5ODZybWN1R1E5aXhYQ1Exd1ZrbEpMU2xKQm5nS3F6RW5NUzBuTHpNa3B0cGRZeG1va0p5VUQ5SDU1U1NwMk5RS01BQSIsImlkIjoiZmNfV2FjVmFxQzJCb3EycHRRUGxQYVBPQV8xIn0%3D"
+    }
+  ],
+  "ai_overview": {
+    "page_token": "Nm777nicxVXNcuI4EL7vewyXJNj8hZAq15RkFEZAIIIQh1xcRnaMjf9iOThw23fZF9rrPs3IBhMbTKZ2qra2D2p3u9XdavWn_vMvx_JW__zx9zKKAnYrCHEcV03fNx2jSn1X0NjGo8Kr77CQLr8z_z2khqVLdBn6rlHZrKVGhTJJrBiWpGj0SXuT69B_qwcReXAetIcxqKQeJHWhMcPmAT5sJqgCX1bfGl0uVFnV8KrKsI_WoqOL1qxaF2ud6ljQXG4A_kvCCMicmYAk3Cyx6GIA8zI8sSAIYM6meZ2ZW7ONSRAAEMIJk8tiJYRSqz5Md1-NohuwJVmyZ7bA4g85ThYw4wGTLVg-ziQLVEaZoZ-upNQGpDU7piSJwcHLfS69cy5InJNnSUpXSVaTg258sN2nhdCnaxPGwI5fTYRQeYSUuLN53N2QG3yu4PsQBLvxPn05HhFgCrrJu08UFiFnNcGiS5p-hCxpSvmxI_oofG4uo-FNV3z9ISuL8Y2x_LiCr-0O6AOBLrid42u6oatLVfyeyrV6rSV2Gu2byxQNlB3gwPJwsNVHTaP2WumvqsMqrH1iQU6vzSweBvMKlV1Jokz0pKDJiOxkmX-YuW7w97y3BDDfOIMBeUgvc39rXJhjdNIhqaMSLBxSzUVHq71ydthaPNjBfabuHt9iTk5tYxB8noXAvHkSulAlPE1-yzADax4RJje37na7gn0BYb5fceYK7swJwoAcITX9tcphAaXPAGc4NkEsk0F2cSQ9iLk_Di8HOjoo7BXFOXBWpe_Vr-ns05MjM2v7oy7Od_8dfem3p33xw3gytljczgMVtLfDF2A1QXm3--7iX7z-9H_Gw342-PvZUIYHXMTDywkeCH_uwVezYdcp2WxY7WaDfwYPCJ3MhqwlM1wd4-EDF_BgfTUbPvGwi_w1HsgZPHR35id4GJThAZbigV9BOhvyeFgVZwMszoYMD78zG6a_MxtScBg7VhwU77Z5dmD02MyegWlz_oxHvqPo0wYj93GrL48x-eXAeHWjW1fTnUvV0m9hvR9t9EuVK_xbQ6-8SSMjXmprw7tAnhGam4sJx9vaCDcXdxq1HCvaXBiuxZjle6ziOqEviVq78673NObHAZwo4b0YKMp7K6KtQdANgkWwaU2GtrhdXgWLtRtB_ISuWeeaBG8r5rafxrYJEd6yrvGoKtjRPh680Ttce0QfWV3Ffp42hjXaCyZoatt2Swt-jPR11xvMWqjfi5t4em3Hegt7ZJxmwySmIHBfl_FKjStuSCXeB00T8GorJqBAngPCHy4iJ3CsMKqpBltLbb1Dr0WjUa-Li6beaFdcM9oEUrNWYV4o1X4CxxcdPw",
+    "serpapi_link": "https://serpapi.com/search.json?engine=google_ai_overview&page_token=Nm777nicxVXNcuI4EL7vewyXJNj8hZAq15RkFEZAIIIQh1xcRnaMjf9iOThw23fZF9rrPs3IBhMbTKZ2qra2D2p3u9XdavWn_vMvx_JW__zx9zKKAnYrCHEcV03fNx2jSn1X0NjGo8Kr77CQLr8z_z2khqVLdBn6rlHZrKVGhTJJrBiWpGj0SXuT69B_qwcReXAetIcxqKQeJHWhMcPmAT5sJqgCX1bfGl0uVFnV8KrKsI_WoqOL1qxaF2ud6ljQXG4A_kvCCMicmYAk3Cyx6GIA8zI8sSAIYM6meZ2ZW7ONSRAAEMIJk8tiJYRSqz5Md1-NohuwJVmyZ7bA4g85ThYw4wGTLVg-ziQLVEaZoZ-upNQGpDU7piSJwcHLfS69cy5InJNnSUpXSVaTg258sN2nhdCnaxPGwI5fTYRQeYSUuLN53N2QG3yu4PsQBLvxPn05HhFgCrrJu08UFiFnNcGiS5p-hCxpSvmxI_oofG4uo-FNV3z9ISuL8Y2x_LiCr-0O6AOBLrid42u6oatLVfyeyrV6rSV2Gu2byxQNlB3gwPJwsNVHTaP2WumvqsMqrH1iQU6vzSweBvMKlV1Jokz0pKDJiOxkmX-YuW7w97y3BDDfOIMBeUgvc39rXJhjdNIhqaMSLBxSzUVHq71ydthaPNjBfabuHt9iTk5tYxB8noXAvHkSulAlPE1-yzADax4RJje37na7gn0BYb5fceYK7swJwoAcITX9tcphAaXPAGc4NkEsk0F2cSQ9iLk_Di8HOjoo7BXFOXBWpe_Vr-ns05MjM2v7oy7Od_8dfem3p33xw3gytljczgMVtLfDF2A1QXm3--7iX7z-9H_Gw342-PvZUIYHXMTDywkeCH_uwVezYdcp2WxY7WaDfwYPCJ3MhqwlM1wd4-EDF_BgfTUbPvGwi_w1HsgZPHR35id4GJThAZbigV9BOhvyeFgVZwMszoYMD78zG6a_MxtScBg7VhwU77Z5dmD02MyegWlz_oxHvqPo0wYj93GrL48x-eXAeHWjW1fTnUvV0m9hvR9t9EuVK_xbQ6-8SSMjXmprw7tAnhGam4sJx9vaCDcXdxq1HCvaXBiuxZjle6ziOqEviVq78673NObHAZwo4b0YKMp7K6KtQdANgkWwaU2GtrhdXgWLtRtB_ISuWeeaBG8r5rafxrYJEd6yrvGoKtjRPh680Ttce0QfWV3Ffp42hjXaCyZoatt2Swt-jPR11xvMWqjfi5t4em3Hegt7ZJxmwySmIHBfl_FKjStuSCXeB00T8GorJqBAngPCHy4iJ3CsMKqpBltLbb1Dr0WjUa-Li6beaFdcM9oEUrNWYV4o1X4CxxcdPw"
+  },
+  "organic_results": [
+    {
+      "position": 1,
+      "title": "EfW Annual Performance Report Newhaven ERF 2019.xlsm",
+      "link": "https://ukwin.org.uk/library/129-AnnualPerformanceReport-2019.pdf",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://ukwin.org.uk/library/129-AnnualPerformanceReport-2019.pdf&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQFnoECCAQAQ",
+      "displayed_link": "https://ukwin.org.uk › library › 129-AnnualPerfor...",
+      "favicon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoX0Tc99QOyfQyNrtfkWBxrE.png",
+      "date": "Jan 24, 2020",
+      "snippet": "Emissions to Water. Emissions to Air (periodically monitored). Emissions to Air (continuously monitored). Hydrogen Chloride emissions. Sulphur ...",
+      "snippet_highlighted_words": [
+        "Emissions to Water"
+      ],
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "pages": 25
+          },
+          "extensions": [
+            "25 pages"
+          ]
+        }
+      },
+      "about_this_result": {
+        "source": {
+          "description": "Emissions to Water. Emissions to Air (periodically monitored). Emissions to Air (continuously monitored). Hydrogen Chloride emissions. Sulphur ...",
+          "source_info_link": "https://ukwin.org.uk/library/129-AnnualPerformanceReport-2019.pdf",
+          "icon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoYsLM70mUzYmDEIAV2XFB9GdWm9eUci04wiFLP1ryRUF.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://ukwin.org.uk/library/129-AnnualPerformanceReport-2019.pdf&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fukwin.org.uk%2Flibrary%2F129-AnnualPerformanceReport-2019.pdf",
+      "source": "United Kingdom Without Incineration Network"
+    },
+    {
+      "position": 2,
+      "title": "Newhaven Energy Recovery Facility",
+      "link": "https://www.southdowns.veolia.co.uk/facilities/newhaven-energy-recovery-facility",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.southdowns.veolia.co.uk/facilities/newhaven-energy-recovery-facility&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQFnoECCYQAQ",
+      "displayed_link": "https://www.southdowns.veolia.co.uk › facilities › newha...",
+      "favicon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoaItIbbAJbTtPQXB4jc50GE.png",
+      "snippet": "Information on the latest emissions to air data for the Newhaven Energy Recovery Facility.",
+      "snippet_highlighted_words": [
+        "latest emissions to air data"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Information on the latest emissions to air data for the Newhaven Energy Recovery Facility.",
+          "source_info_link": "https://www.southdowns.veolia.co.uk/facilities/newhaven-energy-recovery-facility",
+          "icon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoemqUV2JR6Wx_n6LDtQANlvBWF6Kzu1dTRM-c98XdPB5.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.southdowns.veolia.co.uk/facilities/newhaven-energy-recovery-facility&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.southdowns.veolia.co.uk%2Ffacilities%2Fnewhaven-energy-recovery-facility",
+      "source": "Veolia South Downs"
+    },
+    {
+      "position": 3,
+      "title": "RSA takes Energy Recovery very seriously: Newhaven ...",
+      "link": "https://www.regionalstudies.org/rsa-blog/rsa-takes-energy-recovery-very/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.regionalstudies.org/rsa-blog/rsa-takes-energy-recovery-very/&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQFnoECB4QAQ",
+      "displayed_link": "https://www.regionalstudies.org › rsa-blog › rsa-takes-e...",
+      "favicon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoXaytlfU8DWQQeDSRRKIT9g.png",
+      "snippet": "It burns approximately 28 tonnes of waste per hour, over 210,000 tonnes per year. This state-of-the-art facility provides enough power to supply 25,000 homes ( ...",
+      "snippet_highlighted_words": [
+        "facility"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "It burns approximately 28 tonnes of waste per hour, over 210,000 tonnes per year. This state-of-the-art facility provides enough power to supply 25,000 homes ( ...",
+          "source_info_link": "https://www.regionalstudies.org/rsa-blog/rsa-takes-energy-recovery-very/",
+          "icon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoTSqjME4lZE4zfBIR4X1qvFWlaEQO4hNBS0Fghnho4uD.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.regionalstudies.org/rsa-blog/rsa-takes-energy-recovery-very/&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.regionalstudies.org%2Frsa-blog%2Frsa-takes-energy-recovery-very%2F",
+      "missing": [
+        "emissions"
+      ],
+      "must_include": {
+        "word": "emissions",
+        "link": "https://www.google.com/search?sca_esv=7d9c60e3220b4d37&q=Newhaven+Energy+Recovery+Facility+%22emissions%22&sa=X&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQ5t4CegQILBAB"
+      },
+      "source": "The Regional Studies Association"
+    },
+    {
+      "position": 4,
+      "title": "Green Councillors Visit Newhaven Energy Recovery Facility",
+      "link": "https://hastings.greenparty.org.uk/2025/10/19/green-councillors-visit-newhaven-energy-recovery-facility/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://hastings.greenparty.org.uk/2025/10/19/green-councillors-visit-newhaven-energy-recovery-facility/&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQFnoECB8QAQ",
+      "displayed_link": "https://hastings.greenparty.org.uk › News",
+      "favicon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoY8I16Ml953cfz2uHPp_ztY.png",
+      "date": "Oct 19, 2025",
+      "snippet": "The entire system is under continuous control to ensure good combustion, low emissions, and efficient operation. The plant constantly ...",
+      "snippet_highlighted_words": [
+        "low emissions"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "The entire system is under continuous control to ensure good combustion, low emissions, and efficient operation. The plant constantly ...",
+          "source_info_link": "https://hastings.greenparty.org.uk/2025/10/19/green-councillors-visit-newhaven-energy-recovery-facility/",
+          "icon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaocIzKFyod_vGW2wDMJwNaThxbaerC2EhD1gEbnU27zto.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://hastings.greenparty.org.uk/2025/10/19/green-councillors-visit-newhaven-energy-recovery-facility/&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fhastings.greenparty.org.uk%2F2025%2F10%2F19%2Fgreen-councillors-visit-newhaven-energy-recovery-facility%2F",
+      "source": "Hastings Green Party"
+    },
+    {
+      "position": 5,
+      "title": "1 Annual Performance Report 2012 Newhaven Energy ...",
+      "link": "https://ukwin.org.uk/files/pdf/newhaven_2012.pdf",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://ukwin.org.uk/files/pdf/newhaven_2012.pdf&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQFnoECB0QAQ",
+      "displayed_link": "https://ukwin.org.uk › files › pdf › newhaven_2012",
+      "favicon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoZ_I0SqY9rgKnqIQ_Qk09bI.png",
+      "snippet": "The flue gases released into the atmosphere are continuously monitored using Continuous Emissions. Monitoring Equipment (CEMS) for particulate matter, hydrogen ...",
+      "snippet_highlighted_words": [
+        "Emissions"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "The flue gases released into the atmosphere are continuously monitored using Continuous Emissions. Monitoring Equipment (CEMS) for particulate matter, hydrogen ...",
+          "source_info_link": "https://ukwin.org.uk/files/pdf/newhaven_2012.pdf",
+          "icon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoRV3_odLeDuCj42QSRXeHtOOCx0V3LjoLlXYQmNIO6LM.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://ukwin.org.uk/files/pdf/newhaven_2012.pdf&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fukwin.org.uk%2Ffiles%2Fpdf%2Fnewhaven_2012.pdf",
+      "source": "United Kingdom Without Incineration Network"
+    },
+    {
+      "position": 6,
+      "title": "Newhaven ERF",
+      "link": "https://en.wikipedia.org/wiki/Newhaven_ERF",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://en.wikipedia.org/wiki/Newhaven_ERF&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQFnoECDkQAQ",
+      "displayed_link": "https://en.wikipedia.org › wiki › Newhaven_ERF",
+      "favicon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoUqsDSeQr42WrOgjGXdwHf0.png",
+      "snippet": "The Newhaven ERF (Energy Recovery Facility) is an incinerator, in the town of Newhaven in the English county of East Sussex, for the treatment of up to ...",
+      "snippet_highlighted_words": [
+        "is an incinerator"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "The Newhaven ERF (Energy Recovery Facility) is an incinerator, in the town of Newhaven in the English county of East Sussex, for the treatment of up to ...",
+          "source_info_link": "https://en.wikipedia.org/wiki/Newhaven_ERF",
+          "icon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoVF5BDphei5dLBPT42LqnW7AbeNirUqy16V7XDzCkOjv.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://en.wikipedia.org/wiki/Newhaven_ERF&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FNewhaven_ERF",
+      "missing": [
+        "emissions"
+      ],
+      "must_include": {
+        "word": "emissions",
+        "link": "https://www.google.com/search?sca_esv=7d9c60e3220b4d37&q=Newhaven+Energy+Recovery+Facility+%22emissions%22&sa=X&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQ5t4CegQITBAB"
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "position": 7,
+      "title": "Newhaven Energy Recovery Facility (ERF)",
+      "link": "https://hochtief.co.uk/project/newhaven-energy-recovery-facility-erf/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://hochtief.co.uk/project/newhaven-energy-recovery-facility-erf/&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQFnoECDcQAQ",
+      "displayed_link": "https://hochtief.co.uk › Projects",
+      "favicon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoaiER6LiDKsev9J3SvENn-8.png",
+      "snippet": "Located in brownfield land on the bank of a tidal estuary over a major aquifer, the ERF site was heavily contaminated and the ground poor due to the high water ...",
+      "snippet_highlighted_words": [
+        "heavily contaminated"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Located in brownfield land on the bank of a tidal estuary over a major aquifer, the ERF site was heavily contaminated and the ground poor due to the high water ...",
+          "source_info_link": "https://hochtief.co.uk/project/newhaven-energy-recovery-facility-erf/",
+          "icon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoaHmfkmqDDTpCyP-zZTfHpxwe3zH5-fB24No7J45Xcrg.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://hochtief.co.uk/project/newhaven-energy-recovery-facility-erf/&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fhochtief.co.uk%2Fproject%2Fnewhaven-energy-recovery-facility-erf%2F",
+      "missing": [
+        "emissions"
+      ],
+      "must_include": {
+        "word": "emissions",
+        "link": "https://www.google.com/search?sca_esv=7d9c60e3220b4d37&q=Newhaven+Energy+Recovery+Facility+%22emissions%22&sa=X&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQ5t4CegQIRxAB"
+      },
+      "source": "Hochtief"
+    },
+    {
+      "position": 8,
+      "title": "Emissions and How Are They Released",
+      "link": "https://www.southdowns.veolia.co.uk/emissions-expertise",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.southdowns.veolia.co.uk/emissions-expertise&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQFnoECDQQAQ",
+      "displayed_link": "https://www.southdowns.veolia.co.uk › emissions-expertise",
+      "favicon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoVbN1XSQ2QLkwoXqH1cMSC0.png",
+      "snippet": "Daily Average Emissions Limit: Dust (Particulates) 5mg/m 3, Total Organic Carbon 10mg/m 3, Hydrogen Chloride 8mg/m 3, Carbon Monoxide 50mg/m 3, Sulphur Dioxide ...",
+      "snippet_highlighted_words": [
+        "Daily Average Emissions Limit"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Daily Average Emissions Limit: Dust (Particulates) 5mg/m 3, Total Organic Carbon 10mg/m 3, Hydrogen Chloride 8mg/m 3, Carbon Monoxide 50mg/m 3, Sulphur Dioxide ...",
+          "source_info_link": "https://www.southdowns.veolia.co.uk/emissions-expertise",
+          "icon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoRj_OBKl0GrXGbCvx3iLha33hUGOZZ8nn5s5tqXfBr9V.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.southdowns.veolia.co.uk/emissions-expertise&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.southdowns.veolia.co.uk%2Femissions-expertise",
+      "source": "Veolia South Downs"
+    },
+    {
+      "position": 9,
+      "title": "Newhaven ERF",
+      "link": "https://grokipedia.com/page/newhaven_erf",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://grokipedia.com/page/newhaven_erf&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQFnoECDUQAQ",
+      "displayed_link": "https://grokipedia.com › page › newhaven_erf",
+      "favicon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoeyz1ZTM9GvFQwpQSbd_z6I.png",
+      "date": "Jan 20, 2026",
+      "snippet": "The Newhaven Energy Recovery Facility (ERF) was developed on a heavily contaminated brownfield site at North Quay, previously used for railway ...",
+      "snippet_highlighted_words": [
+        "heavily contaminated brownfield site at North Quay"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "The Newhaven Energy Recovery Facility (ERF) was developed on a heavily contaminated brownfield site at North Quay, previously used for railway ...",
+          "source_info_link": "https://grokipedia.com/page/newhaven_erf",
+          "icon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoWrm8vgWxwWSSrln9MbD1YE2WwW8QPQAiUJtTIf8--ju.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://grokipedia.com/page/newhaven_erf&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fgrokipedia.com%2Fpage%2Fnewhaven_erf",
+      "source": "Grokipedia"
+    },
+    {
+      "position": 10,
+      "title": "Newhaven / UK Waste to Energy Plant",
+      "link": "https://www.hz-inova.com/wp-content/uploads/2023/12/HZI_Referenzblatt_A4_Newhaven_EN_2023_01_WEB.pdf",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.hz-inova.com/wp-content/uploads/2023/12/HZI_Referenzblatt_A4_Newhaven_EN_2023_01_WEB.pdf&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQFnoECDgQAQ",
+      "displayed_link": "https://www.hz-inova.com › uploads › 2023/12",
+      "favicon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoXazLCeGF_-pphBgUEnZjZw.jpeg",
+      "date": "Dec 19, 2023",
+      "snippet": "Newhaven Waste to Energy Facility – an Integrated Waste. Management Solution for East Sussex and Brighton & Hove. With a view to divert ...",
+      "snippet_highlighted_words": [
+        "Newhaven",
+        "Energy Facility"
+      ],
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "pages": 4
+          },
+          "extensions": [
+            "4 pages"
+          ]
+        }
+      },
+      "about_this_result": {
+        "source": {
+          "description": "Newhaven Waste to Energy Facility – an Integrated Waste. Management Solution for East Sussex and Brighton & Hove. With a view to divert ...",
+          "source_info_link": "https://www.hz-inova.com/wp-content/uploads/2023/12/HZI_Referenzblatt_A4_Newhaven_EN_2023_01_WEB.pdf",
+          "icon": "https://serpapi.com/searches/6a15a758556ce36252104a74/images/89DOV39lO8DMcRuaFRQaoYg64vLgOSnuUleks3bDHVSTtSERJCqA_b0rV0zHNSJe.jpeg"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.hz-inova.com/wp-content/uploads/2023/12/HZI_Referenzblatt_A4_Newhaven_EN_2023_01_WEB.pdf&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.hz-inova.com%2Fwp-content%2Fuploads%2F2023%2F12%2FHZI_Referenzblatt_A4_Newhaven_EN_2023_01_WEB.pdf",
+      "source": "Kanadevia Inova"
+    }
+  ],
+  "related_searches": [
+    {
+      "block_position": 1,
+      "query": "Newhaven energy recovery facility emissions cost",
+      "link": "https://www.google.com/search?sca_esv=7d9c60e3220b4d37&q=Newhaven+energy+recovery+facility+emissions+cost&sa=X&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQ1QJ6BAgwEAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Newhaven+energy+recovery+facility+emissions+cost"
+    },
+    {
+      "block_position": 1,
+      "query": "South Downs WASTE SERVICES LIMITED",
+      "link": "https://www.google.com/search?sca_esv=7d9c60e3220b4d37&q=South+Downs+WASTE+SERVICES+LIMITED&sa=X&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQ1QJ6BAgxEAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=South+Downs+WASTE+SERVICES+LIMITED"
+    },
+    {
+      "block_position": 1,
+      "query": "Veolia dump",
+      "link": "https://www.google.com/search?sca_esv=7d9c60e3220b4d37&q=Veolia+dump&sa=X&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQ1QJ6BAgyEAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+dump"
+    }
+  ],
+  "pagination": {
+    "current": 1,
+    "next": "https://www.google.com/search?q=Newhaven+Energy+Recovery+Facility+emissions&sca_esv=7d9c60e3220b4d37&ei=WacVaqC2Boq2ptQPlPaPOA&start=10&sa=N&sstk=AU9db-A-TrV7algjbVVjw2KegbL35rzjsjCJv87gjepd7jhjFGSeAgSNpj3XpCzZ2Y8HFnDmUMYeoN9QBFjC9HLdd4VfPSR_Is2IHg&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQ8NMDegQILRAU",
+    "other_pages": {
+      "2": "https://www.google.com/search?q=Newhaven+Energy+Recovery+Facility+emissions&sca_esv=7d9c60e3220b4d37&ei=WacVaqC2Boq2ptQPlPaPOA&start=10&sa=N&sstk=AU9db-A-TrV7algjbVVjw2KegbL35rzjsjCJv87gjepd7jhjFGSeAgSNpj3XpCzZ2Y8HFnDmUMYeoN9QBFjC9HLdd4VfPSR_Is2IHg&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQ8tMDegQILRAE",
+      "3": "https://www.google.com/search?q=Newhaven+Energy+Recovery+Facility+emissions&sca_esv=7d9c60e3220b4d37&ei=WacVaqC2Boq2ptQPlPaPOA&start=20&sa=N&sstk=AU9db-A-TrV7algjbVVjw2KegbL35rzjsjCJv87gjepd7jhjFGSeAgSNpj3XpCzZ2Y8HFnDmUMYeoN9QBFjC9HLdd4VfPSR_Is2IHg&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQ8tMDegQILRAG",
+      "4": "https://www.google.com/search?q=Newhaven+Energy+Recovery+Facility+emissions&sca_esv=7d9c60e3220b4d37&ei=WacVaqC2Boq2ptQPlPaPOA&start=30&sa=N&sstk=AU9db-A-TrV7algjbVVjw2KegbL35rzjsjCJv87gjepd7jhjFGSeAgSNpj3XpCzZ2Y8HFnDmUMYeoN9QBFjC9HLdd4VfPSR_Is2IHg&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQ8tMDegQILRAI",
+      "5": "https://www.google.com/search?q=Newhaven+Energy+Recovery+Facility+emissions&sca_esv=7d9c60e3220b4d37&ei=WacVaqC2Boq2ptQPlPaPOA&start=40&sa=N&sstk=AU9db-A-TrV7algjbVVjw2KegbL35rzjsjCJv87gjepd7jhjFGSeAgSNpj3XpCzZ2Y8HFnDmUMYeoN9QBFjC9HLdd4VfPSR_Is2IHg&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQ8tMDegQILRAK",
+      "6": "https://www.google.com/search?q=Newhaven+Energy+Recovery+Facility+emissions&sca_esv=7d9c60e3220b4d37&ei=WacVaqC2Boq2ptQPlPaPOA&start=50&sa=N&sstk=AU9db-A-TrV7algjbVVjw2KegbL35rzjsjCJv87gjepd7jhjFGSeAgSNpj3XpCzZ2Y8HFnDmUMYeoN9QBFjC9HLdd4VfPSR_Is2IHg&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQ8tMDegQILRAM",
+      "7": "https://www.google.com/search?q=Newhaven+Energy+Recovery+Facility+emissions&sca_esv=7d9c60e3220b4d37&ei=WacVaqC2Boq2ptQPlPaPOA&start=60&sa=N&sstk=AU9db-A-TrV7algjbVVjw2KegbL35rzjsjCJv87gjepd7jhjFGSeAgSNpj3XpCzZ2Y8HFnDmUMYeoN9QBFjC9HLdd4VfPSR_Is2IHg&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQ8tMDegQILRAO",
+      "8": "https://www.google.com/search?q=Newhaven+Energy+Recovery+Facility+emissions&sca_esv=7d9c60e3220b4d37&ei=WacVaqC2Boq2ptQPlPaPOA&start=70&sa=N&sstk=AU9db-A-TrV7algjbVVjw2KegbL35rzjsjCJv87gjepd7jhjFGSeAgSNpj3XpCzZ2Y8HFnDmUMYeoN9QBFjC9HLdd4VfPSR_Is2IHg&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQ8tMDegQILRAQ",
+      "9": "https://www.google.com/search?q=Newhaven+Energy+Recovery+Facility+emissions&sca_esv=7d9c60e3220b4d37&ei=WacVaqC2Boq2ptQPlPaPOA&start=80&sa=N&sstk=AU9db-A-TrV7algjbVVjw2KegbL35rzjsjCJv87gjepd7jhjFGSeAgSNpj3XpCzZ2Y8HFnDmUMYeoN9QBFjC9HLdd4VfPSR_Is2IHg&ved=2ahUKEwjgxp3GjteUAxUKm4kEHRT7AwcQ8tMDegQILRAS"
+    }
+  },
+  "serpapi_pagination": {
+    "current": 1,
+    "next_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Newhaven+Energy+Recovery+Facility+emissions&start=10",
+    "next": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Newhaven+Energy+Recovery+Facility+emissions&start=10",
+    "other_pages": {
+      "2": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Newhaven+Energy+Recovery+Facility+emissions&start=10",
+      "3": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Newhaven+Energy+Recovery+Facility+emissions&start=20",
+      "4": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Newhaven+Energy+Recovery+Facility+emissions&start=30",
+      "5": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Newhaven+Energy+Recovery+Facility+emissions&start=40",
+      "6": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Newhaven+Energy+Recovery+Facility+emissions&start=50",
+      "7": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Newhaven+Energy+Recovery+Facility+emissions&start=60",
+      "8": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Newhaven+Energy+Recovery+Facility+emissions&start=70",
+      "9": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Newhaven+Energy+Recovery+Facility+emissions&start=80"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "run_ts": "20260526T140041Z",
+  "warning_count": 1,
+  "warnings": [
+    {
+      "run_ts": "20260526T140041Z",
+      "provider": "GDELT document API",
+      "query": "Newhaven Energy Recovery Facility Veolia",
+      "http_status": null,
+      "warning_at_utc": "2026-05-26T14:01:16.797761+00:00",
+      "warning_at_uk": "2026-05-26T15:01:16.797761+01:00",
+      "error": "ConnectTimeout(MaxRetryError(\"HTTPSConnectionPool(host='api.gdeltproject.org', port=443): Max retries exceeded with url: /api/v2/doc/doc?query=Newhaven+Energy+Recovery+Facility+Veolia&mode=ArtList&format=json&maxrecords=50&sort=HybridRel+%28Caused+by+ConnectTimeoutError%28%3CHTTPSConnection%28host%3D%27api.gdeltproject.org%27%2C+port%3D443%29+at+0x7f9029c3fa50%3E%2C+%27Connection+to+api.gdeltproject.org+timed+out.+%28connect+timeout%3D35%29%27%29%29%22%29%29",
+      "notes": "Non-critical news provider warning; contextual provider only."
+    }
+  ]
+}

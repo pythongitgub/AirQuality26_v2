@@ -1,0 +1,16 @@
+{
+  "run_ts": "20260526T140318Z",
+  "warning_count": 1,
+  "warnings": [
+    {
+      "run_ts": "20260526T140318Z",
+      "provider": "GDELT document API",
+      "query": "Newhaven Energy Recovery Facility Veolia",
+      "http_status": 429,
+      "warning_at_utc": "2026-05-26T14:03:54.272436+00:00",
+      "warning_at_uk": "2026-05-26T15:03:54.272436+01:00",
+      "error": "Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com for larger queries.\n\n",
+      "notes": "Non-critical news provider warning; contextual provider only."
+    }
+  ]
+}
