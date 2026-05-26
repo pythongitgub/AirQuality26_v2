@@ -92,7 +92,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y rsync sshpass
           python -m pip install --upgrade pip
-          pip install requests pandas pyyaml reportlab google-api-python-client google-auth python-dateutil
+          pip install -r requirements.txt
+          pip install google-api-python-client google-auth python-dateutil beautifulsoup4 lxml pyarrow
       - name: Restore existing website history from Hostinger
         if: ${{ github.event.inputs.deploy_to_hostinger != 'false' }}
         env:
@@ -145,6 +146,17 @@ jobs:
             --history-end-date "$AQ26_HISTORY_END_DATE" \
             --asset-root website/assets \
             --remote-subdir "$AQ26_REMOTE_SUBDIR"
+      - name: Canonicalise V3.1 weekly index and chart feeds
+        run: |
+          python scripts/aq26_weeklyv2_history_v3.py \
+            --repo-root . \
+            --output-root outputs \
+            --site-root site_public \
+            --history-weeks "$AQ26_HISTORY_WEEKS" \
+            --history-end-date "$AQ26_HISTORY_END_DATE" \
+            --config configs/aq26_weekly_v2_sources.yml \
+            build-site-data
+
       - name: Validate generated website
         run: |
           set -euo pipefail
