@@ -1,0 +1,45 @@
+provider:
+  id: ukair_sos
+  name: "Defra UK-AIR Sensor Observation Service"
+  status: beta
+  homepage: "https://uk-air.defra.gov.uk/data/about_sos"
+  capabilities_url: "https://uk-air.defra.gov.uk/sos-ukair/api/v1/sos/kvp?service=SOS&request=GetCapabilities"
+  licence: "Open Government Licence v3.0"
+
+runtime:
+  enabled: true
+  timeout_seconds: 45
+  max_retries: 3
+  retry_backoff_seconds: 8
+  user_agent: "AQ26/3.4 scientific-backfill contact=scottchowen@gmail.com"
+
+science:
+  temporal_role: historical_observation
+  source_confidence: official_regulatory_machine_readable
+  provenance_level: official_machine_readable
+  external_grade_candidate: true
+
+pollutants:
+  preferred:
+    - nitrogen dioxide
+    - sulphur dioxide
+    - ozone
+    - PM10 particulate matter
+    - PM2.5 particulate matter
+    - carbon monoxide
+    - benzene
+  aliases:
+    NO2: ["nitrogen dioxide", "Nitrogen dioxide"]
+    SO2: ["sulphur dioxide", "Sulphur dioxide"]
+    O3: ["ozone", "Ozone"]
+    PM10: ["PM10 particulate matter", "PM10"]
+    PM25: ["PM2.5 particulate matter", "PM2.5", "PM25"]
+    CO: ["carbon monoxide", "Carbon monoxide"]
+
+outputs:
+  root: "outputs/30_ukair_sos"
+  site_root: "site_public/data/providers/ukair_sos"
+  station_inventory_json: "site_public/data/providers/ukair_sos/station_inventory.json"
+  pollutant_inventory_json: "site_public/data/providers/ukair_sos/pollutant_inventory.json"
+  observations_jsonl: "outputs/30_ukair_sos/ukair_sos_observations.jsonl"
+  source_records_json: "outputs/30_ukair_sos/ukair_sos_source_records.json"
