@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AQ26 WeeklyV2 Historical Backfill + Interactive Site Data V3.1
+AQ26 WeeklyV2 Historical Backfill + Interactive Site Data V3.2
 
 Conservative goals:
 - Do not invent historical evidence.
@@ -9,6 +9,7 @@ Conservative goals:
 - Run date-bound backfill batches only when the underlying collector supports explicit dates.
 - Write one immutable history summary per processed week.
 - Produce Plotly-ready chart feeds and strict validation reports.
+- Keep live/latest observatory state separate from historical backfill state.
 """
 from __future__ import annotations
 
@@ -84,6 +85,18 @@ def safe_int(value: Any) -> int:
         return 0
 
 
+def record_count_where(records: List[Dict[str, Any]], source_type: str = "", source_name_contains: str = "") -> int:
+    total = 0
+    needle = source_name_contains.lower()
+    for r in records:
+        if source_type and str(r.get("source_type", "")) != source_type:
+            continue
+        if needle and needle not in str(r.get("source_name", "")).lower():
+            continue
+        total += safe_int(r.get("record_count")) or (1 if r.get("status") == "ok" else 0)
+    return total
+
+
 def load_json(path: Path) -> Any:
     with path.open("r", encoding="utf-8", errors="replace") as f:
         return json.load(f)
@@ -145,8 +158,11 @@ def normalise_summary(row: Dict[str, Any], source_path: Optional[Path] = None) -
         out["warning_count"] = out.get("warning_count") or sum(1 for r in recs if "warn" in str(r.get("status", "")).lower())
         out["error_count"] = out.get("error_count") or sum(1 for r in recs if str(r.get("status", "")).lower() == "error")
         out["skipped_count"] = out.get("skipped_count") or sum(1 for r in recs if str(r.get("status", "")).lower() == "skipped")
-        out["satellite_product_count"] = out.get("satellite_product_count") or sum(safe_int(r.get("record_count")) for r in recs if str(r.get("source_type")) == "satellite_metadata")
+        out["satellite_product_count"] = out.get("satellite_product_count") or record_count_where(recs, "satellite_metadata")
+        out["drive_file_count"] = out.get("drive_file_count") or record_count_where(recs, "gdrive")
+        out["high_priority_filings"] = out.get("high_priority_filings") or record_count_where(recs, "official_search")
         out["openaq_request_count"] = out.get("openaq_request_count") or sum(1 for r in recs if "openaq" in str(r.get("source_name", "")).lower())
+        out["news_warning_count"] = out.get("news_warning_count") or sum(1 for r in recs if str(r.get("source_type")) == "news_api_warning" or "warn" in str(r.get("status", "")).lower())
     for key in [
         "external_submission_ready", "redaction_ready", "metoffice_ready", "ground_aq_ready", "openaq_ready",
         "openaq_safety_ready", "satellite_catalogue_ready", "satellite_extraction_ready", "drive_ready",
@@ -290,9 +306,34 @@ def write_source_records_latest(site_root: Path, output_root: Path) -> None:
         data = load_json(latest)
         records = data.get("source_records") if isinstance(data, dict) else None
         if isinstance(records, list):
-            write_json(site_root / "data" / "source_records_latest.json", {"run_ts": data.get("run_ts"), "records": records})
+            write_json(site_root / "data" / "source_records_latest.json", {"run_ts": data.get("run_ts"), "date_window": data.get("date_window"), "records": records})
     except Exception as exc:
         print(f"[warn] unable to refresh source_records_latest.json: {exc}", file=sys.stderr)
+
+
+def preserve_latest_summaries(site_root: Path, output_root: Path) -> None:
+    """Avoid mixing live/current observatory summary with backfill summaries.
+
+    latest_summary.json remains the public live/current site summary when already
+    present. The most recent date-bound batch is written to latest_backfill_summary.json.
+    A latest_live_summary.json copy is also created when a live latest_summary exists.
+    """
+    data_dir = site_root / "data"
+    live = data_dir / "latest_summary.json"
+    if live.exists():
+        try:
+            live_data = load_json(live)
+            write_json(data_dir / "latest_live_summary.json", live_data)
+        except Exception as exc:
+            print(f"[warn] unable to preserve latest_live_summary.json: {exc}", file=sys.stderr)
+    latest = output_root / "00_weeklyv2" / "LATEST_WEEKLYV2.json"
+    if latest.exists():
+        try:
+            latest_data = load_json(latest)
+            latest_data["summary_role"] = "latest_backfill_summary"
+            write_json(data_dir / "latest_backfill_summary.json", normalise_summary(latest_data) or latest_data)
+        except Exception as exc:
+            print(f"[warn] unable to write latest_backfill_summary.json: {exc}", file=sys.stderr)
 
 
 def build_chart_feeds(site_root: Path, weekly_index: Dict[str, Any]) -> None:
@@ -421,7 +462,9 @@ def copy_latest_to_history(output_root: Path, site_root: Path, start: str, end: 
     target = site_root / "data" / "history" / f"week_{start}_{end}.json"
     write_json(target, normalise_summary(data) or data)
     # Also keep a matching copy under outputs for workflow artifacts.
-    write_json(output_root / "10_historical_backfill" / "history" / f"week_{start}_{end}.json", normalise_summary(data) or data)
+    normalised = normalise_summary(data) or data
+    write_json(output_root / "10_historical_backfill" / "history" / f"week_{start}_{end}.json", normalised)
+    write_json(site_root / "data" / "latest_backfill_summary.json", normalised)
     return target
 
 
@@ -435,6 +478,12 @@ def run_existing_pipeline_for_window(repo_root: Path, output_root: Path, site_ro
         "AQ26_WINDOW_END_DATE": end,
         "AQ26_RUN_DATE_FROM": start,
         "AQ26_RUN_DATE_TO": end,
+        "AQ26_NEWSAPI_ENABLED": os.environ.get("AQ26_NEWSAPI_ENABLED", "false"),
+        "AQ26_NEWSDATA_ENABLED": os.environ.get("AQ26_NEWSDATA_ENABLED", "false"),
+        "AQ26_GDELT_ENABLED": os.environ.get("AQ26_GDELT_ENABLED", "true"),
+        "AQ26_GDELT_MIN_SECONDS": os.environ.get("AQ26_GDELT_MIN_SECONDS", "6"),
+        "AQ26_GEMINI_ENABLED": os.environ.get("AQ26_GEMINI_ENABLED", "false"),
+        "AQ26_GEMINI_MODEL": os.environ.get("AQ26_GEMINI_MODEL") or os.environ.get("GEMINI_MODEL", "gemini-3.5-flash"),
     })
     scripts = repo_root / "scripts"
     collect = scripts / "aq26_weeklyv2_collect.py"
@@ -578,6 +627,7 @@ def command_build(args: argparse.Namespace) -> int:
     index = canonical_weekly_index(rows, end, args.history_weeks)
     write_json(site / "data" / "weekly_index.json", index)
     write_source_records_latest(site, output)
+    preserve_latest_summaries(site, output)
     build_chart_feeds(site, index)
     patch_site_assets(site)
     ok, issues = validate_site_data(site, output, args.history_weeks, end, strict=args.strict)

@@ -64,6 +64,17 @@ def env_first(*names):
     return ""
 
 
+def env_bool(name: str, default: bool = False) -> bool:
+    v = os.getenv(name, "")
+    if v == "":
+        return bool(default)
+    return str(v).strip().lower() in {"1", "true", "yes", "y", "on"}
+
+
+def is_backfill_mode() -> bool:
+    return env_bool("AQ26_BACKFILL_MODE", False) or bool(os.getenv("AQ26_HISTORY_START_DATE") or os.getenv("AQ26_WINDOW_START_DATE"))
+
+
 def slug(s: str) -> str:
     return re.sub(r"[^A-Za-z0-9_.-]+", "_", str(s)).strip("_")[:120] or "item"
 
@@ -211,55 +222,80 @@ def metoffice_coord(v):
 
 
 def harvest_news(cfg, out, start_date):
+    """Harvest optional news context with backfill-safe rate controls.
+
+    News is useful context but not core scientific evidence. During historical
+    backfill NewsAPI is disabled by default to avoid quota/rate-limit errors
+    contaminating harvested evidence rows. GDELT remains optional, throttled and
+    reduced to a small query set unless explicitly overridden.
+    """
     global LAST_GDELT
     raw = mkdir(out / "03_news_context" / "raw")
     articles = []
+    backfill = is_backfill_mode()
+    newsapi_enabled = env_bool("AQ26_NEWSAPI_ENABLED", default=not backfill)
+    newsdata_enabled = env_bool("AQ26_NEWSDATA_ENABLED", default=not backfill)
+    gdelt_enabled = env_bool("AQ26_GDELT_ENABLED", default=True)
+    query_limit = int(os.getenv("AQ26_BACKFILL_NEWS_QUERY_LIMIT", "3") if backfill else os.getenv("AQ26_NEWS_QUERY_LIMIT", "999"))
+    gdelt_min_seconds = float(os.getenv("AQ26_GDELT_MIN_SECONDS", "6"))
+    gdelt_retry_seconds = float(os.getenv("AQ26_GDELT_RETRY_SECONDS", "20"))
+
     newsapi = env_first("NEWS_API_KEY", "NEWSAPI_KEY")
     newsdata = env_first("NEWS_DATA_IO_KEY", "NEWSDATA_API_KEY", "NEWSDATA_KEY", "NEWSDATA_IO_KEY")
-    for q in cfg.get("news_queries", []):
-        if newsapi:
+    queries = list(cfg.get("news_queries", []))[:max(0, query_limit)]
+
+    if backfill and not newsapi_enabled:
+        add_record("NewsAPI everything", "news_api", "newsapi://disabled-for-backfill", "historical_backfill", "skipped", None, None, 0, notes="disabled by AQ26_NEWSAPI_ENABLED default during historical backfill")
+    if backfill and not newsdata_enabled:
+        add_record("NewsData.io news", "news_api", "newsdata://disabled-for-backfill", "historical_backfill", "skipped", None, None, 0, notes="disabled by AQ26_NEWSDATA_ENABLED default during historical backfill")
+
+    for q in queries:
+        if newsapi and newsapi_enabled:
             url = "https://newsapi.org/v2/everything"
-            params = {"q": q, "language": "en", "sortBy": "publishedAt", "pageSize": 50, "from": start_date, "apiKey": newsapi}
+            params = {"q": q, "language": "en", "sortBy": "publishedAt", "pageSize": 25 if backfill else 50, "from": start_date, "apiKey": newsapi}
             data, hs, content, err, _ = request_get(url, params=params)
             p = write_bytes(raw / f"newsapi_{slug(q)}_{RUN_TS}.json", content)
-            add_record("NewsAPI everything", "news_api", full_url(url, params), q, "ok" if hs and hs < 400 else "error", hs, p, count_records(data), err)
+            status = "ok" if hs and hs < 400 else ("warning" if hs in (401, 403, 429) else "error")
+            add_record("NewsAPI everything", "news_api" if status != "warning" else "news_api_warning", full_url(url, params), q, status, hs, p, count_records(data), err, notes="non-core contextual source; warning is non-blocking")
             if isinstance(data, dict) and isinstance(data.get("articles"), list):
                 for item in data["articles"]:
                     item["_aq26_provider"] = "NewsAPI"
                     item["_aq26_query"] = q
                     articles.append(item)
 
-        if newsdata:
+        if newsdata and newsdata_enabled:
             url = "https://newsdata.io/api/1/news"
             params = {"apikey": newsdata, "q": q, "language": "en", "size": 10}
             data, hs, content, err, _ = request_get(url, params=params)
             p = write_bytes(raw / f"newsdata_{slug(q)}_{RUN_TS}.json", content)
-            add_record("NewsData.io news", "news_api", full_url(url, params), q, "ok" if hs and hs < 400 else "error", hs, p, count_records(data), err)
+            status = "ok" if hs and hs < 400 else ("warning" if hs in (401, 403, 429) else "error")
+            add_record("NewsData.io news", "news_api" if status != "warning" else "news_api_warning", full_url(url, params), q, status, hs, p, count_records(data), err, notes="non-core contextual source; warning is non-blocking")
             if isinstance(data, dict) and isinstance(data.get("results"), list):
                 for item in data["results"]:
                     item["_aq26_provider"] = "NewsData.io"
                     item["_aq26_query"] = q
                     articles.append(item)
 
-        elapsed = time.time() - LAST_GDELT
-        if elapsed < 12:
-            time.sleep(12 - elapsed)
-        url = "https://api.gdeltproject.org/api/v2/doc/doc"
-        params = {"query": q, "mode": "ArtList", "format": "json", "maxrecords": 50, "sort": "HybridRel"}
-        data, hs, content, err, _ = request_get(url, params=params, timeout=35)
-        LAST_GDELT = time.time()
-        if hs == 429:
-            time.sleep(20)
+        if gdelt_enabled:
+            elapsed = time.time() - LAST_GDELT
+            if elapsed < gdelt_min_seconds:
+                time.sleep(gdelt_min_seconds - elapsed)
+            url = "https://api.gdeltproject.org/api/v2/doc/doc"
+            params = {"query": q, "mode": "ArtList", "format": "json", "maxrecords": 25 if backfill else 50, "sort": "HybridRel"}
             data, hs, content, err, _ = request_get(url, params=params, timeout=35)
             LAST_GDELT = time.time()
-        p = write_bytes(raw / f"gdelt_{slug(q)}_{RUN_TS}.json", content)
-        if hs and hs < 400:
-            add_record("GDELT document API", "news_api", full_url(url, params), q, "ok", hs, p, count_records(data), err)
-        else:
-            add_warning("GDELT document API", q, hs, err, "Non-critical news provider warning; NewsAPI/NewsData remain primary.")
-            add_record("GDELT document API", "news_api_warning", full_url(url, params), q, "warning", hs, p, count_records(data), err, notes="non-critical warning")
+            if hs == 429:
+                time.sleep(gdelt_retry_seconds)
+                data, hs, content, err, _ = request_get(url, params=params, timeout=35)
+                LAST_GDELT = time.time()
+            p = write_bytes(raw / f"gdelt_{slug(q)}_{RUN_TS}.json", content)
+            if hs and hs < 400:
+                add_record("GDELT document API", "news_api", full_url(url, params), q, "ok", hs, p, count_records(data), err)
+            else:
+                add_warning("GDELT document API", q, hs, err, "Non-critical contextual provider warning; official/ground/satellite evidence remain primary.")
+                add_record("GDELT document API", "news_api_warning", full_url(url, params), q, "warning", hs, p, count_records(data), err, notes="non-critical warning; throttled contextual source")
 
-    write_json(out / "03_news_context" / "news_articles.json", {"run_ts": RUN_TS, "count": len(articles), "articles": articles})
+    write_json(out / "03_news_context" / "news_articles.json", {"run_ts": RUN_TS, "backfill_mode": backfill, "query_count": len(queries), "count": len(articles), "articles": articles})
     write_json(out / "03_news_context" / "news_provider_warnings.json", {"run_ts": RUN_TS, "warning_count": len(WARNINGS), "warnings": WARNINGS})
 
 
@@ -688,8 +724,9 @@ def harvest_cdse_auth_readiness(cfg, out):
 
 def harvest_gemini_summary(cfg, out):
     gcfg = cfg.get("optional_sources", {}).get("gemini", {})
+    backfill = is_backfill_mode()
     key = env_first("GEMINI_API_KEY")
-    model = env_first("GEMINI_MODEL") or "gemini-1.5-flash-latest"
+    model = env_first("AQ26_GEMINI_MODEL", "GEMINI_MODEL") or "gemini-3.5-flash"
     summary_input = {
         "run_ts": RUN_TS,
         "records": len(RECORDS),
@@ -699,8 +736,9 @@ def harvest_gemini_summary(cfg, out):
         "source_types": sorted(set(r.get("source_type", "") for r in RECORDS)),
         "controlled_use_boundary": "Neutral metadata-only summary. No raw evidence, no API keys, no causal attribution.",
     }
-    if not gcfg.get("enabled", True):
-        add_record("Gemini neutral metadata summary", "ai_summary", "gemini://disabled", "summary", "skipped", None, None, 0, notes="disabled in config")
+    enabled = env_bool("AQ26_GEMINI_ENABLED", default=bool(gcfg.get("enabled", False if backfill else True)))
+    if not enabled:
+        add_record("Gemini neutral metadata summary", "ai_summary", "gemini://disabled", "summary", "skipped", None, None, 0, notes="disabled for historical backfill unless AQ26_GEMINI_ENABLED=true")
         return
     if not key:
         p = write_json(out / "14_ai" / "gemini_summary.json", {
