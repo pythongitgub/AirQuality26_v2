@@ -1,4 +1,4 @@
-name: AQ26 WeeklyV2 Science Backfill V3.3
+name: AQ26 WeeklyV2 Science Backfill V3.3.1
 
 on:
   workflow_dispatch:
@@ -81,7 +81,7 @@ permissions:
   actions: read
 
 concurrency:
-  group: aq26-weeklyv2-science-backfill-v33
+  group: aq26-weeklyv2-science-backfill-v331
   cancel-in-progress: false
 
 env:
@@ -171,7 +171,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          pip install requests pyyaml pandas
+          pip install requests pyyaml pandas google-api-python-client google-auth google-auth-httplib2 google-auth-oauthlib
 
       - name: Secret alias diagnostics without values
         run: |
@@ -204,10 +204,10 @@ jobs:
             --backfill-limit-windows "$AQ26_BACKFILL_LIMIT_WINDOWS" \
             $STRICT_FLAG $EXTERNAL_FLAG $FORCE_FLAG
 
-      - name: Upload V3.3 site-data artifact
+      - name: Upload V3.3.1 site-data artifact
         uses: actions/upload-artifact@v4
         with:
-          name: aq26-weeklyv2-v33-site-data-${{ github.run_id }}
+          name: aq26-weeklyv2-v331-site-data-${{ github.run_id }}
           path: |
             site_public/data/**
             site_public/assets/aq26_charts_v3.js
@@ -216,7 +216,7 @@ jobs:
             outputs/99_integrity/**
           if-no-files-found: warn
 
-      - name: Commit generated V3.3 site data
+      - name: Commit generated V3.3.1 site data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -224,6 +224,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No generated changes to commit."
           else
-            git commit -m "AQ26 WeeklyV2 V3.3 science backfill and validation"
+            git commit -m "AQ26 WeeklyV2 V3.3.1 science backfill hardening"
             git push
           fi
