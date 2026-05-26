@@ -1,0 +1,47 @@
+provider:
+  id: laqn
+  name: "London Air Quality Network / Imperial ERG AirQuality API"
+  status: beta
+  homepage: "https://api.erg.ic.ac.uk/AirQuality/help"
+  base_url: "https://api.erg.ic.ac.uk/AirQuality"
+  licence_note: "Use subject to provider terms: https://api.erg.ic.ac.uk/AirQuality/Information/Terms/pdf"
+
+runtime:
+  enabled: true
+  timeout_seconds: 45
+  max_retries: 3
+  retry_backoff_seconds: 8
+  user_agent: "AQ26/3.4 LAQN provider probe"
+
+default_probe:
+  group_name: "London"
+  run_data_probe: false
+  # Leave blank to auto-select the first site/species pair from MonitoringSiteSpecies.
+  site_code: ""
+  species_code: ""
+  start_date: "2024-07-22"
+  end_date: "2024-07-23"
+  # LAQN examples use date strings such as "01 Jan 2012".
+  # This script tries compact "22Jul2024" first, then "22 Jul 2024".
+  date_formats:
+    - "%d%b%Y"
+    - "%d %b %Y"
+
+science:
+  provider_role: "validated_urban_comparator"
+  temporal_role_for_metadata: "reference_metadata"
+  temporal_role_for_data: "historical_observation"
+  source_confidence: "validated_monitoring_network"
+  provenance_level: "official_or_network_machine_readable"
+  external_grade_candidate: true
+  caveat: "LAQN is strongest as a London/urban comparator network for AQ26. Do not present it as Newhaven-specific evidence."
+
+outputs:
+  root: "outputs/31_laqn"
+  site_root: "site_public/data/providers/laqn"
+  source_records_json: "outputs/31_laqn/laqn_source_records.json"
+  species_json: "site_public/data/providers/laqn/species.json"
+  groups_json: "site_public/data/providers/laqn/groups.json"
+  sites_json: "site_public/data/providers/laqn/sites_london.json"
+  site_species_json: "site_public/data/providers/laqn/site_species_london.json"
+  index_health_advice_json: "site_public/data/providers/laqn/index_health_advice.json"
