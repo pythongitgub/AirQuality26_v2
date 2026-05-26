@@ -1,0 +1,125 @@
+name: AQ26 LAQN Provider Probe V3.4
+
+on:
+  workflow_dispatch:
+    inputs:
+      group_name:
+        description: "LAQN group name"
+        required: true
+        default: "London"
+        type: string
+      run_data_probe:
+        description: "Run tiny one-site/one-species historical data probe"
+        required: true
+        default: false
+        type: boolean
+      probe_site_code:
+        description: "Optional LAQN site code. Leave blank to auto-select from site/species metadata."
+        required: false
+        default: ""
+        type: string
+      probe_species_code:
+        description: "Optional LAQN species code. Leave blank to auto-select from site/species metadata."
+        required: false
+        default: ""
+        type: string
+      observation_start_date:
+        description: "Tiny data probe start date, ISO yyyy-mm-dd"
+        required: true
+        default: "2024-07-22"
+        type: string
+      observation_end_date:
+        description: "Tiny data probe end date, ISO yyyy-mm-dd"
+        required: true
+        default: "2024-07-23"
+        type: string
+      commit_outputs:
+        description: "Commit provider outputs back to the repository"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  laqn-provider-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    env:
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+      AQ26_USER_AGENT: "AQ26/3.4 LAQN provider probe contact=${{ secrets.MAIL_TO }}"
+      AQ26_LAQN_RUN_DATA_PROBE: ${{ inputs.run_data_probe }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install requirements
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f requirements-laqn.txt ]; then pip install -r requirements-laqn.txt; fi
+          python - <<'PY'
+          import requests, yaml
+          print("requests/yaml import OK")
+          PY
+
+      - name: Probe LAQN metadata and optional data sample
+        run: |
+          args=(
+            --repo-root .
+            --config configs/aq26_laqn.yml
+            --group-name "${{ inputs.group_name }}"
+            --start-date "${{ inputs.observation_start_date }}"
+            --end-date "${{ inputs.observation_end_date }}"
+          )
+          if [ "${{ inputs.run_data_probe }}" = "true" ]; then
+            args+=(--run-data-probe)
+          fi
+          if [ -n "${{ inputs.probe_site_code }}" ]; then
+            args+=(--site-code "${{ inputs.probe_site_code }}")
+          fi
+          if [ -n "${{ inputs.probe_species_code }}" ]; then
+            args+=(--species-code "${{ inputs.probe_species_code }}")
+          fi
+          python scripts/aq26_provider_laqn.py "${args[@]}"
+
+      - name: Upload LAQN provider artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-laqn-provider-probe
+          path: |
+            outputs/31_laqn/**
+            site_public/data/providers/laqn/**
+          if-no-files-found: error
+
+      - name: Commit LAQN provider outputs
+        if: ${{ inputs.commit_outputs }}
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add \
+            outputs/31_laqn \
+            site_public/data/providers/laqn \
+            configs/aq26_laqn.yml \
+            scripts/aq26_provider_laqn.py \
+            .github/workflows/aq26_laqn_probe.yml \
+            requirements-laqn.txt \
+            docs/laqn_provider_v34_notes.md \
+            README_AQ26_LAQN_V34.md
+          if git diff --cached --quiet; then
+            echo "No LAQN changes to commit"
+          else
+            git commit -m "Add AQ26 LAQN provider probe"
+            git push
+          fi
