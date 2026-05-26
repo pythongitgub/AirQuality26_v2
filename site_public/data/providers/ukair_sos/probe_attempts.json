@@ -1,29 +1,5 @@
 [
   {
-    "bytes": 949,
-    "content_type": "text/html;charset=utf-8",
-    "http_status": 404,
-    "looks_xml": true,
-    "sha256": "826e0211f70159fe08029e6bfd76c6ae993a1a7e89f3dc857f1bbd1ab4b71f11",
-    "url": "https://uk-air.defra.gov.uk/sos-ukair/api/v1/sos/kvp?service=SOS&request=GetCapabilities&AcceptVersions=2.0.0"
-  },
-  {
-    "bytes": 949,
-    "content_type": "text/html;charset=utf-8",
-    "http_status": 404,
-    "looks_xml": true,
-    "sha256": "826e0211f70159fe08029e6bfd76c6ae993a1a7e89f3dc857f1bbd1ab4b71f11",
-    "url": "https://uk-air.defra.gov.uk/sos-ukair/api/v1/sos/kvp?service=SOS&request=GetCapabilities&version=2.0.0"
-  },
-  {
-    "bytes": 949,
-    "content_type": "text/html;charset=utf-8",
-    "http_status": 404,
-    "looks_xml": true,
-    "sha256": "826e0211f70159fe08029e6bfd76c6ae993a1a7e89f3dc857f1bbd1ab4b71f11",
-    "url": "https://uk-air.defra.gov.uk/sos-ukair/api/v1/sos/kvp?service=SOS&request=GetCapabilities"
-  },
-  {
     "bytes": 12404625,
     "content_type": "application/xml;charset=UTF-8",
     "http_status": 200,

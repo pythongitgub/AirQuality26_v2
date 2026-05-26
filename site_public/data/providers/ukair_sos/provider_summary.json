@@ -1,0 +1,183 @@
+{
+  "counts": {
+    "observable_properties_unique": 176,
+    "observable_property_links": 2907,
+    "offerings": 2884,
+    "operations": 9,
+    "procedures_unique": 2884,
+    "response_formats_unique": 5
+  },
+  "operations": [
+    "Batch",
+    "DescribeSensor",
+    "GetCapabilities",
+    "GetDataAvailability",
+    "GetFeatureOfInterest",
+    "GetObservation",
+    "GetObservationById",
+    "GetResult",
+    "GetResultTemplate"
+  ],
+  "provider": "ukair_sos",
+  "raw_sha256": "d44434df39a1f8aaab3ce7a940e08b80df0ed5b423d4c3113544b1b460303f65",
+  "retrieved_at_utc": "2026-05-26T15:13:31Z",
+  "science_notes": [
+    "Capabilities readiness is confirmed; this is not yet observation harvesting.",
+    "Use explicit GetObservation/GetResult windows before adding UK-AIR SOS to pollutant timeseries.",
+    "The raw capabilities XML was compressed to avoid large uncompressed XML commits."
+  ],
+  "source_url": "https://uk-air.defra.gov.uk/sos-ukair/sos?service=SOS&request=GetCapabilities&AcceptVersions=2.0.0",
+  "status": "verified_capabilities_ready",
+  "top_pollutants": [
+    {
+      "count": 262,
+      "pollutant_code": "6001",
+      "pollutant_hint": "AQI_or_summary_indicator",
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001"
+    },
+    {
+      "count": 258,
+      "pollutant_code": "5",
+      "pollutant_hint": "PM10",
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5"
+    },
+    {
+      "count": 208,
+      "pollutant_code": "9",
+      "pollutant_hint": "NOx",
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/9"
+    },
+    {
+      "count": 207,
+      "pollutant_code": "8",
+      "pollutant_hint": "NO2",
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/8"
+    },
+    {
+      "count": 195,
+      "pollutant_code": "38",
+      "pollutant_hint": "PM2.5",
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/38"
+    },
+    {
+      "count": 124,
+      "pollutant_code": "7",
+      "pollutant_hint": "O3",
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/7"
+    },
+    {
+      "count": 80,
+      "pollutant_code": "1",
+      "pollutant_hint": "SO2",
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1"
+    },
+    {
+      "count": 72,
+      "pollutant_code": "6411",
+      "pollutant_hint": null,
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6411"
+    },
+    {
+      "count": 72,
+      "pollutant_code": "6410",
+      "pollutant_hint": null,
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6410"
+    },
+    {
+      "count": 67,
+      "pollutant_code": "6400",
+      "pollutant_hint": null,
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6400"
+    },
+    {
+      "count": 66,
+      "pollutant_code": "6401",
+      "pollutant_hint": null,
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6401"
+    },
+    {
+      "count": 45,
+      "pollutant_code": "20",
+      "pollutant_hint": "Benzene",
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/20"
+    },
+    {
+      "count": 33,
+      "pollutant_code": "5524",
+      "pollutant_hint": null,
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5524"
+    },
+    {
+      "count": 33,
+      "pollutant_code": "5525",
+      "pollutant_hint": null,
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5525"
+    },
+    {
+      "count": 33,
+      "pollutant_code": "5610",
+      "pollutant_hint": null,
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5610"
+    },
+    {
+      "count": 33,
+      "pollutant_code": "5417",
+      "pollutant_hint": null,
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5417"
+    },
+    {
+      "count": 33,
+      "pollutant_code": "5406",
+      "pollutant_hint": null,
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5406"
+    },
+    {
+      "count": 33,
+      "pollutant_code": "5522",
+      "pollutant_hint": null,
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5522"
+    },
+    {
+      "count": 33,
+      "pollutant_code": "5617",
+      "pollutant_hint": null,
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5617"
+    },
+    {
+      "count": 33,
+      "pollutant_code": "5626",
+      "pollutant_hint": null,
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5626"
+    },
+    {
+      "count": 33,
+      "pollutant_code": "5759",
+      "pollutant_hint": null,
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5759"
+    },
+    {
+      "count": 33,
+      "pollutant_code": "5381",
+      "pollutant_hint": null,
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5381"
+    },
+    {
+      "count": 33,
+      "pollutant_code": "5029",
+      "pollutant_hint": null,
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5029"
+    },
+    {
+      "count": 33,
+      "pollutant_code": "5488",
+      "pollutant_hint": null,
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5488"
+    },
+    {
+      "count": 33,
+      "pollutant_code": "5655",
+      "pollutant_hint": null,
+      "uri": "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5655"
+    }
+  ]
+}
