@@ -1,0 +1,62 @@
+project:
+  name: SCCNEXUS AirQuality26 WeeklyV2 Science Backfill V3.3
+  controlled_use_boundary: >
+    Controlled-review environmental intelligence only. No endorsement, regulatory determination,
+    health attribution, legal conclusion or causal claim is made.
+  target_review_audiences:
+    - World Health Organization (WHO)
+    - United Nations Environment Programme (UNEP)
+    - European Environment Agency (EEA)
+    - C40 Cities
+    - independent academic expert review
+
+history:
+  weeks: 104
+  auto_mode_default: earliest_missing
+  batch_limit_default: 4
+  missing_rows_are_evidence: false
+
+provider_policy:
+  historical_backfill:
+    newsapi_enabled_default: false
+    newsdata_enabled_default: false
+    gdelt_enabled_default: true
+    gdelt_min_seconds: 8
+    gdelt_query_limit: 2
+    gemini_enabled_default: false
+  evidence_priority_order:
+    - official_environmental_records
+    - ground_air_quality
+    - satellite_catalogue
+    - meteorology
+    - atmospheric_models
+    - contextual_news
+    - ai_summary
+
+scientific_gates:
+  external_submission_default: false
+  required_before_external_submission:
+    - redaction_ready
+    - ground_aq_ready
+    - openaq_ready
+    - satellite_catalogue_ready
+    - satellite_extraction_ready
+    - cams_data_ready
+    - official_document_review_ready
+    - target_control_comparison_ready
+    - uncertainty_and_confounder_review_ready
+
+readiness_semantics:
+  null: not_measured_or_not_harvested
+  false: measured_not_ready
+  true: measured_ready
+
+cdse_auth_order:
+  - CDSE_USERNAME + CDSE_PASSWORD
+  - CDSE_ID + CDSE_SECRET
+  - CDSE_CLIENT_ID + CDSE_CLIENT_SECRET
+
+outputs:
+  history_dir: site_public/data/history
+  weekly_index: site_public/data/weekly_index.json
+  validation: outputs/99_integrity/AQ26_WEEKLYV2_SCIENCE_V33_VALIDATION.json
