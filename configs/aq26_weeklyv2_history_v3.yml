@@ -1,11 +1,12 @@
-# AQ26 WeeklyV2 V3.1 historical backfill policy
-# This file is informational/configuration documentation for controlled GitHub Actions runs.
+# AQ26 WeeklyV2 V3.2 historical backfill policy
 history:
   weeks: 104
   default_end_date: "2026-05-25"
   window_convention: "start inclusive, end labelled upper bound, seven-day Monday-to-Monday slots"
   immutable_history_folder: "site_public/data/history"
   generated_public_index: "site_public/data/weekly_index.json"
+  latest_live_summary: "site_public/data/latest_live_summary.json"
+  latest_backfill_summary: "site_public/data/latest_backfill_summary.json"
   do_not_ingest_as_history:
     - "site_public/data/weekly_index.json"
     - "site_public/data/latest_summary.json"
@@ -27,5 +28,17 @@ backfill:
     - satellite_catalogue
     - weather_context
     - cams_if_configured
-    - news_context
-    - optional_ai_summary
+    - gdelt_context_optional_throttled
+    - optional_ai_summary_non_blocking
+  default_provider_policy:
+    newsapi_enabled_during_backfill: false
+    newsdata_enabled_during_backfill: false
+    gdelt_enabled_during_backfill: true
+    gdelt_min_seconds_between_requests: 6
+    backfill_news_query_limit: 3
+    gemini_enabled_during_backfill: false
+    gemini_default_model: "gemini-3.5-flash"
+rollups:
+  derive_drive_file_count_from_gdrive_source_record_count: true
+  derive_satellite_product_count_from_satellite_metadata_records: true
+  derive_news_warning_count_from_news_api_warning_records: true
