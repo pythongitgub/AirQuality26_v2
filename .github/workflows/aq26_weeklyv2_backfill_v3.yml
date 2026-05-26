@@ -1,0 +1,97 @@
+
+name: AQ26 WeeklyV2 Historical Backfill V3
+
+on:
+  workflow_dispatch:
+    inputs:
+      backfill_start_date:
+        description: 'Start date YYYY-MM-DD'
+        required: true
+        default: '2024-05-27'
+      backfill_end_date:
+        description: 'End date YYYY-MM-DD'
+        required: true
+        default: '2026-05-25'
+      backfill_limit_windows:
+        description: 'Number of weekly windows to process this run'
+        required: true
+        default: '4'
+      strict_validation:
+        description: 'Fail deployment if validation issues remain'
+        required: true
+        default: 'false'
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  backfill-and-build-site-data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    env:
+      AQ26_BACKFILL_START_DATE: ${{ inputs.backfill_start_date }}
+      AQ26_BACKFILL_END_DATE: ${{ inputs.backfill_end_date }}
+      AQ26_BACKFILL_LIMIT_WINDOWS: ${{ inputs.backfill_limit_windows }}
+      AQ26_HISTORY_WEEKS: '104'
+      AQ26_HISTORY_END_DATE: ${{ inputs.backfill_end_date }}
+      OPENAQ_API_KEY: ${{ secrets.OPENAQ_API_KEY }}
+      NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+      NEWSDATA_API_KEY: ${{ secrets.NEWSDATA_API_KEY }}
+      METOFFICE_API_KEY: ${{ secrets.METOFFICE_API_KEY }}
+      CAMS_API_KEY: ${{ secrets.CAMS_API_KEY }}
+      CAMS_ENDPOINT: ${{ secrets.CAMS_ENDPOINT }}
+      CDSE_CLIENT_ID: ${{ secrets.CDSE_CLIENT_ID }}
+      CDSE_CLIENT_SECRET: ${{ secrets.CDSE_CLIENT_SECRET }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pandas requests python-dateutil beautifulsoup4 lxml pyarrow || true
+      - name: Run controlled historical backfill batch
+        run: |
+          python scripts/aq26_weeklyv2_history_v3.py \
+            --repo-root . \
+            --output-root outputs \
+            --site-root site_public \
+            --history-weeks "$AQ26_HISTORY_WEEKS" \
+            --history-end-date "$AQ26_HISTORY_END_DATE" \
+            backfill-batch \
+            --backfill-start-date "$AQ26_BACKFILL_START_DATE" \
+            --backfill-end-date "$AQ26_BACKFILL_END_DATE" \
+            --backfill-limit-windows "$AQ26_BACKFILL_LIMIT_WINDOWS"
+      - name: Canonicalise weekly index and build chart feeds
+        run: |
+          STRICT_FLAG=""
+          if [ "${{ inputs.strict_validation }}" = "true" ]; then STRICT_FLAG="--strict"; fi
+          python scripts/aq26_weeklyv2_history_v3.py \
+            --repo-root . \
+            --output-root outputs \
+            --site-root site_public \
+            --history-weeks "$AQ26_HISTORY_WEEKS" \
+            --history-end-date "$AQ26_HISTORY_END_DATE" \
+            $STRICT_FLAG \
+            build-site-data
+      - name: Upload AQ26 V3 site data artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-weeklyv2-v3-site-data
+          path: |
+            site_public/data/**/*.json
+            site_public/assets/aq26_charts_v3.js
+            outputs/99_integrity/AQ26_WEEKLYV2_SITE_V3_VALIDATION.json
+      - name: Commit generated site data back to branch
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/aq26_weeklyv2_history_v3.py site_public/data site_public/assets/aq26_charts_v3.js outputs/99_integrity/AQ26_WEEKLYV2_SITE_V3_VALIDATION.json || true
+          git commit -m "AQ26 WeeklyV2 V3 historical index and chart feeds" || echo "No changes to commit"
+          git push || true
