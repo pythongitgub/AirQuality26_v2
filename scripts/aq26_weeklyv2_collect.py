@@ -681,10 +681,15 @@ def harvest_cdse_auth_readiness(cfg, out):
     if not ccfg.get("enabled", True):
         add_record("CDSE auth readiness", "satellite_auth", "cdse://disabled", "readiness", "skipped", None, None, 0, notes="disabled in config")
         return
+
+    # AQ26 V3.2.1: support the repository's existing secret names and the
+    # alternative names used by some Copernicus/CDSE examples. Scott confirmed
+    # CDSE_USERNAME + CDSE_PASSWORD have worked previously, so test that path
+    # first before attempting client-credentials aliases.
     username = env_first("CDSE_USERNAME")
     password = env_first("CDSE_PASSWORD")
-    client_id = env_first("CDSE_ID")
-    client_secret = env_first("CDSE_SECRET")
+    client_id = env_first("CDSE_ID", "CDSE_CLIENT_ID")
+    client_secret = env_first("CDSE_SECRET", "CDSE_CLIENT_SECRET")
     token_url = ccfg.get("token_url", "https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token")
     readiness = {
         "run_ts": RUN_TS,
@@ -692,34 +697,64 @@ def harvest_cdse_auth_readiness(cfg, out):
         "cdse_password_present": bool(password),
         "cdse_client_id_present": bool(client_id),
         "cdse_client_secret_present": bool(client_secret),
+        "cdse_username_password_ready": False,
+        "cdse_client_credentials_ready": False,
         "cdse_token_ready": False,
         "token_probe_attempted": False,
+        "auth_method_attempted": [],
         "http_status": None,
-        "notes": "No token value is stored. WeeklyV2 does not download CDSE products."
+        "notes": "No token value is stored. WeeklyV2 probes readiness only; product download/extraction is a later gate."
     }
-    if username and password:
-        # Public CDSE password-flow client is commonly cdse-public. If user has a client id, prefer it.
-        data = {
-            "grant_type": "password",
-            "username": username,
-            "password": password,
-            "client_id": client_id or "cdse-public",
-        }
+
+    def _post_token(method_name, data):
+        readiness["token_probe_attempted"] = True
+        readiness["auth_method_attempted"].append(method_name)
         try:
             r = requests.post(token_url, data=data, timeout=30)
-            readiness["token_probe_attempted"] = True
             readiness["http_status"] = r.status_code
             if r.ok:
                 js = r.json()
-                readiness["cdse_token_ready"] = bool(js.get("access_token"))
-                readiness["expires_in"] = js.get("expires_in")
+                if js.get("access_token"):
+                    readiness["cdse_token_ready"] = True
+                    readiness["expires_in"] = js.get("expires_in")
+                    readiness["auth_method_success"] = method_name
+                    return True
+                readiness["error"] = "Token response did not include access_token"
             else:
                 readiness["error"] = redact(r.text[:500])
         except Exception as exc:
-            readiness["token_probe_attempted"] = True
             readiness["error"] = redact(repr(exc))
+        return False
+
+    # 1) Known-good AQ26 path: username/password with public client. Try
+    # cdse-public first; if user supplied CDSE_ID and it differs, try that too.
+    if username and password:
+        client_candidates = []
+        for cid in ["cdse-public", client_id]:
+            if cid and cid not in client_candidates:
+                client_candidates.append(cid)
+        for cid in client_candidates:
+            ok = _post_token("username_password", {
+                "grant_type": "password",
+                "username": username,
+                "password": password,
+                "client_id": cid,
+            })
+            if ok:
+                readiness["cdse_username_password_ready"] = True
+                break
+
+    # 2) Fallback alias path: CDSE_ID/CDSE_SECRET or CDSE_CLIENT_ID/CDSE_CLIENT_SECRET.
+    if not readiness.get("cdse_token_ready") and client_id and client_secret:
+        ok = _post_token("client_credentials", {
+            "grant_type": "client_credentials",
+            "client_id": client_id,
+            "client_secret": client_secret,
+        })
+        readiness["cdse_client_credentials_ready"] = bool(ok)
+
     p = write_json(out / "15_optional_sources" / "cdse_auth_readiness.json", readiness)
-    add_record("CDSE auth readiness", "satellite_auth", token_url, "token_probe", "ok" if readiness.get("cdse_token_ready") else "warning", readiness.get("http_status"), p, 1, readiness.get("error", ""), notes="token readiness only; access token not stored")
+    add_record("CDSE auth readiness", "satellite_auth", token_url, "token_probe", "ok" if readiness.get("cdse_token_ready") else "warning", readiness.get("http_status"), p, 1, readiness.get("error", ""), notes="auth probe order: CDSE_USERNAME/CDSE_PASSWORD then CDSE_ID/CDSE_SECRET aliases; token is not stored")
 
 
 def harvest_gemini_summary(cfg, out):

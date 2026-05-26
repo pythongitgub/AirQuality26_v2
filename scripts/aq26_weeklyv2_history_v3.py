@@ -525,24 +525,50 @@ def run_backfill_batch(args: argparse.Namespace) -> int:
     output = Path(args.output_root).resolve()
     site = Path(args.site_root).resolve()
     end = parse_date(args.backfill_end_date) or parse_date(args.history_end_date) or dt.date.today()
-    start = parse_date(args.backfill_start_date) or (end - dt.timedelta(days=7 * args.history_weeks))
-    if start >= end:
-        raise ValueError("backfill_start_date must be earlier than backfill_end_date")
-    windows: List[Tuple[str, str]] = []
-    cur = start
-    while cur < end:
-        nxt = min(cur + dt.timedelta(days=7), end)
-        windows.append((cur.isoformat(), nxt.isoformat()))
-        cur = nxt
-    if args.backfill_limit_windows:
-        windows = windows[:args.backfill_limit_windows]
-    print(f"[backfill] windows={len(windows)} range={start}..{end}")
+    requested_start = str(args.backfill_start_date or "").strip().lower()
+
+    # AQ26 V3.2.1: support backfill_start_date=auto/next and, even with a
+    # manual older start date, select the next missing immutable week files
+    # before applying the run limit. This prevents accidental repeat-skip runs.
+    if requested_start in {"auto", "next", "next-missing", "first-missing"}:
+        spine = make_week_slots(end, args.history_weeks)
+        missing = []
+        for slot in spine:
+            s0, e0 = slot["date_window"]["start"], slot["date_window"]["end"]
+            target = site / "data" / "history" / f"week_{s0}_{e0}.json"
+            if not target.exists() or args.force:
+                missing.append((s0, e0))
+        if not missing:
+            print("[backfill] no missing weekly history slots remain in the canonical spine")
+            return 0
+        windows = missing[: args.backfill_limit_windows or len(missing)]
+        print(f"[backfill] auto-selected {len(windows)} missing windows from canonical {args.history_weeks}-week spine ending {end}")
+    else:
+        start = parse_date(args.backfill_start_date) or (end - dt.timedelta(days=7 * args.history_weeks))
+        if start >= end:
+            raise ValueError("backfill_start_date must be earlier than backfill_end_date")
+        all_windows: List[Tuple[str, str]] = []
+        cur = start
+        while cur < end:
+            nxt = min(cur + dt.timedelta(days=7), end)
+            all_windows.append((cur.isoformat(), nxt.isoformat()))
+            cur = nxt
+        if args.force:
+            windows = all_windows[: args.backfill_limit_windows or len(all_windows)]
+        else:
+            windows = []
+            for start_s, end_s in all_windows:
+                target = site / "data" / "history" / f"week_{start_s}_{end_s}.json"
+                if target.exists():
+                    print(f"[backfill] SKIP existing {target}")
+                    continue
+                windows.append((start_s, end_s))
+                if args.backfill_limit_windows and len(windows) >= args.backfill_limit_windows:
+                    break
+        print(f"[backfill] selected_windows={len(windows)} requested_range={start}..{end} force={args.force}")
+
     failures = []
     for start_s, end_s in windows:
-        target = site / "data" / "history" / f"week_{start_s}_{end_s}.json"
-        if target.exists() and not args.force:
-            print(f"[backfill] SKIP existing {target}")
-            continue
         rc = run_existing_pipeline_for_window(repo, output, site, start_s, end_s, args.config, dry_run=args.dry_run)
         if rc:
             failures.append((start_s, end_s, rc))
