@@ -1,0 +1,31 @@
+# AQ26 WeeklyV2 V3.1 historical backfill policy
+# This file is informational/configuration documentation for controlled GitHub Actions runs.
+history:
+  weeks: 104
+  default_end_date: "2026-05-25"
+  window_convention: "start inclusive, end labelled upper bound, seven-day Monday-to-Monday slots"
+  immutable_history_folder: "site_public/data/history"
+  generated_public_index: "site_public/data/weekly_index.json"
+  do_not_ingest_as_history:
+    - "site_public/data/weekly_index.json"
+    - "site_public/data/latest_summary.json"
+    - "site_public/data/source_records_latest.json"
+    - "site_public/data/charts/*.json"
+validation:
+  require_exact_week_count: true
+  fail_on_duplicate_windows: true
+  fail_on_harvested_zero_records: true
+  fail_on_generated_aggregate_source: true
+  fail_on_unreadable_csv: true
+  external_submission_ready_requires_all_science_gates: true
+backfill:
+  batch_weeks_recommended: 4
+  force_rebuild_default: false
+  source_priority:
+    - openaq_ground_aq
+    - official_ea_defra_data_gov
+    - satellite_catalogue
+    - weather_context
+    - cams_if_configured
+    - news_context
+    - optional_ai_summary
