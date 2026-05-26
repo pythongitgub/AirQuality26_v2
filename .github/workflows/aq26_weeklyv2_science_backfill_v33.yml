@@ -1,0 +1,229 @@
+name: AQ26 WeeklyV2 Science Backfill V3.3
+
+on:
+  workflow_dispatch:
+    inputs:
+      backfill_start_date:
+        description: "YYYY-MM-DD or auto"
+        required: true
+        default: "auto"
+      auto_mode:
+        description: "earliest_missing is recommended for systematic historical backfill"
+        required: true
+        type: choice
+        options:
+          - earliest_missing
+          - latest_missing
+          - chronological
+          - reverse_chronological
+        default: earliest_missing
+      backfill_end_date:
+        description: "Last allowed backfill window end date"
+        required: true
+        default: "2026-05-25"
+      backfill_limit_windows:
+        description: "Number of missing weekly windows to harvest in this run"
+        required: true
+        default: "4"
+      history_end_date:
+        description: "Public archive end date"
+        required: true
+        default: "2026-05-25"
+      history_weeks:
+        description: "Number of public weekly rows"
+        required: true
+        default: "104"
+      newsapi_enabled:
+        description: "Enable NewsAPI during historical backfill; false recommended"
+        required: true
+        type: choice
+        options: ["false", "true"]
+        default: "false"
+      newsdata_enabled:
+        description: "Enable NewsData.io during historical backfill; false recommended"
+        required: true
+        type: choice
+        options: ["false", "true"]
+        default: "false"
+      gdelt_enabled:
+        description: "Enable GDELT contextual news; true with throttling is acceptable"
+        required: true
+        type: choice
+        options: ["true", "false"]
+        default: "true"
+      gemini_enabled:
+        description: "Enable Gemini narrative summary; false recommended during evidence backfill"
+        required: true
+        type: choice
+        options: ["false", "true"]
+        default: "false"
+      strict_validation:
+        description: "Fail workflow if validation has errors"
+        required: true
+        type: choice
+        options: ["true", "false"]
+        default: "true"
+      external_grade_validation:
+        description: "Treat harvested weeks with source errors as failing validation"
+        required: true
+        type: choice
+        options: ["false", "true"]
+        default: "false"
+      force:
+        description: "Force re-run existing history windows"
+        required: true
+        type: choice
+        options: ["false", "true"]
+        default: "false"
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: aq26-weeklyv2-science-backfill-v33
+  cancel-in-progress: false
+
+env:
+  PYTHONUNBUFFERED: "1"
+  AQ26_HISTORY_END_DATE: ${{ inputs.history_end_date }}
+  AQ26_HISTORY_WEEKS: ${{ inputs.history_weeks }}
+  AQ26_BACKFILL_START_DATE: ${{ inputs.backfill_start_date }}
+  AQ26_BACKFILL_END_DATE: ${{ inputs.backfill_end_date }}
+  AQ26_BACKFILL_LIMIT_WINDOWS: ${{ inputs.backfill_limit_windows }}
+  AQ26_BACKFILL_AUTO_MODE: ${{ inputs.auto_mode }}
+  AQ26_BACKFILL_FORCE: ${{ inputs.force }}
+  AQ26_STRICT_VALIDATION: ${{ inputs.strict_validation }}
+  AQ26_EXTERNAL_GRADE_VALIDATION: ${{ inputs.external_grade_validation }}
+  AQ26_NEWSAPI_ENABLED: ${{ inputs.newsapi_enabled }}
+  AQ26_NEWSDATA_ENABLED: ${{ inputs.newsdata_enabled }}
+  AQ26_GDELT_ENABLED: ${{ inputs.gdelt_enabled }}
+  AQ26_GDELT_MIN_SECONDS: "8"
+  AQ26_BACKFILL_NEWS_QUERY_LIMIT: "2"
+  AQ26_GEMINI_ENABLED: ${{ inputs.gemini_enabled }}
+  AQ26_GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+  GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+
+  # AQ provider secrets
+  OPENAQ_API_KEY: ${{ secrets.OPENAQ_API_KEY }}
+  WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
+  OPENWEATHER_KEY: ${{ secrets.OPENWEATHER_KEY }}
+  PURPLE_AIR_API_KEY: ${{ secrets.PURPLE_AIR_API_KEY }}
+
+  # Met Office aliases
+  METOFFICE_API_KEY: ${{ secrets.METOFFICE_API_KEY }}
+  MET_OFFICE_API_KEY: ${{ secrets.MET_OFFICE_API_KEY }}
+  MET_OFFICE_LAND_OBSERVATIONS: ${{ secrets.MET_OFFICE_LAND_OBSERVATIONS }}
+
+  # News aliases
+  NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+  NEWSAPI_KEY: ${{ secrets.NEWS_API_KEY }}
+  NEWS_DATA_IO_KEY: ${{ secrets.NEWS_DATA_IO_KEY }}
+  NEWSDATA_API_KEY: ${{ secrets.NEWS_DATA_IO_KEY }}
+  SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
+
+  # Satellite/model aliases
+  CAMS_API_KEY: ${{ secrets.CAMS_API_KEY }}
+  EARTH_DATA_API_KEY: ${{ secrets.EARTH_DATA_API_KEY }}
+  CDSE_USERNAME: ${{ secrets.CDSE_USERNAME }}
+  CDSE_PASSWORD: ${{ secrets.CDSE_PASSWORD }}
+  CDSE_ID: ${{ secrets.CDSE_ID }}
+  CDSE_SECRET: ${{ secrets.CDSE_SECRET }}
+  CDSE_CLIENT_ID: ${{ secrets.CDSE_ID }}
+  CDSE_CLIENT_SECRET: ${{ secrets.CDSE_SECRET }}
+
+  # Google Drive
+  GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+  GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
+
+  # Gemini
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+  # Email/deploy available to other scripts if called later
+  MAIL_FROM: ${{ secrets.MAIL_FROM }}
+  MAIL_TO: ${{ secrets.MAIL_TO }}
+  SMTP_HOST: ${{ secrets.SMTP_HOST }}
+  SMTP_PORT: ${{ secrets.SMTP_PORT }}
+  SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+  SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+  HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+  SCCNEXUS_SSH_HOST: ${{ secrets.SCCNEXUS_SSH_HOST }}
+  SCCNEXUS_SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
+  SCCNEXUS_SSH_USERNAME: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
+  SCCNEXUS_SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
+
+jobs:
+  science-backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install requirements
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install requests pyyaml pandas
+
+      - name: Secret alias diagnostics without values
+        run: |
+          python scripts/aq26_weeklyv2_science_backfill_v33.py diagnose-secrets \
+            --repo-root . \
+            --output-root outputs \
+            --site-root site_public \
+            --history-end-date "$AQ26_HISTORY_END_DATE" \
+            --history-weeks "$AQ26_HISTORY_WEEKS"
+
+      - name: Run controlled science backfill batch
+        run: |
+          STRICT_FLAG=""
+          if [ "$AQ26_STRICT_VALIDATION" = "true" ]; then STRICT_FLAG="--strict"; fi
+          EXTERNAL_FLAG=""
+          if [ "$AQ26_EXTERNAL_GRADE_VALIDATION" = "true" ]; then EXTERNAL_FLAG="--external-grade-validation"; fi
+          FORCE_FLAG=""
+          if [ "$AQ26_BACKFILL_FORCE" = "true" ]; then FORCE_FLAG="--force"; fi
+          python scripts/aq26_weeklyv2_science_backfill_v33.py run-batch \
+            --repo-root . \
+            --collector-script scripts/aq26_weeklyv2_collect.py \
+            --config configs/aq26_weekly_v2_sources.yml \
+            --output-root outputs \
+            --site-root site_public \
+            --history-end-date "$AQ26_HISTORY_END_DATE" \
+            --history-weeks "$AQ26_HISTORY_WEEKS" \
+            --backfill-start-date "$AQ26_BACKFILL_START_DATE" \
+            --auto-mode "$AQ26_BACKFILL_AUTO_MODE" \
+            --backfill-end-date "$AQ26_BACKFILL_END_DATE" \
+            --backfill-limit-windows "$AQ26_BACKFILL_LIMIT_WINDOWS" \
+            $STRICT_FLAG $EXTERNAL_FLAG $FORCE_FLAG
+
+      - name: Upload V3.3 site-data artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-weeklyv2-v33-site-data-${{ github.run_id }}
+          path: |
+            site_public/data/**
+            site_public/assets/aq26_charts_v3.js
+            outputs/10_historical_backfill/**
+            outputs/98_logs/**
+            outputs/99_integrity/**
+          if-no-files-found: warn
+
+      - name: Commit generated V3.3 site data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site_public/data site_public/assets/aq26_charts_v3.js outputs/10_historical_backfill outputs/99_integrity || true
+          if git diff --cached --quiet; then
+            echo "No generated changes to commit."
+          else
+            git commit -m "AQ26 WeeklyV2 V3.3 science backfill and validation"
+            git push
+          fi
