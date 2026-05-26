@@ -1,7 +1,26 @@
-name: AQ26 UK-AIR SOS Provider Probe
+name: AQ26 UK-AIR SOS Provider Probe V3.4
 
 on:
   workflow_dispatch:
+    inputs:
+      run_observation_probe:
+        description: "Run a very small GetObservation probe after capabilities parsing"
+        required: true
+        default: "false"
+        type: choice
+        options: ["false", "true"]
+      observation_start_date:
+        description: "Observation probe start date"
+        required: true
+        default: "2024-07-22"
+      observation_end_date:
+        description: "Observation probe end date"
+        required: true
+        default: "2024-07-23"
+      observation_limit:
+        description: "Maximum GetObservation probe calls"
+        required: true
+        default: "3"
 
 permissions:
   contents: write
@@ -10,10 +29,13 @@ permissions:
 jobs:
   ukair-sos-probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     env:
-      AQ26_USER_AGENT: "AQ26/3.4 scientific-backfill contact=${{ secrets.MAIL_TO }}"
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      AQ26_USER_AGENT: "AQ26/3.4 ukair-sos scientific-backfill contact=${{ secrets.MAIL_TO }}"
+      AQ26_UKAIR_SOS_CAPABILITIES_URL: "https://uk-air.defra.gov.uk/sos-ukair/sos"
+      AQ26_UKAIR_SOS_MAX_OFFERINGS_SITE: "500"
 
     steps:
       - name: Checkout
@@ -31,29 +53,56 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Probe UK-AIR SOS
+      - name: Probe UK-AIR SOS capabilities
         run: |
           python scripts/aq26_provider_ukair_sos.py \
             --repo-root . \
             --out-root outputs/30_ukair_sos \
-            --site-root site_public/data/providers/ukair_sos
+            --site-root site_public/data/providers/ukair_sos \
+            --capabilities-url "$AQ26_UKAIR_SOS_CAPABILITIES_URL"
+
+      - name: Optional UK-AIR SOS observation probe
+        if: ${{ github.event.inputs.run_observation_probe == 'true' }}
+        run: |
+          python scripts/aq26_provider_ukair_sos_observations.py \
+            --repo-root . \
+            --start-date "${{ github.event.inputs.observation_start_date }}" \
+            --end-date "${{ github.event.inputs.observation_end_date }}" \
+            --limit "${{ github.event.inputs.observation_limit }}"
 
       - name: Upload UK-AIR SOS artifact
         uses: actions/upload-artifact@v4
         with:
-          name: aq26-ukair-sos-provider-probe
+          name: aq26-ukair-sos-provider-probe-v34
           path: |
             outputs/30_ukair_sos/**
             site_public/data/providers/ukair_sos/**
 
-      - name: Commit UK-AIR SOS provider outputs
+      - name: Commit lightweight UK-AIR SOS provider outputs
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add outputs/30_ukair_sos site_public/data/providers/ukair_sos configs/aq26_ukair_sos.yml scripts/aq26_provider_ukair_sos.py .github/workflows/aq26_ukair_sos_probe.yml requirements.txt
+
+          # Keep compact parsed inventories in Git. Raw compressed XML and full offering inventory are useful artifacts,
+          # but can be large, so only add them if they are already tracked.
+          git add configs/aq26_ukair_sos.yml \
+                  scripts/aq26_provider_ukair_sos.py \
+                  scripts/aq26_provider_ukair_sos_observations.py \
+                  .github/workflows/aq26_ukair_sos_probe.yml \
+                  requirements.txt \
+                  outputs/30_ukair_sos/ukair_sos_probe_attempts.json \
+                  outputs/30_ukair_sos/ukair_sos_capabilities_parsed.json \
+                  outputs/30_ukair_sos/ukair_sos_source_records.json \
+                  outputs/30_ukair_sos/ukair_sos_observation_probe_urls.json \
+                  site_public/data/providers/ukair_sos || true
+
+          if git ls-files --error-unmatch outputs/30_ukair_sos/ukair_sos_capabilities.xml >/dev/null 2>&1; then
+            git rm -f outputs/30_ukair_sos/ukair_sos_capabilities.xml || true
+          fi
+
           if git diff --cached --quiet; then
             echo "No UK-AIR SOS changes to commit"
           else
-            git commit -m "Add AQ26 UK-AIR SOS provider probe"
+            git commit -m "AQ26 UK-AIR SOS V3.4 verified provider inventories"
             git push
           fi
