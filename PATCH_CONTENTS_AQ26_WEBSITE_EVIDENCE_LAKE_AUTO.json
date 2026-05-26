@@ -1,0 +1,17 @@
+{
+  "patch": "aq26_website_evidence_lake_auto_patch_260526",
+  "files": [
+    "PATCH_CONTENTS_AQ26_WEBSITE_EVIDENCE_LAKE_AUTO.json",
+    "scripts/aq26_weeklyv2_build_sccnexus_site.py",
+    "scripts/aq26_drive_evidence_exporter.py",
+    "scripts/aq26_laqn_historical_harvest_checkpointed.py",
+    "docs/AQ26_WEBSITE_EVIDENCE_LAKE_PLACEMENT.md",
+    "configs/aq26_drive_evidence_lake.json",
+    "notebooks/AQ26_33A_Google_Drive_Evidence_Lake_Exporter.ipynb",
+    "site_public/assets/aq26_evidence_lake.js",
+    "site_public/data/providers/laqn/evidence_lake/latest_index.json",
+    ".github/workflows/aq26_weekly_v2_sccnexus_website.yml",
+    ".github/workflows/aq26_evidence_lake_package.yml",
+    ".github/workflows/aq26_deploy_site_hostinger.yml"
+  ]
+}

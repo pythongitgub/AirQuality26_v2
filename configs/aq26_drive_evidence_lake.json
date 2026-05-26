@@ -1,0 +1,23 @@
+{
+  "project": "AirQuality26",
+  "recommended_drive_root": "/content/drive/MyDrive/SCC_NEXUS_100GB_ROOT/PROJECTS/AirQuality26",
+  "recommended_repo_root": "/content/drive/MyDrive/SCC_NEXUS_100GB_ROOT/PROJECTS/AirQuality26/repo/AirQuality26_v2",
+  "provider_exports": {
+    "laqn": {
+      "source_subdir": "outputs/31_laqn",
+      "site_public_subdir": "site_public/data/providers/laqn/evidence_lake",
+      "priority_species": ["NO2", "PM25", "PM10", "O3", "SO2", "CO"],
+      "default_probe_start_date": "2024-07-22",
+      "default_probe_end_date": "2024-07-23"
+    },
+    "earthdata": {
+      "source_subdir": "outputs/32_earthdata_cmr",
+      "site_public_subdir": "site_public/data/providers/earthdata/evidence_lake"
+    }
+  },
+  "storage_policy": {
+    "github": ["scripts", "configs", ".github/workflows", "docs", "small site_ready JSON", "manifests"],
+    "google_drive": ["raw API responses", "large CSV/parquet", "audit archives", "historical snapshots", "run manifests"],
+    "website": ["small compressed JSON", "summary cards", "chart-safe tables", "maps and provenance summaries"]
+  }
+}

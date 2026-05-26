@@ -1,0 +1,14 @@
+{
+  "provider": "laqn",
+  "status": "pending",
+  "created_at_utc": "placeholder - replaced by AQ26 Evidence Lake Package",
+  "run_ts": "not_yet_exported",
+  "counts": {
+    "total_files": 0,
+    "total_bytes": 0,
+    "site_ready_files": 0,
+    "raw_files": 0
+  },
+  "files": [],
+  "note": "This compact website placeholder is safe to publish. It is replaced by scripts/aq26_drive_evidence_exporter.py when the evidence-lake package workflow runs."
+}
