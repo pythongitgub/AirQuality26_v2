@@ -1,0 +1,24 @@
+[
+  {
+    "notes": "No secret values are printed or persisted. This confirms whether GitHub Actions can authenticate via environment secrets.",
+    "provenance_level": "credential_runtime_check_no_secret_values_written",
+    "provider": "NASA Earthdata Login / earthaccess",
+    "record_count": 1,
+    "retrieved_at_utc": "2026-05-26T20:30:01Z",
+    "source_class": "credential_smoke_test",
+    "source_type": "nasa_earthdata_login",
+    "status": "ok",
+    "title": "Earthdata GitHub Actions credential smoke test"
+  },
+  {
+    "notes": "CMR catalogue discovery does not require Earthdata Login, but it verifies network/API behaviour from GitHub Actions.",
+    "provenance_level": "official_machine_readable_catalogue",
+    "provider": "NASA Common Metadata Repository",
+    "record_count": 3,
+    "retrieved_at_utc": "2026-05-26T20:30:01Z",
+    "source_class": "public_catalogue_smoke_test",
+    "source_type": "nasa_earthdata_cmr",
+    "status": "ok",
+    "title": "CMR public collection and granule smoke test"
+  }
+]

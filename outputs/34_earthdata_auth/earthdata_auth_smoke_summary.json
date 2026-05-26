@@ -1,0 +1,64 @@
+{
+  "cmr_public_discovery_test": {
+    "collection_entries": 3,
+    "collections_http": {
+      "bytes": 29816,
+      "content_type": "application/json;charset=utf-8",
+      "http_status": 200,
+      "ok": true,
+      "sha256": "a49ed177fe4450509bd8cb4580d650631a0760cba6133411d494737c74d8cdb5",
+      "url": "https://cmr.earthdata.nasa.gov/search/collections.json?keyword=air+quality&page_size=3&has_granules=true"
+    },
+    "first_collection_id": "C1693440801-GES_DISC",
+    "granule_entries": 2,
+    "granules_http": {
+      "bytes": 6981,
+      "content_type": "application/json;charset=utf-8",
+      "http_status": 200,
+      "ok": true,
+      "sha256": "c56fbf4c6531eae038c684223864bc66bc3c7629686948736c5fde9dcf649e71",
+      "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C1693440801-GES_DISC&page_size=2"
+    },
+    "status": "ok"
+  },
+  "earthaccess_environment_login_test": {
+    "auth_object_type": "Auth",
+    "status": "ok"
+  },
+  "earthdata_token_profile_probe": {
+    "bytes": 98,
+    "content_type": "application/json; charset=utf-8",
+    "http_status": 401,
+    "note": "Bearer-token profile probe is informational; username/password earthaccess login is the primary GitHub credential test.",
+    "status": "warning"
+  },
+  "generated_utc": "2026-05-26T20:30:01Z",
+  "interpretation": {
+    "next_step": "Run CMR discovery first; only test tiny selected OPeNDAP/download subsets after a product is chosen.",
+    "ready_for_authenticated_earthaccess_workflows": true,
+    "ready_for_cmr_discovery": true,
+    "ready_for_large_downloads": false
+  },
+  "provider": "nasa_earthdata_auth_smoke_test",
+  "secrets_safe_state": [
+    {
+      "length_bucket": "1-20",
+      "name": "EARTHDATA_USERNAME",
+      "non_empty": true,
+      "present": true
+    },
+    {
+      "length_bucket": "1-20",
+      "name": "EARTHDATA_PASSWORD",
+      "non_empty": true,
+      "present": true
+    },
+    {
+      "length_bucket": "81+",
+      "name": "EARTHDATA_TOKEN",
+      "non_empty": true,
+      "present": true
+    }
+  ],
+  "status": "ok"
+}
