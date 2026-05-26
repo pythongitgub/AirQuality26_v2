@@ -1,0 +1,15 @@
+{
+  "_meta": {
+    "bytes": 328,
+    "content_type": "application/json;charset=utf-8",
+    "http_status": 200,
+    "sha256": "400aefcdc0d68c23a04026000803dd71788cadd77507fbe92e4d861ef4927468",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C1693440838-GES_DISC&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=3&sort_key=-start_date"
+  },
+  "feed": {
+    "entry": [],
+    "id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?collection_concept_id=C1693440838-GES_DISC&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=3&sort_key=-start_date",
+    "title": "ECHO granule metadata",
+    "updated": "2026-05-26T20:36:33.067Z"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "_meta": {
+    "bytes": 3265,
+    "content_type": "application/json;charset=utf-8",
+    "http_status": 200,
+    "sha256": "c029b51fc30d99c89dddc0432ca54edfb472d55d3a1e69e2800204662caeeb2c",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2503251631-GES_DISC&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=3&sort_key=-start_date"
+  },
+  "feed": {
+    "entry": [
+      {
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "collection_concept_id": "C2503251631-GES_DISC",
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "Multi-Satellite Air Quality Sulfur Dioxide (SO2) Database Long-Term L4 Global V2 (MSAQSO2L4) at GES DISC",
+        "day_night_flag": "UNSPECIFIED",
+        "granule_size": "1.605443954467773",
+        "id": "G3587574118-GES_DISC",
+        "links": [
+          {
+            "href": "https://data.gesdisc.earthdata.nasa.gov/data/SO2/MSAQSO2L4.2/MSAQSO2L4_2005-2024_v02-00_20250629.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MSAQSO2L4_2005-2024_v02-00_20250629.nc"
+          },
+          {
+            "href": "s3://gesdisc-cumulus-prod-protected/SO2/MSAQSO2L4.2/MSAQSO2L4_2005-2024_v02-00_20250629.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule"
+          },
+          {
+            "href": "https://measures.gesdisc.eosdis.nasa.gov/opendap/SO2/MSAQSO2L4.2/MSAQSO2L4_2005-2024_v02-00_20250629.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "type": "application/x-netcdf"
+          },
+          {
+            "href": "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/MSAQSO2L4_2.html",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://measures.gesdisc.eosdis.nasa.gov/data/SO2/MSAQSO2L4.2",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://measures.gesdisc.eosdis.nasa.gov/opendap/SO2/MSAQSO2L4.2",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/about/competitive-programs/measures/multi-decadal-sulfur-dioxide-climatology-satellite-instruments",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/MEaSUREs/Krotkov/README.MSAQSO2L4.V2.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://so2.gsfc.nasa.gov/measures.html",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C2503251631-GES_DISC",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "original_format": "ECHO10",
+        "producer_granule_id": "MSAQSO2L4_2005-2024_v02-00_20250629.nc",
+        "time_end": "2024-12-31T23:59:59.000Z",
+        "time_start": "2005-01-01T00:00:00.000Z",
+        "title": "MSAQSO2L4.2:MSAQSO2L4_2005-2024_v02-00_20250629.nc",
+        "updated": "2025-06-30T22:34:51.000Z"
+      }
+    ],
+    "id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?collection_concept_id=C2503251631-GES_DISC&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=3&sort_key=-start_date",
+    "title": "ECHO granule metadata",
+    "updated": "2026-05-26T20:36:31.752Z"
+  }
+}

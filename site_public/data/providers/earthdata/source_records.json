@@ -1,0 +1,28 @@
+[
+  {
+    "notes": "Discovery only. Do not treat catalogue candidates as extracted pollutant observations.",
+    "output_path": "outputs/32_earthdata/collection_candidates.json",
+    "provenance_level": "official_machine_readable_catalogue",
+    "provider": "NASA Earthdata Common Metadata Repository",
+    "record_count": 10,
+    "retrieved_at_utc": "2026-05-26T20:36:33Z",
+    "source_class": "satellite_or_reanalysis_discovery",
+    "source_type": "nasa_earthdata_cmr",
+    "status": "ok",
+    "temporal_role": "catalogue_discovery",
+    "title": "NASA Earthdata CMR air-quality collection discovery"
+  },
+  {
+    "notes": "Tiny granule probe only. Next stage should select a small subset via Earthdata Login/OPeNDAP.",
+    "output_path": "outputs/32_earthdata/granule_candidates.json",
+    "provenance_level": "official_machine_readable_catalogue",
+    "provider": "NASA Earthdata Common Metadata Repository",
+    "record_count": 19,
+    "retrieved_at_utc": "2026-05-26T20:36:33Z",
+    "source_class": "satellite_or_reanalysis_discovery",
+    "source_type": "nasa_earthdata_cmr",
+    "status": "ok",
+    "temporal_role": "granule_discovery",
+    "title": "NASA Earthdata CMR air-quality granule probe"
+  }
+]

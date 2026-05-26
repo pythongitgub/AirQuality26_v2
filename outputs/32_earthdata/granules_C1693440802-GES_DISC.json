@@ -1,0 +1,298 @@
+{
+  "_meta": {
+    "bytes": 10470,
+    "content_type": "application/json;charset=utf-8",
+    "http_status": 200,
+    "sha256": "a4660c36513d13a592a3c218d8f3821029c206713ce1887e76f57bd50be34ca4",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C1693440802-GES_DISC&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=3&sort_key=-start_date"
+  },
+  "feed": {
+    "entry": [
+      {
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "collection_concept_id": "C1693440802-GES_DISC",
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Specific Quality Control Gridded Daily V2 (SNDRAQIL3SDCCP) at GES DISC",
+        "day_night_flag": "UNSPECIFIED",
+        "granule_size": "211.684154510498",
+        "id": "G4193271005-GES_DISC",
+        "links": [
+          {
+            "href": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/2026/SNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161902.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download SNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161902.nc"
+          },
+          {
+            "href": "s3://gesdisc-cumulus-prod-protected/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/2026/SNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161902.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule"
+          },
+          {
+            "href": "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)"
+          },
+          {
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1693440802-GES_DISC/granules/SNDRAQIL3SDCCP.2%3ASNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161902.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3SDCCP_2.html",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://airs.jpl.nasa.gov/index.html",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1693440802-GES_DISC",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "original_format": "ECHO10",
+        "producer_granule_id": "SNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161902.nc",
+        "time_end": "2026-03-25T00:00:00.000Z",
+        "time_start": "2026-03-24T00:00:00.000Z",
+        "title": "SNDRAQIL3SDCCP.2:SNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161902.nc",
+        "updated": "2026-05-21T16:55:09.000Z"
+      },
+      {
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "collection_concept_id": "C1693440802-GES_DISC",
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Specific Quality Control Gridded Daily V2 (SNDRAQIL3SDCCP) at GES DISC",
+        "day_night_flag": "UNSPECIFIED",
+        "granule_size": "212.192963600159",
+        "id": "G4193271018-GES_DISC",
+        "links": [
+          {
+            "href": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/2026/SNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161841.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download SNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161841.nc"
+          },
+          {
+            "href": "s3://gesdisc-cumulus-prod-protected/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/2026/SNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161841.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule"
+          },
+          {
+            "href": "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)"
+          },
+          {
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1693440802-GES_DISC/granules/SNDRAQIL3SDCCP.2%3ASNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161841.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3SDCCP_2.html",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://airs.jpl.nasa.gov/index.html",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1693440802-GES_DISC",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "original_format": "ECHO10",
+        "producer_granule_id": "SNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161841.nc",
+        "time_end": "2026-03-24T00:00:00.000Z",
+        "time_start": "2026-03-23T00:00:00.000Z",
+        "title": "SNDRAQIL3SDCCP.2:SNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161841.nc",
+        "updated": "2026-05-21T16:55:09.000Z"
+      },
+      {
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "collection_concept_id": "C1693440802-GES_DISC",
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Specific Quality Control Gridded Daily V2 (SNDRAQIL3SDCCP) at GES DISC",
+        "day_night_flag": "UNSPECIFIED",
+        "granule_size": "211.455390930176",
+        "id": "G4193271029-GES_DISC",
+        "links": [
+          {
+            "href": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/2026/SNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161935.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download SNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161935.nc"
+          },
+          {
+            "href": "s3://gesdisc-cumulus-prod-protected/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/2026/SNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161935.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule"
+          },
+          {
+            "href": "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)"
+          },
+          {
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1693440802-GES_DISC/granules/SNDRAQIL3SDCCP.2%3ASNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161935.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3SDCCP_2.html",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://airs.jpl.nasa.gov/index.html",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1693440802-GES_DISC",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "original_format": "ECHO10",
+        "producer_granule_id": "SNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161935.nc",
+        "time_end": "2026-03-23T00:00:00.000Z",
+        "time_start": "2026-03-22T00:00:00.000Z",
+        "title": "SNDRAQIL3SDCCP.2:SNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161935.nc",
+        "updated": "2026-05-21T16:55:09.000Z"
+      }
+    ],
+    "id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?collection_concept_id=C1693440802-GES_DISC&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=3&sort_key=-start_date",
+    "title": "ECHO granule metadata",
+    "updated": "2026-05-26T20:36:31.099Z"
+  }
+}

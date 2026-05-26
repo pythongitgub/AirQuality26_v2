@@ -1,0 +1,322 @@
+{
+  "_meta": {
+    "bytes": 10835,
+    "content_type": "application/json;charset=utf-8",
+    "http_status": 200,
+    "sha256": "9a9f85b6775a5a12d47b38cb55a7092b15d114e73d12f08c0314a2b53ba151ca",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C3645629331-LARC_CLOUD&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=3&sort_key=-start_date"
+  },
+  "feed": {
+    "entry": [
+      {
+        "browse_flag": false,
+        "collection_concept_id": "C3645629331-LARC_CLOUD",
+        "coordinate_system": "CARTESIAN",
+        "data_center": "LARC_CLOUD",
+        "dataset_id": "Low Cost Sensors AQ BEACO2N Data",
+        "day_night_flag": "UNSPECIFIED",
+        "granule_size": "39.303420066833496",
+        "id": "G3799560866-LARC_CLOUD",
+        "links": [
+          {
+            "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_CO2_2021-01-01_thru_2025-08-14.ict",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download Low-Cost-Sensors-AQ_BEACO2N_CO2_2021-01-01_thru_2025-08-14.ict"
+          },
+          {
+            "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_CO2_2021-01-01_thru_2025-08-14.ict.met",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "Download Low-Cost-Sensors-AQ_BEACO2N_CO2_2021-01-01_thru_2025-08-14.ict.met"
+          },
+          {
+            "href": "s3://asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_CO2_2021-01-01_thru_2025-08-14.ict",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule"
+          },
+          {
+            "href": "s3://asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_CO2_2021-01-01_thru_2025-08-14.ict.met",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "This link provides direct download access via S3 to the granule"
+          },
+          {
+            "href": "https://data.asdc.earthdata.nasa.gov/s3credentials",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access"
+          },
+          {
+            "href": "https://beacon.berkeley.edu/about/#",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://doi.org/10.5194/amt-17-1051-2024",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://doi.org/10.5194/amt-14-5487-2021",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://asdc.larc.nasa.gov/citing-data",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3645629331-LARC_CLOUD",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://doi.org/10.5067/Low-Cost-Sensors-AQ/BEACO2N",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://experience.arcgis.com/experience/d8aee5b3925d421884572b9da08de8e6",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://github.com/KristenOkorn/nasa-low-cost-sensors-aq",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "original_format": "UMM_JSON",
+        "polygons": [
+          [
+            "-36.93 -122.51 -36.93 174.82 56.05 174.82 56.05 -122.51 -36.93 -122.51"
+          ]
+        ],
+        "producer_granule_id": "Low-Cost-Sensors-AQ_BEACO2N_CO2_2021-01-01_thru_2025-08-14.ict",
+        "time_end": "2025-08-14T07:00:00.000Z",
+        "time_start": "2021-01-01T08:00:00.000Z",
+        "title": "Low-Cost-Sensors-AQ_BEACO2N_CO2_2021-01-01_thru_2025-08-14.ict",
+        "updated": "2025-10-07T20:00:57.210Z"
+      },
+      {
+        "browse_flag": false,
+        "collection_concept_id": "C3645629331-LARC_CLOUD",
+        "coordinate_system": "CARTESIAN",
+        "data_center": "LARC_CLOUD",
+        "dataset_id": "Low Cost Sensors AQ BEACO2N Data",
+        "day_night_flag": "UNSPECIFIED",
+        "granule_size": "34.77549457550049",
+        "id": "G3799560869-LARC_CLOUD",
+        "links": [
+          {
+            "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_PM2.5_2021-01-01_thru_2025-08-14.ict",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download Low-Cost-Sensors-AQ_BEACO2N_PM2.5_2021-01-01_thru_2025-08-14.ict"
+          },
+          {
+            "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_PM2.5_2021-01-01_thru_2025-08-14.ict.met",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "Download Low-Cost-Sensors-AQ_BEACO2N_PM2.5_2021-01-01_thru_2025-08-14.ict.met"
+          },
+          {
+            "href": "s3://asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_PM2.5_2021-01-01_thru_2025-08-14.ict",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule"
+          },
+          {
+            "href": "s3://asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_PM2.5_2021-01-01_thru_2025-08-14.ict.met",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "This link provides direct download access via S3 to the granule"
+          },
+          {
+            "href": "https://data.asdc.earthdata.nasa.gov/s3credentials",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access"
+          },
+          {
+            "href": "https://beacon.berkeley.edu/about/#",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://doi.org/10.5194/amt-17-1051-2024",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://doi.org/10.5194/amt-14-5487-2021",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://asdc.larc.nasa.gov/citing-data",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3645629331-LARC_CLOUD",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://doi.org/10.5067/Low-Cost-Sensors-AQ/BEACO2N",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://experience.arcgis.com/experience/d8aee5b3925d421884572b9da08de8e6",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://github.com/KristenOkorn/nasa-low-cost-sensors-aq",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "original_format": "UMM_JSON",
+        "polygons": [
+          [
+            "-36.93 -122.51 -36.93 174.82 56.05 174.82 56.05 -122.51 -36.93 -122.51"
+          ]
+        ],
+        "producer_granule_id": "Low-Cost-Sensors-AQ_BEACO2N_PM2.5_2021-01-01_thru_2025-08-14.ict",
+        "time_end": "2025-08-14T07:00:00.000Z",
+        "time_start": "2021-01-01T08:00:00.000Z",
+        "title": "Low-Cost-Sensors-AQ_BEACO2N_PM2.5_2021-01-01_thru_2025-08-14.ict",
+        "updated": "2025-10-07T20:01:03.307Z"
+      },
+      {
+        "browse_flag": false,
+        "collection_concept_id": "C3645629331-LARC_CLOUD",
+        "coordinate_system": "CARTESIAN",
+        "data_center": "LARC_CLOUD",
+        "dataset_id": "Low Cost Sensors AQ BEACO2N Data",
+        "day_night_flag": "UNSPECIFIED",
+        "granule_size": "43.09872817993164",
+        "id": "G3799560874-LARC_CLOUD",
+        "links": [
+          {
+            "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_O3_2021-01-01_thru_2025-08-14.ict",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download Low-Cost-Sensors-AQ_BEACO2N_O3_2021-01-01_thru_2025-08-14.ict"
+          },
+          {
+            "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_O3_2021-01-01_thru_2025-08-14.ict.met",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "Download Low-Cost-Sensors-AQ_BEACO2N_O3_2021-01-01_thru_2025-08-14.ict.met"
+          },
+          {
+            "href": "s3://asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_O3_2021-01-01_thru_2025-08-14.ict",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule"
+          },
+          {
+            "href": "s3://asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_O3_2021-01-01_thru_2025-08-14.ict.met",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "This link provides direct download access via S3 to the granule"
+          },
+          {
+            "href": "https://data.asdc.earthdata.nasa.gov/s3credentials",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access"
+          },
+          {
+            "href": "https://beacon.berkeley.edu/about/#",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://doi.org/10.5194/amt-17-1051-2024",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://doi.org/10.5194/amt-14-5487-2021",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://asdc.larc.nasa.gov/citing-data",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3645629331-LARC_CLOUD",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://doi.org/10.5067/Low-Cost-Sensors-AQ/BEACO2N",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://experience.arcgis.com/experience/d8aee5b3925d421884572b9da08de8e6",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://github.com/KristenOkorn/nasa-low-cost-sensors-aq",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "original_format": "UMM_JSON",
+        "polygons": [
+          [
+            "-36.93 -122.51 -36.93 174.82 56.05 174.82 56.05 -122.51 -36.93 -122.51"
+          ]
+        ],
+        "producer_granule_id": "Low-Cost-Sensors-AQ_BEACO2N_O3_2021-01-01_thru_2025-08-14.ict",
+        "time_end": "2025-08-14T07:00:00.000Z",
+        "time_start": "2021-01-01T08:00:00.000Z",
+        "title": "Low-Cost-Sensors-AQ_BEACO2N_O3_2021-01-01_thru_2025-08-14.ict",
+        "updated": "2025-10-07T20:00:58.069Z"
+      }
+    ],
+    "id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?collection_concept_id=C3645629331-LARC_CLOUD&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=3&sort_key=-start_date",
+    "title": "ECHO granule metadata",
+    "updated": "2026-05-26T20:36:33.363Z"
+  }
+}

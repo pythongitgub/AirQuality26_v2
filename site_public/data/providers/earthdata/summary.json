@@ -1,0 +1,17 @@
+{
+  "bounding_box": "-1.1,50.6,0.7,51.8",
+  "caveat": "Discovery output is not observational evidence until a selected product is downloaded/subsetted and validated.",
+  "cmr_collections": 10,
+  "cmr_granules": 19,
+  "next_api_order": [
+    "CMR Search APIs",
+    "Earthdata Login APIs",
+    "OPeNDAP/Hyrax",
+    "GIBS",
+    "DAAC-specific APIs"
+  ],
+  "provider": "nasa_earthdata",
+  "retrieved_at_utc": "2026-05-26T20:36:33Z",
+  "status": "ok",
+  "temporal": "2024-01-01T00:00:00Z,2026-05-26T23:59:59Z"
+}

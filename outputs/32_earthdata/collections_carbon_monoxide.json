@@ -1,0 +1,2672 @@
+{
+  "_meta": {
+    "bytes": 70175,
+    "content_type": "application/json;charset=utf-8",
+    "http_status": 200,
+    "sha256": "e381186fb51048758c973dc178422671ab0dad8aa9b328feb57cea2c29eee5a7",
+    "url": "https://cmr.earthdata.nasa.gov/search/collections.json?keyword=carbon+monoxide&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=10&sort_key=-score"
+  },
+  "feed": {
+    "entry": [
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "services": [
+            {
+              "concept_id": "S2786683405-GES_DISC"
+            },
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            },
+            {
+              "concept_id": "S3267470083-GES_DISC"
+            },
+            {
+              "concept_id": "S1962070864-POCLOUD"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V2556680711-GES_DISC"
+            },
+            {
+              "concept_id": "V2556680840-GES_DISC"
+            },
+            {
+              "concept_id": "V2556680829-GES_DISC"
+            },
+            {
+              "concept_id": "V2556681663-GES_DISC"
+            },
+            {
+              "concept_id": "V2556098667-GES_DISC"
+            },
+            {
+              "concept_id": "V2556681593-GES_DISC"
+            },
+            {
+              "concept_id": "V2556681727-GES_DISC"
+            },
+            {
+              "concept_id": "V2556678359-GES_DISC"
+            },
+            {
+              "concept_id": "V2556680812-GES_DISC"
+            },
+            {
+              "concept_id": "V2556679786-GES_DISC"
+            },
+            {
+              "concept_id": "V2556103211-GES_DISC"
+            },
+            {
+              "concept_id": "V2556098404-GES_DISC"
+            },
+            {
+              "concept_id": "V2556681769-GES_DISC"
+            },
+            {
+              "concept_id": "V2556103256-GES_DISC"
+            },
+            {
+              "concept_id": "V2556681913-GES_DISC"
+            },
+            {
+              "concept_id": "V2556682227-GES_DISC"
+            },
+            {
+              "concept_id": "V2556679797-GES_DISC"
+            },
+            {
+              "concept_id": "V2556098580-GES_DISC"
+            },
+            {
+              "concept_id": "V2555903923-GES_DISC"
+            },
+            {
+              "concept_id": "V2556679429-GES_DISC"
+            },
+            {
+              "concept_id": "V2556679405-GES_DISC"
+            },
+            {
+              "concept_id": "V2556679447-GES_DISC"
+            },
+            {
+              "concept_id": "V2556681885-GES_DISC"
+            },
+            {
+              "concept_id": "V2556679526-GES_DISC"
+            },
+            {
+              "concept_id": "V2556680792-GES_DISC"
+            },
+            {
+              "concept_id": "V2556681906-GES_DISC"
+            },
+            {
+              "concept_id": "V2556679634-GES_DISC"
+            },
+            {
+              "concept_id": "V2556653305-GES_DISC"
+            },
+            {
+              "concept_id": "V2556681404-GES_DISC"
+            },
+            {
+              "concept_id": "V2556098500-GES_DISC"
+            },
+            {
+              "concept_id": "V2556679255-GES_DISC"
+            },
+            {
+              "concept_id": "V2556680584-GES_DISC"
+            },
+            {
+              "concept_id": "V2556680201-GES_DISC"
+            },
+            {
+              "concept_id": "V2556679893-GES_DISC"
+            },
+            {
+              "concept_id": "V2556681968-GES_DISC"
+            },
+            {
+              "concept_id": "V2556681092-GES_DISC"
+            },
+            {
+              "concept_id": "V2556681649-GES_DISC"
+            },
+            {
+              "concept_id": "V2556681539-GES_DISC"
+            },
+            {
+              "concept_id": "V2556681605-GES_DISC"
+            },
+            {
+              "concept_id": "V2556678469-GES_DISC"
+            },
+            {
+              "concept_id": "V2556103174-GES_DISC"
+            },
+            {
+              "concept_id": "V2556681832-GES_DISC"
+            },
+            {
+              "concept_id": "V2556103241-GES_DISC"
+            },
+            {
+              "concept_id": "V2556681693-GES_DISC"
+            },
+            {
+              "concept_id": "V2556680803-GES_DISC"
+            },
+            {
+              "concept_id": "V2556679378-GES_DISC"
+            },
+            {
+              "concept_id": "V2556666404-GES_DISC"
+            },
+            {
+              "concept_id": "V2556679738-GES_DISC"
+            },
+            {
+              "concept_id": "V2556668276-GES_DISC"
+            },
+            {
+              "concept_id": "V2556681333-GES_DISC"
+            },
+            {
+              "concept_id": "V2556680753-GES_DISC"
+            },
+            {
+              "concept_id": "V2556098295-GES_DISC"
+            },
+            {
+              "concept_id": "V2556678644-GES_DISC"
+            },
+            {
+              "concept_id": "V2556679094-GES_DISC"
+            },
+            {
+              "concept_id": "V2556680458-GES_DISC"
+            },
+            {
+              "concept_id": "V2556103228-GES_DISC"
+            },
+            {
+              "concept_id": "V2556681262-GES_DISC"
+            },
+            {
+              "concept_id": "V2556103236-GES_DISC"
+            },
+            {
+              "concept_id": "V2556103099-GES_DISC"
+            },
+            {
+              "concept_id": "V2556680976-GES_DISC"
+            },
+            {
+              "concept_id": "V2556680877-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "services": [
+            "S2786683405-GES_DISC",
+            "S2874702816-XYZ_PROV",
+            "S3267470083-GES_DISC",
+            "S1962070864-POCLOUD"
+          ],
+          "variables": [
+            "V2556680711-GES_DISC",
+            "V2556680840-GES_DISC",
+            "V2556680829-GES_DISC",
+            "V2556681663-GES_DISC",
+            "V2556098667-GES_DISC",
+            "V2556681593-GES_DISC",
+            "V2556681727-GES_DISC",
+            "V2556678359-GES_DISC",
+            "V2556680812-GES_DISC",
+            "V2556679786-GES_DISC",
+            "V2556103211-GES_DISC",
+            "V2556098404-GES_DISC",
+            "V2556681769-GES_DISC",
+            "V2556103256-GES_DISC",
+            "V2556681913-GES_DISC",
+            "V2556682227-GES_DISC",
+            "V2556679797-GES_DISC",
+            "V2556098580-GES_DISC",
+            "V2555903923-GES_DISC",
+            "V2556679429-GES_DISC",
+            "V2556679405-GES_DISC",
+            "V2556679447-GES_DISC",
+            "V2556681885-GES_DISC",
+            "V2556679526-GES_DISC",
+            "V2556680792-GES_DISC",
+            "V2556681906-GES_DISC",
+            "V2556679634-GES_DISC",
+            "V2556653305-GES_DISC",
+            "V2556681404-GES_DISC",
+            "V2556098500-GES_DISC",
+            "V2556679255-GES_DISC",
+            "V2556680584-GES_DISC",
+            "V2556680201-GES_DISC",
+            "V2556679893-GES_DISC",
+            "V2556681968-GES_DISC",
+            "V2556681092-GES_DISC",
+            "V2556681649-GES_DISC",
+            "V2556681539-GES_DISC",
+            "V2556681605-GES_DISC",
+            "V2556678469-GES_DISC",
+            "V2556103174-GES_DISC",
+            "V2556681832-GES_DISC",
+            "V2556103241-GES_DISC",
+            "V2556681693-GES_DISC",
+            "V2556680803-GES_DISC",
+            "V2556679378-GES_DISC",
+            "V2556666404-GES_DISC",
+            "V2556679738-GES_DISC",
+            "V2556668276-GES_DISC",
+            "V2556681333-GES_DISC",
+            "V2556680753-GES_DISC",
+            "V2556098295-GES_DISC",
+            "V2556678644-GES_DISC",
+            "V2556679094-GES_DISC",
+            "V2556680458-GES_DISC",
+            "V2556103228-GES_DISC",
+            "V2556681262-GES_DISC",
+            "V2556103236-GES_DISC",
+            "V2556103099-GES_DISC",
+            "V2556680976-GES_DISC",
+            "V2556680877-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "Sentinel-5P TROPOMI Carbon Monoxide CO Column 1-Orbit L2 5.5km x 7km V2 (S5P_L2__CO_____HiR) at GES DISC",
+        "entry_id": "S5P_L2__CO_____HiR_2",
+        "eula_identifiers": [
+          "2f16e13a-e648-4920-9276-d578f30707c6"
+        ],
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C2087132178-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/S5P_OFFL_L2__CO_____HiR_1.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/S5P/sentinel-eula.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://sentiwiki.copernicus.eu/web/document-library#DocumentLibrary-LatestMissionStatusReports.3",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/S5P_L2__CO_____HiR_2.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://tropomi.gesdisc.eosdis.nasa.gov/opendap/S5P_TROPOMI_Level2/S5P_L2__CO_____HiR.2/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://tropomi.gesdisc.eosdis.nasa.gov/data/S5P_TROPOMI_Level2/S5P_L2__CO_____HiR.2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://sentiwiki.copernicus.eu/__attachments/1673595/S5P-MPC-SRON-PRF-CO%20-%20Sentinel-5P%20Carbon%20Monoxide%20Level%202%20Product%20Readme%20File%202025%20-%202.9.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C2087132178-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://sentiwiki.copernicus.eu/__attachments/1673595/SRON-S5P-LEV2-RP-002%20-%20Sentinel-5P%20TROPOMI%20ATBD%20Carbon%20Monoxide%20Total%20Column%20Retrieval%202024%20-%202.5.0.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://sentiwiki.copernicus.eu/__attachments/1673595/SRON-S5P-LEV2-MA-002%20-%20Sentinel-5P%20Level%202%20Product%20User%20Manual%20Carbon%20Monoxide%202024%20-%202.8.0.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://sentinels.copernicus.eu/web/sentinel/copernicus/sentinel-5p",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/glossary?title=Sentinel-5P",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Sentinel-5P"
+        ],
+        "processing_level_id": "2",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": false,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "S5P_L2__CO_____HiR",
+        "summary": "Starting from August 6th in 2019, Sentinel-5P TROPOMI along-track high spatial resolution (~5.5km at nadir) has been implemented.\nFor data before August 6th of 2019, please check S5P_L2__CO_____1 data collection.\n\nThe Copernicus Sentinel-5 Precursor (Sentinel-5P or S5P) satellite mission is one of the European Space Agency's (ESA) new mission family - Sentinels, and it is a joint initiative between the Kingdom of the Netherlands and the ESA. The sole payload on Sentinel-5P is the TROPOspheric Monitoring Instrument (TROPOMI), which is a nadir-viewing 108 degree Field-of-View push-broom grating hyperspectral spectrometer, covering the wavelength of ultraviolet-visible (UV-VIS, 270nm to 495nm), near infrared (NIR, 675nm to 775nm), and shortwave infrared (SWIR, 2305nm-2385nm). Sentinel-5P is the first of the Atmospheric Composition Sentinels and is expected to provide measurements of ozone, NO2, SO2, CH4, CO, formaldehyde, aerosols and cloud at high spatial, temporal and spectral resolutions.\n\nThe TROPOMI Carbon Monoxide total column applies a modified SWIR CO retrieval (SICOR) algorithm based on the CO absorption band between 2305 nm and 2385 nm. The S5P SICOR algorithm accounts for cloudy and aerosol loaded atmosphere conditions and is suitable for clear sky observations over land and cloudy observations over both land and oceans.",
+        "time_start": "2018-04-30T00:41:23.000Z",
+        "title": "Sentinel-5P TROPOMI Carbon Monoxide CO Column 1-Orbit L2 5.5km x 7km V2 (S5P_L2__CO_____HiR) at GES DISC",
+        "updated": "2017-05-05T00:00:00.000Z",
+        "version_id": "2"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT4181367039-ESDIS"
+            },
+            {
+              "concept_id": "CIT3963294752-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181359158-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804097047-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803959614-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857566558-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804233954-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803994836-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181372315-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857558973-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181380373-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857566588-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181362243-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804245418-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804260534-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804225405-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181331904-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S2164732315-XYZ_PROV"
+            },
+            {
+              "concept_id": "S2786683405-GES_DISC"
+            },
+            {
+              "concept_id": "S4057306097-XYZ_PROV"
+            },
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3383819455-GES_DISC"
+            },
+            {
+              "concept_id": "V3383819597-GES_DISC"
+            },
+            {
+              "concept_id": "V3383819601-GES_DISC"
+            },
+            {
+              "concept_id": "V3383819468-GES_DISC"
+            },
+            {
+              "concept_id": "V3383819474-GES_DISC"
+            },
+            {
+              "concept_id": "V3383819425-GES_DISC"
+            },
+            {
+              "concept_id": "V3383819493-GES_DISC"
+            },
+            {
+              "concept_id": "V3383819439-GES_DISC"
+            },
+            {
+              "concept_id": "V3383819485-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT4181367039-ESDIS",
+            "CIT3963294752-ESDIS",
+            "CIT4181359158-ESDIS",
+            "CIT3804097047-ESDIS",
+            "CIT3803959614-ESDIS",
+            "CIT3857566558-ESDIS",
+            "CIT3804233954-ESDIS",
+            "CIT3803994836-ESDIS",
+            "CIT4181372315-ESDIS",
+            "CIT3857558973-ESDIS",
+            "CIT4181380373-ESDIS",
+            "CIT3857566588-ESDIS",
+            "CIT4181362243-ESDIS",
+            "CIT3804245418-ESDIS",
+            "CIT3804260534-ESDIS",
+            "CIT3804225405-ESDIS",
+            "CIT4181331904-ESDIS"
+          ],
+          "services": [
+            "S2164732315-XYZ_PROV",
+            "S2786683405-GES_DISC",
+            "S4057306097-XYZ_PROV",
+            "S2874702816-XYZ_PROV"
+          ],
+          "variables": [
+            "V3383819455-GES_DISC",
+            "V3383819597-GES_DISC",
+            "V3383819601-GES_DISC",
+            "V3383819468-GES_DISC",
+            "V3383819474-GES_DISC",
+            "V3383819425-GES_DISC",
+            "V3383819493-GES_DISC",
+            "V3383819439-GES_DISC",
+            "V3383819485-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "MERRA-2 inst3_3d_chm_Nv: 3d,3-Hourly,Instantaneous,Model-Level,Assimilation,Carbon Monoxide and Ozone Mixing Ratio 0.625 x 0.5 degree V5.12.4 (M2I3NVCHM) at GES DISC",
+        "entry_id": "M2I3NVCHM_5.12.4",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1276812901-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/M2I3NVCHM_5.12.4.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/howto?tags=MERRA",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/M2I3NVCHM_5.12.4.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://goldsmr5.gesdisc.eosdis.nasa.gov/data/MERRA2/M2I3NVCHM.5.12.4/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1276812901-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://goldsmr5.gesdisc.eosdis.nasa.gov/opendap/MERRA2/M2I3NVCHM.5.12.4/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://goldsmr5.gesdisc.eosdis.nasa.gov/thredds/catalog/MERRA2_aggregation/M2I3NVCHM.5.12.4/catalog.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://gmao.gsfc.nasa.gov/gmao-products/merra-2/documentation_merra-2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://gmao.gsfc.nasa.gov/media/publications/zbly36ziNFDFbmYmvhQeVqPhUo/Bosilovich785.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://goldsmr5.gesdisc.eosdis.nasa.gov/data/MERRA2/M2I3NVCHM.5.12.4/doc/MERRA2.README.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/mission-project?title=MERRA-2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/MERRA/Records_MERRA-2_Data_Reprocessing_and_Service_Changes.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/faqs?keywords=MERRA-2&page=1",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "MERRA-2"
+        ],
+        "processing_level_id": "4",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": false,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "M2I3NVCHM",
+        "summary": "M2I3NVCHM (or  inst3_3d_chm_Nv) is an instantaneous 3-dimensional 3-hourly data collection in Modern-Era Retrospective analysis for Research and Applications version 2 (MERRA-2).  This collection consists of assimilations of carbon monoxide and ozone mixing ratio at 72 model layers.  The data is available every three hour starting from 00:00 UTC, e.g.:  00:00, 03:00, … , 21:00 UTC. Section 4.2 of the MERRA-2 File Specification document provides pressure values nominal for a 1000 hPa surface pressure and refers to the top edge of the layer. The lev=1 is for the top layer, and lev=72 is for the bottom (or surface) model layer. \n\nMERRA-2 is the latest version of global atmospheric reanalysis for the satellite era produced by NASA Global Modeling and Assimilation Office (GMAO) using the Goddard Earth Observing System Model (GEOS) version 5.12.4.  The dataset covers the period of 1980-present with the latency of ~3 weeks after the end of a month. \n\nData Reprocessing:  Please check “Records of MERRA-2 Data Reprocessing and Service Changes” linked from the “Documentation” tab on this page.  Note that a reprocessed data filename is different from the original file.\n\nMERRA-2 Mailing List: Sign up to receive information on reprocessing of data, changing of tools and services, as well as data announcements from GMAO. Contact the GES DISC Help Desk (gsfc-dl-help-disc@mail.nasa.gov) to be added to the list.\n\nQuestions: If you have a question, please read \"MERRA-2 File Specification Document\",  “MERRA-2 Data Access – Quick Start Guide”, and FAQs linked from the ”Documentation” tab on this page.  If that does not answer your question, you may post your question to the NASA Earthdata Forum (forum.earthdata.nasa.gov) or email the GES DISC Help Desk (gsfc-dl-help-disc@mail.nasa.gov).",
+        "time_start": "1980-01-01T00:00:00.000Z",
+        "title": "MERRA-2 inst3_3d_chm_Nv: 3d,3-Hourly,Instantaneous,Model-Level,Assimilation,Carbon Monoxide and Ozone Mixing Ratio 0.625 x 0.5 degree V5.12.4 (M2I3NVCHM) at GES DISC",
+        "updated": "2015-07-07T00:00:00.000Z",
+        "version_id": "5.12.4"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT4181367039-ESDIS"
+            },
+            {
+              "concept_id": "CIT4106689118-ESDIS"
+            },
+            {
+              "concept_id": "CIT3963291895-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803975890-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804305346-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181374408-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382878-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803947418-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804175642-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181355202-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181370491-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181353100-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804183176-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S2786683405-GES_DISC"
+            },
+            {
+              "concept_id": "S4057306097-XYZ_PROV"
+            },
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            },
+            {
+              "concept_id": "S2164732315-XYZ_PROV"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3395852555-GES_DISC"
+            },
+            {
+              "concept_id": "V3395852932-GES_DISC"
+            },
+            {
+              "concept_id": "V3395852635-GES_DISC"
+            },
+            {
+              "concept_id": "V3395852598-GES_DISC"
+            },
+            {
+              "concept_id": "V3395852741-GES_DISC"
+            },
+            {
+              "concept_id": "V3395852992-GES_DISC"
+            },
+            {
+              "concept_id": "V3395852580-GES_DISC"
+            },
+            {
+              "concept_id": "V3395852998-GES_DISC"
+            },
+            {
+              "concept_id": "V3395852593-GES_DISC"
+            },
+            {
+              "concept_id": "V3395852843-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT4181367039-ESDIS",
+            "CIT4106689118-ESDIS",
+            "CIT3963291895-ESDIS",
+            "CIT3803975890-ESDIS",
+            "CIT3804305346-ESDIS",
+            "CIT4181374408-ESDIS",
+            "CIT4181382878-ESDIS",
+            "CIT3803947418-ESDIS",
+            "CIT3804175642-ESDIS",
+            "CIT4181355202-ESDIS",
+            "CIT4181370491-ESDIS",
+            "CIT4181353100-ESDIS",
+            "CIT3804183176-ESDIS"
+          ],
+          "services": [
+            "S2786683405-GES_DISC",
+            "S4057306097-XYZ_PROV",
+            "S2874702816-XYZ_PROV",
+            "S2164732315-XYZ_PROV"
+          ],
+          "variables": [
+            "V3395852555-GES_DISC",
+            "V3395852932-GES_DISC",
+            "V3395852635-GES_DISC",
+            "V3395852598-GES_DISC",
+            "V3395852741-GES_DISC",
+            "V3395852992-GES_DISC",
+            "V3395852580-GES_DISC",
+            "V3395852998-GES_DISC",
+            "V3395852593-GES_DISC",
+            "V3395852843-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "MERRA-2 tavg1_2d_chm_Nx: 2d,1-Hourly,Time-Averaged,Single-Level,Assimilation,Carbon Monoxide and Ozone Diagnostics 0.625 x 0.5 degree V5.12.4 (M2T1NXCHM) at GES DISC",
+        "entry_id": "M2T1NXCHM_5.12.4",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1276812831-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/M2T1NXCHM_5.12.4.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/howto?tags=MERRA",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/M2T1NXCHM_5.12.4.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2/M2T1NXCHM.5.12.4/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1276812831-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/opendap/MERRA2/M2T1NXCHM.5.12.4/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/thredds/catalog/MERRA2_aggregation/M2T1NXCHM.5.12.4/catalog.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://gmao.gsfc.nasa.gov/gmao-products/merra-2/documentation_merra-2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://gmao.gsfc.nasa.gov/media/publications/zbly36ziNFDFbmYmvhQeVqPhUo/Bosilovich785.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2/M2T1NXCHM.5.12.4/doc/MERRA2.README.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/mission-project?title=MERRA-2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/MERRA/Records_MERRA-2_Data_Reprocessing_and_Service_Changes.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/faqs?keywords=MERRA-2&page=1",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "MERRA-2"
+        ],
+        "processing_level_id": "4",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": false,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "M2T1NXCHM",
+        "summary": "M2T1NXCHM (or  tavg1_2d_chm_Nx) is an hourly time-averaged 2-dimensional data collection in Modern-Era Retrospective analysis for Research and Applications version 2 (MERRA-2).  This collection consists of assimilated carbon monoxide and ozone diagnostics, such as properties of carbon monoxide (column burden, emission, chemical production, and surface concentration), and total column ozone.  The data field is time-stamped with the central time of an hour starting from 00:30 UTC, e.g.: 00:30, 01:30, … , 23:30 UTC.\n\nMERRA-2 is the latest version of global atmospheric reanalysis for the satellite era produced by NASA Global Modeling and Assimilation Office (GMAO) using the Goddard Earth Observing System Model (GEOS) version 5.12.4.  The dataset covers the period of 1980-present with the latency of ~3 weeks after the end of a month. \n\nData Reprocessing:  Please check “Records of MERRA-2 Data Reprocessing and Service Changes” linked from the “Documentation” tab on this page.  Note that a reprocessed data filename is different from the original file.\n\nMERRA-2 Mailing List: Sign up to receive information on reprocessing of data, changing of tools and services, as well as data announcements from GMAO. Contact the GES DISC Help Desk (gsfc-dl-help-disc@mail.nasa.gov) to be added to the list.\n\nQuestions: If you have a question, please read \"MERRA-2 File Specification Document\",  “MERRA-2 Data Access – Quick Start Guide”, and FAQs linked from the ”Documentation” tab on this page.  If that does not answer your question, you may post your question to the NASA Earthdata Forum (forum.earthdata.nasa.gov) or email the GES DISC Help Desk (gsfc-dl-help-disc@mail.nasa.gov).",
+        "time_start": "1980-01-01T00:00:00.000Z",
+        "title": "MERRA-2 tavg1_2d_chm_Nx: 2d,1-Hourly,Time-Averaged,Single-Level,Assimilation,Carbon Monoxide and Ozone Diagnostics 0.625 x 0.5 degree V5.12.4 (M2T1NXCHM) at GES DISC",
+        "updated": "2015-07-07T00:00:00.000Z",
+        "version_id": "5.12.4"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT4181355195-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181354961-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181373661-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181370540-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181362669-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804316900-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804087397-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804077537-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181351542-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181362913-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804184812-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181362562-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382418-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181364370-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803996071-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181371711-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181377632-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181377604-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181351685-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            },
+            {
+              "concept_id": "S2164732315-XYZ_PROV"
+            },
+            {
+              "concept_id": "S4057306097-XYZ_PROV"
+            },
+            {
+              "concept_id": "S2786683405-GES_DISC"
+            }
+          ],
+          "tools": [
+            {
+              "concept_id": "TL2140660116-GES_DISC"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3914259671-GES_DISC"
+            },
+            {
+              "concept_id": "V3914259649-GES_DISC"
+            },
+            {
+              "concept_id": "V3914260560-GES_DISC"
+            },
+            {
+              "concept_id": "V3914259989-GES_DISC"
+            },
+            {
+              "concept_id": "V3914260301-GES_DISC"
+            },
+            {
+              "concept_id": "V3914260055-GES_DISC"
+            },
+            {
+              "concept_id": "V3914260820-GES_DISC"
+            },
+            {
+              "concept_id": "V3914260180-GES_DISC"
+            },
+            {
+              "concept_id": "V3914261008-GES_DISC"
+            },
+            {
+              "concept_id": "V3914260943-GES_DISC"
+            },
+            {
+              "concept_id": "V3914260205-GES_DISC"
+            },
+            {
+              "concept_id": "V3914260083-GES_DISC"
+            },
+            {
+              "concept_id": "V3914259822-GES_DISC"
+            },
+            {
+              "concept_id": "V3914259281-GES_DISC"
+            },
+            {
+              "concept_id": "V3914260115-GES_DISC"
+            },
+            {
+              "concept_id": "V3914259422-GES_DISC"
+            },
+            {
+              "concept_id": "V3914259302-GES_DISC"
+            }
+          ],
+          "visualizations": [
+            {
+              "concept_id": "VIS3974543569-ESDIS"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT4181355195-ESDIS",
+            "CIT4181354961-ESDIS",
+            "CIT4181373661-ESDIS",
+            "CIT4181370540-ESDIS",
+            "CIT4181362669-ESDIS",
+            "CIT3804316900-ESDIS",
+            "CIT3804087397-ESDIS",
+            "CIT3804077537-ESDIS",
+            "CIT4181351542-ESDIS",
+            "CIT4181362913-ESDIS",
+            "CIT3804184812-ESDIS",
+            "CIT4181362562-ESDIS",
+            "CIT4181382418-ESDIS",
+            "CIT4181364370-ESDIS",
+            "CIT3803996071-ESDIS",
+            "CIT4181371711-ESDIS",
+            "CIT4181377632-ESDIS",
+            "CIT4181377604-ESDIS",
+            "CIT4181351685-ESDIS"
+          ],
+          "services": [
+            "S2874702816-XYZ_PROV",
+            "S2164732315-XYZ_PROV",
+            "S4057306097-XYZ_PROV",
+            "S2786683405-GES_DISC"
+          ],
+          "tools": [
+            "TL2140660116-GES_DISC"
+          ],
+          "variables": [
+            "V3914259671-GES_DISC",
+            "V3914259649-GES_DISC",
+            "V3914260560-GES_DISC",
+            "V3914259989-GES_DISC",
+            "V3914260301-GES_DISC",
+            "V3914260055-GES_DISC",
+            "V3914260820-GES_DISC",
+            "V3914260180-GES_DISC",
+            "V3914261008-GES_DISC",
+            "V3914260943-GES_DISC",
+            "V3914260205-GES_DISC",
+            "V3914260083-GES_DISC",
+            "V3914259822-GES_DISC",
+            "V3914259281-GES_DISC",
+            "V3914260115-GES_DISC",
+            "V3914259422-GES_DISC",
+            "V3914259302-GES_DISC"
+          ],
+          "visualizations": [
+            "VIS3974543569-ESDIS"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "MERRA-2 tavgM_2d_chm_Nx: 2d,Monthly mean,Time-Averaged,Single-Level,Assimilation,Carbon Monoxide and Ozone Diagnostics 0.625 x 0.5 degree V5.12.4 (M2TMNXCHM) at GES DISC",
+        "entry_id": "M2TMNXCHM_5.12.4",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1276812852-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/M2TMNXCHM_5.12.4.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/howto?tags=MERRA",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/M2TMNXCHM_5.12.4.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2_MONTHLY/M2TMNXCHM.5.12.4/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://giovanni.gsfc.nasa.gov/giovanni/#dataKeyword=M2TMNXCHM",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1276812852-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/opendap/MERRA2_MONTHLY/M2TMNXCHM.5.12.4/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/thredds/catalog/MERRA2_MONTHLY_aggregation/catalog.html?dataset=merra2_monthly_aggregation/M2TMNXCHM.5.12.4_Aggregation.ncml",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://gmao.gsfc.nasa.gov/gmao-products/merra-2/documentation_merra-2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://gmao.gsfc.nasa.gov/media/publications/zbly36ziNFDFbmYmvhQeVqPhUo/Bosilovich785.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2_MONTHLY/M2TMNXCHM.5.12.4/doc/MERRA2.README.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/mission-project?title=MERRA-2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/documents?title=Records%20of%20MERRA-2%20Data%20Reprocessing%20and%20Service%20Changes",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/faqs?keywords=MERRA-2&page=1",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://worldview.earthdata.nasa.gov/?l=Reference_Labels_15m(hidden),Reference_Features_15m(hidden),Coastlines_15m,MERRA2_Carbon_Monoxide_Emission_Monthly,OCI_PACE_True_Color(hidden),VIIRS_NOAA21_CorrectedReflectance_TrueColor(hidden),VIIRS_NOAA20_CorrectedReflectance_TrueColor(hidden),VIIRS_SNPP_CorrectedReflectance_TrueColor(hidden),MODIS_Aqua_CorrectedReflectance_TrueColor(hidden),MODIS_Terra_CorrectedReflectance_TrueColor&lg=true&t=2026-03-16-T14%3A43%3A41Z",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "MERRA-2"
+        ],
+        "processing_level_id": "4",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": false,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "M2TMNXCHM",
+        "summary": "M2TMNXCHM (or  tavgM_2d_chm_Nx) is a time-averaged 2-dimensional monthly mean data collection in Modern-Era Retrospective analysis for Research and Applications version 2 (MERRA-2).  This collection consists of assimilated carbon monoxide and ozone diagnostics, such as properties of carbon monoxide (column burden, emission, chemical production, and surface concentration), and total column ozone.  The collection also includes variance of certain parameters.  \n\nMERRA-2 is the latest version of global atmospheric reanalysis for the satellite era produced by NASA Global Modeling and Assimilation Office (GMAO) using the Goddard Earth Observing System Model (GEOS) version 5.12.4.  The dataset covers the period of 1980-present with the latency of ~3 weeks after the end of a month. \n\nData Reprocessing:  Please check “Records of MERRA-2 Data Reprocessing and Service Changes” linked from the “Documentation” tab on this page.  Note that a reprocessed data filename is different from the original file.\n\nMERRA-2 Mailing List: Sign up to receive information on reprocessing of data, changing of tools and services, as well as data announcements from GMAO. Contact the GES DISC Help Desk (gsfc-dl-help-disc@mail.nasa.gov) to be added to the list.\n\nQuestions: If you have a question, please read \"MERRA-2 File Specification Document\",  “MERRA-2 Data Access – Quick Start Guide”, and FAQs linked from the ”Documentation” tab on this page.  If that does not answer your question, you may post your question to the NASA Earthdata Forum (forum.earthdata.nasa.gov) or email the GES DISC Help Desk (gsfc-dl-help-disc@mail.nasa.gov).",
+        "time_start": "1980-01-01T00:00:00.000Z",
+        "title": "MERRA-2 tavgM_2d_chm_Nx: 2d,Monthly mean,Time-Averaged,Single-Level,Assimilation,Carbon Monoxide and Ozone Diagnostics 0.625 x 0.5 degree V5.12.4 (M2TMNXCHM) at GES DISC",
+        "updated": "2015-07-07T00:00:00.000Z",
+        "version_id": "5.12.4"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT3804200554-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804223398-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804209920-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804307818-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804182048-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804186285-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S2164732315-XYZ_PROV"
+            },
+            {
+              "concept_id": "S4057306097-XYZ_PROV"
+            },
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            },
+            {
+              "concept_id": "S2786683405-GES_DISC"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3395789971-GES_DISC"
+            },
+            {
+              "concept_id": "V3395790018-GES_DISC"
+            },
+            {
+              "concept_id": "V3395789783-GES_DISC"
+            },
+            {
+              "concept_id": "V3395790000-GES_DISC"
+            },
+            {
+              "concept_id": "V3395789946-GES_DISC"
+            },
+            {
+              "concept_id": "V3395789805-GES_DISC"
+            },
+            {
+              "concept_id": "V3395789758-GES_DISC"
+            },
+            {
+              "concept_id": "V3395789707-GES_DISC"
+            },
+            {
+              "concept_id": "V3395789728-GES_DISC"
+            },
+            {
+              "concept_id": "V3395789837-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT3804200554-ESDIS",
+            "CIT3804223398-ESDIS",
+            "CIT3804209920-ESDIS",
+            "CIT3804307818-ESDIS",
+            "CIT3804182048-ESDIS",
+            "CIT3804186285-ESDIS"
+          ],
+          "services": [
+            "S2164732315-XYZ_PROV",
+            "S4057306097-XYZ_PROV",
+            "S2874702816-XYZ_PROV",
+            "S2786683405-GES_DISC"
+          ],
+          "variables": [
+            "V3395789971-GES_DISC",
+            "V3395790018-GES_DISC",
+            "V3395789783-GES_DISC",
+            "V3395790000-GES_DISC",
+            "V3395789946-GES_DISC",
+            "V3395789805-GES_DISC",
+            "V3395789758-GES_DISC",
+            "V3395789707-GES_DISC",
+            "V3395789728-GES_DISC",
+            "V3395789837-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "MERRA-2 tavgU_2d_chm_Nx: 2d,diurnal,Time-Averaged,Single-Level,Assimilation,Carbon Monoxide and Ozone Diagnostics 0.625 x 0.5 degree V5.12.4 (M2TUNXCHM) at GES DISC",
+        "entry_id": "M2TUNXCHM_5.12.4",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1276812870-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/M2TUNXCHM_5.12.4.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/howto?tags=MERRA",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/M2TUNXCHM_5.12.4.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2_DIURNAL/M2TUNXCHM.5.12.4/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1276812870-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/opendap/MERRA2_DIURNAL/M2TUNXCHM.5.12.4/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/thredds/catalog/MERRA2_DIURNAL_aggregation/catalog.html?dataset=merra2_diurnal_aggregation/M2TUNXCHM.5.12.4_Aggregation.ncml",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://gmao.gsfc.nasa.gov/gmao-products/merra-2/documentation_merra-2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://gmao.gsfc.nasa.gov/media/publications/zbly36ziNFDFbmYmvhQeVqPhUo/Bosilovich785.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2_DIURNAL/M2TUNXCHM.5.12.4/doc/MERRA2.README.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/mission-project?title=MERRA-2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/documents?title=Records%20of%20MERRA-2%20Data%20Reprocessing%20and%20Service%20Changes",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/faqs?keywords=MERRA-2&page=1",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "MERRA-2"
+        ],
+        "processing_level_id": "4",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": false,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "M2TUNXCHM",
+        "summary": "M2TUNXCHM (or  tavgU_2d_chm_Nx) is a time-averaged 2-dimensional monthly diurnal means data collection in Modern-Era Retrospective analysis for Research and Applications version 2 (MERRA-2).  This collection consists of assimilated carbon monoxide and ozone diagnostics, such as properties of carbon monoxide (column burden, emission, chemical production, and surface concentration), and total column ozone.  This data collection is the monthly mean of data fields for each hour and time-stamped with the central time of an hour starting from 00:30 UTC, e.g.: 00:30, 01:30, … , 23:30 UTC.\n\nMERRA-2 is the latest version of global atmospheric reanalysis for the satellite era produced by NASA Global Modeling and Assimilation Office (GMAO) using the Goddard Earth Observing System Model (GEOS) version 5.12.4.  The dataset covers the period of 1980-present with the latency of ~3 weeks after the end of a month. \n\nData Reprocessing:  Please check “Records of MERRA-2 Data Reprocessing and Service Changes” linked from the “Documentation” tab on this page.  Note that a reprocessed data filename is different from the original file.\n\nMERRA-2 Mailing List: Sign up to receive information on reprocessing of data, changing of tools and services, as well as data announcements from GMAO. Contact the GES DISC Help Desk (gsfc-dl-help-disc@mail.nasa.gov) to be added to the list.\n\nQuestions: If you have a question, please read \"MERRA-2 File Specification Document\",  “MERRA-2 Data Access – Quick Start Guide”, and FAQs linked from the ”Documentation” tab on this page.  If that does not answer your question, you may post your question to the NASA Earthdata Forum (forum.earthdata.nasa.gov) or email the GES DISC Help Desk (gsfc-dl-help-disc@mail.nasa.gov).",
+        "time_start": "1980-01-01T00:00:00.000Z",
+        "title": "MERRA-2 tavgU_2d_chm_Nx: 2d,diurnal,Time-Averaged,Single-Level,Assimilation,Carbon Monoxide and Ozone Diagnostics 0.625 x 0.5 degree V5.12.4 (M2TUNXCHM) at GES DISC",
+        "updated": "2015-07-07T00:00:00.000Z",
+        "version_id": "5.12.4"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "NEAR_REAL_TIME",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "Sentinel-5P TROPOMI Near-Real-Time (NRT) Carbon Monoxide CO Column 1-Orbit L2 5.5km x 7km V2 (S5P_L2__CO_____HiR_NRT) at GES DISC",
+        "entry_id": "S5P_L2__CO_____HiR_NRT_2",
+        "eula_identifiers": [
+          "2f16e13a-e648-4920-9276-d578f30707c6"
+        ],
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C3412185659-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/S5P_OFFL_L2__CO_____HiR_1.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/S5P/sentinel-eula.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://sentiwiki.copernicus.eu/web/document-library#DocumentLibrary-LatestMissionStatusReports.3",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/S5P_L2__CO_____HiR_NRT_2.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://discnrt1.gesdisc.eosdis.nasa.gov/data/S5P_TROPOMI_NRT/S5P_L2__CO_____HiR_NRT.2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://sentiwiki.copernicus.eu/__attachments/1673595/S5P-MPC-SRON-PRF-CO%20-%20Sentinel-5P%20Carbon%20Monoxide%20Level%202%20Product%20Readme%20File%202025%20-%202.9.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3412185659-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://sentiwiki.copernicus.eu/__attachments/1673595/SRON-S5P-LEV2-RP-002%20-%20Sentinel-5P%20TROPOMI%20ATBD%20Carbon%20Monoxide%20Total%20Column%20Retrieval%202024%20-%202.5.0.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://sentiwiki.copernicus.eu/__attachments/1673595/SRON-S5P-LEV2-MA-002%20-%20Sentinel-5P%20Level%202%20Product%20User%20Manual%20Carbon%20Monoxide%202024%20-%202.8.0.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://sentinels.copernicus.eu/web/sentinel/copernicus/sentinel-5p",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/glossary?title=Sentinel-5P",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Sentinel-5P"
+        ],
+        "processing_level_id": "2",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "S5P_L2__CO_____HiR_NRT",
+        "summary": "The Sentinel-5P TROPOMI Near Real Time (NRT) Carbon Monoxide CO Column 1-Orbit L2 5.5km x 7km V2 (S5P_L2__CO_____HiR_NRT) at GES DISC is the near real time version of the offline S5P_L2__CO_____HiR data product. These data are typically available within three hours of measurement as required by the Land Atmosphere NRT Capability Earth Observing System (LANCE). These data are intended for a rapid turnaround assessment and are only archived for up to ten days. Users who require a longer data record, or wish to conduct rigorous analysis should use the offline version of this product S5P_L2__CO_____HiR.\n\nThe Copernicus Sentinel-5 Precursor (Sentinel-5P or S5P) satellite mission is one of the European Space Agency's (ESA) new mission family - Sentinels, and it is a joint initiative between the Kingdom of the Netherlands and the ESA. The sole payload on Sentinel-5P is the TROPOspheric Monitoring Instrument (TROPOMI), which is a nadir-viewing 108 degree Field-of-View push-broom grating hyperspectral spectrometer, covering the wavelength of ultraviolet-visible (UV-VIS, 270nm to 495nm), near infrared (NIR, 675nm to 775nm), and shortwave infrared (SWIR, 2305nm-2385nm). Sentinel-5P is the first of the Atmospheric Composition Sentinels and is expected to provide measurements of ozone, NO2, SO2, CH4, CO, formaldehyde, aerosols and cloud at high spatial, temporal and spectral resolutions.\n\nThe TROPOMI Carbon Monoxide total column applies a modified SWIR CO retrieval (SICOR) algorithm based on the CO absorption band between 2305 nm and 2385 nm. The S5P SICOR algorithm accounts for cloudy and aerosol loaded atmosphere conditions and is suitable for clear sky observations over land and cloudy observations over both land and oceans. Data are stored in individual files, or granules, that contain one orbit of information. The data are stored in netCDF4 data format and files and complete files are ~20 MB.",
+        "time_start": "2025-01-27T00:00:00.000Z",
+        "title": "Sentinel-5P TROPOMI Near-Real-Time (NRT) Carbon Monoxide CO Column 1-Orbit L2 5.5km x 7km V2 (S5P_L2__CO_____HiR_NRT) at GES DISC",
+        "updated": "2025-01-27T00:00:00.000Z",
+        "version_id": "2"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT3804054806-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803951427-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803940718-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804109387-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804214824-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857566447-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804141424-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804262698-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804159311-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804153055-ESDIS"
+            },
+            {
+              "concept_id": "CIT3963294849-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804194133-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803982598-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804010263-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181364491-ESDIS"
+            },
+            {
+              "concept_id": "CIT3963295289-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804016297-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804043575-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804038690-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181335515-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804293561-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181342440-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803992177-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804017308-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S3267470083-GES_DISC"
+            },
+            {
+              "concept_id": "S1962070864-POCLOUD"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V2693782524-GES_DISC"
+            },
+            {
+              "concept_id": "V2693786395-GES_DISC"
+            },
+            {
+              "concept_id": "V2693785394-GES_DISC"
+            },
+            {
+              "concept_id": "V2693785337-GES_DISC"
+            },
+            {
+              "concept_id": "V2693786337-GES_DISC"
+            },
+            {
+              "concept_id": "V2693785905-GES_DISC"
+            },
+            {
+              "concept_id": "V2693785368-GES_DISC"
+            },
+            {
+              "concept_id": "V2693784286-GES_DISC"
+            },
+            {
+              "concept_id": "V2693783056-GES_DISC"
+            },
+            {
+              "concept_id": "V2693783547-GES_DISC"
+            },
+            {
+              "concept_id": "V2693786387-GES_DISC"
+            },
+            {
+              "concept_id": "V2693786347-GES_DISC"
+            },
+            {
+              "concept_id": "V2693785140-GES_DISC"
+            },
+            {
+              "concept_id": "V2693785479-GES_DISC"
+            },
+            {
+              "concept_id": "V2693783457-GES_DISC"
+            },
+            {
+              "concept_id": "V2693783871-GES_DISC"
+            },
+            {
+              "concept_id": "V2693783604-GES_DISC"
+            },
+            {
+              "concept_id": "V2693787402-GES_DISC"
+            },
+            {
+              "concept_id": "V2693783433-GES_DISC"
+            },
+            {
+              "concept_id": "V2693782830-GES_DISC"
+            },
+            {
+              "concept_id": "V2693784185-GES_DISC"
+            },
+            {
+              "concept_id": "V2693783729-GES_DISC"
+            },
+            {
+              "concept_id": "V2693785940-GES_DISC"
+            },
+            {
+              "concept_id": "V2693786335-GES_DISC"
+            },
+            {
+              "concept_id": "V2693785433-GES_DISC"
+            },
+            {
+              "concept_id": "V2693783266-GES_DISC"
+            },
+            {
+              "concept_id": "V2693783095-GES_DISC"
+            },
+            {
+              "concept_id": "V2693785923-GES_DISC"
+            },
+            {
+              "concept_id": "V2693731450-GES_DISC"
+            },
+            {
+              "concept_id": "V2693784971-GES_DISC"
+            },
+            {
+              "concept_id": "V2693783172-GES_DISC"
+            },
+            {
+              "concept_id": "V2693786109-GES_DISC"
+            },
+            {
+              "concept_id": "V2693785173-GES_DISC"
+            },
+            {
+              "concept_id": "V2693782837-GES_DISC"
+            },
+            {
+              "concept_id": "V2693785307-GES_DISC"
+            },
+            {
+              "concept_id": "V2693782740-GES_DISC"
+            },
+            {
+              "concept_id": "V2693785952-GES_DISC"
+            },
+            {
+              "concept_id": "V2693786048-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT3804054806-ESDIS",
+            "CIT3803951427-ESDIS",
+            "CIT3803940718-ESDIS",
+            "CIT3804109387-ESDIS",
+            "CIT3804214824-ESDIS",
+            "CIT3857566447-ESDIS",
+            "CIT3804141424-ESDIS",
+            "CIT3804262698-ESDIS",
+            "CIT3804159311-ESDIS",
+            "CIT3804153055-ESDIS",
+            "CIT3963294849-ESDIS",
+            "CIT3804194133-ESDIS",
+            "CIT3803982598-ESDIS",
+            "CIT3804010263-ESDIS",
+            "CIT4181364491-ESDIS",
+            "CIT3963295289-ESDIS",
+            "CIT3804016297-ESDIS",
+            "CIT3804043575-ESDIS",
+            "CIT3804038690-ESDIS",
+            "CIT4181335515-ESDIS",
+            "CIT3804293561-ESDIS",
+            "CIT4181342440-ESDIS",
+            "CIT3803992177-ESDIS",
+            "CIT3804017308-ESDIS"
+          ],
+          "services": [
+            "S3267470083-GES_DISC",
+            "S1962070864-POCLOUD"
+          ],
+          "variables": [
+            "V2693782524-GES_DISC",
+            "V2693786395-GES_DISC",
+            "V2693785394-GES_DISC",
+            "V2693785337-GES_DISC",
+            "V2693786337-GES_DISC",
+            "V2693785905-GES_DISC",
+            "V2693785368-GES_DISC",
+            "V2693784286-GES_DISC",
+            "V2693783056-GES_DISC",
+            "V2693783547-GES_DISC",
+            "V2693786387-GES_DISC",
+            "V2693786347-GES_DISC",
+            "V2693785140-GES_DISC",
+            "V2693785479-GES_DISC",
+            "V2693783457-GES_DISC",
+            "V2693783871-GES_DISC",
+            "V2693783604-GES_DISC",
+            "V2693787402-GES_DISC",
+            "V2693783433-GES_DISC",
+            "V2693782830-GES_DISC",
+            "V2693784185-GES_DISC",
+            "V2693783729-GES_DISC",
+            "V2693785940-GES_DISC",
+            "V2693786335-GES_DISC",
+            "V2693785433-GES_DISC",
+            "V2693783266-GES_DISC",
+            "V2693783095-GES_DISC",
+            "V2693785923-GES_DISC",
+            "V2693731450-GES_DISC",
+            "V2693784971-GES_DISC",
+            "V2693783172-GES_DISC",
+            "V2693786109-GES_DISC",
+            "V2693785173-GES_DISC",
+            "V2693782837-GES_DISC",
+            "V2693785307-GES_DISC",
+            "V2693782740-GES_DISC",
+            "V2693785952-GES_DISC",
+            "V2693786048-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-82 -180 82 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "MLS/Aura Level 2 Carbon Monoxide (CO) Mixing Ratio V005 (ML2CO) at GES DISC",
+        "entry_id": "ML2CO_005",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1729925130-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/ML2CO_005.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2CO_005.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2CO.005/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2CO.005/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1729925130-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/v5-0_data_quality_document.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/publications/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/eos-aura-mls/data.php",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura"
+        ],
+        "processing_level_id": "2",
+        "score": 1.1,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": false,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "ML2CO",
+        "summary": "ML2CO is the EOS Aura Microwave Limb Sounder (MLS) standard product for carbon monoxide derived from radiances measured by the 640 GHz radiometer. The data version is 5.0. Data coverage is from August 8, 2004 to current. Spatial coverage is near-global (-82 degrees to +82 degrees latitude), with each profile spaced 1.5 degrees or ~165 km along the orbit track (roughly 15 orbits per day). The recommended useful vertical range is between 215 and 0.00564 hPa, and the vertical resolution is about 6 km. Users of the ML2CO data product should read section 3.7 of the EOS MLS Level 2 Version 5 Quality Document for more information.\n\nThe data are stored in the version 5 EOS Hierarchical Data Format (HDF-EOS5), which is based on the version 5 Hierarchical Data Format, or HDF-5. Each file contains two swath objects (profile and column data), each with a set of data and geolocation fields, swath attributes, and metadata.",
+        "time_start": "2004-08-02T00:00:00.000Z",
+        "title": "MLS/Aura Level 2 Carbon Monoxide (CO) Mixing Ratio V005 (ML2CO) at GES DISC",
+        "updated": "2020-02-04T00:00:00.000Z",
+        "version_id": "005"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "visualizations": [
+            {
+              "concept_id": "VIS3741139315-ESDIS"
+            },
+            {
+              "concept_id": "VIS3741139323-ESDIS"
+            }
+          ]
+        },
+        "associations": {
+          "visualizations": [
+            "VIS3741139315-ESDIS",
+            "VIS3741139323-ESDIS"
+          ]
+        },
+        "boxes": [
+          "-82 -180 82 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "NEAR_REAL_TIME",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "MLS/Aura Near-Real-Time L2 Carbon Monoxide (CO) Mixing Ratio V005 (ML2CO_NRT) at GES DISC",
+        "entry_id": "ML2CO_NRT_005",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C2131771725-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/ML2CO_NRT_003.jpeg",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2CO_NRT_005.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://discnrt1.gesdisc.eosdis.nasa.gov/data/Aura_MLS_NRT/ML2CO_NRT.005/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C2131771725-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/NRT-user-guide-v5.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/v5-0_data_quality_document.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://worldview.earthdata.nasa.gov/?l=Reference_Labels_15m(hidden),Reference_Features_15m(hidden),Coastlines_15m,MLS_CO_215hPa_Day,MLS_CO_215hPa_Night,OCI_PACE_True_Color(hidden),VIIRS_NOAA21_CorrectedReflectance_TrueColor(hidden),VIIRS_NOAA20_CorrectedReflectance_TrueColor(hidden),VIIRS_SNPP_CorrectedReflectance_TrueColor(hidden),MODIS_Aqua_CorrectedReflectance_TrueColor(hidden),MODIS_Terra_CorrectedReflectance_TrueColor&lg=true&t=2026-03-12-T14%3A51%3A57Z",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura"
+        ],
+        "processing_level_id": "2",
+        "score": 1.1,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "ML2CO_NRT",
+        "summary": "ML2CO_NRT is the EOS Aura Microwave Limb Sounder (MLS) Near-Real-Time (NRT) product for carbon monoxide (CO). This product contains CO profiles derived from the 240 GHz region. The NRT data are typically available within 3 hours of observation and are broken into files containing about 15 minutes of data. The most recent 7 days of data are available online. Spatial coverage is near-global (-82 degrees to +82 degrees latitude), with each profile spaced 1.5 degrees or ~165 km along the orbit track (roughly 15 orbits per day). The vertical coverage is from 215 to 0.1 hPa.\n\nThe MLS NRT algorithm uses a simplified fast forward model to meet Near Real Time data latency requirements and are therefore not as accurate as the retrievals that constitute the standard MLS products. Nevertheless the results are scientifically useful in selected regions of the Earth's atmosphere provided that the data are screened according to the recommendations in the MLS NRT User Guide and the MLS L2 Data Quality Document for Standard Products.",
+        "time_start": "2021-09-21T00:00:00.000Z",
+        "title": "MLS/Aura Near-Real-Time L2 Carbon Monoxide (CO) Mixing Ratio V005 (ML2CO_NRT) at GES DISC",
+        "updated": "2021-09-21T00:00:00.000Z",
+        "version_id": "005"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT3804150523-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804213100-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804304372-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804320933-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            },
+            {
+              "concept_id": "S3267470083-GES_DISC"
+            },
+            {
+              "concept_id": "S1962070864-POCLOUD"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V2920567190-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567270-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567249-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567109-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567283-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567253-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567019-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566838-GES_DISC"
+            },
+            {
+              "concept_id": "V2930961018-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566887-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567148-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567252-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566947-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567124-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567364-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567208-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567049-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566986-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567251-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567262-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567094-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567304-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567073-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567334-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567319-GES_DISC"
+            },
+            {
+              "concept_id": "V2920567230-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT3804150523-ESDIS",
+            "CIT3804213100-ESDIS",
+            "CIT3804304372-ESDIS",
+            "CIT3804320933-ESDIS"
+          ],
+          "services": [
+            "S2874702816-XYZ_PROV",
+            "S3267470083-GES_DISC",
+            "S1962070864-POCLOUD"
+          ],
+          "variables": [
+            "V2920567190-GES_DISC",
+            "V2920567270-GES_DISC",
+            "V2920567249-GES_DISC",
+            "V2920567109-GES_DISC",
+            "V2920567283-GES_DISC",
+            "V2920567253-GES_DISC",
+            "V2920567019-GES_DISC",
+            "V2920566838-GES_DISC",
+            "V2930961018-GES_DISC",
+            "V2920566887-GES_DISC",
+            "V2920567148-GES_DISC",
+            "V2920567252-GES_DISC",
+            "V2920566947-GES_DISC",
+            "V2920567124-GES_DISC",
+            "V2920567364-GES_DISC",
+            "V2920567208-GES_DISC",
+            "V2920567049-GES_DISC",
+            "V2920566986-GES_DISC",
+            "V2920567251-GES_DISC",
+            "V2920567262-GES_DISC",
+            "V2920567094-GES_DISC",
+            "V2920567304-GES_DISC",
+            "V2920567073-GES_DISC",
+            "V2920567334-GES_DISC",
+            "V2920567319-GES_DISC",
+            "V2920567230-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "TROPESS CrIS-JPSS1 L2 Carbon Monoxide for Forward Stream, Standard Product V1 (TRPSDL2COCRS1FS) at GES DISC",
+        "entry_id": "TRPSDL2COCRS1FS_1",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C2088007544-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/TROPESS/images/TRPSDL2COCRS1FS_Sample.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/TRPSDL2COCRS1FS_1.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://tropess.gesdisc.eosdis.nasa.gov/data/TROPESS_Standard/TRPSDL2COCRS1FS.1/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://tropess.gesdisc.eosdis.nasa.gov/opendap/TROPESS_Standard/TRPSDL2COCRS1FS.1/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://tropess.gesdisc.eosdis.nasa.gov/data/TROPESS_Standard/TRPSDL2COCRS1FS.1/doc/TROPESS_Forward_Stream_README.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/TROPESS/User_Guides/TROPESS-AIRS-CrIS_CO_L2_Product_User_Guide.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/TROPESS/TROPESS_ATBDv1.1.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/mission-project?title=TROPESS",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C2088007544-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "JPSS-1"
+        ],
+        "processing_level_id": "2",
+        "score": 1.1,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": false,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "TRPSDL2COCRS1FS",
+        "summary": "The TROPESS CrIS-JPSS1 L2 Carbon Monoxide for Forward Stream, Standard Product contains the vertical distribution of the retrieved atmospheric state of carbon monoxide (CO), formal uncertainties, and diagnostic information measured by the CrIS instrument on the JPSS-1 (NOAA-20) satellite. The forward stream standard product is global for the time period from 2021-04-01 to present. The NASA TRopospheric Ozone and Precursors from Earth System Sounding (TROPESS) project, uses an optimal estimation algorithm, known as the MUlti-SpEctra, MUlti-SpEcies, Multi-SEnsors (MUSES).\n\nThe data files are written in the netCDF version 4 file format, and each file contains one day of data. The data have a spatial resolution of 14 km (CrIS nadir FOV), and are reported at 14 vertical levels from the surface to 0.1 hPa. The principal investigator for the TROPESS project is Kevin W. Bowman.",
+        "time_start": "2021-04-01T00:00:00.000Z",
+        "title": "TROPESS CrIS-JPSS1 L2 Carbon Monoxide for Forward Stream, Standard Product V1 (TRPSDL2COCRS1FS) at GES DISC",
+        "updated": "2021-05-18T00:00:00.000Z",
+        "version_id": "1"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT3804236357-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S3267470083-GES_DISC"
+            },
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            },
+            {
+              "concept_id": "S1962070864-POCLOUD"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V2920566450-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566583-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566510-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566284-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566123-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566107-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566118-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566110-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566337-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566224-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566712-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566167-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566484-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566732-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566736-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566104-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566431-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566579-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566466-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566396-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566411-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566385-GES_DISC"
+            },
+            {
+              "concept_id": "V2930961965-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566144-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566690-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566137-GES_DISC"
+            },
+            {
+              "concept_id": "V2920566181-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT3804236357-ESDIS"
+          ],
+          "services": [
+            "S3267470083-GES_DISC",
+            "S2874702816-XYZ_PROV",
+            "S1962070864-POCLOUD"
+          ],
+          "variables": [
+            "V2920566450-GES_DISC",
+            "V2920566583-GES_DISC",
+            "V2920566510-GES_DISC",
+            "V2920566284-GES_DISC",
+            "V2920566123-GES_DISC",
+            "V2920566107-GES_DISC",
+            "V2920566118-GES_DISC",
+            "V2920566110-GES_DISC",
+            "V2920566337-GES_DISC",
+            "V2920566224-GES_DISC",
+            "V2920566712-GES_DISC",
+            "V2920566167-GES_DISC",
+            "V2920566484-GES_DISC",
+            "V2920566732-GES_DISC",
+            "V2920566736-GES_DISC",
+            "V2920566104-GES_DISC",
+            "V2920566431-GES_DISC",
+            "V2920566579-GES_DISC",
+            "V2920566466-GES_DISC",
+            "V2920566396-GES_DISC",
+            "V2920566411-GES_DISC",
+            "V2920566385-GES_DISC",
+            "V2930961965-GES_DISC",
+            "V2920566144-GES_DISC",
+            "V2920566690-GES_DISC",
+            "V2920566137-GES_DISC",
+            "V2920566181-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "TROPESS CrIS-JPSS1 L2 Carbon Monoxide for Forward Stream, Summary Product V1 (TRPSYL2COCRS1FS) at GES DISC",
+        "entry_id": "TRPSYL2COCRS1FS_1",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C2247040116-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/TROPESS/images/TRPSYL2COCRS1FS_Sample.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/TRPSYL2COCRS1FS_1.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://tropess.gesdisc.eosdis.nasa.gov/opendap/TROPESS_Summary/TRPSYL2COCRS1FS.1/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://tropess.gesdisc.eosdis.nasa.gov/data/TROPESS_Summary/TRPSYL2COCRS1FS.1/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://tropess.gesdisc.eosdis.nasa.gov/data/TROPESS_Summary/TRPSYL2COCRS1FS.1/doc/TROPESS_Forward_Stream_README.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/TROPESS/User_Guides/TROPESS-CO_L2_Product_Quick_Start_User_Guide_Summary_only.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/TROPESS/TROPESS_ATBDv1.1.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/mission-project?title=TROPESS",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C2247040116-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "JPSS-1"
+        ],
+        "processing_level_id": "2",
+        "score": 1.1,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": false,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "TRPSYL2COCRS1FS",
+        "summary": "The TROPESS CrIS-JPSS1 L2 Carbon Monoxide for Forward Stream, Summary Product contains the vertical distribution of the retrieved atmospheric state of carbon monoxide (CO),  and formal uncertainties measured by the CrIS instrument on the JPSS-1 (NOAA-20) satellite. The forward stream standard product is global for the time period from 2021-04-01 to present. The NASA TRopospheric Ozone and Precursors from Earth System Sounding (TROPESS) project, uses an optimal estimation algorithm, known as the MUlti-SpEctra, MUlti-SpEcies, Multi-SEnsors (MUSES).\n\nThe data files are written in the netCDF version 4 file format, and each file contains one day of data. The data have a spatial resolution of 14 km (CrIS nadir FOV), and are reported at 14 vertical levels from the surface to 0.1 hPa. The principal investigator for the TROPESS project is Kevin W. Bowman.",
+        "time_start": "2021-02-01T00:00:00.000Z",
+        "title": "TROPESS CrIS-JPSS1 L2 Carbon Monoxide for Forward Stream, Summary Product V1 (TRPSYL2COCRS1FS) at GES DISC",
+        "updated": "2022-04-01T00:00:00.000Z",
+        "version_id": "1"
+      }
+    ],
+    "id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?keyword=carbon+monoxide&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=10&sort_key=-score",
+    "title": "ECHO dataset metadata",
+    "updated": "2026-05-26T20:36:29.901Z"
+  }
+}

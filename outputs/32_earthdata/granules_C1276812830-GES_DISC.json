@@ -1,0 +1,370 @@
+{
+  "_meta": {
+    "bytes": 12253,
+    "content_type": "application/json;charset=utf-8",
+    "http_status": 200,
+    "sha256": "1bcb720c56a87a6173c759969e391c352a204615d55b713527d2a87a6169a5be",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C1276812830-GES_DISC&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=3&sort_key=-start_date"
+  },
+  "feed": {
+    "entry": [
+      {
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "collection_concept_id": "C1276812830-GES_DISC",
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "MERRA-2 tavg1_2d_aer_Nx: 2d,1-Hourly,Time-averaged,Single-Level,Assimilation,Aerosol Diagnostics 0.625 x 0.5 degree V5.12.4 (M2T1NXAER) at GES DISC",
+        "day_night_flag": "UNSPECIFIED",
+        "granule_size": "475.76255798339844",
+        "id": "G4194357728-GES_DISC",
+        "links": [
+          {
+            "href": "https://data.gesdisc.earthdata.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/2026/05/MERRA2_400.tavg1_2d_aer_Nx.20260501.nc4",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MERRA2_400.tavg1_2d_aer_Nx.20260501.nc4"
+          },
+          {
+            "href": "s3://gesdisc-cumulus-prod-protected/MERRA2/M2T1NXAER.5.12.4/2026/05/MERRA2_400.tavg1_2d_aer_Nx.20260501.nc4",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule"
+          },
+          {
+            "href": "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)"
+          },
+          {
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1276812830-GES_DISC/granules/M2T1NXAER.5.12.4%3AMERRA2_400.tavg1_2d_aer_Nx.20260501.nc4",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/howto?tags=MERRA",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/M2T1NXAER_5.12.4.html",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1276812830-GES_DISC",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/opendap/MERRA2/M2T1NXAER.5.12.4/contents.html",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/thredds/catalog/MERRA2_aggregation/M2T1NXAER.5.12.4/catalog.html",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://gmao.gsfc.nasa.gov/gmao-products/merra-2/documentation_merra-2/",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://gmao.gsfc.nasa.gov/media/publications/zbly36ziNFDFbmYmvhQeVqPhUo/Bosilovich785.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/doc/MERRA2.README.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/mission-project?title=MERRA-2",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/MERRA/Records_MERRA-2_Data_Reprocessing_and_Service_Changes.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/faqs?keywords=MERRA-2&page=1",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "original_format": "ECHO10",
+        "producer_granule_id": "MERRA2_400.tavg1_2d_aer_Nx.20260501.nc4",
+        "time_end": "2026-05-01T23:59:59.000Z",
+        "time_start": "2026-05-01T00:00:00.000Z",
+        "title": "M2T1NXAER.5.12.4:MERRA2_400.tavg1_2d_aer_Nx.20260501.nc4",
+        "updated": "2026-05-22T20:23:34.000Z"
+      },
+      {
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "collection_concept_id": "C1276812830-GES_DISC",
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "MERRA-2 tavg1_2d_aer_Nx: 2d,1-Hourly,Time-averaged,Single-Level,Assimilation,Aerosol Diagnostics 0.625 x 0.5 degree V5.12.4 (M2T1NXAER) at GES DISC",
+        "day_night_flag": "UNSPECIFIED",
+        "granule_size": "478.1006202697754",
+        "id": "G4194349970-GES_DISC",
+        "links": [
+          {
+            "href": "https://data.gesdisc.earthdata.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/2026/04/MERRA2_400.tavg1_2d_aer_Nx.20260430.nc4",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MERRA2_400.tavg1_2d_aer_Nx.20260430.nc4"
+          },
+          {
+            "href": "s3://gesdisc-cumulus-prod-protected/MERRA2/M2T1NXAER.5.12.4/2026/04/MERRA2_400.tavg1_2d_aer_Nx.20260430.nc4",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule"
+          },
+          {
+            "href": "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)"
+          },
+          {
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1276812830-GES_DISC/granules/M2T1NXAER.5.12.4%3AMERRA2_400.tavg1_2d_aer_Nx.20260430.nc4",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/howto?tags=MERRA",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/M2T1NXAER_5.12.4.html",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1276812830-GES_DISC",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/opendap/MERRA2/M2T1NXAER.5.12.4/contents.html",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/thredds/catalog/MERRA2_aggregation/M2T1NXAER.5.12.4/catalog.html",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://gmao.gsfc.nasa.gov/gmao-products/merra-2/documentation_merra-2/",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://gmao.gsfc.nasa.gov/media/publications/zbly36ziNFDFbmYmvhQeVqPhUo/Bosilovich785.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/doc/MERRA2.README.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/mission-project?title=MERRA-2",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/MERRA/Records_MERRA-2_Data_Reprocessing_and_Service_Changes.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/faqs?keywords=MERRA-2&page=1",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "original_format": "ECHO10",
+        "producer_granule_id": "MERRA2_400.tavg1_2d_aer_Nx.20260430.nc4",
+        "time_end": "2026-04-30T23:59:59.000Z",
+        "time_start": "2026-04-30T00:00:00.000Z",
+        "title": "M2T1NXAER.5.12.4:MERRA2_400.tavg1_2d_aer_Nx.20260430.nc4",
+        "updated": "2026-05-22T20:46:01.000Z"
+      },
+      {
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "collection_concept_id": "C1276812830-GES_DISC",
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "MERRA-2 tavg1_2d_aer_Nx: 2d,1-Hourly,Time-averaged,Single-Level,Assimilation,Aerosol Diagnostics 0.625 x 0.5 degree V5.12.4 (M2T1NXAER) at GES DISC",
+        "day_night_flag": "UNSPECIFIED",
+        "granule_size": "478.3262348175049",
+        "id": "G4194364256-GES_DISC",
+        "links": [
+          {
+            "href": "https://data.gesdisc.earthdata.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/2026/04/MERRA2_400.tavg1_2d_aer_Nx.20260429.nc4",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MERRA2_400.tavg1_2d_aer_Nx.20260429.nc4"
+          },
+          {
+            "href": "s3://gesdisc-cumulus-prod-protected/MERRA2/M2T1NXAER.5.12.4/2026/04/MERRA2_400.tavg1_2d_aer_Nx.20260429.nc4",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule"
+          },
+          {
+            "href": "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)"
+          },
+          {
+            "href": "https://opendap.earthdata.nasa.gov/collections/C1276812830-GES_DISC/granules/M2T1NXAER.5.12.4%3AMERRA2_400.tavg1_2d_aer_Nx.20260429.nc4",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/howto?tags=MERRA",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/M2T1NXAER_5.12.4.html",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1276812830-GES_DISC",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/opendap/MERRA2/M2T1NXAER.5.12.4/contents.html",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/thredds/catalog/MERRA2_aggregation/M2T1NXAER.5.12.4/catalog.html",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://gmao.gsfc.nasa.gov/gmao-products/merra-2/documentation_merra-2/",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://gmao.gsfc.nasa.gov/media/publications/zbly36ziNFDFbmYmvhQeVqPhUo/Bosilovich785.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/doc/MERRA2.README.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/mission-project?title=MERRA-2",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/MERRA/Records_MERRA-2_Data_Reprocessing_and_Service_Changes.pdf",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/faqs?keywords=MERRA-2&page=1",
+            "hreflang": "en-US",
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "original_format": "ECHO10",
+        "producer_granule_id": "MERRA2_400.tavg1_2d_aer_Nx.20260429.nc4",
+        "time_end": "2026-04-29T23:59:59.000Z",
+        "time_start": "2026-04-29T00:00:00.000Z",
+        "title": "M2T1NXAER.5.12.4:MERRA2_400.tavg1_2d_aer_Nx.20260429.nc4",
+        "updated": "2026-05-22T20:44:22.000Z"
+      }
+    ],
+    "id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?collection_concept_id=C1276812830-GES_DISC&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=3&sort_key=-start_date",
+    "title": "ECHO granule metadata",
+    "updated": "2026-05-26T20:36:33.673Z"
+  }
+}

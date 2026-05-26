@@ -1,0 +1,4986 @@
+{
+  "_meta": {
+    "bytes": 107888,
+    "content_type": "application/json;charset=utf-8",
+    "http_status": 200,
+    "sha256": "a143355569f38aa2c14be6bb13bee722551320afd5896da08c78d9e5d025d98c",
+    "url": "https://cmr.earthdata.nasa.gov/search/collections.json?keyword=air+quality&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=10&sort_key=-score"
+  },
+  "feed": {
+    "entry": [
+      {
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT4181374395-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382434-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3815147503-GES_DISC"
+            },
+            {
+              "concept_id": "V3815151574-GES_DISC"
+            },
+            {
+              "concept_id": "V3815150968-GES_DISC"
+            },
+            {
+              "concept_id": "V3815150656-GES_DISC"
+            },
+            {
+              "concept_id": "V3815152480-GES_DISC"
+            },
+            {
+              "concept_id": "V3815148590-GES_DISC"
+            },
+            {
+              "concept_id": "V3815151661-GES_DISC"
+            },
+            {
+              "concept_id": "V3815150563-GES_DISC"
+            },
+            {
+              "concept_id": "V3815151499-GES_DISC"
+            },
+            {
+              "concept_id": "V3815152423-GES_DISC"
+            },
+            {
+              "concept_id": "V3815149036-GES_DISC"
+            },
+            {
+              "concept_id": "V3815147476-GES_DISC"
+            },
+            {
+              "concept_id": "V3815148326-GES_DISC"
+            },
+            {
+              "concept_id": "V3815146726-GES_DISC"
+            },
+            {
+              "concept_id": "V3815146749-GES_DISC"
+            },
+            {
+              "concept_id": "V3815146854-GES_DISC"
+            },
+            {
+              "concept_id": "V3815151569-GES_DISC"
+            },
+            {
+              "concept_id": "V3815147486-GES_DISC"
+            },
+            {
+              "concept_id": "V3815150550-GES_DISC"
+            },
+            {
+              "concept_id": "V3815151423-GES_DISC"
+            },
+            {
+              "concept_id": "V3815151588-GES_DISC"
+            },
+            {
+              "concept_id": "V3815150546-GES_DISC"
+            },
+            {
+              "concept_id": "V3815152454-GES_DISC"
+            },
+            {
+              "concept_id": "V3815150304-GES_DISC"
+            },
+            {
+              "concept_id": "V3815151217-GES_DISC"
+            },
+            {
+              "concept_id": "V3815150777-GES_DISC"
+            },
+            {
+              "concept_id": "V3815147480-GES_DISC"
+            },
+            {
+              "concept_id": "V3815149397-GES_DISC"
+            },
+            {
+              "concept_id": "V3815147467-GES_DISC"
+            },
+            {
+              "concept_id": "V3815148574-GES_DISC"
+            },
+            {
+              "concept_id": "V3815147908-GES_DISC"
+            },
+            {
+              "concept_id": "V3815148566-GES_DISC"
+            },
+            {
+              "concept_id": "V3815147604-GES_DISC"
+            },
+            {
+              "concept_id": "V3815147493-GES_DISC"
+            },
+            {
+              "concept_id": "V3815149287-GES_DISC"
+            },
+            {
+              "concept_id": "V3815149379-GES_DISC"
+            },
+            {
+              "concept_id": "V3815150089-GES_DISC"
+            },
+            {
+              "concept_id": "V3815148558-GES_DISC"
+            },
+            {
+              "concept_id": "V3815150575-GES_DISC"
+            },
+            {
+              "concept_id": "V3815147199-GES_DISC"
+            },
+            {
+              "concept_id": "V3815149585-GES_DISC"
+            },
+            {
+              "concept_id": "V3815148625-GES_DISC"
+            },
+            {
+              "concept_id": "V3815150558-GES_DISC"
+            },
+            {
+              "concept_id": "V3815152413-GES_DISC"
+            },
+            {
+              "concept_id": "V3815149935-GES_DISC"
+            },
+            {
+              "concept_id": "V3815148584-GES_DISC"
+            },
+            {
+              "concept_id": "V3815147597-GES_DISC"
+            },
+            {
+              "concept_id": "V3815148676-GES_DISC"
+            },
+            {
+              "concept_id": "V3815151677-GES_DISC"
+            },
+            {
+              "concept_id": "V3815150466-GES_DISC"
+            },
+            {
+              "concept_id": "V3815151572-GES_DISC"
+            },
+            {
+              "concept_id": "V3815147062-GES_DISC"
+            },
+            {
+              "concept_id": "V3815151898-GES_DISC"
+            },
+            {
+              "concept_id": "V3815147522-GES_DISC"
+            },
+            {
+              "concept_id": "V3815149389-GES_DISC"
+            },
+            {
+              "concept_id": "V3815150636-GES_DISC"
+            },
+            {
+              "concept_id": "V3815148856-GES_DISC"
+            },
+            {
+              "concept_id": "V3815152063-GES_DISC"
+            },
+            {
+              "concept_id": "V3815152463-GES_DISC"
+            },
+            {
+              "concept_id": "V3815149512-GES_DISC"
+            },
+            {
+              "concept_id": "V3815152435-GES_DISC"
+            },
+            {
+              "concept_id": "V3815148541-GES_DISC"
+            },
+            {
+              "concept_id": "V3815149382-GES_DISC"
+            },
+            {
+              "concept_id": "V3815146734-GES_DISC"
+            },
+            {
+              "concept_id": "V3815151582-GES_DISC"
+            },
+            {
+              "concept_id": "V3815147510-GES_DISC"
+            },
+            {
+              "concept_id": "V3815152442-GES_DISC"
+            },
+            {
+              "concept_id": "V3815149415-GES_DISC"
+            },
+            {
+              "concept_id": "V3815146743-GES_DISC"
+            },
+            {
+              "concept_id": "V3815152305-GES_DISC"
+            },
+            {
+              "concept_id": "V3815149417-GES_DISC"
+            },
+            {
+              "concept_id": "V3815148580-GES_DISC"
+            },
+            {
+              "concept_id": "V3815149407-GES_DISC"
+            },
+            {
+              "concept_id": "V3815146821-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT4181374395-ESDIS",
+            "CIT4181382434-ESDIS"
+          ],
+          "services": [
+            "S2874702816-XYZ_PROV"
+          ],
+          "variables": [
+            "V3815147503-GES_DISC",
+            "V3815151574-GES_DISC",
+            "V3815150968-GES_DISC",
+            "V3815150656-GES_DISC",
+            "V3815152480-GES_DISC",
+            "V3815148590-GES_DISC",
+            "V3815151661-GES_DISC",
+            "V3815150563-GES_DISC",
+            "V3815151499-GES_DISC",
+            "V3815152423-GES_DISC",
+            "V3815149036-GES_DISC",
+            "V3815147476-GES_DISC",
+            "V3815148326-GES_DISC",
+            "V3815146726-GES_DISC",
+            "V3815146749-GES_DISC",
+            "V3815146854-GES_DISC",
+            "V3815151569-GES_DISC",
+            "V3815147486-GES_DISC",
+            "V3815150550-GES_DISC",
+            "V3815151423-GES_DISC",
+            "V3815151588-GES_DISC",
+            "V3815150546-GES_DISC",
+            "V3815152454-GES_DISC",
+            "V3815150304-GES_DISC",
+            "V3815151217-GES_DISC",
+            "V3815150777-GES_DISC",
+            "V3815147480-GES_DISC",
+            "V3815149397-GES_DISC",
+            "V3815147467-GES_DISC",
+            "V3815148574-GES_DISC",
+            "V3815147908-GES_DISC",
+            "V3815148566-GES_DISC",
+            "V3815147604-GES_DISC",
+            "V3815147493-GES_DISC",
+            "V3815149287-GES_DISC",
+            "V3815149379-GES_DISC",
+            "V3815150089-GES_DISC",
+            "V3815148558-GES_DISC",
+            "V3815150575-GES_DISC",
+            "V3815147199-GES_DISC",
+            "V3815149585-GES_DISC",
+            "V3815148625-GES_DISC",
+            "V3815150558-GES_DISC",
+            "V3815152413-GES_DISC",
+            "V3815149935-GES_DISC",
+            "V3815148584-GES_DISC",
+            "V3815147597-GES_DISC",
+            "V3815148676-GES_DISC",
+            "V3815151677-GES_DISC",
+            "V3815150466-GES_DISC",
+            "V3815151572-GES_DISC",
+            "V3815147062-GES_DISC",
+            "V3815151898-GES_DISC",
+            "V3815147522-GES_DISC",
+            "V3815149389-GES_DISC",
+            "V3815150636-GES_DISC",
+            "V3815148856-GES_DISC",
+            "V3815152063-GES_DISC",
+            "V3815152463-GES_DISC",
+            "V3815149512-GES_DISC",
+            "V3815152435-GES_DISC",
+            "V3815148541-GES_DISC",
+            "V3815149382-GES_DISC",
+            "V3815146734-GES_DISC",
+            "V3815151582-GES_DISC",
+            "V3815147510-GES_DISC",
+            "V3815152442-GES_DISC",
+            "V3815149415-GES_DISC",
+            "V3815146743-GES_DISC",
+            "V3815152305-GES_DISC",
+            "V3815149417-GES_DISC",
+            "V3815148580-GES_DISC",
+            "V3815149407-GES_DISC",
+            "V3815146821-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Comprehensive Quality Control Gridded Monthly V2 (SNDRAQIL3CMCCP) at GES DISC",
+        "entry_id": "SNDRAQIL3CMCCP_2",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1693440801-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/SNDRAQIL3CMCCP_2.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3CMCCP_2.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://airs.jpl.nasa.gov/index.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1693440801-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aqua"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "SNDRAQIL3CMCCP",
+        "summary": "WARNING: To users of the derived product “co_mmr_midtrop” (carbon monoxide mass mixing ratio to dry air [kg/kg] at ~500 hPa). This variable has a significant bias due to a conversion error: the molecular weight of carbon dioxide (CO2, 44.01 g/mol) was used instead of carbon monoxide (CO, 28.01 g/mol). To correct, simply multiply “co_mmr_midtrop” by 28.01/44.01. Alternatively, derive a profile of mass mixing ratio from scratch using the retrieved column density values (“mol_lay/co_mol_lay”) in the Level 2 files. For further questions or concerns please contact the Sounder SIPS at: sounder.sips@jpl.nasa.gov\n\nThe CLIMCAPS (Community Long-term Infrared Microwave Coupled Product System) algorithm is used to analyze data from the AIRS (Atmospheric Infrared Sounder). The AIRS instrument is a grating spectrometer (R = 1200) aboard the second Earth Observing System (EOS) polar-orbiting platform, EOS Aqua. The AIRS Standard Retrieval Product consists of retrieved estimates of cloud and surface properties, plus profiles of retrieved temperature, water vapor, ozone, carbon monoxide and methane. The temperature profile vertical resolution is 100 levels total between 1100 mb and 0.1 mb, while moisture profile is reported at atmospheric layers between 1100 mb and 300 mb. The horizontal resolution is 50 km.\n \nThe CLIMCAPS algorithm uses an Optimal Estimation methodology and uses an a-priori first guess to start the process. A CLIMCAPS sounding is comprised of a set of parameters that characterizes the full atmospheric state and includes a variety of geophysical parameters derived from the CrIMSS data. These include surface temperature and infrared emissivity; full atmosphere profiles of temperature, water vapor and ozone; infrared effective cloud top characteristics; carbon monoxide, methane, carbon dioxide, sulfur dioxide, nitrous oxide, and nitric acid.\n\nThis monthly one degree latitude by one degree longitude level-3 product starts with level-2 retrieval products applying the comprehensive quality control (QC) methodology. Comprehensive QC accepts a retrieval if the profile is good to the surface and ensures consistent analysis across all levels and variables. \n\n",
+        "time_start": "2002-08-31T00:00:00.000Z",
+        "title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Comprehensive Quality Control Gridded Monthly V2 (SNDRAQIL3CMCCP) at GES DISC",
+        "updated": "1970-01-01T00:00:00.000Z",
+        "version_id": "2"
+      },
+      {
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT3804100727-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3815160012-GES_DISC"
+            },
+            {
+              "concept_id": "V3815158361-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156117-GES_DISC"
+            },
+            {
+              "concept_id": "V3815158013-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156291-GES_DISC"
+            },
+            {
+              "concept_id": "V3815159192-GES_DISC"
+            },
+            {
+              "concept_id": "V3815160871-GES_DISC"
+            },
+            {
+              "concept_id": "V3815155129-GES_DISC"
+            },
+            {
+              "concept_id": "V3815159873-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156205-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156158-GES_DISC"
+            },
+            {
+              "concept_id": "V3815159897-GES_DISC"
+            },
+            {
+              "concept_id": "V3815155120-GES_DISC"
+            },
+            {
+              "concept_id": "V3815157374-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156955-GES_DISC"
+            },
+            {
+              "concept_id": "V3815155272-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156213-GES_DISC"
+            },
+            {
+              "concept_id": "V3815159151-GES_DISC"
+            },
+            {
+              "concept_id": "V3815155142-GES_DISC"
+            },
+            {
+              "concept_id": "V3815158029-GES_DISC"
+            },
+            {
+              "concept_id": "V3815155090-GES_DISC"
+            },
+            {
+              "concept_id": "V3815154768-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156983-GES_DISC"
+            },
+            {
+              "concept_id": "V3815160407-GES_DISC"
+            },
+            {
+              "concept_id": "V3815158665-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156938-GES_DISC"
+            },
+            {
+              "concept_id": "V3815160569-GES_DISC"
+            },
+            {
+              "concept_id": "V3815159845-GES_DISC"
+            },
+            {
+              "concept_id": "V3815160913-GES_DISC"
+            },
+            {
+              "concept_id": "V3815159001-GES_DISC"
+            },
+            {
+              "concept_id": "V3815155097-GES_DISC"
+            },
+            {
+              "concept_id": "V3815160893-GES_DISC"
+            },
+            {
+              "concept_id": "V3815159413-GES_DISC"
+            },
+            {
+              "concept_id": "V3815159016-GES_DISC"
+            },
+            {
+              "concept_id": "V3815157094-GES_DISC"
+            },
+            {
+              "concept_id": "V3815159046-GES_DISC"
+            },
+            {
+              "concept_id": "V3815155062-GES_DISC"
+            },
+            {
+              "concept_id": "V3815158222-GES_DISC"
+            },
+            {
+              "concept_id": "V3815155081-GES_DISC"
+            },
+            {
+              "concept_id": "V3815155233-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156098-GES_DISC"
+            },
+            {
+              "concept_id": "V3815159823-GES_DISC"
+            },
+            {
+              "concept_id": "V3815157991-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156138-GES_DISC"
+            },
+            {
+              "concept_id": "V3815159035-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156614-GES_DISC"
+            },
+            {
+              "concept_id": "V3815158990-GES_DISC"
+            },
+            {
+              "concept_id": "V3815159806-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156971-GES_DISC"
+            },
+            {
+              "concept_id": "V3815157773-GES_DISC"
+            },
+            {
+              "concept_id": "V3815160847-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156154-GES_DISC"
+            },
+            {
+              "concept_id": "V3815157000-GES_DISC"
+            },
+            {
+              "concept_id": "V3815155137-GES_DISC"
+            },
+            {
+              "concept_id": "V3815158037-GES_DISC"
+            },
+            {
+              "concept_id": "V3815157124-GES_DISC"
+            },
+            {
+              "concept_id": "V3815158975-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156074-GES_DISC"
+            },
+            {
+              "concept_id": "V3815158002-GES_DISC"
+            },
+            {
+              "concept_id": "V3815158919-GES_DISC"
+            },
+            {
+              "concept_id": "V3815159550-GES_DISC"
+            },
+            {
+              "concept_id": "V3815159935-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156883-GES_DISC"
+            },
+            {
+              "concept_id": "V3815159054-GES_DISC"
+            },
+            {
+              "concept_id": "V3815158051-GES_DISC"
+            },
+            {
+              "concept_id": "V3815155909-GES_DISC"
+            },
+            {
+              "concept_id": "V3815158074-GES_DISC"
+            },
+            {
+              "concept_id": "V3815159955-GES_DISC"
+            },
+            {
+              "concept_id": "V3815160131-GES_DISC"
+            },
+            {
+              "concept_id": "V3815157563-GES_DISC"
+            },
+            {
+              "concept_id": "V3815155722-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156361-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156927-GES_DISC"
+            },
+            {
+              "concept_id": "V3815156919-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT3804100727-ESDIS"
+          ],
+          "services": [
+            "S2874702816-XYZ_PROV"
+          ],
+          "variables": [
+            "V3815160012-GES_DISC",
+            "V3815158361-GES_DISC",
+            "V3815156117-GES_DISC",
+            "V3815158013-GES_DISC",
+            "V3815156291-GES_DISC",
+            "V3815159192-GES_DISC",
+            "V3815160871-GES_DISC",
+            "V3815155129-GES_DISC",
+            "V3815159873-GES_DISC",
+            "V3815156205-GES_DISC",
+            "V3815156158-GES_DISC",
+            "V3815159897-GES_DISC",
+            "V3815155120-GES_DISC",
+            "V3815157374-GES_DISC",
+            "V3815156955-GES_DISC",
+            "V3815155272-GES_DISC",
+            "V3815156213-GES_DISC",
+            "V3815159151-GES_DISC",
+            "V3815155142-GES_DISC",
+            "V3815158029-GES_DISC",
+            "V3815155090-GES_DISC",
+            "V3815154768-GES_DISC",
+            "V3815156983-GES_DISC",
+            "V3815160407-GES_DISC",
+            "V3815158665-GES_DISC",
+            "V3815156938-GES_DISC",
+            "V3815160569-GES_DISC",
+            "V3815159845-GES_DISC",
+            "V3815160913-GES_DISC",
+            "V3815159001-GES_DISC",
+            "V3815155097-GES_DISC",
+            "V3815160893-GES_DISC",
+            "V3815159413-GES_DISC",
+            "V3815159016-GES_DISC",
+            "V3815157094-GES_DISC",
+            "V3815159046-GES_DISC",
+            "V3815155062-GES_DISC",
+            "V3815158222-GES_DISC",
+            "V3815155081-GES_DISC",
+            "V3815155233-GES_DISC",
+            "V3815156098-GES_DISC",
+            "V3815159823-GES_DISC",
+            "V3815157991-GES_DISC",
+            "V3815156138-GES_DISC",
+            "V3815159035-GES_DISC",
+            "V3815156614-GES_DISC",
+            "V3815158990-GES_DISC",
+            "V3815159806-GES_DISC",
+            "V3815156971-GES_DISC",
+            "V3815157773-GES_DISC",
+            "V3815160847-GES_DISC",
+            "V3815156154-GES_DISC",
+            "V3815157000-GES_DISC",
+            "V3815155137-GES_DISC",
+            "V3815158037-GES_DISC",
+            "V3815157124-GES_DISC",
+            "V3815158975-GES_DISC",
+            "V3815156074-GES_DISC",
+            "V3815158002-GES_DISC",
+            "V3815158919-GES_DISC",
+            "V3815159550-GES_DISC",
+            "V3815159935-GES_DISC",
+            "V3815156883-GES_DISC",
+            "V3815159054-GES_DISC",
+            "V3815158051-GES_DISC",
+            "V3815155909-GES_DISC",
+            "V3815158074-GES_DISC",
+            "V3815159955-GES_DISC",
+            "V3815160131-GES_DISC",
+            "V3815157563-GES_DISC",
+            "V3815155722-GES_DISC",
+            "V3815156361-GES_DISC",
+            "V3815156927-GES_DISC",
+            "V3815156919-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Specific Quality Control Gridded Daily V2 (SNDRAQIL3SDCCP) at GES DISC",
+        "entry_id": "SNDRAQIL3SDCCP_2",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1693440802-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/SNDRAQIL3SDCCP_2.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3SDCCP_2.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://airs.jpl.nasa.gov/index.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1693440802-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aqua"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "SNDRAQIL3SDCCP",
+        "summary": "WARNING: Users of the derived product “co_mmr_midtrop” (carbon monoxide mass mixing ratio to dry air [kg/kg] at ~500 hPa). This variable has a significant bias due to a conversion error: the molecular weight of carbon dioxide (CO2, 44.01 g/mol) was used instead of carbon monoxide (CO, 28.01 g/mol). To correct, simply multiply “co_mmr_midtrop” by 28.01/44.01. Alternatively, derive a profile of mass mixing ratio from scratch using the retrieved column density values (“mol_lay/co_mol_lay”) in the Level 2 files. For further questions or concerns please contact the Sounder SIPS at: sounder.sips@jpl.nasa.gov\n\nThe CLIMCAPS (Community Long-term Infrared Microwave Coupled Product System) algorithm is used to analyze data from the AIRS (Atmospheric Infrared Sounder). The AIRS instrument is a grating spectrometer (R = 1200) aboard the second Earth Observing System (EOS) polar-orbiting platform, EOS Aqua. The AIRS Standard Retrieval Product consists of retrieved estimates of cloud and surface properties, plus profiles of retrieved temperature, water vapor, ozone, carbon monoxide and methane. The temperature profile vertical resolution is 100 levels total between 1100 mb and 0.1 mb, while moisture profile is reported at atmospheric layers between 1100 mb and 300 mb. The horizontal resolution is 50 km.\n\nThe CLIMCAPS algorithm uses an Optimal Estimation methodology and uses an a-priori first guess to start the process. A CLIMCAPS sounding is comprised of a set of parameters that characterizes the full atmospheric state and includes a variety of geophysical parameters derived from the CrIMSS data. These include surface temperature and infrared emissivity; full atmosphere profiles of temperature, water vapor and ozone; infrared effective cloud top characteristics; carbon monoxide, methane, carbon dioxide, sulfur dioxide, nitrous oxide, and nitric acid.\n\nThis daily one degree latitude by one degree longitude level-3 product starts with level-2 retrieval products applying the specific quality control (QC) methodology. Specific QC accepts profile level from the top of the atmosphere down to the level where the QC determines that it is still good. Below this level, the data is rejected.\n\n",
+        "time_start": "2002-08-31T00:00:00.000Z",
+        "title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Specific Quality Control Gridded Daily V2 (SNDRAQIL3SDCCP) at GES DISC",
+        "updated": "1970-01-01T00:00:00.000Z",
+        "version_id": "2"
+      },
+      {
+        "association_details": {
+          "services": [
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3815165177-GES_DISC"
+            },
+            {
+              "concept_id": "V3815167593-GES_DISC"
+            },
+            {
+              "concept_id": "V3815162546-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166787-GES_DISC"
+            },
+            {
+              "concept_id": "V3815162501-GES_DISC"
+            },
+            {
+              "concept_id": "V3815162524-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166023-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166791-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166887-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166955-GES_DISC"
+            },
+            {
+              "concept_id": "V3815167559-GES_DISC"
+            },
+            {
+              "concept_id": "V3815163438-GES_DISC"
+            },
+            {
+              "concept_id": "V3815165551-GES_DISC"
+            },
+            {
+              "concept_id": "V3815167588-GES_DISC"
+            },
+            {
+              "concept_id": "V3815162504-GES_DISC"
+            },
+            {
+              "concept_id": "V3815164332-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166031-GES_DISC"
+            },
+            {
+              "concept_id": "V3815165260-GES_DISC"
+            },
+            {
+              "concept_id": "V3815164243-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166052-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166806-GES_DISC"
+            },
+            {
+              "concept_id": "V3815165196-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166040-GES_DISC"
+            },
+            {
+              "concept_id": "V3815163443-GES_DISC"
+            },
+            {
+              "concept_id": "V3815162780-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166450-GES_DISC"
+            },
+            {
+              "concept_id": "V3815164183-GES_DISC"
+            },
+            {
+              "concept_id": "V3815163420-GES_DISC"
+            },
+            {
+              "concept_id": "V3815167302-GES_DISC"
+            },
+            {
+              "concept_id": "V3815163407-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166000-GES_DISC"
+            },
+            {
+              "concept_id": "V3815167583-GES_DISC"
+            },
+            {
+              "concept_id": "V3815163428-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166793-GES_DISC"
+            },
+            {
+              "concept_id": "V3815163096-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166696-GES_DISC"
+            },
+            {
+              "concept_id": "V3815164193-GES_DISC"
+            },
+            {
+              "concept_id": "V3815165285-GES_DISC"
+            },
+            {
+              "concept_id": "V3815165358-GES_DISC"
+            },
+            {
+              "concept_id": "V3815164767-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166143-GES_DISC"
+            },
+            {
+              "concept_id": "V3815165245-GES_DISC"
+            },
+            {
+              "concept_id": "V3815162519-GES_DISC"
+            },
+            {
+              "concept_id": "V3815163565-GES_DISC"
+            },
+            {
+              "concept_id": "V3815165206-GES_DISC"
+            },
+            {
+              "concept_id": "V3815163542-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166046-GES_DISC"
+            },
+            {
+              "concept_id": "V3815167577-GES_DISC"
+            },
+            {
+              "concept_id": "V3815163392-GES_DISC"
+            },
+            {
+              "concept_id": "V3815167164-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166012-GES_DISC"
+            },
+            {
+              "concept_id": "V3815164219-GES_DISC"
+            },
+            {
+              "concept_id": "V3815165224-GES_DISC"
+            },
+            {
+              "concept_id": "V3815162571-GES_DISC"
+            },
+            {
+              "concept_id": "V3815167569-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166812-GES_DISC"
+            },
+            {
+              "concept_id": "V3815165714-GES_DISC"
+            },
+            {
+              "concept_id": "V3815163865-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166161-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166797-GES_DISC"
+            },
+            {
+              "concept_id": "V3815164228-GES_DISC"
+            },
+            {
+              "concept_id": "V3815163410-GES_DISC"
+            },
+            {
+              "concept_id": "V3815162493-GES_DISC"
+            },
+            {
+              "concept_id": "V3815165089-GES_DISC"
+            },
+            {
+              "concept_id": "V3815164460-GES_DISC"
+            },
+            {
+              "concept_id": "V3815164205-GES_DISC"
+            },
+            {
+              "concept_id": "V3815163453-GES_DISC"
+            },
+            {
+              "concept_id": "V3815164972-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166015-GES_DISC"
+            },
+            {
+              "concept_id": "V3815164234-GES_DISC"
+            },
+            {
+              "concept_id": "V3815166801-GES_DISC"
+            },
+            {
+              "concept_id": "V3815162539-GES_DISC"
+            },
+            {
+              "concept_id": "V3815162874-GES_DISC"
+            },
+            {
+              "concept_id": "V3815164059-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "services": [
+            "S2874702816-XYZ_PROV"
+          ],
+          "variables": [
+            "V3815165177-GES_DISC",
+            "V3815167593-GES_DISC",
+            "V3815162546-GES_DISC",
+            "V3815166787-GES_DISC",
+            "V3815162501-GES_DISC",
+            "V3815162524-GES_DISC",
+            "V3815166023-GES_DISC",
+            "V3815166791-GES_DISC",
+            "V3815166887-GES_DISC",
+            "V3815166955-GES_DISC",
+            "V3815167559-GES_DISC",
+            "V3815163438-GES_DISC",
+            "V3815165551-GES_DISC",
+            "V3815167588-GES_DISC",
+            "V3815162504-GES_DISC",
+            "V3815164332-GES_DISC",
+            "V3815166031-GES_DISC",
+            "V3815165260-GES_DISC",
+            "V3815164243-GES_DISC",
+            "V3815166052-GES_DISC",
+            "V3815166806-GES_DISC",
+            "V3815165196-GES_DISC",
+            "V3815166040-GES_DISC",
+            "V3815163443-GES_DISC",
+            "V3815162780-GES_DISC",
+            "V3815166450-GES_DISC",
+            "V3815164183-GES_DISC",
+            "V3815163420-GES_DISC",
+            "V3815167302-GES_DISC",
+            "V3815163407-GES_DISC",
+            "V3815166000-GES_DISC",
+            "V3815167583-GES_DISC",
+            "V3815163428-GES_DISC",
+            "V3815166793-GES_DISC",
+            "V3815163096-GES_DISC",
+            "V3815166696-GES_DISC",
+            "V3815164193-GES_DISC",
+            "V3815165285-GES_DISC",
+            "V3815165358-GES_DISC",
+            "V3815164767-GES_DISC",
+            "V3815166143-GES_DISC",
+            "V3815165245-GES_DISC",
+            "V3815162519-GES_DISC",
+            "V3815163565-GES_DISC",
+            "V3815165206-GES_DISC",
+            "V3815163542-GES_DISC",
+            "V3815166046-GES_DISC",
+            "V3815167577-GES_DISC",
+            "V3815163392-GES_DISC",
+            "V3815167164-GES_DISC",
+            "V3815166012-GES_DISC",
+            "V3815164219-GES_DISC",
+            "V3815165224-GES_DISC",
+            "V3815162571-GES_DISC",
+            "V3815167569-GES_DISC",
+            "V3815166812-GES_DISC",
+            "V3815165714-GES_DISC",
+            "V3815163865-GES_DISC",
+            "V3815166161-GES_DISC",
+            "V3815166797-GES_DISC",
+            "V3815164228-GES_DISC",
+            "V3815163410-GES_DISC",
+            "V3815162493-GES_DISC",
+            "V3815165089-GES_DISC",
+            "V3815164460-GES_DISC",
+            "V3815164205-GES_DISC",
+            "V3815163453-GES_DISC",
+            "V3815164972-GES_DISC",
+            "V3815166015-GES_DISC",
+            "V3815164234-GES_DISC",
+            "V3815166801-GES_DISC",
+            "V3815162539-GES_DISC",
+            "V3815162874-GES_DISC",
+            "V3815164059-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Specific Quality Control Gridded Monthly V2 (SNDRAQIL3SMCCP) at GES DISC",
+        "entry_id": "SNDRAQIL3SMCCP_2",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1693440803-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/SNDRAQIL3SMCCP_2.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3SMCCP_2.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://airs.jpl.nasa.gov/index.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1693440803-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aqua"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "SNDRAQIL3SMCCP",
+        "summary": "WARNING: Users of the derived product “co_mmr_midtrop” (carbon monoxide mass mixing ratio to dry air [kg/kg] at ~500 hPa). This variable has a significant bias due to a conversion error: the molecular weight of carbon dioxide (CO2, 44.01 g/mol) was used instead of carbon monoxide (CO, 28.01 g/mol). To correct, simply multiply “co_mmr_midtrop” by 28.01/44.01. Alternatively, derive a profile of mass mixing ratio from scratch using the retrieved column density values (“mol_lay/co_mol_lay”) in the Level 2 files. For further questions or concerns please contact the Sounder SIPS at: sounder.sips@jpl.nasa.gov\n\nThe CLIMCAPS (Community Long-term Infrared Microwave Coupled Product System) algorithm is used to analyze data from the AIRS (Atmospheric Infrared Sounder). The AIRS instrument is a grating spectrometer (R = 1200) aboard the second Earth Observing System (EOS) polar-orbiting platform, EOS Aqua. The AIRS Standard Retrieval Product consists of retrieved estimates of cloud and surface properties, plus profiles of retrieved temperature, water vapor, ozone, carbon monoxide and methane. The temperature profile vertical resolution is 100 levels total between 1100 mb and 0.1 mb, while moisture profile is reported at atmospheric layers between 1100 mb and 300 mb. The horizontal resolution is 50 km.\n \nThe CLIMCAPS algorithm uses an Optimal Estimation methodology and uses an a-priori first guess to start the process. A CLIMCAPS sounding is comprised of a set of parameters that characterizes the full atmospheric state and includes a variety of geophysical parameters derived from the CrIMSS data. These include surface temperature and infrared emissivity; full atmosphere profiles of temperature, water vapor and ozone; infrared effective cloud top characteristics; carbon monoxide, methane, carbon dioxide, sulfur dioxide, nitrous oxide, and nitric acid.\n\nThis daily one degree latitude by one degree longitude level-3 product starts with level-2 retrieval products applying the specific quality control (QC) methodology. Specific QC accepts profile level from the top of the atmosphere down to the level where the QC determines that it is still good. Below this level, the data is rejected. \n\n",
+        "time_start": "2002-08-31T00:00:00.000Z",
+        "title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Specific Quality Control Gridded Monthly V2 (SNDRAQIL3SMCCP) at GES DISC",
+        "updated": "1970-01-01T00:00:00.000Z",
+        "version_id": "2"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT3804306048-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181357426-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857559130-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803999294-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804116388-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804237535-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803985158-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804192471-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804325258-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804295024-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804097176-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804177181-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804260511-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857563050-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804228741-ESDIS"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT3804306048-ESDIS",
+            "CIT4181357426-ESDIS",
+            "CIT3857559130-ESDIS",
+            "CIT3803999294-ESDIS",
+            "CIT3804116388-ESDIS",
+            "CIT3804237535-ESDIS",
+            "CIT3803985158-ESDIS",
+            "CIT3804192471-ESDIS",
+            "CIT3804325258-ESDIS",
+            "CIT3804295024-ESDIS",
+            "CIT3804097176-ESDIS",
+            "CIT3804177181-ESDIS",
+            "CIT3804260511-ESDIS",
+            "CIT3857563050-ESDIS",
+            "CIT3804228741-ESDIS"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "Multi-Satellite Air Quality Sulfur Dioxide (SO2) Database Long-Term L4 Global V2 (MSAQSO2L4) at GES DISC",
+        "entry_id": "MSAQSO2L4_2",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C2503251631-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/MEaSUREs/Krotkov/MSAQSO2L4.PNG",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/MSAQSO2L4_2.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://measures.gesdisc.eosdis.nasa.gov/data/SO2/MSAQSO2L4.2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://measures.gesdisc.eosdis.nasa.gov/opendap/SO2/MSAQSO2L4.2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/about/competitive-programs/measures/multi-decadal-sulfur-dioxide-climatology-satellite-instruments",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/MEaSUREs/Krotkov/README.MSAQSO2L4.V2.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://so2.gsfc.nasa.gov/measures.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C2503251631-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura",
+          "Suomi-NPP",
+          "Sentinel-5P",
+          "NOAA-20"
+        ],
+        "processing_level_id": "4",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "MSAQSO2L4",
+        "summary": "These data are a part of Multi-Decadal Sulfur Dioxide (SO2) Climatology from Satellite Instruments (MEaSUREs-12-0022 project). Version 2 of the global catalogue of emissions from large SO2 point sources combines data from the Ozone Monitoring Instrument (OMI) on NASA's EOS Aura spacecraft, the Ozone Mapping and Profiler Suite (OMPS) on the NASA-NOAA Suomi National Polar-orbiting Partnership (SNPP), and the TROPOspheric Monitoring Instrument (TROPOMI) on the ESA/Copernicus Sentinel-5 Precursor (S-5P) spacecraft.\n\nThe catalogue MSAQSO2L4 file contains the site coordinates, source type, country, source name, annual SO2 emissions, annual emission uncertainties, and the number of satellite pixels in the fitting area for three satellite instruments as well as for their weighted average.\n\nThe emission estimates are based on operational version 2 OMI and OMPS Principal Component Analysis (PCA) retrieval algorithm SO2 slant column density (SCD) data (Li et al., 2020) as well as on new TROPOMI Covariance-Based Retrieval Algorithm (COBRA) SCD data (Theys et al., 2021). A single time-independent site-specific Air-Mass Factor (AMF) value for each site was calculated (McLinden et al., 2014) and applied consistently to each satellite SCD dataset to derive SO2 vertical column densities (VCDs=SCDs/AMFs). The emission estimate method is based on a fit of satellite VCDs to an empirical plume model developed to describe the SO2 spatial distribution near emission point sources. The plume model assumes that the SO2 concentrations emitted from a point source decline exponentially with distance and that they are affected by turbulent diffusion that can be described by a two-dimensional (2D) exponentially modified Gaussian function. The total SO2 mass is derived from the fit and the annual emission rate is calculated as the ratio between the total mass and the prescribed SO2 lifetime.",
+        "time_start": "2005-01-01T00:00:00.000Z",
+        "title": "Multi-Satellite Air Quality Sulfur Dioxide (SO2) Database Long-Term L4 Global V2 (MSAQSO2L4) at GES DISC",
+        "updated": "2024-04-20T00:00:00.000Z",
+        "version_id": "2"
+      },
+      {
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT4181382289-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3815138806-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144987-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144140-GES_DISC"
+            },
+            {
+              "concept_id": "V3815140652-GES_DISC"
+            },
+            {
+              "concept_id": "V3815142590-GES_DISC"
+            },
+            {
+              "concept_id": "V3815145671-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144957-GES_DISC"
+            },
+            {
+              "concept_id": "V3815141311-GES_DISC"
+            },
+            {
+              "concept_id": "V3815140534-GES_DISC"
+            },
+            {
+              "concept_id": "V3815140503-GES_DISC"
+            },
+            {
+              "concept_id": "V3815140476-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144920-GES_DISC"
+            },
+            {
+              "concept_id": "V3815140525-GES_DISC"
+            },
+            {
+              "concept_id": "V3815140519-GES_DISC"
+            },
+            {
+              "concept_id": "V3815138962-GES_DISC"
+            },
+            {
+              "concept_id": "V3815145506-GES_DISC"
+            },
+            {
+              "concept_id": "V3815140671-GES_DISC"
+            },
+            {
+              "concept_id": "V3815142610-GES_DISC"
+            },
+            {
+              "concept_id": "V3815141331-GES_DISC"
+            },
+            {
+              "concept_id": "V3815139620-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144450-GES_DISC"
+            },
+            {
+              "concept_id": "V3815138991-GES_DISC"
+            },
+            {
+              "concept_id": "V3815141434-GES_DISC"
+            },
+            {
+              "concept_id": "V3815138796-GES_DISC"
+            },
+            {
+              "concept_id": "V3815140981-GES_DISC"
+            },
+            {
+              "concept_id": "V3815138820-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144926-GES_DISC"
+            },
+            {
+              "concept_id": "V3815138149-GES_DISC"
+            },
+            {
+              "concept_id": "V3815139965-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144282-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144117-GES_DISC"
+            },
+            {
+              "concept_id": "V3815143966-GES_DISC"
+            },
+            {
+              "concept_id": "V3815142827-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144124-GES_DISC"
+            },
+            {
+              "concept_id": "V3815138864-GES_DISC"
+            },
+            {
+              "concept_id": "V3815141363-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144934-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144940-GES_DISC"
+            },
+            {
+              "concept_id": "V3815138458-GES_DISC"
+            },
+            {
+              "concept_id": "V3815141957-GES_DISC"
+            },
+            {
+              "concept_id": "V3815141215-GES_DISC"
+            },
+            {
+              "concept_id": "V3815142649-GES_DISC"
+            },
+            {
+              "concept_id": "V3815138977-GES_DISC"
+            },
+            {
+              "concept_id": "V3815145074-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144980-GES_DISC"
+            },
+            {
+              "concept_id": "V3815140539-GES_DISC"
+            },
+            {
+              "concept_id": "V3815140321-GES_DISC"
+            },
+            {
+              "concept_id": "V3815141360-GES_DISC"
+            },
+            {
+              "concept_id": "V3815138648-GES_DISC"
+            },
+            {
+              "concept_id": "V3815142310-GES_DISC"
+            },
+            {
+              "concept_id": "V3815142390-GES_DISC"
+            },
+            {
+              "concept_id": "V3815141464-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144239-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144620-GES_DISC"
+            },
+            {
+              "concept_id": "V3815138083-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144113-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144129-GES_DISC"
+            },
+            {
+              "concept_id": "V3815143170-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144157-GES_DISC"
+            },
+            {
+              "concept_id": "V3815145173-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144173-GES_DISC"
+            },
+            {
+              "concept_id": "V3815138171-GES_DISC"
+            },
+            {
+              "concept_id": "V3815143728-GES_DISC"
+            },
+            {
+              "concept_id": "V3815139095-GES_DISC"
+            },
+            {
+              "concept_id": "V3815141373-GES_DISC"
+            },
+            {
+              "concept_id": "V3815139276-GES_DISC"
+            },
+            {
+              "concept_id": "V3815142598-GES_DISC"
+            },
+            {
+              "concept_id": "V3815142621-GES_DISC"
+            },
+            {
+              "concept_id": "V3815141735-GES_DISC"
+            },
+            {
+              "concept_id": "V3815141303-GES_DISC"
+            },
+            {
+              "concept_id": "V3815141324-GES_DISC"
+            },
+            {
+              "concept_id": "V3815140412-GES_DISC"
+            },
+            {
+              "concept_id": "V3815142640-GES_DISC"
+            },
+            {
+              "concept_id": "V3815144974-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT4181382289-ESDIS"
+          ],
+          "services": [
+            "S2874702816-XYZ_PROV"
+          ],
+          "variables": [
+            "V3815138806-GES_DISC",
+            "V3815144987-GES_DISC",
+            "V3815144140-GES_DISC",
+            "V3815140652-GES_DISC",
+            "V3815142590-GES_DISC",
+            "V3815145671-GES_DISC",
+            "V3815144957-GES_DISC",
+            "V3815141311-GES_DISC",
+            "V3815140534-GES_DISC",
+            "V3815140503-GES_DISC",
+            "V3815140476-GES_DISC",
+            "V3815144920-GES_DISC",
+            "V3815140525-GES_DISC",
+            "V3815140519-GES_DISC",
+            "V3815138962-GES_DISC",
+            "V3815145506-GES_DISC",
+            "V3815140671-GES_DISC",
+            "V3815142610-GES_DISC",
+            "V3815141331-GES_DISC",
+            "V3815139620-GES_DISC",
+            "V3815144450-GES_DISC",
+            "V3815138991-GES_DISC",
+            "V3815141434-GES_DISC",
+            "V3815138796-GES_DISC",
+            "V3815140981-GES_DISC",
+            "V3815138820-GES_DISC",
+            "V3815144926-GES_DISC",
+            "V3815138149-GES_DISC",
+            "V3815139965-GES_DISC",
+            "V3815144282-GES_DISC",
+            "V3815144117-GES_DISC",
+            "V3815143966-GES_DISC",
+            "V3815142827-GES_DISC",
+            "V3815144124-GES_DISC",
+            "V3815138864-GES_DISC",
+            "V3815141363-GES_DISC",
+            "V3815144934-GES_DISC",
+            "V3815144940-GES_DISC",
+            "V3815138458-GES_DISC",
+            "V3815141957-GES_DISC",
+            "V3815141215-GES_DISC",
+            "V3815142649-GES_DISC",
+            "V3815138977-GES_DISC",
+            "V3815145074-GES_DISC",
+            "V3815144980-GES_DISC",
+            "V3815140539-GES_DISC",
+            "V3815140321-GES_DISC",
+            "V3815141360-GES_DISC",
+            "V3815138648-GES_DISC",
+            "V3815142310-GES_DISC",
+            "V3815142390-GES_DISC",
+            "V3815141464-GES_DISC",
+            "V3815144239-GES_DISC",
+            "V3815144620-GES_DISC",
+            "V3815138083-GES_DISC",
+            "V3815144113-GES_DISC",
+            "V3815144129-GES_DISC",
+            "V3815143170-GES_DISC",
+            "V3815144157-GES_DISC",
+            "V3815145173-GES_DISC",
+            "V3815144173-GES_DISC",
+            "V3815138171-GES_DISC",
+            "V3815143728-GES_DISC",
+            "V3815139095-GES_DISC",
+            "V3815141373-GES_DISC",
+            "V3815139276-GES_DISC",
+            "V3815142598-GES_DISC",
+            "V3815142621-GES_DISC",
+            "V3815141735-GES_DISC",
+            "V3815141303-GES_DISC",
+            "V3815141324-GES_DISC",
+            "V3815140412-GES_DISC",
+            "V3815142640-GES_DISC",
+            "V3815144974-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS : Comprehensive Quality Control Gridded Daily V2 (SNDRAQIL3CDCCP) at GES DISC",
+        "entry_id": "SNDRAQIL3CDCCP_2",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1693440800-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/SNDRAQIL3CDCCP_2.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3CDCCP_2.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://airs.jpl.nasa.gov/index.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1693440800-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aqua"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "SNDRAQIL3CDCCP",
+        "summary": "WARNING: To users of the derived product “co_mmr_midtrop” (carbon monoxide mass mixing ratio to dry air [kg/kg] at ~500 hPa). This variable has a significant bias due to a conversion error: the molecular weight of carbon dioxide (CO2, 44.01 g/mol) was used instead of carbon monoxide (CO, 28.01 g/mol). To correct, simply multiply “co_mmr_midtrop” by 28.01/44.01. Alternatively, derive a profile of mass mixing ratio from scratch using the retrieved column density values (“mol_lay/co_mol_lay”) in the Level 2 files. For further questions or concerns please contact the Sounder SIPS at: sounder.sips@jpl.nasa.gov\n\nThe CLIMCAPS (Community Long-term Infrared Microwave Coupled Product System) algorithm is used to analyze data from the AIRS (Atmospheric Infrared Sounder). The AIRS instrument is a grating spectrometer (R = 1200) aboard the second Earth Observing System (EOS) polar-orbiting platform, EOS Aqua. The AIRS Standard Retrieval Product consists of retrieved estimates of cloud and surface properties, plus profiles of retrieved temperature, water vapor, ozone, carbon monoxide and methane. The temperature profile vertical resolution is 100 levels total between 1100 mb and 0.1 mb, while moisture profile is reported at atmospheric layers between 1100 mb and 300 mb. The horizontal resolution is 50 km.\n \nThe CLIMCAPS algorithm uses an Optimal Estimation methodology and uses an a-priori first guess to start the process. A CLIMCAPS sounding is comprised of a set of parameters that characterizes the full atmospheric state and includes a variety of geophysical parameters derived from the CrIMSS data. These include surface temperature and infrared emissivity; full atmosphere profiles of temperature, water vapor and ozone; infrared effective cloud top characteristics; carbon monoxide, methane, carbon dioxide, sulfur dioxide, nitrous oxide, and nitric acid.\n\nThis daily one degree latitude by one degree longitude level-3 product starts with level-2 retrieval products applying the comprehensive quality control (QC) methodology. Comprehensive QC accepts a retrieval if the profile is good to the surface and ensures consistent analysis across all levels and variables.\n\n",
+        "time_start": "2002-08-31T00:00:00.000Z",
+        "title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS : Comprehensive Quality Control Gridded Daily V2 (SNDRAQIL3CDCCP) at GES DISC",
+        "updated": "1970-01-01T00:00:00.000Z",
+        "version_id": "2"
+      },
+      {
+        "association_details": {
+          "services": [
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            },
+            {
+              "concept_id": "S2786683405-GES_DISC"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3815177323-GES_DISC"
+            },
+            {
+              "concept_id": "V3815175394-GES_DISC"
+            },
+            {
+              "concept_id": "V3815175416-GES_DISC"
+            },
+            {
+              "concept_id": "V3815175371-GES_DISC"
+            },
+            {
+              "concept_id": "V3815176385-GES_DISC"
+            },
+            {
+              "concept_id": "V3815176443-GES_DISC"
+            },
+            {
+              "concept_id": "V3815176397-GES_DISC"
+            },
+            {
+              "concept_id": "V3815177490-GES_DISC"
+            },
+            {
+              "concept_id": "V3815177003-GES_DISC"
+            },
+            {
+              "concept_id": "V3815172114-GES_DISC"
+            },
+            {
+              "concept_id": "V3815177302-GES_DISC"
+            },
+            {
+              "concept_id": "V3815174396-GES_DISC"
+            },
+            {
+              "concept_id": "V3815175399-GES_DISC"
+            },
+            {
+              "concept_id": "V3815174379-GES_DISC"
+            },
+            {
+              "concept_id": "V3815172075-GES_DISC"
+            },
+            {
+              "concept_id": "V3815173186-GES_DISC"
+            },
+            {
+              "concept_id": "V3815176361-GES_DISC"
+            },
+            {
+              "concept_id": "V3815174357-GES_DISC"
+            },
+            {
+              "concept_id": "V3815176381-GES_DISC"
+            },
+            {
+              "concept_id": "V3815176376-GES_DISC"
+            },
+            {
+              "concept_id": "V3815177291-GES_DISC"
+            },
+            {
+              "concept_id": "V3815172632-GES_DISC"
+            },
+            {
+              "concept_id": "V3815171152-GES_DISC"
+            },
+            {
+              "concept_id": "V3815174093-GES_DISC"
+            },
+            {
+              "concept_id": "V3815177308-GES_DISC"
+            },
+            {
+              "concept_id": "V3815174371-GES_DISC"
+            },
+            {
+              "concept_id": "V3815173308-GES_DISC"
+            },
+            {
+              "concept_id": "V3815172185-GES_DISC"
+            },
+            {
+              "concept_id": "V3815172091-GES_DISC"
+            },
+            {
+              "concept_id": "V3815173943-GES_DISC"
+            },
+            {
+              "concept_id": "V3815172293-GES_DISC"
+            },
+            {
+              "concept_id": "V3815175410-GES_DISC"
+            },
+            {
+              "concept_id": "V3815174816-GES_DISC"
+            },
+            {
+              "concept_id": "V3815176387-GES_DISC"
+            },
+            {
+              "concept_id": "V3815172015-GES_DISC"
+            },
+            {
+              "concept_id": "V3815174366-GES_DISC"
+            },
+            {
+              "concept_id": "V3815172079-GES_DISC"
+            },
+            {
+              "concept_id": "V3815178260-GES_DISC"
+            },
+            {
+              "concept_id": "V3815173056-GES_DISC"
+            },
+            {
+              "concept_id": "V3815171460-GES_DISC"
+            },
+            {
+              "concept_id": "V3815175433-GES_DISC"
+            },
+            {
+              "concept_id": "V3815176140-GES_DISC"
+            },
+            {
+              "concept_id": "V3815173264-GES_DISC"
+            },
+            {
+              "concept_id": "V3815173157-GES_DISC"
+            },
+            {
+              "concept_id": "V3815176829-GES_DISC"
+            },
+            {
+              "concept_id": "V3815175948-GES_DISC"
+            },
+            {
+              "concept_id": "V3815176665-GES_DISC"
+            },
+            {
+              "concept_id": "V3815177305-GES_DISC"
+            },
+            {
+              "concept_id": "V3815173440-GES_DISC"
+            },
+            {
+              "concept_id": "V3815175680-GES_DISC"
+            },
+            {
+              "concept_id": "V3815178392-GES_DISC"
+            },
+            {
+              "concept_id": "V3815172798-GES_DISC"
+            },
+            {
+              "concept_id": "V3815177731-GES_DISC"
+            },
+            {
+              "concept_id": "V3815175070-GES_DISC"
+            },
+            {
+              "concept_id": "V3815174351-GES_DISC"
+            },
+            {
+              "concept_id": "V3815173288-GES_DISC"
+            },
+            {
+              "concept_id": "V3815175383-GES_DISC"
+            },
+            {
+              "concept_id": "V3815177320-GES_DISC"
+            },
+            {
+              "concept_id": "V3815171194-GES_DISC"
+            },
+            {
+              "concept_id": "V3815174361-GES_DISC"
+            },
+            {
+              "concept_id": "V3815178058-GES_DISC"
+            },
+            {
+              "concept_id": "V3815176358-GES_DISC"
+            },
+            {
+              "concept_id": "V3815174329-GES_DISC"
+            },
+            {
+              "concept_id": "V3815174508-GES_DISC"
+            },
+            {
+              "concept_id": "V3815171335-GES_DISC"
+            },
+            {
+              "concept_id": "V3815173240-GES_DISC"
+            },
+            {
+              "concept_id": "V3815177317-GES_DISC"
+            },
+            {
+              "concept_id": "V3815171768-GES_DISC"
+            },
+            {
+              "concept_id": "V3815175389-GES_DISC"
+            },
+            {
+              "concept_id": "V3815172425-GES_DISC"
+            },
+            {
+              "concept_id": "V3815172095-GES_DISC"
+            },
+            {
+              "concept_id": "V3815177311-GES_DISC"
+            },
+            {
+              "concept_id": "V3815173168-GES_DISC"
+            },
+            {
+              "concept_id": "V3815172148-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "services": [
+            "S2874702816-XYZ_PROV",
+            "S2786683405-GES_DISC"
+          ],
+          "variables": [
+            "V3815177323-GES_DISC",
+            "V3815175394-GES_DISC",
+            "V3815175416-GES_DISC",
+            "V3815175371-GES_DISC",
+            "V3815176385-GES_DISC",
+            "V3815176443-GES_DISC",
+            "V3815176397-GES_DISC",
+            "V3815177490-GES_DISC",
+            "V3815177003-GES_DISC",
+            "V3815172114-GES_DISC",
+            "V3815177302-GES_DISC",
+            "V3815174396-GES_DISC",
+            "V3815175399-GES_DISC",
+            "V3815174379-GES_DISC",
+            "V3815172075-GES_DISC",
+            "V3815173186-GES_DISC",
+            "V3815176361-GES_DISC",
+            "V3815174357-GES_DISC",
+            "V3815176381-GES_DISC",
+            "V3815176376-GES_DISC",
+            "V3815177291-GES_DISC",
+            "V3815172632-GES_DISC",
+            "V3815171152-GES_DISC",
+            "V3815174093-GES_DISC",
+            "V3815177308-GES_DISC",
+            "V3815174371-GES_DISC",
+            "V3815173308-GES_DISC",
+            "V3815172185-GES_DISC",
+            "V3815172091-GES_DISC",
+            "V3815173943-GES_DISC",
+            "V3815172293-GES_DISC",
+            "V3815175410-GES_DISC",
+            "V3815174816-GES_DISC",
+            "V3815176387-GES_DISC",
+            "V3815172015-GES_DISC",
+            "V3815174366-GES_DISC",
+            "V3815172079-GES_DISC",
+            "V3815178260-GES_DISC",
+            "V3815173056-GES_DISC",
+            "V3815171460-GES_DISC",
+            "V3815175433-GES_DISC",
+            "V3815176140-GES_DISC",
+            "V3815173264-GES_DISC",
+            "V3815173157-GES_DISC",
+            "V3815176829-GES_DISC",
+            "V3815175948-GES_DISC",
+            "V3815176665-GES_DISC",
+            "V3815177305-GES_DISC",
+            "V3815173440-GES_DISC",
+            "V3815175680-GES_DISC",
+            "V3815178392-GES_DISC",
+            "V3815172798-GES_DISC",
+            "V3815177731-GES_DISC",
+            "V3815175070-GES_DISC",
+            "V3815174351-GES_DISC",
+            "V3815173288-GES_DISC",
+            "V3815175383-GES_DISC",
+            "V3815177320-GES_DISC",
+            "V3815171194-GES_DISC",
+            "V3815174361-GES_DISC",
+            "V3815178058-GES_DISC",
+            "V3815176358-GES_DISC",
+            "V3815174329-GES_DISC",
+            "V3815174508-GES_DISC",
+            "V3815171335-GES_DISC",
+            "V3815173240-GES_DISC",
+            "V3815177317-GES_DISC",
+            "V3815171768-GES_DISC",
+            "V3815175389-GES_DISC",
+            "V3815172425-GES_DISC",
+            "V3815172095-GES_DISC",
+            "V3815177311-GES_DISC",
+            "V3815173168-GES_DISC",
+            "V3815172148-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "Sounder SIPS: AQUA AIRS IR + MW Level 3 CLIMCAPS : Comprehensive Quality Control Gridded Daily V2 (SNDRAQIML3CDCCP) at GES DISC",
+        "entry_id": "SNDRAQIML3CDCCP_2",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1693440804-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/SNDRAQIML3CDCCP_2.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIML3CDCCP_2.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIML3CDCCP.2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIML3CDCCP.2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://airs.jpl.nasa.gov/index.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1693440804-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aqua"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "SNDRAQIML3CDCCP",
+        "summary": "WARNING: To users of the derived product “co_mmr_midtrop” (carbon monoxide mass mixing ratio to dry air [kg/kg] at ~500 hPa). This variable has a significant bias due to a conversion error: the molecular weight of carbon dioxide (CO2, 44.01 g/mol) was used instead of carbon monoxide (CO, 28.01 g/mol). To correct, simply multiply “co_mmr_midtrop” by 28.01/44.01. Alternatively, derive a profile of mass mixing ratio from scratch using the retrieved column density values (“mol_lay/co_mol_lay”) in the Level 2 files. For further questions or concerns please contact the Sounder SIPS at: sounder.sips@jpl.nasa.gov\n\nThe CLIMCAPS (Community Long-term Infrared Microwave Coupled Product System) algorithm is used to analyze data from the AIRS (Atmospheric Infrared Sounder) and AMSU (Advanced Microwave Sounding Unit). The AIRS instrument is a grating spectrometer (R = 1200) aboard the second Earth Observing System (EOS) polar-orbiting platform, EOS Aqua. The AIRS in combination with the AMSU constitutes an innovative atmospheric sounding group of infrared and microwave sensors. The AIRS Standard Retrieval Product consists of retrieved estimates of cloud and surface properties, plus profiles of retrieved temperature, water vapor, ozone, carbon monoxide and methane. The temperature profile vertical resolution is 100 levels total between 1100 mb and 0.1 mb, while moisture profile is reported at atmospheric layers between 1100 mb and 300 mb. The horizontal resolution is 50 km.\n\nThe CLIMCAPS algorithm uses an Optimal Estimation methodology and uses an a-priori first guess to start the process. A CLIMCAPS sounding is comprised of a set of parameters that characterizes the full atmospheric state and includes a variety of geophysical parameters derived from the CrIMSS data. These include surface temperature and infrared emissivity; full atmosphere profiles of temperature, water vapor and ozone; infrared effective cloud top characteristics; carbon monoxide, methane, carbon dioxide, sulfur dioxide, nitrous oxide, and nitric acid.\n\nThis daily one degree latitude by one degree longitude level-3 product starts with level-2 retrieval products applying the comprehensive quality control (QC) methodology. Comprehensive QC accepts a retrieval if the profile is good to the surface and ensures consistent analysis across all levels and variables.\n\n",
+        "time_start": "2002-08-31T00:00:00.000Z",
+        "title": "Sounder SIPS: AQUA AIRS IR + MW Level 3 CLIMCAPS : Comprehensive Quality Control Gridded Daily V2 (SNDRAQIML3CDCCP) at GES DISC",
+        "updated": "1970-01-01T00:00:00.000Z",
+        "version_id": "2"
+      },
+      {
+        "association_details": {
+          "services": [
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            },
+            {
+              "concept_id": "S2786683405-GES_DISC"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3816716997-GES_DISC"
+            },
+            {
+              "concept_id": "V3815190681-GES_DISC"
+            },
+            {
+              "concept_id": "V3815190497-GES_DISC"
+            },
+            {
+              "concept_id": "V3816717305-GES_DISC"
+            },
+            {
+              "concept_id": "V3815191728-GES_DISC"
+            },
+            {
+              "concept_id": "V3816716536-GES_DISC"
+            },
+            {
+              "concept_id": "V3816715796-GES_DISC"
+            },
+            {
+              "concept_id": "V3815189928-GES_DISC"
+            },
+            {
+              "concept_id": "V3815193388-GES_DISC"
+            },
+            {
+              "concept_id": "V3815194114-GES_DISC"
+            },
+            {
+              "concept_id": "V3815192936-GES_DISC"
+            },
+            {
+              "concept_id": "V3816717520-GES_DISC"
+            },
+            {
+              "concept_id": "V3816715515-GES_DISC"
+            },
+            {
+              "concept_id": "V3815189659-GES_DISC"
+            },
+            {
+              "concept_id": "V3815193559-GES_DISC"
+            },
+            {
+              "concept_id": "V3815190421-GES_DISC"
+            },
+            {
+              "concept_id": "V3815194934-GES_DISC"
+            },
+            {
+              "concept_id": "V3815190479-GES_DISC"
+            },
+            {
+              "concept_id": "V3815192589-GES_DISC"
+            },
+            {
+              "concept_id": "V3815189318-GES_DISC"
+            },
+            {
+              "concept_id": "V3816714967-GES_DISC"
+            },
+            {
+              "concept_id": "V3815191415-GES_DISC"
+            },
+            {
+              "concept_id": "V3816718335-GES_DISC"
+            },
+            {
+              "concept_id": "V3815191017-GES_DISC"
+            },
+            {
+              "concept_id": "V3815193887-GES_DISC"
+            },
+            {
+              "concept_id": "V3815191422-GES_DISC"
+            },
+            {
+              "concept_id": "V3815191335-GES_DISC"
+            },
+            {
+              "concept_id": "V3816714393-GES_DISC"
+            },
+            {
+              "concept_id": "V3816715095-GES_DISC"
+            },
+            {
+              "concept_id": "V3816714853-GES_DISC"
+            },
+            {
+              "concept_id": "V3816716164-GES_DISC"
+            },
+            {
+              "concept_id": "V3815192582-GES_DISC"
+            },
+            {
+              "concept_id": "V3815191433-GES_DISC"
+            },
+            {
+              "concept_id": "V3816714738-GES_DISC"
+            },
+            {
+              "concept_id": "V3815190435-GES_DISC"
+            },
+            {
+              "concept_id": "V3815192527-GES_DISC"
+            },
+            {
+              "concept_id": "V3816716881-GES_DISC"
+            },
+            {
+              "concept_id": "V3816717935-GES_DISC"
+            },
+            {
+              "concept_id": "V3815194877-GES_DISC"
+            },
+            {
+              "concept_id": "V3815192046-GES_DISC"
+            },
+            {
+              "concept_id": "V3815194606-GES_DISC"
+            },
+            {
+              "concept_id": "V3816716673-GES_DISC"
+            },
+            {
+              "concept_id": "V3815192568-GES_DISC"
+            },
+            {
+              "concept_id": "V3816714913-GES_DISC"
+            },
+            {
+              "concept_id": "V3815194921-GES_DISC"
+            },
+            {
+              "concept_id": "V3815192660-GES_DISC"
+            },
+            {
+              "concept_id": "V3815190414-GES_DISC"
+            },
+            {
+              "concept_id": "V3815192564-GES_DISC"
+            },
+            {
+              "concept_id": "V3815190430-GES_DISC"
+            },
+            {
+              "concept_id": "V3815191406-GES_DISC"
+            },
+            {
+              "concept_id": "V3815193902-GES_DISC"
+            },
+            {
+              "concept_id": "V3815193961-GES_DISC"
+            },
+            {
+              "concept_id": "V3815191398-GES_DISC"
+            },
+            {
+              "concept_id": "V3815193880-GES_DISC"
+            },
+            {
+              "concept_id": "V3815191176-GES_DISC"
+            },
+            {
+              "concept_id": "V3815190608-GES_DISC"
+            },
+            {
+              "concept_id": "V3815192547-GES_DISC"
+            },
+            {
+              "concept_id": "V3815192280-GES_DISC"
+            },
+            {
+              "concept_id": "V3815189481-GES_DISC"
+            },
+            {
+              "concept_id": "V3815193915-GES_DISC"
+            },
+            {
+              "concept_id": "V3815194412-GES_DISC"
+            },
+            {
+              "concept_id": "V3815191443-GES_DISC"
+            },
+            {
+              "concept_id": "V3815193859-GES_DISC"
+            },
+            {
+              "concept_id": "V3815190342-GES_DISC"
+            },
+            {
+              "concept_id": "V3816717070-GES_DISC"
+            },
+            {
+              "concept_id": "V3816717153-GES_DISC"
+            },
+            {
+              "concept_id": "V3815191553-GES_DISC"
+            },
+            {
+              "concept_id": "V3815193870-GES_DISC"
+            },
+            {
+              "concept_id": "V3815193838-GES_DISC"
+            },
+            {
+              "concept_id": "V3816715025-GES_DISC"
+            },
+            {
+              "concept_id": "V3815190105-GES_DISC"
+            },
+            {
+              "concept_id": "V3816715142-GES_DISC"
+            },
+            {
+              "concept_id": "V3815192553-GES_DISC"
+            },
+            {
+              "concept_id": "V3815189326-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "services": [
+            "S2874702816-XYZ_PROV",
+            "S2786683405-GES_DISC"
+          ],
+          "variables": [
+            "V3816716997-GES_DISC",
+            "V3815190681-GES_DISC",
+            "V3815190497-GES_DISC",
+            "V3816717305-GES_DISC",
+            "V3815191728-GES_DISC",
+            "V3816716536-GES_DISC",
+            "V3816715796-GES_DISC",
+            "V3815189928-GES_DISC",
+            "V3815193388-GES_DISC",
+            "V3815194114-GES_DISC",
+            "V3815192936-GES_DISC",
+            "V3816717520-GES_DISC",
+            "V3816715515-GES_DISC",
+            "V3815189659-GES_DISC",
+            "V3815193559-GES_DISC",
+            "V3815190421-GES_DISC",
+            "V3815194934-GES_DISC",
+            "V3815190479-GES_DISC",
+            "V3815192589-GES_DISC",
+            "V3815189318-GES_DISC",
+            "V3816714967-GES_DISC",
+            "V3815191415-GES_DISC",
+            "V3816718335-GES_DISC",
+            "V3815191017-GES_DISC",
+            "V3815193887-GES_DISC",
+            "V3815191422-GES_DISC",
+            "V3815191335-GES_DISC",
+            "V3816714393-GES_DISC",
+            "V3816715095-GES_DISC",
+            "V3816714853-GES_DISC",
+            "V3816716164-GES_DISC",
+            "V3815192582-GES_DISC",
+            "V3815191433-GES_DISC",
+            "V3816714738-GES_DISC",
+            "V3815190435-GES_DISC",
+            "V3815192527-GES_DISC",
+            "V3816716881-GES_DISC",
+            "V3816717935-GES_DISC",
+            "V3815194877-GES_DISC",
+            "V3815192046-GES_DISC",
+            "V3815194606-GES_DISC",
+            "V3816716673-GES_DISC",
+            "V3815192568-GES_DISC",
+            "V3816714913-GES_DISC",
+            "V3815194921-GES_DISC",
+            "V3815192660-GES_DISC",
+            "V3815190414-GES_DISC",
+            "V3815192564-GES_DISC",
+            "V3815190430-GES_DISC",
+            "V3815191406-GES_DISC",
+            "V3815193902-GES_DISC",
+            "V3815193961-GES_DISC",
+            "V3815191398-GES_DISC",
+            "V3815193880-GES_DISC",
+            "V3815191176-GES_DISC",
+            "V3815190608-GES_DISC",
+            "V3815192547-GES_DISC",
+            "V3815192280-GES_DISC",
+            "V3815189481-GES_DISC",
+            "V3815193915-GES_DISC",
+            "V3815194412-GES_DISC",
+            "V3815191443-GES_DISC",
+            "V3815193859-GES_DISC",
+            "V3815190342-GES_DISC",
+            "V3816717070-GES_DISC",
+            "V3816717153-GES_DISC",
+            "V3815191553-GES_DISC",
+            "V3815193870-GES_DISC",
+            "V3815193838-GES_DISC",
+            "V3816715025-GES_DISC",
+            "V3815190105-GES_DISC",
+            "V3816715142-GES_DISC",
+            "V3815192553-GES_DISC",
+            "V3815189326-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "Sounder SIPS: AQUA AIRS IR MW Level 3 CLIMCAPS : Specific Quality Control Gridded Daily V2 (SNDRAQIML3SDCCP) at GES DISC",
+        "entry_id": "SNDRAQIML3SDCCP_2",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1693440821-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/SNDRAQIML3SDCCP_2.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIML3SDCCP_2.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIML3SDCCP.2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIML3SDCCP.2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://airs.jpl.nasa.gov/index.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1693440821-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aqua"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "SNDRAQIML3SDCCP",
+        "summary": "WARNING: Users of the derived product “co_mmr_midtrop” (carbon monoxide mass mixing ratio to dry air [kg/kg] at ~500 hPa). This variable has a significant bias due to a conversion error: the molecular weight of carbon dioxide (CO2, 44.01 g/mol) was used instead of carbon monoxide (CO, 28.01 g/mol). To correct, simply multiply “co_mmr_midtrop” by 28.01/44.01. Alternatively, derive a profile of mass mixing ratio from scratch using the retrieved column density values (“mol_lay/co_mol_lay”) in the Level 2 files. For further questions or concerns please contact the Sounder SIPS at: sounder.sips@jpl.nasa.gov\n\nThe CLIMCAPS (Community Long-term Infrared Microwave Coupled Product System) algorithm is used to analyze data from the AIRS (Atmospheric Infrared Sounder) and AMSU (Advanced Microwave Sounding Unit). The AIRS instrument is a grating spectrometer (R = 1200) aboard the second Earth Observing System (EOS) polar-orbiting platform, EOS Aqua. The AIRS in combination with the AMSU constitutes an innovative atmospheric sounding group of infrared and microwave sensors. The AIRS Standard Retrieval Product consists of retrieved estimates of cloud and surface properties, plus profiles of retrieved temperature, water vapor, ozone, carbon monoxide and methane. The temperature profile vertical resolution is 100 levels total between 1100 mb and 0.1 mb, while moisture profile is reported at atmospheric layers between 1100 mb and 300 mb. The horizontal resolution is 50 km.\n \nThe CLIMCAPS algorithm uses an Optimal Estimation methodology and uses an a-priori first guess to start the process. A CLIMCAPS sounding is comprised of a set of parameters that characterizes the full atmospheric state and includes a variety of geophysical parameters derived from the CrIMSS data. These include surface temperature and infrared emissivity; full atmosphere profiles of temperature, water vapor and ozone; infrared effective cloud top characteristics; carbon monoxide, methane, carbon dioxide, sulfur dioxide, nitrous oxide, and nitric acid.\n\nThis daily one degree latitude by one degree longitude level-3 product starts with level-2 retrieval products applying the specific quality control (QC) methodology. Specific QC accepts profile level from the top of the atmosphere down to the level where the QC determines that it is still good. Below this level, the data is rejected.\n\n",
+        "time_start": "2002-08-31T00:00:00.000Z",
+        "title": "Sounder SIPS: AQUA AIRS IR MW Level 3 CLIMCAPS : Specific Quality Control Gridded Daily V2 (SNDRAQIML3SDCCP) at GES DISC",
+        "updated": "1970-01-01T00:00:00.000Z",
+        "version_id": "2"
+      },
+      {
+        "association_details": {
+          "services": [
+            {
+              "concept_id": "S2786683405-GES_DISC"
+            },
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3815196579-GES_DISC"
+            },
+            {
+              "concept_id": "V3815199478-GES_DISC"
+            },
+            {
+              "concept_id": "V3815195972-GES_DISC"
+            },
+            {
+              "concept_id": "V3815200604-GES_DISC"
+            },
+            {
+              "concept_id": "V3815198277-GES_DISC"
+            },
+            {
+              "concept_id": "V3815201220-GES_DISC"
+            },
+            {
+              "concept_id": "V3815202143-GES_DISC"
+            },
+            {
+              "concept_id": "V3815198172-GES_DISC"
+            },
+            {
+              "concept_id": "V3815203674-GES_DISC"
+            },
+            {
+              "concept_id": "V3815204224-GES_DISC"
+            },
+            {
+              "concept_id": "V3815196774-GES_DISC"
+            },
+            {
+              "concept_id": "V3815202057-GES_DISC"
+            },
+            {
+              "concept_id": "V3815202397-GES_DISC"
+            },
+            {
+              "concept_id": "V3815204337-GES_DISC"
+            },
+            {
+              "concept_id": "V3815197891-GES_DISC"
+            },
+            {
+              "concept_id": "V3815200541-GES_DISC"
+            },
+            {
+              "concept_id": "V3815198111-GES_DISC"
+            },
+            {
+              "concept_id": "V3815202341-GES_DISC"
+            },
+            {
+              "concept_id": "V3815197113-GES_DISC"
+            },
+            {
+              "concept_id": "V3815202564-GES_DISC"
+            },
+            {
+              "concept_id": "V3815198187-GES_DISC"
+            },
+            {
+              "concept_id": "V3815201606-GES_DISC"
+            },
+            {
+              "concept_id": "V3815199336-GES_DISC"
+            },
+            {
+              "concept_id": "V3815202278-GES_DISC"
+            },
+            {
+              "concept_id": "V3815200747-GES_DISC"
+            },
+            {
+              "concept_id": "V3815200303-GES_DISC"
+            },
+            {
+              "concept_id": "V3815198089-GES_DISC"
+            },
+            {
+              "concept_id": "V3815199094-GES_DISC"
+            },
+            {
+              "concept_id": "V3815201858-GES_DISC"
+            },
+            {
+              "concept_id": "V3815199373-GES_DISC"
+            },
+            {
+              "concept_id": "V3815199349-GES_DISC"
+            },
+            {
+              "concept_id": "V3815195952-GES_DISC"
+            },
+            {
+              "concept_id": "V3815203354-GES_DISC"
+            },
+            {
+              "concept_id": "V3815196937-GES_DISC"
+            },
+            {
+              "concept_id": "V3815195927-GES_DISC"
+            },
+            {
+              "concept_id": "V3815202206-GES_DISC"
+            },
+            {
+              "concept_id": "V3815197019-GES_DISC"
+            },
+            {
+              "concept_id": "V3815197005-GES_DISC"
+            },
+            {
+              "concept_id": "V3815198903-GES_DISC"
+            },
+            {
+              "concept_id": "V3815198150-GES_DISC"
+            },
+            {
+              "concept_id": "V3815203520-GES_DISC"
+            },
+            {
+              "concept_id": "V3815196984-GES_DISC"
+            },
+            {
+              "concept_id": "V3815203390-GES_DISC"
+            },
+            {
+              "concept_id": "V3815199761-GES_DISC"
+            },
+            {
+              "concept_id": "V3815197025-GES_DISC"
+            },
+            {
+              "concept_id": "V3815196296-GES_DISC"
+            },
+            {
+              "concept_id": "V3815200418-GES_DISC"
+            },
+            {
+              "concept_id": "V3815195963-GES_DISC"
+            },
+            {
+              "concept_id": "V3815199369-GES_DISC"
+            },
+            {
+              "concept_id": "V3815196119-GES_DISC"
+            },
+            {
+              "concept_id": "V3815199980-GES_DISC"
+            },
+            {
+              "concept_id": "V3815200485-GES_DISC"
+            },
+            {
+              "concept_id": "V3815200665-GES_DISC"
+            },
+            {
+              "concept_id": "V3815199315-GES_DISC"
+            },
+            {
+              "concept_id": "V3815200363-GES_DISC"
+            },
+            {
+              "concept_id": "V3815199362-GES_DISC"
+            },
+            {
+              "concept_id": "V3815202892-GES_DISC"
+            },
+            {
+              "concept_id": "V3815197334-GES_DISC"
+            },
+            {
+              "concept_id": "V3815203341-GES_DISC"
+            },
+            {
+              "concept_id": "V3815200983-GES_DISC"
+            },
+            {
+              "concept_id": "V3815203377-GES_DISC"
+            },
+            {
+              "concept_id": "V3815196961-GES_DISC"
+            },
+            {
+              "concept_id": "V3815196963-GES_DISC"
+            },
+            {
+              "concept_id": "V3815203414-GES_DISC"
+            },
+            {
+              "concept_id": "V3815204353-GES_DISC"
+            },
+            {
+              "concept_id": "V3815203965-GES_DISC"
+            },
+            {
+              "concept_id": "V3815203373-GES_DISC"
+            },
+            {
+              "concept_id": "V3815203406-GES_DISC"
+            },
+            {
+              "concept_id": "V3815203062-GES_DISC"
+            },
+            {
+              "concept_id": "V3815198481-GES_DISC"
+            },
+            {
+              "concept_id": "V3815198100-GES_DISC"
+            },
+            {
+              "concept_id": "V3815199381-GES_DISC"
+            },
+            {
+              "concept_id": "V3815203397-GES_DISC"
+            },
+            {
+              "concept_id": "V3815197703-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "services": [
+            "S2786683405-GES_DISC",
+            "S2874702816-XYZ_PROV"
+          ],
+          "variables": [
+            "V3815196579-GES_DISC",
+            "V3815199478-GES_DISC",
+            "V3815195972-GES_DISC",
+            "V3815200604-GES_DISC",
+            "V3815198277-GES_DISC",
+            "V3815201220-GES_DISC",
+            "V3815202143-GES_DISC",
+            "V3815198172-GES_DISC",
+            "V3815203674-GES_DISC",
+            "V3815204224-GES_DISC",
+            "V3815196774-GES_DISC",
+            "V3815202057-GES_DISC",
+            "V3815202397-GES_DISC",
+            "V3815204337-GES_DISC",
+            "V3815197891-GES_DISC",
+            "V3815200541-GES_DISC",
+            "V3815198111-GES_DISC",
+            "V3815202341-GES_DISC",
+            "V3815197113-GES_DISC",
+            "V3815202564-GES_DISC",
+            "V3815198187-GES_DISC",
+            "V3815201606-GES_DISC",
+            "V3815199336-GES_DISC",
+            "V3815202278-GES_DISC",
+            "V3815200747-GES_DISC",
+            "V3815200303-GES_DISC",
+            "V3815198089-GES_DISC",
+            "V3815199094-GES_DISC",
+            "V3815201858-GES_DISC",
+            "V3815199373-GES_DISC",
+            "V3815199349-GES_DISC",
+            "V3815195952-GES_DISC",
+            "V3815203354-GES_DISC",
+            "V3815196937-GES_DISC",
+            "V3815195927-GES_DISC",
+            "V3815202206-GES_DISC",
+            "V3815197019-GES_DISC",
+            "V3815197005-GES_DISC",
+            "V3815198903-GES_DISC",
+            "V3815198150-GES_DISC",
+            "V3815203520-GES_DISC",
+            "V3815196984-GES_DISC",
+            "V3815203390-GES_DISC",
+            "V3815199761-GES_DISC",
+            "V3815197025-GES_DISC",
+            "V3815196296-GES_DISC",
+            "V3815200418-GES_DISC",
+            "V3815195963-GES_DISC",
+            "V3815199369-GES_DISC",
+            "V3815196119-GES_DISC",
+            "V3815199980-GES_DISC",
+            "V3815200485-GES_DISC",
+            "V3815200665-GES_DISC",
+            "V3815199315-GES_DISC",
+            "V3815200363-GES_DISC",
+            "V3815199362-GES_DISC",
+            "V3815202892-GES_DISC",
+            "V3815197334-GES_DISC",
+            "V3815203341-GES_DISC",
+            "V3815200983-GES_DISC",
+            "V3815203377-GES_DISC",
+            "V3815196961-GES_DISC",
+            "V3815196963-GES_DISC",
+            "V3815203414-GES_DISC",
+            "V3815204353-GES_DISC",
+            "V3815203965-GES_DISC",
+            "V3815203373-GES_DISC",
+            "V3815203406-GES_DISC",
+            "V3815203062-GES_DISC",
+            "V3815198481-GES_DISC",
+            "V3815198100-GES_DISC",
+            "V3815199381-GES_DISC",
+            "V3815203397-GES_DISC",
+            "V3815197703-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "Sounder SIPS: AQUA AIRS IR + MW Level 3 CLIMCAPS: Specific Quality Control Gridded Monthly V2 (SNDRAQIML3SMCCP) at GES DISC",
+        "entry_id": "SNDRAQIML3SMCCP_2",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1693440838-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/SNDRAQIML3SMCCP_2.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIML3SMCCP_2.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIML3SMCCP.2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIML3SMCCP.2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://airs.jpl.nasa.gov/index.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1693440838-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aqua"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "SNDRAQIML3SMCCP",
+        "summary": "WARNING: To users of the derived product “co_mmr_midtrop” (carbon monoxide mass mixing ratio to dry air [kg/kg] at ~500 hPa). This variable has a significant bias due to a conversion error: the molecular weight of carbon dioxide (CO2, 44.01 g/mol) was used instead of carbon monoxide (CO, 28.01 g/mol). To correct, simply multiply “co_mmr_midtrop” by 28.01/44.01. Alternatively, derive a profile of mass mixing ratio from scratch using the retrieved column density values (“mol_lay/co_mol_lay”) in the Level 2 files. For further questions or concerns please contact the Sounder SIPS at: sounder.sips@jpl.nasa.gov\n\nThe CLIMCAPS (Community Long-term Infrared Microwave Coupled Product System) algorithm is used to analyze data from the AIRS (Atmospheric Infrared Sounder) and AMSU (Advanced Microwave Sounding Unit). The AIRS instrument is a grating spectrometer (R = 1200) aboard the second Earth Observing System (EOS) polar-orbiting platform, EOS Aqua. The AIRS in combination with the AMSU constitutes an innovative atmospheric sounding group of infrared and microwave sensors. The AIRS Standard Retrieval Product consists of retrieved estimates of cloud and surface properties, plus profiles of retrieved temperature, water vapor, ozone, carbon monoxide and methane. The temperature profile vertical resolution is 100 levels total between 1100 mb and 0.1 mb, while moisture profile is reported at atmospheric layers between 1100 mb and 300 mb. The horizontal resolution is 50 km.\n \nThe CLIMCAPS algorithm uses an Optimal Estimation methodology and uses an a-priori first guess to start the process. A CLIMCAPS sounding is comprised of a set of parameters that characterizes the full atmospheric state and includes a variety of geophysical parameters derived from the CrIMSS data. These include surface temperature and infrared emissivity; full atmosphere profiles of temperature, water vapor and ozone; infrared effective cloud top characteristics; carbon monoxide, methane, carbon dioxide, sulfur dioxide, nitrous oxide, and nitric acid.\n \nThis monthly one degree latitude by one degree longitude level-3 product starts with level-2 retrieval products applying the specific quality control (QC) methodology. Specific QC accepts profile level from the top of the atmosphere down to the level where the QC determines that it is still good. Below this level, the data is rejected.\n\n",
+        "time_start": "2002-08-31T00:00:00.000Z",
+        "title": "Sounder SIPS: AQUA AIRS IR + MW Level 3 CLIMCAPS: Specific Quality Control Gridded Monthly V2 (SNDRAQIML3SMCCP) at GES DISC",
+        "updated": "1970-01-01T00:00:00.000Z",
+        "version_id": "2"
+      },
+      {
+        "archive_center": "NASA/LARC/SD/ASDC",
+        "boxes": [
+          "-36.93 -122.51 56.05 174.82"
+        ],
+        "browse_flag": false,
+        "cloud_hosted": true,
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "LARC_CLOUD",
+        "dataset_id": "Low Cost Sensors AQ BEACO2N Data",
+        "entry_id": "Low-Cost-Sensors-AQ_BEACO2N_1",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C3645629331-LARC_CLOUD",
+        "links": [
+          {
+            "href": "https://beacon.berkeley.edu/about/#",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://doi.org/10.5194/amt-17-1051-2024",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://doi.org/10.5194/amt-14-5487-2021",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://asdc.larc.nasa.gov/citing-data",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3645629331-LARC_CLOUD",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://doi.org/10.5067/Low-Cost-Sensors-AQ/BEACO2N",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://experience.arcgis.com/experience/d8aee5b3925d421884572b9da08de8e6",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://github.com/KristenOkorn/nasa-low-cost-sensors-aq",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/LARC/SD/ASDC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "BEACO2N"
+        ],
+        "processing_level_id": "2",
+        "score": 0.78000005,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "Low-Cost-Sensors-AQ_BEACO2N",
+        "summary": "Low-Cost-Sensors-AQ_BEACO2N is the ground site data collected by the Berkeley Environmental Air-quality & CO2 Network (BEACO2N) as part of the Low-Cost Air Quality Sensor Harmonization Database. Data collection for this product is ongoing.\n\nThe Low-Cost Sensor AQ Harmonization aims to harmonize sensor networks by amalgamating measurements from a multitude of networks into one open access framework. Currently, data from 10 unique US-based sensor networks have been collected for redistribution in the archive. Data from each network is reformatted in a common data format with metadata embedded to streamline data processing. A key feature is a tier system in which the team critically reviews each sensor network by their calibration efforts and subsequent data quality, providing data quality flags to help end users determine which sensor data best meets their target application. The framework allows users to search based on calibration criteria in addition to location, date range, and pollutant of interest. The sensor database is aimed at scientific end users seeking ground-based validation data for satellites and models alike but is also accessible to community scientists. The team is currently accepting new submissions! If you maintain a sensor network that you would like included, please contact the PI (kristen.e.okorn@nasa.gov). ",
+        "time_start": "2012-04-06T00:00:00.000Z",
+        "title": "Low Cost Sensors AQ BEACO2N Data",
+        "version_id": "1"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT4181375528-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181377258-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804299497-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382535-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181317655-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804217439-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804288516-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181371332-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181379767-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181366771-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804096227-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804304484-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804171575-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803973244-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804285455-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181377606-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181379896-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804184792-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804321182-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181324497-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804296444-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181337705-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804196816-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804231112-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181379370-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804192634-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181377536-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181381604-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181371705-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181370051-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181379404-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181357832-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181368364-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804004900-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181381993-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181356158-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181335680-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181353100-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181316556-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181339450-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181375243-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181376714-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804192006-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181345664-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804266693-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804157003-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803952722-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804322033-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804211485-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181381315-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804231616-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804143030-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181311574-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181355202-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181374383-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804309702-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804162564-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804072440-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181379901-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804176128-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804289383-ESDIS"
+            },
+            {
+              "concept_id": "CIT4076022041-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804220773-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181372553-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804315903-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181366403-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804302710-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857554798-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181323283-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181348075-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181377896-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181365732-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181316980-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181317038-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857561956-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181378268-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181338100-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804289493-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181377636-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382491-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804232689-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857559890-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804159428-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857573997-ESDIS"
+            },
+            {
+              "concept_id": "CIT4106700813-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804240037-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857555824-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181370373-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181371720-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181373717-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181361726-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181380713-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804229579-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804189418-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181379593-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181373088-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181311684-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804180487-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857567842-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803940054-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857568069-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804201917-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181377805-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804183176-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382533-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804289762-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804232803-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804218295-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181353822-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804160828-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804115174-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181374428-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181380095-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181367050-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181326538-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803943876-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181320797-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804310207-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804269727-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181362562-ESDIS"
+            },
+            {
+              "concept_id": "CIT4106692009-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181379292-ESDIS"
+            },
+            {
+              "concept_id": "CIT4106688135-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382141-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804190269-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382202-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803991556-ESDIS"
+            },
+            {
+              "concept_id": "CIT4076007180-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804162594-ESDIS"
+            },
+            {
+              "concept_id": "CIT4106684602-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804155156-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181358600-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181343550-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804194885-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804323559-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804255454-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181371922-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181373339-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181367468-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804038174-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181379104-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804320970-ESDIS"
+            },
+            {
+              "concept_id": "CIT3963288143-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181377229-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181366699-ESDIS"
+            },
+            {
+              "concept_id": "CIT4106707614-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181378967-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804314896-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181340089-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804115493-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803959651-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804306143-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804278616-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804199900-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181330826-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181373036-ESDIS"
+            },
+            {
+              "concept_id": "CIT3963290230-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804199314-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804165278-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804126452-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181312079-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804295238-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804200618-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181379418-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181383326-ESDIS"
+            },
+            {
+              "concept_id": "CIT3963295192-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181374347-ESDIS"
+            },
+            {
+              "concept_id": "CIT4106686015-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804126058-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804304390-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181352785-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382878-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181379771-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804315869-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804386729-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181362475-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804268247-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181317800-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857564000-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804219894-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181372969-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181383064-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804039234-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181379399-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804308862-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857560156-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181374408-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804195987-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804141931-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804037544-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181369522-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181341078-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382467-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181320550-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804277521-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181350029-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181373067-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181345353-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804105420-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181379889-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181381077-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181369678-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181370208-ESDIS"
+            },
+            {
+              "concept_id": "CIT4106690295-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181375894-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804287370-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181373713-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181367039-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181365120-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181369736-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382889-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181377942-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804168704-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382923-ESDIS"
+            },
+            {
+              "concept_id": "CIT3963289772-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857568086-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181375545-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181317756-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804197179-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181383122-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804124816-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803969261-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804088076-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181372803-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804109296-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181321664-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181325605-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181350678-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181375600-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181313981-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181328896-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181354581-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181367706-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804253480-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181372833-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804041030-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804290619-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804265041-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181381950-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804232189-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181377271-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804054638-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181333792-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804190397-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803963117-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804305346-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803991801-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804125763-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181319052-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181377618-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804000615-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382895-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181364544-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804314563-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181351685-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804288184-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804162694-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803975890-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181383215-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804198197-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803987048-ESDIS"
+            },
+            {
+              "concept_id": "CIT4106693760-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804212867-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804322354-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181381667-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181377362-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804157746-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181323279-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804169187-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804009498-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181380545-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181372162-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804031994-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181371061-ESDIS"
+            },
+            {
+              "concept_id": "CIT3963295659-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181375130-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181359935-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181381368-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804024365-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181380453-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804316841-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181365526-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181378259-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804288140-ESDIS"
+            },
+            {
+              "concept_id": "CIT4106689118-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804229082-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804198641-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181370548-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857560020-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803983748-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181316196-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181378254-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181370491-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181364892-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181372273-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803996008-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382553-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181340238-ESDIS"
+            },
+            {
+              "concept_id": "CIT4106684518-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804315161-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181312100-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181342866-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181378466-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181375956-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181376297-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804157715-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181377828-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804102702-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804023037-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804225405-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181324571-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181340010-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181355261-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804117536-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181383182-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181371201-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804124335-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181380499-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181354459-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181374729-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S3385907677-GES_DISC"
+            },
+            {
+              "concept_id": "S2786683405-GES_DISC"
+            },
+            {
+              "concept_id": "S4057306097-XYZ_PROV"
+            },
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            },
+            {
+              "concept_id": "S2164732315-XYZ_PROV"
+            },
+            {
+              "concept_id": "S2739607260-GES_DISC"
+            }
+          ],
+          "tools": [
+            {
+              "concept_id": "TL2140660116-GES_DISC"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3171509955-GES_DISC"
+            },
+            {
+              "concept_id": "V3171510287-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509615-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509344-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509321-GES_DISC"
+            },
+            {
+              "concept_id": "V3171510290-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509503-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509834-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509505-GES_DISC"
+            },
+            {
+              "concept_id": "V3171510146-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509959-GES_DISC"
+            },
+            {
+              "concept_id": "V3171510182-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509948-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509767-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509680-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509870-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509330-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509500-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509777-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509795-GES_DISC"
+            },
+            {
+              "concept_id": "V3171510036-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509762-GES_DISC"
+            },
+            {
+              "concept_id": "V3171510111-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509787-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509335-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509589-GES_DISC"
+            },
+            {
+              "concept_id": "V3171510212-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509743-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509913-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509563-GES_DISC"
+            },
+            {
+              "concept_id": "V3171510219-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509764-GES_DISC"
+            },
+            {
+              "concept_id": "V3171510217-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509325-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509646-GES_DISC"
+            },
+            {
+              "concept_id": "V3171510071-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509394-GES_DISC"
+            },
+            {
+              "concept_id": "V3171510206-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509363-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509493-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509714-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509779-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509333-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509319-GES_DISC"
+            },
+            {
+              "concept_id": "V3171510001-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509323-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509807-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509953-GES_DISC"
+            },
+            {
+              "concept_id": "V3171510238-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509444-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509774-GES_DISC"
+            },
+            {
+              "concept_id": "V3171509525-GES_DISC"
+            },
+            {
+              "concept_id": "V3171510214-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT4181375528-ESDIS",
+            "CIT4181377258-ESDIS",
+            "CIT3804299497-ESDIS",
+            "CIT4181382535-ESDIS",
+            "CIT4181317655-ESDIS",
+            "CIT3804217439-ESDIS",
+            "CIT3804288516-ESDIS",
+            "CIT4181371332-ESDIS",
+            "CIT4181379767-ESDIS",
+            "CIT4181366771-ESDIS",
+            "CIT3804096227-ESDIS",
+            "CIT3804304484-ESDIS",
+            "CIT3804171575-ESDIS",
+            "CIT3803973244-ESDIS",
+            "CIT3804285455-ESDIS",
+            "CIT4181377606-ESDIS",
+            "CIT4181379896-ESDIS",
+            "CIT3804184792-ESDIS",
+            "CIT3804321182-ESDIS",
+            "CIT4181324497-ESDIS",
+            "CIT3804296444-ESDIS",
+            "CIT4181337705-ESDIS",
+            "CIT3804196816-ESDIS",
+            "CIT3804231112-ESDIS",
+            "CIT4181379370-ESDIS",
+            "CIT3804192634-ESDIS",
+            "CIT4181377536-ESDIS",
+            "CIT4181381604-ESDIS",
+            "CIT4181371705-ESDIS",
+            "CIT4181370051-ESDIS",
+            "CIT4181379404-ESDIS",
+            "CIT4181357832-ESDIS",
+            "CIT4181368364-ESDIS",
+            "CIT3804004900-ESDIS",
+            "CIT4181381993-ESDIS",
+            "CIT4181356158-ESDIS",
+            "CIT4181335680-ESDIS",
+            "CIT4181353100-ESDIS",
+            "CIT4181316556-ESDIS",
+            "CIT4181339450-ESDIS",
+            "CIT4181375243-ESDIS",
+            "CIT4181376714-ESDIS",
+            "CIT3804192006-ESDIS",
+            "CIT4181345664-ESDIS",
+            "CIT3804266693-ESDIS",
+            "CIT3804157003-ESDIS",
+            "CIT3803952722-ESDIS",
+            "CIT3804322033-ESDIS",
+            "CIT3804211485-ESDIS",
+            "CIT4181381315-ESDIS",
+            "CIT3804231616-ESDIS",
+            "CIT3804143030-ESDIS",
+            "CIT4181311574-ESDIS",
+            "CIT4181355202-ESDIS",
+            "CIT4181374383-ESDIS",
+            "CIT3804309702-ESDIS",
+            "CIT3804162564-ESDIS",
+            "CIT3804072440-ESDIS",
+            "CIT4181379901-ESDIS",
+            "CIT3804176128-ESDIS",
+            "CIT3804289383-ESDIS",
+            "CIT4076022041-ESDIS",
+            "CIT3804220773-ESDIS",
+            "CIT4181372553-ESDIS",
+            "CIT3804315903-ESDIS",
+            "CIT4181366403-ESDIS",
+            "CIT3804302710-ESDIS",
+            "CIT3857554798-ESDIS",
+            "CIT4181323283-ESDIS",
+            "CIT4181348075-ESDIS",
+            "CIT4181377896-ESDIS",
+            "CIT4181365732-ESDIS",
+            "CIT4181316980-ESDIS",
+            "CIT4181317038-ESDIS",
+            "CIT3857561956-ESDIS",
+            "CIT4181378268-ESDIS",
+            "CIT4181338100-ESDIS",
+            "CIT3804289493-ESDIS",
+            "CIT4181377636-ESDIS",
+            "CIT4181382491-ESDIS",
+            "CIT3804232689-ESDIS",
+            "CIT3857559890-ESDIS",
+            "CIT3804159428-ESDIS",
+            "CIT3857573997-ESDIS",
+            "CIT4106700813-ESDIS",
+            "CIT3804240037-ESDIS",
+            "CIT3857555824-ESDIS",
+            "CIT4181370373-ESDIS",
+            "CIT4181371720-ESDIS",
+            "CIT4181373717-ESDIS",
+            "CIT4181361726-ESDIS",
+            "CIT4181380713-ESDIS",
+            "CIT3804229579-ESDIS",
+            "CIT3804189418-ESDIS",
+            "CIT4181379593-ESDIS",
+            "CIT4181373088-ESDIS",
+            "CIT4181311684-ESDIS",
+            "CIT3804180487-ESDIS",
+            "CIT3857567842-ESDIS",
+            "CIT3803940054-ESDIS",
+            "CIT3857568069-ESDIS",
+            "CIT3804201917-ESDIS",
+            "CIT4181377805-ESDIS",
+            "CIT3804183176-ESDIS",
+            "CIT4181382533-ESDIS",
+            "CIT3804289762-ESDIS",
+            "CIT3804232803-ESDIS",
+            "CIT3804218295-ESDIS",
+            "CIT4181353822-ESDIS",
+            "CIT3804160828-ESDIS",
+            "CIT3804115174-ESDIS",
+            "CIT4181374428-ESDIS",
+            "CIT4181380095-ESDIS",
+            "CIT4181367050-ESDIS",
+            "CIT4181326538-ESDIS",
+            "CIT3803943876-ESDIS",
+            "CIT4181320797-ESDIS",
+            "CIT3804310207-ESDIS",
+            "CIT3804269727-ESDIS",
+            "CIT4181362562-ESDIS",
+            "CIT4106692009-ESDIS",
+            "CIT4181379292-ESDIS",
+            "CIT4106688135-ESDIS",
+            "CIT4181382141-ESDIS",
+            "CIT3804190269-ESDIS",
+            "CIT4181382202-ESDIS",
+            "CIT3803991556-ESDIS",
+            "CIT4076007180-ESDIS",
+            "CIT3804162594-ESDIS",
+            "CIT4106684602-ESDIS",
+            "CIT3804155156-ESDIS",
+            "CIT4181358600-ESDIS",
+            "CIT4181343550-ESDIS",
+            "CIT3804194885-ESDIS",
+            "CIT3804323559-ESDIS",
+            "CIT3804255454-ESDIS",
+            "CIT4181371922-ESDIS",
+            "CIT4181373339-ESDIS",
+            "CIT4181367468-ESDIS",
+            "CIT3804038174-ESDIS",
+            "CIT4181379104-ESDIS",
+            "CIT3804320970-ESDIS",
+            "CIT3963288143-ESDIS",
+            "CIT4181377229-ESDIS",
+            "CIT4181366699-ESDIS",
+            "CIT4106707614-ESDIS",
+            "CIT4181378967-ESDIS",
+            "CIT3804314896-ESDIS",
+            "CIT4181340089-ESDIS",
+            "CIT3804115493-ESDIS",
+            "CIT3803959651-ESDIS",
+            "CIT3804306143-ESDIS",
+            "CIT3804278616-ESDIS",
+            "CIT3804199900-ESDIS",
+            "CIT4181330826-ESDIS",
+            "CIT4181373036-ESDIS",
+            "CIT3963290230-ESDIS",
+            "CIT3804199314-ESDIS",
+            "CIT3804165278-ESDIS",
+            "CIT3804126452-ESDIS",
+            "CIT4181312079-ESDIS",
+            "CIT3804295238-ESDIS",
+            "CIT3804200618-ESDIS",
+            "CIT4181379418-ESDIS",
+            "CIT4181383326-ESDIS",
+            "CIT3963295192-ESDIS",
+            "CIT4181374347-ESDIS",
+            "CIT4106686015-ESDIS",
+            "CIT3804126058-ESDIS",
+            "CIT3804304390-ESDIS",
+            "CIT4181352785-ESDIS",
+            "CIT4181382878-ESDIS",
+            "CIT4181379771-ESDIS",
+            "CIT3804315869-ESDIS",
+            "CIT3804386729-ESDIS",
+            "CIT4181362475-ESDIS",
+            "CIT3804268247-ESDIS",
+            "CIT4181317800-ESDIS",
+            "CIT3857564000-ESDIS",
+            "CIT3804219894-ESDIS",
+            "CIT4181372969-ESDIS",
+            "CIT4181383064-ESDIS",
+            "CIT3804039234-ESDIS",
+            "CIT4181379399-ESDIS",
+            "CIT3804308862-ESDIS",
+            "CIT3857560156-ESDIS",
+            "CIT4181374408-ESDIS",
+            "CIT3804195987-ESDIS",
+            "CIT3804141931-ESDIS",
+            "CIT3804037544-ESDIS",
+            "CIT4181369522-ESDIS",
+            "CIT4181341078-ESDIS",
+            "CIT4181382467-ESDIS",
+            "CIT4181320550-ESDIS",
+            "CIT3804277521-ESDIS",
+            "CIT4181350029-ESDIS",
+            "CIT4181373067-ESDIS",
+            "CIT4181345353-ESDIS",
+            "CIT3804105420-ESDIS",
+            "CIT4181379889-ESDIS",
+            "CIT4181381077-ESDIS",
+            "CIT4181369678-ESDIS",
+            "CIT4181370208-ESDIS",
+            "CIT4106690295-ESDIS",
+            "CIT4181375894-ESDIS",
+            "CIT3804287370-ESDIS",
+            "CIT4181373713-ESDIS",
+            "CIT4181367039-ESDIS",
+            "CIT4181365120-ESDIS",
+            "CIT4181369736-ESDIS",
+            "CIT4181382889-ESDIS",
+            "CIT4181377942-ESDIS",
+            "CIT3804168704-ESDIS",
+            "CIT4181382923-ESDIS",
+            "CIT3963289772-ESDIS",
+            "CIT3857568086-ESDIS",
+            "CIT4181375545-ESDIS",
+            "CIT4181317756-ESDIS",
+            "CIT3804197179-ESDIS",
+            "CIT4181383122-ESDIS",
+            "CIT3804124816-ESDIS",
+            "CIT3803969261-ESDIS",
+            "CIT3804088076-ESDIS",
+            "CIT4181372803-ESDIS",
+            "CIT3804109296-ESDIS",
+            "CIT4181321664-ESDIS",
+            "CIT4181325605-ESDIS",
+            "CIT4181350678-ESDIS",
+            "CIT4181375600-ESDIS",
+            "CIT4181313981-ESDIS",
+            "CIT4181328896-ESDIS",
+            "CIT4181354581-ESDIS",
+            "CIT4181367706-ESDIS",
+            "CIT3804253480-ESDIS",
+            "CIT4181372833-ESDIS",
+            "CIT3804041030-ESDIS",
+            "CIT3804290619-ESDIS",
+            "CIT3804265041-ESDIS",
+            "CIT4181381950-ESDIS",
+            "CIT3804232189-ESDIS",
+            "CIT4181377271-ESDIS",
+            "CIT3804054638-ESDIS",
+            "CIT4181333792-ESDIS",
+            "CIT3804190397-ESDIS",
+            "CIT3803963117-ESDIS",
+            "CIT3804305346-ESDIS",
+            "CIT3803991801-ESDIS",
+            "CIT3804125763-ESDIS",
+            "CIT4181319052-ESDIS",
+            "CIT4181377618-ESDIS",
+            "CIT3804000615-ESDIS",
+            "CIT4181382895-ESDIS",
+            "CIT4181364544-ESDIS",
+            "CIT3804314563-ESDIS",
+            "CIT4181351685-ESDIS",
+            "CIT3804288184-ESDIS",
+            "CIT3804162694-ESDIS",
+            "CIT3803975890-ESDIS",
+            "CIT4181383215-ESDIS",
+            "CIT3804198197-ESDIS",
+            "CIT3803987048-ESDIS",
+            "CIT4106693760-ESDIS",
+            "CIT3804212867-ESDIS",
+            "CIT3804322354-ESDIS",
+            "CIT4181381667-ESDIS",
+            "CIT4181377362-ESDIS",
+            "CIT3804157746-ESDIS",
+            "CIT4181323279-ESDIS",
+            "CIT3804169187-ESDIS",
+            "CIT3804009498-ESDIS",
+            "CIT4181380545-ESDIS",
+            "CIT4181372162-ESDIS",
+            "CIT3804031994-ESDIS",
+            "CIT4181371061-ESDIS",
+            "CIT3963295659-ESDIS",
+            "CIT4181375130-ESDIS",
+            "CIT4181359935-ESDIS",
+            "CIT4181381368-ESDIS",
+            "CIT3804024365-ESDIS",
+            "CIT4181380453-ESDIS",
+            "CIT3804316841-ESDIS",
+            "CIT4181365526-ESDIS",
+            "CIT4181378259-ESDIS",
+            "CIT3804288140-ESDIS",
+            "CIT4106689118-ESDIS",
+            "CIT3804229082-ESDIS",
+            "CIT3804198641-ESDIS",
+            "CIT4181370548-ESDIS",
+            "CIT3857560020-ESDIS",
+            "CIT3803983748-ESDIS",
+            "CIT4181316196-ESDIS",
+            "CIT4181378254-ESDIS",
+            "CIT4181370491-ESDIS",
+            "CIT4181364892-ESDIS",
+            "CIT4181372273-ESDIS",
+            "CIT3803996008-ESDIS",
+            "CIT4181382553-ESDIS",
+            "CIT4181340238-ESDIS",
+            "CIT4106684518-ESDIS",
+            "CIT3804315161-ESDIS",
+            "CIT4181312100-ESDIS",
+            "CIT4181342866-ESDIS",
+            "CIT4181378466-ESDIS",
+            "CIT4181375956-ESDIS",
+            "CIT4181376297-ESDIS",
+            "CIT3804157715-ESDIS",
+            "CIT4181377828-ESDIS",
+            "CIT3804102702-ESDIS",
+            "CIT3804023037-ESDIS",
+            "CIT3804225405-ESDIS",
+            "CIT4181324571-ESDIS",
+            "CIT4181340010-ESDIS",
+            "CIT4181355261-ESDIS",
+            "CIT3804117536-ESDIS",
+            "CIT4181383182-ESDIS",
+            "CIT4181371201-ESDIS",
+            "CIT3804124335-ESDIS",
+            "CIT4181380499-ESDIS",
+            "CIT4181354459-ESDIS",
+            "CIT4181374729-ESDIS"
+          ],
+          "services": [
+            "S3385907677-GES_DISC",
+            "S2786683405-GES_DISC",
+            "S4057306097-XYZ_PROV",
+            "S2874702816-XYZ_PROV",
+            "S2164732315-XYZ_PROV",
+            "S2739607260-GES_DISC"
+          ],
+          "tools": [
+            "TL2140660116-GES_DISC"
+          ],
+          "variables": [
+            "V3171509955-GES_DISC",
+            "V3171510287-GES_DISC",
+            "V3171509615-GES_DISC",
+            "V3171509344-GES_DISC",
+            "V3171509321-GES_DISC",
+            "V3171510290-GES_DISC",
+            "V3171509503-GES_DISC",
+            "V3171509834-GES_DISC",
+            "V3171509505-GES_DISC",
+            "V3171510146-GES_DISC",
+            "V3171509959-GES_DISC",
+            "V3171510182-GES_DISC",
+            "V3171509948-GES_DISC",
+            "V3171509767-GES_DISC",
+            "V3171509680-GES_DISC",
+            "V3171509870-GES_DISC",
+            "V3171509330-GES_DISC",
+            "V3171509500-GES_DISC",
+            "V3171509777-GES_DISC",
+            "V3171509795-GES_DISC",
+            "V3171510036-GES_DISC",
+            "V3171509762-GES_DISC",
+            "V3171510111-GES_DISC",
+            "V3171509787-GES_DISC",
+            "V3171509335-GES_DISC",
+            "V3171509589-GES_DISC",
+            "V3171510212-GES_DISC",
+            "V3171509743-GES_DISC",
+            "V3171509913-GES_DISC",
+            "V3171509563-GES_DISC",
+            "V3171510219-GES_DISC",
+            "V3171509764-GES_DISC",
+            "V3171510217-GES_DISC",
+            "V3171509325-GES_DISC",
+            "V3171509646-GES_DISC",
+            "V3171510071-GES_DISC",
+            "V3171509394-GES_DISC",
+            "V3171510206-GES_DISC",
+            "V3171509363-GES_DISC",
+            "V3171509493-GES_DISC",
+            "V3171509714-GES_DISC",
+            "V3171509779-GES_DISC",
+            "V3171509333-GES_DISC",
+            "V3171509319-GES_DISC",
+            "V3171510001-GES_DISC",
+            "V3171509323-GES_DISC",
+            "V3171509807-GES_DISC",
+            "V3171509953-GES_DISC",
+            "V3171510238-GES_DISC",
+            "V3171509444-GES_DISC",
+            "V3171509774-GES_DISC",
+            "V3171509525-GES_DISC",
+            "V3171510214-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "MERRA-2 tavg1_2d_aer_Nx: 2d,1-Hourly,Time-averaged,Single-Level,Assimilation,Aerosol Diagnostics 0.625 x 0.5 degree V5.12.4 (M2T1NXAER) at GES DISC",
+        "entry_id": "M2T1NXAER_5.12.4",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1276812830-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/M2T1NXAER_5.12.4.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/howto?tags=MERRA",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/M2T1NXAER_5.12.4.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://giovanni.gsfc.nasa.gov/giovanni/#dataKeyword=M2T1NXAER",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1276812830-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/opendap/MERRA2/M2T1NXAER.5.12.4/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/thredds/catalog/MERRA2_aggregation/M2T1NXAER.5.12.4/catalog.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://gmao.gsfc.nasa.gov/gmao-products/merra-2/documentation_merra-2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://gmao.gsfc.nasa.gov/media/publications/zbly36ziNFDFbmYmvhQeVqPhUo/Bosilovich785.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/doc/MERRA2.README.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/mission-project?title=MERRA-2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/MERRA/Records_MERRA-2_Data_Reprocessing_and_Service_Changes.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/information/faqs?keywords=MERRA-2&page=1",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "MERRA-2"
+        ],
+        "processing_level_id": "4",
+        "score": 0.6,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": false,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "M2T1NXAER",
+        "summary": "M2T1NXAER (or  tavg1_2d_aer_Nx) is an hourly time-averaged 2-dimensional data collection in Modern-Era Retrospective analysis for Research and Applications version 2 (MERRA-2).  This collection consists of assimilated aerosol diagnostics, such as column mass density of aerosol components (black carbon, dust, sea salt, sulfate, and organic carbon), surface mass concentration of aerosol components, and total extinction (and scattering ) aerosol optical thickness (AOT) at 550 nm.  The total PM1.0, PM2.5, and PM10 may be derived with the formula described in the FAQs under the Documentation tab of this page.  The data field is time-stamped with the central time of an hour starting from 00:30 UTC, e.g.: 00:30, 01:30, … , 23:30 UTC.\n\nMERRA-2 is the latest version of global atmospheric reanalysis for the satellite era produced by NASA Global Modeling and Assimilation Office (GMAO) using the Goddard Earth Observing System Model (GEOS) version 5.12.4.  The dataset covers the period of 1980-present with the latency of ~3 weeks after the end of a month. \n\nData Reprocessing:  Please check “Records of MERRA-2 Data Reprocessing and Service Changes” linked from the “Documentation” tab on this page.  Note that a reprocessed data filename is different from the original file.\n\nMERRA-2 Mailing List: Sign up to receive information on reprocessing of data, changing of tools and services, as well as data announcements from GMAO. Contact the GES DISC Help Desk (gsfc-dl-help-disc@mail.nasa.gov) to be added to the list.\n\nQuestions: If you have a question, please read \"MERRA-2 File Specification Document\",  “MERRA-2 Data Access – Quick Start Guide”, and FAQs linked from the ”Documentation” tab on this page.  If that does not answer your question, you may post your question to the NASA Earthdata Forum (forum.earthdata.nasa.gov) or email the GES DISC Help Desk (gsfc-dl-help-disc@mail.nasa.gov).",
+        "time_start": "1980-01-01T00:00:00.000Z",
+        "title": "MERRA-2 tavg1_2d_aer_Nx: 2d,1-Hourly,Time-averaged,Single-Level,Assimilation,Aerosol Diagnostics 0.625 x 0.5 degree V5.12.4 (M2T1NXAER) at GES DISC",
+        "updated": "2015-07-07T00:00:00.000Z",
+        "version_id": "5.12.4"
+      }
+    ],
+    "id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?keyword=air+quality&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=10&sort_key=-score",
+    "title": "ECHO dataset metadata",
+    "updated": "2026-05-26T20:36:28.881Z"
+  }
+}

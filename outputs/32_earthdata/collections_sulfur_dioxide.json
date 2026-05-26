@@ -1,0 +1,2527 @@
+{
+  "_meta": {
+    "bytes": 61185,
+    "content_type": "application/json;charset=utf-8",
+    "http_status": 200,
+    "sha256": "25e877605d5d23b412330639591baeb94648786033d240b4b509822d62ed6223",
+    "url": "https://cmr.earthdata.nasa.gov/search/collections.json?keyword=sulfur+dioxide&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=10&sort_key=-score"
+  },
+  "feed": {
+    "entry": [
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT4181375541-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804060990-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804032269-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804004900-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181328841-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181317470-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181326183-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181362378-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181351181-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804072562-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181334970-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804218666-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181329813-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181327116-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803977398-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181380680-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382408-ESDIS"
+            },
+            {
+              "concept_id": "CIT4076007291-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181349087-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181328313-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181331172-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181375528-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804160332-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803949990-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804191539-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804248943-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181321556-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181323510-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804228757-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181315666-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803983657-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803964043-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804255447-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804257506-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181321854-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803966197-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804281822-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181321885-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804084098-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181362590-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181333782-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181383287-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181383312-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804017578-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804214636-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181323514-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804265286-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181355909-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181338231-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181371988-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181315321-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181345989-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181373663-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803963043-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804230500-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181331554-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803961913-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181314305-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181381844-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181348991-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804248976-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803992180-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803960940-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181342991-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181361745-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804003412-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804106662-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181339377-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804217472-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803994807-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181352101-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804169163-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181345597-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181331436-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181373770-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804169187-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181358007-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804302343-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181370494-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181358295-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804060866-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803992173-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181315101-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181327128-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181334367-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181358971-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181351555-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181315143-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181322295-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181323876-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804018298-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181370959-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804077948-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181353221-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804249602-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181373661-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181355271-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181357297-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804256137-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181334231-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804114535-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804017338-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181371035-ESDIS"
+            },
+            {
+              "concept_id": "CIT4106706534-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181320124-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804063666-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S2739607260-GES_DISC"
+            },
+            {
+              "concept_id": "S3385907677-GES_DISC"
+            }
+          ],
+          "tools": [
+            {
+              "concept_id": "TL2140660116-GES_DISC"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3496200180-GES_DISC"
+            },
+            {
+              "concept_id": "V3496200080-GES_DISC"
+            },
+            {
+              "concept_id": "V3496200825-GES_DISC"
+            },
+            {
+              "concept_id": "V3496200395-GES_DISC"
+            },
+            {
+              "concept_id": "V3496200336-GES_DISC"
+            },
+            {
+              "concept_id": "V3496200370-GES_DISC"
+            },
+            {
+              "concept_id": "V3496200428-GES_DISC"
+            },
+            {
+              "concept_id": "V3496200918-GES_DISC"
+            },
+            {
+              "concept_id": "V3496200535-GES_DISC"
+            },
+            {
+              "concept_id": "V3496200839-GES_DISC"
+            },
+            {
+              "concept_id": "V3496200452-GES_DISC"
+            },
+            {
+              "concept_id": "V3496200856-GES_DISC"
+            },
+            {
+              "concept_id": "V3496201011-GES_DISC"
+            },
+            {
+              "concept_id": "V3496200828-GES_DISC"
+            },
+            {
+              "concept_id": "V3496200603-GES_DISC"
+            }
+          ],
+          "visualizations": [
+            {
+              "concept_id": "VIS3974543424-ESDIS"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT4181375541-ESDIS",
+            "CIT3804060990-ESDIS",
+            "CIT3804032269-ESDIS",
+            "CIT3804004900-ESDIS",
+            "CIT4181328841-ESDIS",
+            "CIT4181317470-ESDIS",
+            "CIT4181326183-ESDIS",
+            "CIT4181362378-ESDIS",
+            "CIT4181351181-ESDIS",
+            "CIT3804072562-ESDIS",
+            "CIT4181334970-ESDIS",
+            "CIT3804218666-ESDIS",
+            "CIT4181329813-ESDIS",
+            "CIT4181327116-ESDIS",
+            "CIT3803977398-ESDIS",
+            "CIT4181380680-ESDIS",
+            "CIT4181382408-ESDIS",
+            "CIT4076007291-ESDIS",
+            "CIT4181349087-ESDIS",
+            "CIT4181328313-ESDIS",
+            "CIT4181331172-ESDIS",
+            "CIT4181375528-ESDIS",
+            "CIT3804160332-ESDIS",
+            "CIT3803949990-ESDIS",
+            "CIT3804191539-ESDIS",
+            "CIT3804248943-ESDIS",
+            "CIT4181321556-ESDIS",
+            "CIT4181323510-ESDIS",
+            "CIT3804228757-ESDIS",
+            "CIT4181315666-ESDIS",
+            "CIT3803983657-ESDIS",
+            "CIT3803964043-ESDIS",
+            "CIT3804255447-ESDIS",
+            "CIT3804257506-ESDIS",
+            "CIT4181321854-ESDIS",
+            "CIT3803966197-ESDIS",
+            "CIT3804281822-ESDIS",
+            "CIT4181321885-ESDIS",
+            "CIT3804084098-ESDIS",
+            "CIT4181362590-ESDIS",
+            "CIT4181333782-ESDIS",
+            "CIT4181383287-ESDIS",
+            "CIT4181383312-ESDIS",
+            "CIT3804017578-ESDIS",
+            "CIT3804214636-ESDIS",
+            "CIT4181323514-ESDIS",
+            "CIT3804265286-ESDIS",
+            "CIT4181355909-ESDIS",
+            "CIT4181338231-ESDIS",
+            "CIT4181371988-ESDIS",
+            "CIT4181315321-ESDIS",
+            "CIT4181345989-ESDIS",
+            "CIT4181373663-ESDIS",
+            "CIT3803963043-ESDIS",
+            "CIT3804230500-ESDIS",
+            "CIT4181331554-ESDIS",
+            "CIT3803961913-ESDIS",
+            "CIT4181314305-ESDIS",
+            "CIT4181381844-ESDIS",
+            "CIT4181348991-ESDIS",
+            "CIT3804248976-ESDIS",
+            "CIT3803992180-ESDIS",
+            "CIT3803960940-ESDIS",
+            "CIT4181342991-ESDIS",
+            "CIT4181361745-ESDIS",
+            "CIT3804003412-ESDIS",
+            "CIT3804106662-ESDIS",
+            "CIT4181339377-ESDIS",
+            "CIT3804217472-ESDIS",
+            "CIT3803994807-ESDIS",
+            "CIT4181352101-ESDIS",
+            "CIT3804169163-ESDIS",
+            "CIT4181345597-ESDIS",
+            "CIT4181331436-ESDIS",
+            "CIT4181373770-ESDIS",
+            "CIT3804169187-ESDIS",
+            "CIT4181358007-ESDIS",
+            "CIT3804302343-ESDIS",
+            "CIT4181370494-ESDIS",
+            "CIT4181358295-ESDIS",
+            "CIT3804060866-ESDIS",
+            "CIT3803992173-ESDIS",
+            "CIT4181315101-ESDIS",
+            "CIT4181327128-ESDIS",
+            "CIT4181334367-ESDIS",
+            "CIT4181358971-ESDIS",
+            "CIT4181351555-ESDIS",
+            "CIT4181315143-ESDIS",
+            "CIT4181322295-ESDIS",
+            "CIT4181323876-ESDIS",
+            "CIT3804018298-ESDIS",
+            "CIT4181370959-ESDIS",
+            "CIT3804077948-ESDIS",
+            "CIT4181353221-ESDIS",
+            "CIT3804249602-ESDIS",
+            "CIT4181373661-ESDIS",
+            "CIT4181355271-ESDIS",
+            "CIT4181357297-ESDIS",
+            "CIT3804256137-ESDIS",
+            "CIT4181334231-ESDIS",
+            "CIT3804114535-ESDIS",
+            "CIT3804017338-ESDIS",
+            "CIT4181371035-ESDIS",
+            "CIT4106706534-ESDIS",
+            "CIT4181320124-ESDIS",
+            "CIT3804063666-ESDIS"
+          ],
+          "services": [
+            "S2739607260-GES_DISC",
+            "S3385907677-GES_DISC"
+          ],
+          "tools": [
+            "TL2140660116-GES_DISC"
+          ],
+          "variables": [
+            "V3496200180-GES_DISC",
+            "V3496200080-GES_DISC",
+            "V3496200825-GES_DISC",
+            "V3496200395-GES_DISC",
+            "V3496200336-GES_DISC",
+            "V3496200370-GES_DISC",
+            "V3496200428-GES_DISC",
+            "V3496200918-GES_DISC",
+            "V3496200535-GES_DISC",
+            "V3496200839-GES_DISC",
+            "V3496200452-GES_DISC",
+            "V3496200856-GES_DISC",
+            "V3496201011-GES_DISC",
+            "V3496200828-GES_DISC",
+            "V3496200603-GES_DISC"
+          ],
+          "visualizations": [
+            "VIS3974543424-ESDIS"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "OMI/Aura Sulfur Dioxide (SO2) Total Column Daily L3 1 day Best Pixel in 0.25 degree x 0.25 degree V3 (OMSO2e) at GES DISC",
+        "entry_id": "OMSO2e_003",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1266136112-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/OMSO2e_003.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/OMSO2e_003.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level3/OMSO2e.003/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://giovanni.gsfc.nasa.gov/giovanni/#dataKeyword=OMSO2e",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1266136112-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMSO2e.003/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level3/OMSO2e.003/doc/README.OMSO2e_2020-10-16.txt",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/repository/Mission/OMI/3.3_ScienceDataProductDocumentation/3.3.2_ProductRequirements_Designs/README.OMI_DUG.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/OMI/OMSO2e_2020-11-25.fs",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://aura.gsfc.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://www.knmiprojects.nl/projects/ozone-monitoring-instrument",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://so2.gsfc.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://www.knmi.nl/research/publications",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://worldview.earthdata.nasa.gov/?l=Reference_Labels_15m(hidden),Reference_Features_15m(hidden),Coastlines_15m,OMI_SO2_Lower_Troposphere,OMI_SO2_Middle_Troposphere,OMI_SO2_Upper_Troposphere_and_Stratosphere,OMI_SO2_Planetary_Boundary_Layer,OCI_PACE_True_Color(hidden),VIIRS_NOAA21_CorrectedReflectance_TrueColor(hidden),VIIRS_NOAA20_CorrectedReflectance_TrueColor(hidden),VIIRS_SNPP_CorrectedReflectance_TrueColor(hidden),MODIS_Aqua_CorrectedReflectance_TrueColor(hidden),MODIS_Terra_CorrectedReflectance_TrueColor&lg=true&t=2026-03-06-T13%3A47%3A22Z",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": false,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "OMSO2e",
+        "summary": "The OMI science team produces this Level-3 Aura/OMI Global OMSO2e Data Products (0.25 degree Latitude/Longitude grids). In this Level-3 daily global SO2 data product, each grid contains only one observation of Total Column Density of SO2 in the Planetary Boundary Layer (PBL), based on an improved Principal Component Analysis (PCA) Algorithm. This single observation is the \"best pixel\", selected from all \"good\" L2 pixels of OMSO2 that overlap this grid and have UTC time between UTC times of 00:00:00 and 23:59:59.999. In addition to the SO2 Vertical column value some ancillary parameters, e.g., cloud fraction, terrain height, scene number, solar and satellite viewing angles, row anomaly flags, and quality flags have been also made available corresponding to the best selected SO2 data pixel in each grid.\n\nThe OMSO2e files are stored in the version 5 EOS Hierarchical Data Format (HDF-EOS5) using the grid model.",
+        "time_start": "2004-10-01T00:00:00.000Z",
+        "title": "OMI/Aura Sulfur Dioxide (SO2) Total Column Daily L3 1 day Best Pixel in 0.25 degree x 0.25 degree V3 (OMSO2e) at GES DISC",
+        "updated": "2020-10-15T00:00:00.000Z",
+        "version_id": "003"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT3804017338-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181370494-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804191539-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181371035-ESDIS"
+            },
+            {
+              "concept_id": "CIT4076007291-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804032269-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804106662-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181355909-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181371988-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181383312-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181331172-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804018298-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181339377-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804072562-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803949990-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181323510-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803960940-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181327128-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804114535-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181333782-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181349087-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803966197-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181357297-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804265286-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181321556-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804281822-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804256137-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181358007-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181315143-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181317470-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181331554-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804255447-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181375528-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804230500-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804003412-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804228757-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804302343-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181380680-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181314305-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181375541-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181362590-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181323876-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804017578-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181351555-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181320124-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181321885-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181329813-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181338231-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803983657-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181328841-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181315101-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181373663-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803961913-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804248943-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804063666-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181323514-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803963043-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382408-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181373661-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181348991-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181358971-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804218666-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181342991-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804248976-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181362378-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181321854-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181345597-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181334970-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181351181-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181373770-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181331436-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181315666-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181361745-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804060866-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181334231-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804257506-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181328313-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804084098-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804169187-ESDIS"
+            },
+            {
+              "concept_id": "CIT4106706534-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803964043-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181355271-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804249602-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181381844-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803992173-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804004900-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804217472-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181383287-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803977398-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181353221-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804077948-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804160332-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804060990-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181322295-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181315321-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181352101-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181334367-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803992180-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181327116-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804169163-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803994807-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181370959-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181345989-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804214636-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181326183-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181358295-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            },
+            {
+              "concept_id": "S2786683405-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT3804017338-ESDIS",
+            "CIT4181370494-ESDIS",
+            "CIT3804191539-ESDIS",
+            "CIT4181371035-ESDIS",
+            "CIT4076007291-ESDIS",
+            "CIT3804032269-ESDIS",
+            "CIT3804106662-ESDIS",
+            "CIT4181355909-ESDIS",
+            "CIT4181371988-ESDIS",
+            "CIT4181383312-ESDIS",
+            "CIT4181331172-ESDIS",
+            "CIT3804018298-ESDIS",
+            "CIT4181339377-ESDIS",
+            "CIT3804072562-ESDIS",
+            "CIT3803949990-ESDIS",
+            "CIT4181323510-ESDIS",
+            "CIT3803960940-ESDIS",
+            "CIT4181327128-ESDIS",
+            "CIT3804114535-ESDIS",
+            "CIT4181333782-ESDIS",
+            "CIT4181349087-ESDIS",
+            "CIT3803966197-ESDIS",
+            "CIT4181357297-ESDIS",
+            "CIT3804265286-ESDIS",
+            "CIT4181321556-ESDIS",
+            "CIT3804281822-ESDIS",
+            "CIT3804256137-ESDIS",
+            "CIT4181358007-ESDIS",
+            "CIT4181315143-ESDIS",
+            "CIT4181317470-ESDIS",
+            "CIT4181331554-ESDIS",
+            "CIT3804255447-ESDIS",
+            "CIT4181375528-ESDIS",
+            "CIT3804230500-ESDIS",
+            "CIT3804003412-ESDIS",
+            "CIT3804228757-ESDIS",
+            "CIT3804302343-ESDIS",
+            "CIT4181380680-ESDIS",
+            "CIT4181314305-ESDIS",
+            "CIT4181375541-ESDIS",
+            "CIT4181362590-ESDIS",
+            "CIT4181323876-ESDIS",
+            "CIT3804017578-ESDIS",
+            "CIT4181351555-ESDIS",
+            "CIT4181320124-ESDIS",
+            "CIT4181321885-ESDIS",
+            "CIT4181329813-ESDIS",
+            "CIT4181338231-ESDIS",
+            "CIT3803983657-ESDIS",
+            "CIT4181328841-ESDIS",
+            "CIT4181315101-ESDIS",
+            "CIT4181373663-ESDIS",
+            "CIT3803961913-ESDIS",
+            "CIT3804248943-ESDIS",
+            "CIT3804063666-ESDIS",
+            "CIT4181323514-ESDIS",
+            "CIT3803963043-ESDIS",
+            "CIT4181382408-ESDIS",
+            "CIT4181373661-ESDIS",
+            "CIT4181348991-ESDIS",
+            "CIT4181358971-ESDIS",
+            "CIT3804218666-ESDIS",
+            "CIT4181342991-ESDIS",
+            "CIT3804248976-ESDIS",
+            "CIT4181362378-ESDIS",
+            "CIT4181321854-ESDIS",
+            "CIT4181345597-ESDIS",
+            "CIT4181334970-ESDIS",
+            "CIT4181351181-ESDIS",
+            "CIT4181373770-ESDIS",
+            "CIT4181331436-ESDIS",
+            "CIT4181315666-ESDIS",
+            "CIT4181361745-ESDIS",
+            "CIT3804060866-ESDIS",
+            "CIT4181334231-ESDIS",
+            "CIT3804257506-ESDIS",
+            "CIT4181328313-ESDIS",
+            "CIT3804084098-ESDIS",
+            "CIT3804169187-ESDIS",
+            "CIT4106706534-ESDIS",
+            "CIT3803964043-ESDIS",
+            "CIT4181355271-ESDIS",
+            "CIT3804249602-ESDIS",
+            "CIT4181381844-ESDIS",
+            "CIT3803992173-ESDIS",
+            "CIT3804004900-ESDIS",
+            "CIT3804217472-ESDIS",
+            "CIT4181383287-ESDIS",
+            "CIT3803977398-ESDIS",
+            "CIT4181353221-ESDIS",
+            "CIT3804077948-ESDIS",
+            "CIT3804160332-ESDIS",
+            "CIT3804060990-ESDIS",
+            "CIT4181322295-ESDIS",
+            "CIT4181315321-ESDIS",
+            "CIT4181352101-ESDIS",
+            "CIT4181334367-ESDIS",
+            "CIT3803992180-ESDIS",
+            "CIT4181327116-ESDIS",
+            "CIT3804169163-ESDIS",
+            "CIT3803994807-ESDIS",
+            "CIT4181370959-ESDIS",
+            "CIT4181345989-ESDIS",
+            "CIT3804214636-ESDIS",
+            "CIT4181326183-ESDIS",
+            "CIT4181358295-ESDIS"
+          ],
+          "services": [
+            "S2874702816-XYZ_PROV",
+            "S2786683405-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": false,
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "OMI/Aura Sulfur Dioxide (SO2) Total Column Daily L3 1 day Best Pixel in 0.25 degree x 0.25 degree V4 (OMSO2e) at GES DISC",
+        "entry_id": "OMSO2e_004",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C3756242136-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/OMSO2e_004.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/OMSO2e_004.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level3/OMSO2e.004/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://giovanni.gsfc.nasa.gov/giovanni/#dataKeyword=OMSO2e",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3756242136-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMSO2e.004/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level3/OMSO2e.004/doc/README.OMSO2e_2025-11-25.txt",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/repository/Mission/OMI/3.3_ScienceDataProductDocumentation/3.3.2_ProductRequirements_Designs/README.OMI_DUG.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/OMI/OMSO2e_2020-11-25.fs",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://aura.gsfc.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://www.knmiprojects.nl/projects/ozone-monitoring-instrument",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://so2.gsfc.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://www.knmi.nl/research/publications",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "OMSO2e",
+        "summary": "The OMI science team produces this Level-3 Aura/OMI Global OMSO2e Data Products (0.25 degree Latitude/Longitude grids). In this Level-3 daily global SO2 data product, each grid contains only one observation of Total Column Density of SO2 from the GEOS-5 profile, based on an improved Principal Component Analysis (PCA) Algorithm. This single observation is the \"best pixel\", selected from all \"good\" L2 pixels of OMSO2 that overlap this grid and have UTC time between UTC times of 00:00:00 and 23:59:59.999. In addition to the SO2 Vertical column value some ancillary parameters, e.g., cloud fraction, terrain height, scene number, solar and satellite viewing angles, row anomaly flags, and quality flags have been also made available corresponding to the best selected SO2 data pixel in each grid.\n\nThe OMSO2e files are stored in the version 5 EOS Hierarchical Data Format (HDF-EOS5) using the grid model.",
+        "time_start": "2004-10-01T00:00:00.000Z",
+        "title": "OMI/Aura Sulfur Dioxide (SO2) Total Column Daily L3 1 day Best Pixel in 0.25 degree x 0.25 degree V4 (OMSO2e) at GES DISC",
+        "updated": "2025-09-25T00:00:00.000Z",
+        "version_id": "004"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT3857556799-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181335515-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181334356-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804213100-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181334779-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804242193-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804141424-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181353108-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181353213-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181321712-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S1962070864-POCLOUD"
+            },
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            },
+            {
+              "concept_id": "S3267470083-GES_DISC"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V2758121101-GES_DISC"
+            },
+            {
+              "concept_id": "V2758121999-GES_DISC"
+            },
+            {
+              "concept_id": "V2758120781-GES_DISC"
+            },
+            {
+              "concept_id": "V2758119636-GES_DISC"
+            },
+            {
+              "concept_id": "V2758122002-GES_DISC"
+            },
+            {
+              "concept_id": "V2758122275-GES_DISC"
+            },
+            {
+              "concept_id": "V2756968960-GES_DISC"
+            },
+            {
+              "concept_id": "V2758121405-GES_DISC"
+            },
+            {
+              "concept_id": "V2758121786-GES_DISC"
+            },
+            {
+              "concept_id": "V2758122502-GES_DISC"
+            },
+            {
+              "concept_id": "V2758121702-GES_DISC"
+            },
+            {
+              "concept_id": "V2758119676-GES_DISC"
+            },
+            {
+              "concept_id": "V2758119922-GES_DISC"
+            },
+            {
+              "concept_id": "V2758121488-GES_DISC"
+            },
+            {
+              "concept_id": "V2756968979-GES_DISC"
+            },
+            {
+              "concept_id": "V2756967115-GES_DISC"
+            },
+            {
+              "concept_id": "V2758122015-GES_DISC"
+            },
+            {
+              "concept_id": "V2758120304-GES_DISC"
+            },
+            {
+              "concept_id": "V2758119688-GES_DISC"
+            },
+            {
+              "concept_id": "V2758120268-GES_DISC"
+            },
+            {
+              "concept_id": "V2758122368-GES_DISC"
+            },
+            {
+              "concept_id": "V2756979130-GES_DISC"
+            },
+            {
+              "concept_id": "V2758122144-GES_DISC"
+            },
+            {
+              "concept_id": "V2758122643-GES_DISC"
+            },
+            {
+              "concept_id": "V2758121679-GES_DISC"
+            },
+            {
+              "concept_id": "V2758120814-GES_DISC"
+            },
+            {
+              "concept_id": "V2758120563-GES_DISC"
+            },
+            {
+              "concept_id": "V2758119596-GES_DISC"
+            },
+            {
+              "concept_id": "V2758122342-GES_DISC"
+            },
+            {
+              "concept_id": "V2756973381-GES_DISC"
+            },
+            {
+              "concept_id": "V2758120934-GES_DISC"
+            },
+            {
+              "concept_id": "V2758121903-GES_DISC"
+            },
+            {
+              "concept_id": "V2758120661-GES_DISC"
+            },
+            {
+              "concept_id": "V2758119585-GES_DISC"
+            },
+            {
+              "concept_id": "V2758119619-GES_DISC"
+            },
+            {
+              "concept_id": "V2756970473-GES_DISC"
+            },
+            {
+              "concept_id": "V2758121803-GES_DISC"
+            },
+            {
+              "concept_id": "V2758122691-GES_DISC"
+            },
+            {
+              "concept_id": "V2758120446-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT3857556799-ESDIS",
+            "CIT4181335515-ESDIS",
+            "CIT4181334356-ESDIS",
+            "CIT3804213100-ESDIS",
+            "CIT4181334779-ESDIS",
+            "CIT3804242193-ESDIS",
+            "CIT3804141424-ESDIS",
+            "CIT4181353108-ESDIS",
+            "CIT4181353213-ESDIS",
+            "CIT4181321712-ESDIS"
+          ],
+          "services": [
+            "S1962070864-POCLOUD",
+            "S2874702816-XYZ_PROV",
+            "S3267470083-GES_DISC"
+          ],
+          "variables": [
+            "V2758121101-GES_DISC",
+            "V2758121999-GES_DISC",
+            "V2758120781-GES_DISC",
+            "V2758119636-GES_DISC",
+            "V2758122002-GES_DISC",
+            "V2758122275-GES_DISC",
+            "V2756968960-GES_DISC",
+            "V2758121405-GES_DISC",
+            "V2758121786-GES_DISC",
+            "V2758122502-GES_DISC",
+            "V2758121702-GES_DISC",
+            "V2758119676-GES_DISC",
+            "V2758119922-GES_DISC",
+            "V2758121488-GES_DISC",
+            "V2756968979-GES_DISC",
+            "V2756967115-GES_DISC",
+            "V2758122015-GES_DISC",
+            "V2758120304-GES_DISC",
+            "V2758119688-GES_DISC",
+            "V2758120268-GES_DISC",
+            "V2758122368-GES_DISC",
+            "V2756979130-GES_DISC",
+            "V2758122144-GES_DISC",
+            "V2758122643-GES_DISC",
+            "V2758121679-GES_DISC",
+            "V2758120814-GES_DISC",
+            "V2758120563-GES_DISC",
+            "V2758119596-GES_DISC",
+            "V2758122342-GES_DISC",
+            "V2756973381-GES_DISC",
+            "V2758120934-GES_DISC",
+            "V2758121903-GES_DISC",
+            "V2758120661-GES_DISC",
+            "V2758119585-GES_DISC",
+            "V2758119619-GES_DISC",
+            "V2756970473-GES_DISC",
+            "V2758121803-GES_DISC",
+            "V2758122691-GES_DISC",
+            "V2758120446-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-82 -180 82 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "MLS/Aura Level 2 Sulfur Dioxide (SO2) Mixing Ratio V005 (ML2SO2) at GES DISC",
+        "entry_id": "ML2SO2_005",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1729926699-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/ML2SO2_005.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2SO2_005.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2SO2.005/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2SO2.005/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1729926699-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/v5-0_data_quality_document.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/publications/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/eos-aura-mls/data.php",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura"
+        ],
+        "processing_level_id": "2",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": false,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "ML2SO2",
+        "summary": "ML2SO2 is the EOS Aura Microwave Limb Sounder (MLS) standard product for sulfur dioxide derived from radiances measured by the 240 GHz radiometer. The data version is 5.0. Spatial coverage is near-global (-82 degrees to +82 degrees latitude), with each profile spaced 1.5 degrees or ~165 km along the orbit track (roughly 15 orbits per day). The recommended useful vertical range is from 215 to 10 hPa, and the vertical resolution is about 3 km. Users of the ML2SO2 data product should read section 3.21 of the EOS MLS Level 2 Version 5 Quality Document for more information.\n\nThe data are stored in the version 5 EOS Hierarchical Data Format (HDF-EOS5), which is based on the version 5 Hierarchical Data Format, or HDF-5. Each file contains two swath objects (profile and column data), each with a set of data and geolocation fields, swath attributes, and metadata.",
+        "time_start": "2004-08-02T00:00:00.000Z",
+        "title": "MLS/Aura Level 2 Sulfur Dioxide (SO2) Mixing Ratio V005 (ML2SO2) at GES DISC",
+        "updated": "2020-02-04T00:00:00.000Z",
+        "version_id": "005"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "visualizations": [
+            {
+              "concept_id": "VIS3741139589-ESDIS"
+            },
+            {
+              "concept_id": "VIS3741139647-ESDIS"
+            }
+          ]
+        },
+        "associations": {
+          "visualizations": [
+            "VIS3741139589-ESDIS",
+            "VIS3741139647-ESDIS"
+          ]
+        },
+        "boxes": [
+          "-82 -180 82 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "NEAR_REAL_TIME",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "MLS/Aura Near-Real-Time L2 Sulfur Dioxide (SO2) Mixing Ratio V005 (ML2SO2_NRT) at GES DISC",
+        "entry_id": "ML2SO2_NRT_005",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C2131772275-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/ML2SO2_NRT_003.jpeg",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2SO2_NRT_005.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://discnrt1.gesdisc.eosdis.nasa.gov/data/Aura_MLS_NRT/ML2SO2_NRT.005/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C2131772275-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/NRT-user-guide-v5.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/v5-0_data_quality_document.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://worldview.earthdata.nasa.gov/?l=Reference_Labels_15m(hidden),Reference_Features_15m(hidden),Coastlines_15m,MLS_SO2_147hPa_Night,MLS_SO2_147hPa_Day,OCI_PACE_True_Color(hidden),VIIRS_NOAA21_CorrectedReflectance_TrueColor(hidden),VIIRS_NOAA20_CorrectedReflectance_TrueColor(hidden),VIIRS_SNPP_CorrectedReflectance_TrueColor(hidden),MODIS_Aqua_CorrectedReflectance_TrueColor(hidden),MODIS_Terra_CorrectedReflectance_TrueColor&lg=true&t=2026-03-12-T14%3A51%3A57Z",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura"
+        ],
+        "processing_level_id": "2",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "ML2SO2_NRT",
+        "summary": "ML2SO2_NRT is the EOS Aura Microwave Limb Sounder (MLS) Near-Real-Time (NRT) product for sulfur dioxide (SO2). This product contains SO2 profiles derived from the 190 and 240 GHz regions. The NRT data are typically available within 3 hours of observation and are broken into files containing about 15 minutes of data. The most recent 7 days of data are available online. Spatial coverage is near-global (-82 degrees to +82 degrees latitude), with each profile spaced 1.5 degrees or ~165 km along the orbit track (roughly 15 orbits per day). The vertical coverage is from 215 to 10 hPa.\n\nThe MLS NRT algorithm uses a simplified fast forward model to meet Near Real Time data latency requirements and are therefore not as accurate as the retrievals that constitute the standard MLS products. Nevertheless the results are scientifically useful in selected regions of the Earth's atmosphere provided that the data are screened according to the recommendations in the MLS NRT User Guide and the MLS L2 Data Quality Document for Standard Products.",
+        "time_start": "2021-09-21T00:00:00.000Z",
+        "title": "MLS/Aura Near-Real-Time L2 Sulfur Dioxide (SO2) Mixing Ratio V005 (ML2SO2_NRT) at GES DISC",
+        "updated": "2021-09-21T00:00:00.000Z",
+        "version_id": "005"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT3804306048-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181357426-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857559130-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803999294-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804116388-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804237535-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803985158-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804192471-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804325258-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804295024-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804097176-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804177181-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804260511-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857563050-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804228741-ESDIS"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT3804306048-ESDIS",
+            "CIT4181357426-ESDIS",
+            "CIT3857559130-ESDIS",
+            "CIT3803999294-ESDIS",
+            "CIT3804116388-ESDIS",
+            "CIT3804237535-ESDIS",
+            "CIT3803985158-ESDIS",
+            "CIT3804192471-ESDIS",
+            "CIT3804325258-ESDIS",
+            "CIT3804295024-ESDIS",
+            "CIT3804097176-ESDIS",
+            "CIT3804177181-ESDIS",
+            "CIT3804260511-ESDIS",
+            "CIT3857563050-ESDIS",
+            "CIT3804228741-ESDIS"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "Multi-Satellite Air Quality Sulfur Dioxide (SO2) Database Long-Term L4 Global V2 (MSAQSO2L4) at GES DISC",
+        "entry_id": "MSAQSO2L4_2",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C2503251631-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/MEaSUREs/Krotkov/MSAQSO2L4.PNG",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/MSAQSO2L4_2.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://measures.gesdisc.eosdis.nasa.gov/data/SO2/MSAQSO2L4.2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://measures.gesdisc.eosdis.nasa.gov/opendap/SO2/MSAQSO2L4.2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/about/competitive-programs/measures/multi-decadal-sulfur-dioxide-climatology-satellite-instruments",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/MEaSUREs/Krotkov/README.MSAQSO2L4.V2.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://so2.gsfc.nasa.gov/measures.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C2503251631-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura",
+          "Suomi-NPP",
+          "Sentinel-5P",
+          "NOAA-20"
+        ],
+        "processing_level_id": "4",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "MSAQSO2L4",
+        "summary": "These data are a part of Multi-Decadal Sulfur Dioxide (SO2) Climatology from Satellite Instruments (MEaSUREs-12-0022 project). Version 2 of the global catalogue of emissions from large SO2 point sources combines data from the Ozone Monitoring Instrument (OMI) on NASA's EOS Aura spacecraft, the Ozone Mapping and Profiler Suite (OMPS) on the NASA-NOAA Suomi National Polar-orbiting Partnership (SNPP), and the TROPOspheric Monitoring Instrument (TROPOMI) on the ESA/Copernicus Sentinel-5 Precursor (S-5P) spacecraft.\n\nThe catalogue MSAQSO2L4 file contains the site coordinates, source type, country, source name, annual SO2 emissions, annual emission uncertainties, and the number of satellite pixels in the fitting area for three satellite instruments as well as for their weighted average.\n\nThe emission estimates are based on operational version 2 OMI and OMPS Principal Component Analysis (PCA) retrieval algorithm SO2 slant column density (SCD) data (Li et al., 2020) as well as on new TROPOMI Covariance-Based Retrieval Algorithm (COBRA) SCD data (Theys et al., 2021). A single time-independent site-specific Air-Mass Factor (AMF) value for each site was calculated (McLinden et al., 2014) and applied consistently to each satellite SCD dataset to derive SO2 vertical column densities (VCDs=SCDs/AMFs). The emission estimate method is based on a fit of satellite VCDs to an empirical plume model developed to describe the SO2 spatial distribution near emission point sources. The plume model assumes that the SO2 concentrations emitted from a point source decline exponentially with distance and that they are affected by turbulent diffusion that can be described by a two-dimensional (2D) exponentially modified Gaussian function. The total SO2 mass is derived from the fit and the annual emission rate is calculated as the ratio between the total mass and the prescribed SO2 lifetime.",
+        "time_start": "2005-01-01T00:00:00.000Z",
+        "title": "Multi-Satellite Air Quality Sulfur Dioxide (SO2) Database Long-Term L4 Global V2 (MSAQSO2L4) at GES DISC",
+        "updated": "2024-04-20T00:00:00.000Z",
+        "version_id": "2"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "services": [
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            }
+          ]
+        },
+        "associations": {
+          "services": [
+            "S2874702816-XYZ_PROV"
+          ]
+        },
+        "boxes": [
+          "-82 -180 82 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "MLS/Aura Level 3 Daily Binned Sulfur Dioxide (SO2) Mixing Ratio on Assorted Grids V005 (ML3DBSO2) at GES DISC",
+        "entry_id": "ML3DBSO2_005",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C2042566261-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/ML3DBSO2_005.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML3DBSO2_005.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level3/ML3DBSO2.005/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level3/ML3DBSO2.005/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C2042566261-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/v5-0_data_quality_document.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/publications/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/eos-aura-mls/data.php",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "ML3DBSO2",
+        "summary": "ML3DBSO2 is the EOS Aura Microwave Limb Sounder (MLS) daily binned on various vertical grids product for sulfur dioxide (SO2) derived from radiances measured by the 240 GHz radiometer. The data version is 5.1. Spatial coverage is near-global (-82 to +82 degrees latitude) at a spatial resolution of 4 degrees latitude by 5 degrees longitude. The recommended useful vertical range is from 215 to 10 hPa, and the vertical resolution is about 3 km. Users of the ML3DBSO2 data product should read chapter 4 and section 3.21 of the EOS MLS Level 2 Version 5 Quality Document for more information.\n\nThe data files are archived in the netCDF4 format, which is also compatible with HDF5 readers and tools. Each file contains six group objects: lat-lon map vs pressure, lat vs pressure zonal mean, lat-lon map vs theta, lat vs theta zonal mean, equivalent lat vs theta zonal mean, and vortex average vs theta. Each group has a set of data (average, min, max, std dev, rms) and geolocation fields, grid attributes, and metadata.",
+        "time_start": "2004-08-02T00:00:00.000Z",
+        "title": "MLS/Aura Level 3 Daily Binned Sulfur Dioxide (SO2) Mixing Ratio on Assorted Grids V005 (ML3DBSO2) at GES DISC",
+        "updated": "2021-04-29T00:00:00.000Z",
+        "version_id": "005"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "boxes": [
+          "-82 -180 82 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "MLS/Aura Level 3 Daily Binned Sulfur Dioxide (SO2) Mixing Ratio on Assorted Grids V004 (ML3DBSO2) at GES DISC",
+        "entry_id": "ML3DBSO2_004",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C1725333619-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/ML3DBSO2_004.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML3DBSO2_004.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level3/ML3DBSO2.004/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level3/ML3DBSO2.004/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1725333619-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/publications/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/eos-aura-mls/data.php",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "ML3DBSO2",
+        "summary": "ML3DBSO2 is the EOS Aura Microwave Limb Sounder (MLS) daily binned on various vertical grids product for sulfur dioxide (SO2) derived from radiances measured by the 240 GHz radiometer. The data version is 4.2. Spatial coverage is near-global (-82 to +82 degrees latitude) at a spatial resolution of 4 degrees latitude by 5 degrees longitude. The recommended useful vertical range is from 215 to 10 hPa, and the vertical resolution is about 3 km. Users of the ML3DBSO2 data product should read chapter 4 and section 3.21 of the EOS MLS Level 2 Version 4 Quality Document for more information.\n\nThe data files are archived in the netCDF4 format, which is also compatible with HDF5 readers and tools. Each file contains six group objects: lat-lon map vs pressure, lat vs pressure zonal mean, lat-lon map vs theta, lat vs theta zonal mean, equivalent lat vs theta zonal mean, and vortex average vs theta. Each group has a set of data (average, min, max, std dev, rms) and geolocation fields, grid attributes, and metadata.",
+        "time_start": "2004-08-02T00:00:00.000Z",
+        "title": "MLS/Aura Level 3 Daily Binned Sulfur Dioxide (SO2) Mixing Ratio on Assorted Grids V004 (ML3DBSO2) at GES DISC",
+        "updated": "2020-03-06T00:00:00.000Z",
+        "version_id": "004"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "services": [
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            }
+          ]
+        },
+        "associations": {
+          "services": [
+            "S2874702816-XYZ_PROV"
+          ]
+        },
+        "boxes": [
+          "-82 -180 82 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "MLS/Aura Level 3 Daily Binned Sulfur Dioxide (SO2) Mixing Ratio on Zonal and Similar Grids V005 (ML3DZSO2) at GES DISC",
+        "entry_id": "ML3DZSO2_005",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C2042567405-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/ML3DZSO2_005.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML3DZSO2_005.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level3/ML3DZSO2.005/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level3/ML3DZSO2.005/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C2042567405-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/v5-0_data_quality_document.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/publications/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/eos-aura-mls/data.php",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "ML3DZSO2",
+        "summary": "ML3DZSO2 is the EOS Aura Microwave Limb Sounder (MLS) daily binned on zonal and assorted vertical grids product for sulfur dioxide (SO2) derived from radiances measured by the 240 GHz radiometer. The data version is 5.1. Spatial coverage is near-global (-82 to +82 degrees latitude) at 4 degree latitude zonal increments. The recommended useful vertical range is from 215 to 10 hPa, and the vertical resolution is about 3 km. Users of the ML3DZSO2 data product should read chapter 4 and section 3.21 of the EOS MLS Level 2 Version 5 Quality Document for more information.\n\nThe data files contain one year of data and are archived in the netCDF4 format, which is also compatible with HDF5 readers and tools. Each file contains four group objects: lat vs pressure zonal mean, lat vs \"potential temperature\" zonal mean, \"equivalent latitude\" vs \"potential temperature\" zonal mean, and vortex average vs \"potential temperature\". Each group has a set of data (average, min, max, std dev, rms) and geolocation fields, grid attributes, and metadata.",
+        "time_start": "2004-08-02T00:00:00.000Z",
+        "title": "MLS/Aura Level 3 Daily Binned Sulfur Dioxide (SO2) Mixing Ratio on Zonal and Similar Grids V005 (ML3DZSO2) at GES DISC",
+        "updated": "2021-04-29T00:00:00.000Z",
+        "version_id": "005"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "boxes": [
+          "-82 -180 82 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "MLS/Aura Level 3 Daily Binned Sulfur Dioxide (SO2) Mixing Ratio on Zonal and Similar Grids V004 (ML3DZSO2) at GES DISC",
+        "entry_id": "ML3DZSO2_004",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C1725337919-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/ML3DZSO2_004.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML3DZSO2_004.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level3/ML3DZSO2.004/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level3/ML3DZSO2.004/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1725337919-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/publications/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/eos-aura-mls/data.php",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "ML3DZSO2",
+        "summary": "ML3DZSO2 is the EOS Aura Microwave Limb Sounder (MLS) daily binned on zonal and assorted vertical grids product for sulfur dioxide (SO2) derived from radiances measured by the 240 GHz radiometer. The data version is 4.2. Spatial coverage is near-global (-82 to +82 degrees latitude) at 4 degree latitude zonal increments. The recommended useful vertical range is from 215 to 10 hPa, and the vertical resolution is about 3 km. Users of the ML3DZSO2 data product should read chapter 4 and section 3.21 of the EOS MLS Level 2 Version 4 Quality Document for more information.\n\nThe data files contain one year of data and are archived in the netCDF4 format, which is also compatible with HDF5 readers and tools. Each file contains four group objects: lat vs pressure zonal mean, lat vs \"potential temperature\" zonal mean, \"equivalent latitude\" vs \"potential temperature\" zonal mean, and vortex average vs \"potential temperature\". Each group has a set of data (average, min, max, std dev, rms) and geolocation fields, grid attributes, and metadata.",
+        "time_start": "2004-08-02T00:00:00.000Z",
+        "title": "MLS/Aura Level 3 Daily Binned Sulfur Dioxide (SO2) Mixing Ratio on Zonal and Similar Grids V004 (ML3DZSO2) at GES DISC",
+        "updated": "2020-03-06T00:00:00.000Z",
+        "version_id": "004"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "services": [
+            {
+              "concept_id": "S2874702816-XYZ_PROV"
+            }
+          ]
+        },
+        "associations": {
+          "services": [
+            "S2874702816-XYZ_PROV"
+          ]
+        },
+        "boxes": [
+          "-82 -180 82 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "MLS/Aura Level 3 Monthly Binned Sulfur Dioxide (SO2) Mixing Ratio on Assorted Grids V005 (ML3MBSO2) at GES DISC",
+        "entry_id": "ML3MBSO2_005",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C2042569148-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/ML3MBSO2_005.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML3MBSO2_005.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level3/ML3MBSO2.005/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level3/ML3MBSO2.005/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C2042569148-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/v5-0_data_quality_document.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/publications/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/eos-aura-mls/data.php",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://mls.jpl.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "ML3MBSO2",
+        "summary": "ML3MBSO2 is the EOS Aura Microwave Limb Sounder (MLS) monthly binned on various vertical grids product for sulfur dioxide (SO2) derived from radiances measured by the 240 GHz radiometer. The data version is 5.1. Spatial coverage is near-global (-82 to +82 degrees latitude) at a spatial resolution of 4 degrees latitude by 5 degrees longitude. The recommended useful vertical range is from 215 to 10 hPa, and the vertical resolution is about 3 km. Users of the ML3MBSO2 data product should read chapter 4 and section 3.21 of the EOS MLS Level 2 Version 5 Quality Document for more information.\n\nThe data files are archived in the netCDF4 format, which is also compatible with HDF5 readers and tools. Each file contains six group objects: lat-lon map vs pressure, lat vs pressure zonal mean, lat-lon map vs theta, lat vs theta zonal mean, equivalent lat vs theta zonal mean, and vortex average vs theta. Each group has a set of data (average, min, max, std dev, rms) and geolocation fields, grid attributes, and metadata.",
+        "time_start": "2004-08-02T00:00:00.000Z",
+        "title": "MLS/Aura Level 3 Monthly Binned Sulfur Dioxide (SO2) Mixing Ratio on Assorted Grids V005 (ML3MBSO2) at GES DISC",
+        "updated": "2021-04-29T00:00:00.000Z",
+        "version_id": "005"
+      }
+    ],
+    "id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?keyword=sulfur+dioxide&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=10&sort_key=-score",
+    "title": "ECHO dataset metadata",
+    "updated": "2026-05-26T20:36:29.642Z"
+  }
+}

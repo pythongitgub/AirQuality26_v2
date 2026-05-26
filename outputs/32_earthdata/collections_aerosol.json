@@ -1,0 +1,1827 @@
+{
+  "_meta": {
+    "bytes": 57400,
+    "content_type": "application/json;charset=utf-8",
+    "http_status": 200,
+    "sha256": "27a20d0e20c99b09cc18bb797c32e0706dabf26f323875731d785d71918e1125",
+    "url": "https://cmr.earthdata.nasa.gov/search/collections.json?keyword=aerosol&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=10&sort_key=-score"
+  },
+  "feed": {
+    "entry": [
+      {
+        "archive_center": "NASA/LARC/SD/ASDC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT3963288944-ESDIS"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT3963288944-ESDIS"
+          ]
+        },
+        "browse_flag": false,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "EOSDIS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "LARC_CLOUD",
+        "dataset_id": "Global Space-based Stratospheric Aerosol Climatology Version 2.23",
+        "entry_id": "GloSSAC_2.23",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C3880704189-LARC_CLOUD",
+        "links": [
+          {
+            "href": "https://www.sparc-ssirc.org/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://asdc.larc.nasa.gov/documents/glossac/guide/GloSSAC_Project_Guide_Document_v2.23.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://asdc.larc.nasa.gov/documents/glossac/quality_summaries/GloSSAC_Product_Quality_Summary_v2.23.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://asdc.larc.nasa.gov/documents/glossac/readme/readme_glossac_v2.23.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://asdc.larc.nasa.gov/citing-data",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://doi.org/10.5067/GLOSSAC-L3-V2.23",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://asdc.larc.nasa.gov/project/GloSSAC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3880704189-LARC_CLOUD",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3880704189-LARC_CLOUD",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/LARC/SD/ASDC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "ERBS",
+          "CALIPSO",
+          "UARS",
+          "ISS"
+        ],
+        "polygons": [
+          [
+            "-80 -180 -80 180 80 180 80 -180 -80 -180"
+          ]
+        ],
+        "processing_level_id": "3",
+        "score": 1.7160001,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "GloSSAC",
+        "summary": "The Global Space-based Stratospheric Aerosol Climatology, or GloSSAC, is a 45-year climatology of stratospheric aerosol properties focused on extinction coefficient measurements by the Stratospheric Aerosol and Gas Experiment (SAGE) series of instruments through mid-2005 and later from mid-2017 and on the Optical Spectrograph and InfraRed Imager System (OSIRIS) and the Cloud-Aerosol Lidar and Infrared Pathfinder Satellite Observation (CALIPSO) data thereafter. Data from other space instruments and from ground-based, air and balloon borne instruments to fill in key gaps in the data set. The end result is a global and gap-free data set focused on aerosol extinction coefficient at 525 and 1020 nm and other parameters on an ‘as available’ basis.",
+        "time_end": "2024-12-31T23:59:59.999Z",
+        "time_start": "1979-01-01T00:00:00.000Z",
+        "title": "Global Space-based Stratospheric Aerosol Climatology Version 2.23",
+        "version_id": "2.23"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+        "association_details": {
+          "services": [
+            {
+              "concept_id": "S1962070864-POCLOUD"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3837256234-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256001-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256454-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256328-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256354-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256167-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256079-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256140-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256418-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256366-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256071-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256103-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256375-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256245-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256302-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256196-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256344-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256190-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256397-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256255-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256208-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256436-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256146-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256224-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256025-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256319-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256381-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256280-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256335-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256294-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256060-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256012-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256311-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256090-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256049-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256039-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256123-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256179-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256155-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837256268-OB_CLOUD"
+            }
+          ]
+        },
+        "associations": {
+          "services": [
+            "S1962070864-POCLOUD"
+          ],
+          "variables": [
+            "V3837256234-OB_CLOUD",
+            "V3837256001-OB_CLOUD",
+            "V3837256454-OB_CLOUD",
+            "V3837256328-OB_CLOUD",
+            "V3837256354-OB_CLOUD",
+            "V3837256167-OB_CLOUD",
+            "V3837256079-OB_CLOUD",
+            "V3837256140-OB_CLOUD",
+            "V3837256418-OB_CLOUD",
+            "V3837256366-OB_CLOUD",
+            "V3837256071-OB_CLOUD",
+            "V3837256103-OB_CLOUD",
+            "V3837256375-OB_CLOUD",
+            "V3837256245-OB_CLOUD",
+            "V3837256302-OB_CLOUD",
+            "V3837256196-OB_CLOUD",
+            "V3837256344-OB_CLOUD",
+            "V3837256190-OB_CLOUD",
+            "V3837256397-OB_CLOUD",
+            "V3837256255-OB_CLOUD",
+            "V3837256208-OB_CLOUD",
+            "V3837256436-OB_CLOUD",
+            "V3837256146-OB_CLOUD",
+            "V3837256224-OB_CLOUD",
+            "V3837256025-OB_CLOUD",
+            "V3837256319-OB_CLOUD",
+            "V3837256381-OB_CLOUD",
+            "V3837256280-OB_CLOUD",
+            "V3837256335-OB_CLOUD",
+            "V3837256294-OB_CLOUD",
+            "V3837256060-OB_CLOUD",
+            "V3837256012-OB_CLOUD",
+            "V3837256311-OB_CLOUD",
+            "V3837256090-OB_CLOUD",
+            "V3837256049-OB_CLOUD",
+            "V3837256039-OB_CLOUD",
+            "V3837256123-OB_CLOUD",
+            "V3837256179-OB_CLOUD",
+            "V3837256155-OB_CLOUD",
+            "V3837256268-OB_CLOUD"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "OB_CLOUD",
+        "dataset_id": "PACE HARP2 Level-2 Regional  Aerosol Over Ocean Optical Properties, FastMAPOL Algorithm Data, version 3.0",
+        "entry_id": "PACE_HARP2_L2_MAPOL_OCEAN_3.0",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C3652817390-OB_CLOUD",
+        "links": [
+          {
+            "href": "https://search.earthdata.nasa.gov/search?q=%22PACE_HARP2_L2_MAPOL_OCEAN%22",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/data/reprocessing/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/files/obdaac-ancillary-data-sources.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/PACE",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/instruments/HARP2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://nasa.github.io/oceandata-notebooks/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/images/data/pace/txt/HARP2_Level-2_MAPOL_OCEAN_Data_Structure.txt",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/images/data/pace/sample_data/PACE_HARP2.20250101T000238.L2.MAPOL_OCEAN.V3_0.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+          "OBPG"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "PACE"
+        ],
+        "processing_level_id": "2",
+        "score": 1.43,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": false,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "PACE_HARP2_L2_MAPOL_OCEAN",
+        "summary": "MAPOL_OCEAN provides simultaneous aerosol and ocean color products using the Fast Multi-Angle Polarimetric Ocean and Land algorithm (FastMAPOL). The retrievals jointly solve for aerosol and ocean parameters with a coupled atmosphere and ocean vector radiative-transfer model, accelerated by deep neural networks to improve speed and accuracy. The retrieved aerosol properties are then used to derive angular water leaving signals through multi-angle atmospheric corrections. Use these products for advanced aerosol and ocean color studies, cross-sensor and cross-algorithm data product analysis.\n\nCore geophysical variables in this suite include:\n  - Rrs1/Rrs2 — Angular remote sensing reflectance before and after BRDF correction (sr⁻¹)\n  - chla_mapol — Chlorophyll-a concentration (mg m⁻³)\n  - aot / aot_fine / aot_coarse — Aerosol optical thickness for total/fine/coarse mode (unitless)\n  - ssa / ssa_fine / ssa_coarse — Aerosol single scattering albedo for total/fine/coarse mode (unitless)\n  - fmf / fvf — Aerosol fine mode fraction and fine mode volume fraction (unitless)\n  - angstrom — Aerosol Ångström exponent (unitless; reported for 440–670 nm and 440–870 nm)\n  - alh — Aerosol layer height (km)\n  - reff_fine / reff_coarse — Aerosol effective radius for fine/coarse mode (µm)\n  - veff_fine / veff_coarse — Aerosol effective variance for fine/coarse mode (unitless)\n  - sph / sph_fine / sph_coarse — Aerosol spherical fraction for total/fine/coarse mode (unitless)\n  - mr / mi — Real and imaginary parts of aerosol refractive index (unitless; total/fine/coarse modes available)\n  - vd — Aerosol volume density (µm³ µm⁻²; fine/coarse modes and submodes also available)\n  - wind_speed — Ocean surface wind speed (m s⁻¹)\n",
+        "time_start": "2024-02-05T00:00:00.000Z",
+        "title": "PACE HARP2 Level-2 Regional  Aerosol Over Ocean Optical Properties, FastMAPOL Algorithm Data, version 3.0",
+        "updated": "2024-12-10T00:00:00.000Z",
+        "version_id": "3.0"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+        "association_details": {
+          "services": [
+            {
+              "concept_id": "S1962070864-POCLOUD"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3837275891-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275745-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275566-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275677-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275681-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275852-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275824-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275552-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275934-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275761-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275912-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275671-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275669-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275657-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275643-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275655-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275950-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275971-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275532-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275662-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275648-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275679-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275987-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275665-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275645-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275595-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275579-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275516-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275608-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275867-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275673-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275650-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275733-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837276004-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275779-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275637-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275703-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275720-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275622-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3837275802-OB_CLOUD"
+            }
+          ]
+        },
+        "associations": {
+          "services": [
+            "S1962070864-POCLOUD"
+          ],
+          "variables": [
+            "V3837275891-OB_CLOUD",
+            "V3837275745-OB_CLOUD",
+            "V3837275566-OB_CLOUD",
+            "V3837275677-OB_CLOUD",
+            "V3837275681-OB_CLOUD",
+            "V3837275852-OB_CLOUD",
+            "V3837275824-OB_CLOUD",
+            "V3837275552-OB_CLOUD",
+            "V3837275934-OB_CLOUD",
+            "V3837275761-OB_CLOUD",
+            "V3837275912-OB_CLOUD",
+            "V3837275671-OB_CLOUD",
+            "V3837275669-OB_CLOUD",
+            "V3837275657-OB_CLOUD",
+            "V3837275643-OB_CLOUD",
+            "V3837275655-OB_CLOUD",
+            "V3837275950-OB_CLOUD",
+            "V3837275971-OB_CLOUD",
+            "V3837275532-OB_CLOUD",
+            "V3837275662-OB_CLOUD",
+            "V3837275648-OB_CLOUD",
+            "V3837275679-OB_CLOUD",
+            "V3837275987-OB_CLOUD",
+            "V3837275665-OB_CLOUD",
+            "V3837275645-OB_CLOUD",
+            "V3837275595-OB_CLOUD",
+            "V3837275579-OB_CLOUD",
+            "V3837275516-OB_CLOUD",
+            "V3837275608-OB_CLOUD",
+            "V3837275867-OB_CLOUD",
+            "V3837275673-OB_CLOUD",
+            "V3837275650-OB_CLOUD",
+            "V3837275733-OB_CLOUD",
+            "V3837276004-OB_CLOUD",
+            "V3837275779-OB_CLOUD",
+            "V3837275637-OB_CLOUD",
+            "V3837275703-OB_CLOUD",
+            "V3837275720-OB_CLOUD",
+            "V3837275622-OB_CLOUD",
+            "V3837275802-OB_CLOUD"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "OB_CLOUD",
+        "dataset_id": "PACE SPEXone Level-2 Regional  Aerosol Over Ocean Optical Properties, FastMAPOL Algorithm Data, version 3.0",
+        "entry_id": "PACE_SPEXONE_L2_MAPOL_OCEAN_3.0",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C3652817426-OB_CLOUD",
+        "links": [
+          {
+            "href": "https://search.earthdata.nasa.gov/search?q=%22PACE_SPEXONE_L2_MAPOL_OCEAN%22",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/data/reprocessing/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/files/obdaac-ancillary-data-sources.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/PACE",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/instruments/SPEXone",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://nasa.github.io/oceandata-notebooks/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/images/data/pace/txt/SPEXONE_Level-2_MAPOL_OCEAN_Data_Structure.txt",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/images/data/pace/sample_data/PACE_SPEXONE.20250101T000738.L2.MAPOL_OCEAN.V3_0.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+          "OBPG"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "PACE"
+        ],
+        "processing_level_id": "2",
+        "score": 1.43,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": false,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "PACE_SPEXONE_L2_MAPOL_OCEAN",
+        "summary": "MAPOL_OCEAN provides simultaneous aerosol and ocean color products using the Fast Multi-Angle Polarimetric Ocean and Land algorithm (FastMAPOL). The retrievals jointly solve for aerosol and ocean parameters with a coupled atmosphere and ocean vector radiative-transfer model, accelerated by deep neural networks to improve speed and accuracy. The retrieved aerosol properties are then used to derive angular water leaving signals through multi-angle atmospheric corrections. Use these products for advanced aerosol and ocean color studies, cross-sensor and cross-algorithm data product analysis.\n\nCore geophysical variables in this suite include:\n  - Rrs1/Rrs2 — Angular remote sensing reflectance before and after BRDF correction (sr⁻¹)\n  - chla_mapol — Chlorophyll-a concentration (mg m⁻³)\n  - aot / aot_fine / aot_coarse — Aerosol optical thickness for total/fine/coarse mode (unitless)\n  - ssa / ssa_fine / ssa_coarse — Aerosol single scattering albedo for total/fine/coarse mode (unitless)\n  - fmf / fvf — Aerosol fine mode fraction and fine mode volume fraction (unitless)\n  - angstrom — Aerosol Ångström exponent (unitless; reported for 440–670 nm and 440–870 nm)\n  - alh — Aerosol layer height (km)\n  - reff_fine / reff_coarse — Aerosol effective radius for fine/coarse mode (µm)\n  - veff_fine / veff_coarse — Aerosol effective variance for fine/coarse mode (unitless)\n  - sph / sph_fine / sph_coarse — Aerosol spherical fraction for total/fine/coarse mode (unitless)\n  - mr / mi — Real and imaginary parts of aerosol refractive index (unitless; total/fine/coarse modes available)\n  - vd — Aerosol volume density (µm³ µm⁻²; fine/coarse modes and submodes also available)\n  - wind_speed — Ocean surface wind speed (m s⁻¹)\n",
+        "time_start": "2024-02-05T00:00:00.000Z",
+        "title": "PACE SPEXone Level-2 Regional  Aerosol Over Ocean Optical Properties, FastMAPOL Algorithm Data, version 3.0",
+        "updated": "2024-12-10T00:00:00.000Z",
+        "version_id": "3.0"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+        "association_details": {
+          "services": [
+            {
+              "concept_id": "S3144157208-OB_CLOUD"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V4197994159-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197994057-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197993991-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197994123-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197994089-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197993957-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197994114-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197994066-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197994191-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197994035-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197994133-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197993942-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197994184-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197994013-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197994142-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197994176-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197994107-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197994024-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197994004-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197994167-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197994099-OB_CLOUD"
+            }
+          ]
+        },
+        "associations": {
+          "services": [
+            "S3144157208-OB_CLOUD"
+          ],
+          "variables": [
+            "V4197994159-OB_CLOUD",
+            "V4197994057-OB_CLOUD",
+            "V4197993991-OB_CLOUD",
+            "V4197994123-OB_CLOUD",
+            "V4197994089-OB_CLOUD",
+            "V4197993957-OB_CLOUD",
+            "V4197994114-OB_CLOUD",
+            "V4197994066-OB_CLOUD",
+            "V4197994191-OB_CLOUD",
+            "V4197994035-OB_CLOUD",
+            "V4197994133-OB_CLOUD",
+            "V4197993942-OB_CLOUD",
+            "V4197994184-OB_CLOUD",
+            "V4197994013-OB_CLOUD",
+            "V4197994142-OB_CLOUD",
+            "V4197994176-OB_CLOUD",
+            "V4197994107-OB_CLOUD",
+            "V4197994024-OB_CLOUD",
+            "V4197994004-OB_CLOUD",
+            "V4197994167-OB_CLOUD",
+            "V4197994099-OB_CLOUD"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "OB_CLOUD",
+        "dataset_id": "PACE HARP2 Level-3 Global Mapped Aerosol Over Ocean Optical Properties, FastMAPOL Algorithm Data, version 3.0",
+        "entry_id": "PACE_HARP2_L3M_MAPOL_OCEAN_3.0",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": true,
+        "has_variables": true,
+        "id": "C3974353265-OB_CLOUD",
+        "links": [
+          {
+            "href": "https://oceandata.sci.gsfc.nasa.gov/opendap/PACE_HARP2/L4SMI/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search?q=%22PACE_HARP2_L3M_MAPOL_OCEAN%22",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/data/reprocessing/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/files/obdaac-ancillary-data-sources.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-3%20Mapped/PACE-HARP2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/PACE",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/instruments/HARP2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://nasa.github.io/oceandata-notebooks/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/images/data/pace/txt/HARP2_Level-3m_MAPOL_OCEAN_Data_Structure.txt",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/images/data/pace/sample_data/PACE_HARP2.20250101.L3m.DAY.MAPOL_OCEAN.V3_0.1deg.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+          "OBPG"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "PACE"
+        ],
+        "processing_level_id": "3",
+        "score": 1.43,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": true,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "PACE_HARP2_L3M_MAPOL_OCEAN",
+        "summary": "MAPOL_OCEAN provides simultaneous aerosol and ocean color products using the Fast Multi-Angle Polarimetric Ocean and Land algorithm (FastMAPOL). The retrievals jointly solve for aerosol and ocean parameters with a coupled atmosphere and ocean vector radiative-transfer model, accelerated by deep neural networks to improve speed and accuracy. The retrieved aerosol properties are then used to derive angular water leaving signals through multi-angle atmospheric corrections. Use these products for advanced aerosol and ocean color studies, cross-sensor and cross-algorithm data product analysis.\n\nCore geophysical variables in this suite include:\n  - Rrs1/Rrs2 — Angular remote sensing reflectance before and after BRDF correction (sr⁻¹)\n  - chla_mapol — Chlorophyll-a concentration (mg m⁻³)\n  - aot / aot_fine / aot_coarse — Aerosol optical thickness for total/fine/coarse mode (unitless)\n  - ssa / ssa_fine / ssa_coarse — Aerosol single scattering albedo for total/fine/coarse mode (unitless)\n  - fmf / fvf — Aerosol fine mode fraction and fine mode volume fraction (unitless)\n  - angstrom — Aerosol Ångström exponent (unitless; reported for 440–670 nm and 440–870 nm)\n  - alh — Aerosol layer height (km)\n  - reff_fine / reff_coarse — Aerosol effective radius for fine/coarse mode (µm)\n  - veff_fine / veff_coarse — Aerosol effective variance for fine/coarse mode (unitless)\n  - sph / sph_fine / sph_coarse — Aerosol spherical fraction for total/fine/coarse mode (unitless)\n  - mr / mi — Real and imaginary parts of aerosol refractive index (unitless; total/fine/coarse modes available)\n  - vd — Aerosol volume density (µm³ µm⁻²; fine/coarse modes and submodes also available)\n  - wind_speed — Ocean surface wind speed (m s⁻¹)\n",
+        "time_start": "2024-02-05T00:00:00.000Z",
+        "title": "PACE HARP2 Level-3 Global Mapped Aerosol Over Ocean Optical Properties, FastMAPOL Algorithm Data, version 3.0",
+        "updated": "2025-07-11T00:00:00.000Z",
+        "version_id": "3.0"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+        "association_details": {
+          "services": [
+            {
+              "concept_id": "S3144157208-OB_CLOUD"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3640762704-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3640750364-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3640750375-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3640750379-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3640750359-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3640762798-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3640762724-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3640762767-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3640750357-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3640762735-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3640750377-OB_CLOUD"
+            },
+            {
+              "concept_id": "V3640750362-OB_CLOUD"
+            }
+          ]
+        },
+        "associations": {
+          "services": [
+            "S3144157208-OB_CLOUD"
+          ],
+          "variables": [
+            "V3640762704-OB_CLOUD",
+            "V3640750364-OB_CLOUD",
+            "V3640750375-OB_CLOUD",
+            "V3640750379-OB_CLOUD",
+            "V3640750359-OB_CLOUD",
+            "V3640762798-OB_CLOUD",
+            "V3640762724-OB_CLOUD",
+            "V3640762767-OB_CLOUD",
+            "V3640750357-OB_CLOUD",
+            "V3640762735-OB_CLOUD",
+            "V3640750377-OB_CLOUD",
+            "V3640750362-OB_CLOUD"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "OB_CLOUD",
+        "dataset_id": "PACE SPEXone Level-3 Global Mapped Aerosol Optical Properties, RemoTAP Algorithm Data, version 3.0",
+        "entry_id": "PACE_SPEXONE_L3M_AER_RTAP_3.0",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": true,
+        "has_variables": true,
+        "id": "C3555840363-OB_CLOUD",
+        "links": [
+          {
+            "href": "https://oceandata.sci.gsfc.nasa.gov/opendap/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search?q=%22PACE_SPEXONE_L3M_AER_RTAP%22",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/data/reprocessing/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/files/obdaac-ancillary-data-sources.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-3%20Mapped/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/PACE",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/instruments/SPEXone",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://nasa.github.io/oceandata-notebooks/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/files/atbd/atbd-obdaac-aerosol-from-RemoTAP.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+          "OBPG"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "PACE"
+        ],
+        "processing_level_id": "3",
+        "score": 1.43,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": true,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "PACE_SPEXONE_L3M_AER_RTAP",
+        "summary": "AER_RTAP provides aerosol properties retrieved using the RemoTAP algorithm. The suite includes variables for characterizing aerosol loading, size, and absorption. Use AER_RTAP for air-quality and climate studies, aerosol context for ocean-color atmospheric correction, and model evaluation. \n\n Geophysical variables in this suite include:\n  - angstrom_440_670 — Aerosol Ångström exponent, 440–670 nm (unitless)\n  - aot — Aerosol optical thickness (unitless)\n  - fmf — Aerosol fine mode fraction (unitless)\n  - fvf — Aerosol fine mode volume fraction (unitless)\n  - lidar_bsca_total — Aerosol lidar backscatter coefficient (sr⁻¹ m⁻¹)\n  - lidar_depol_ratio — Aerosol lidar depolarization ratio (unitless)\n  - lidar_p11_pi — Aerosol phase function p11 at backscatter direction (unitless)\n  - mi — Aerosol refractive index, imaginary part (unitless)\n  - mr — Aerosol refractive index, real part (unitless)\n  - reff_coarse — Aerosol effective radius, coarse mode (µm)\n  - reff_fine — Aerosol effective radius, fine mode (µm)\n  - ssa — Aerosol single scattering albedo (unitless)\n",
+        "time_start": "2024-02-05T00:00:00.000Z",
+        "title": "PACE SPEXone Level-3 Global Mapped Aerosol Optical Properties, RemoTAP Algorithm Data, version 3.0",
+        "updated": "2025-05-30T00:00:00.000Z",
+        "version_id": "3.0"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "OB_CLOUD",
+        "dataset_id": "PACE HARP2 Level-3 Global Mapped Aerosol Over Land Optical Properties, FastMAPOL Algorithm Data, version 4.0",
+        "entry_id": "PACE_HARP2_L3M_MAPOL_LAND_4.0",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C4126558490-OB_CLOUD",
+        "links": [
+          {
+            "href": "https://oceandata.sci.gsfc.nasa.gov/opendap/PACE_HARP2/L4SMI/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search?q=%22PACE_HARP2_L3M_MAPOL_LAND%22",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/data/reprocessing/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/files/obdaac-ancillary-data-sources.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-3%20Mapped/PACE-HARP2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/PACE",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/instruments/HARP2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://nasa.github.io/oceandata-notebooks/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/images/data/pace/txt/HARP2_Level-3m_MAPOL_OCEAN_Data_Structure.txt",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/images/data/pace/sample_data/PACE_HARP2.20250101.L3m.DAY.MAPOL_OCEAN.V3_0.1deg.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+          "OBPG"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "PACE"
+        ],
+        "processing_level_id": "3",
+        "score": 1.43,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "PACE_HARP2_L3M_MAPOL_LAND",
+        "summary": "MAPOL_LAND provides simultaneous aerosol and ocean color products using the Fast Multi-Angle Polarimetric Ocean and Land algorithm (FastMAPOL). The retrievals jointly solve for aerosol and ocean parameters with a coupled atmosphere and ocean vector radiative-transfer model, accelerated by deep neural networks to improve speed and accuracy. The retrieved aerosol properties are then used to derive angular water leaving signals through multi-angle atmospheric corrections. Use these products for advanced aerosol and ocean color studies, cross-sensor and cross-algorithm data product analysis.\n\nCore geophysical variables in this suite include:\n  - Rrs1/Rrs2 — Angular remote sensing reflectance before and after BRDF correction (sr⁻¹)\n  - chla_mapol — Chlorophyll-a concentration (mg m⁻³)\n  - aot / aot_fine / aot_coarse — Aerosol optical thickness for total/fine/coarse mode (unitless)\n  - ssa / ssa_fine / ssa_coarse — Aerosol single scattering albedo for total/fine/coarse mode (unitless)\n  - fmf / fvf — Aerosol fine mode fraction and fine mode volume fraction (unitless)\n  - angstrom — Aerosol Ångström exponent (unitless; reported for 440–670 nm and 440–870 nm)\n  - alh — Aerosol layer height (km)\n  - reff_fine / reff_coarse — Aerosol effective radius for fine/coarse mode (µm)\n  - veff_fine / veff_coarse — Aerosol effective variance for fine/coarse mode (unitless)\n  - sph / sph_fine / sph_coarse — Aerosol spherical fraction for total/fine/coarse mode (unitless)\n  - mr / mi — Real and imaginary parts of aerosol refractive index (unitless; total/fine/coarse modes available)\n  - vd — Aerosol volume density (µm³ µm⁻²; fine/coarse modes and submodes also available)\n  - wind_speed — Ocean surface wind speed (m s⁻¹)\n",
+        "time_start": "2024-02-05T00:00:00.000Z",
+        "title": "PACE HARP2 Level-3 Global Mapped Aerosol Over Land Optical Properties, FastMAPOL Algorithm Data, version 4.0",
+        "updated": "2025-07-11T00:00:00.000Z",
+        "version_id": "4.0"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "cloud_hosted": true,
+        "collection_data_type": "EXPEDITED",
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "OB_CLOUD",
+        "dataset_id": "PACE HARP2 Level-3 Global Mapped Aerosol Over Land Optical Properties, FastMAPOL Algorithm - Near Real-time (NRT) Data, version 4.0",
+        "entry_id": "PACE_HARP2_L3M_MAPOL_LAND_NRT_4.0",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C4126558480-OB_CLOUD",
+        "links": [
+          {
+            "href": "https://oceandata.sci.gsfc.nasa.gov/opendap/PACE_HARP2/L4SMI/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search?q=%22PACE_HARP2_L3M_MAPOL_LAND_NRT%22",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/data/reprocessing/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/files/obdaac-ancillary-data-sources.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-3%20Mapped/PACE-HARP2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/PACE",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/instruments/HARP2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://nasa.github.io/oceandata-notebooks/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/images/data/pace/txt/HARP2_Level-3m_MAPOL_OCEAN_Data_Structure.txt",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/images/data/pace/sample_data/PACE_HARP2.20250101.L3m.DAY.MAPOL_OCEAN.V3_0.1deg.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+          "OBPG"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "PACE"
+        ],
+        "processing_level_id": "3",
+        "score": 1.43,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "PACE_HARP2_L3M_MAPOL_LAND_NRT",
+        "summary": "  The Ocean Biology DAAC produces near real-time (NRT) products using the best-available combination of ancillary data from meteorological and ozone data. As such, the inputs and the calibration used are less than optimal. Near real-time products provide a snapshot of the data during a short time period within a single orbit. \n\nMAPOL_LAND provides simultaneous aerosol and ocean color products using the Fast Multi-Angle Polarimetric Ocean and Land algorithm (FastMAPOL). The retrievals jointly solve for aerosol and ocean parameters with a coupled atmosphere and ocean vector radiative-transfer model, accelerated by deep neural networks to improve speed and accuracy. The retrieved aerosol properties are then used to derive angular water leaving signals through multi-angle atmospheric corrections. Use these products for advanced aerosol and ocean color studies, cross-sensor and cross-algorithm data product analysis.\n\n Core geophysical variables in this suite include:\n  - Rrs1/Rrs2 — Angular remote sensing reflectance before and after BRDF correction (sr⁻¹)\n  - chla_mapol — Chlorophyll-a concentration (mg m⁻³)\n  - aot / aot_fine / aot_coarse — Aerosol optical thickness for total/fine/coarse mode (unitless)\n  - ssa / ssa_fine / ssa_coarse — Aerosol single scattering albedo for total/fine/coarse mode (unitless)\n  - fmf / fvf — Aerosol fine mode fraction and fine mode volume fraction (unitless)\n  - angstrom — Aerosol Ångström exponent (unitless; reported for 440–670 nm and 440–870 nm)\n  - alh — Aerosol layer height (km)\n  - reff_fine / reff_coarse — Aerosol effective radius for fine/coarse mode (µm)\n  - veff_fine / veff_coarse — Aerosol effective variance for fine/coarse mode (unitless)\n  - sph / sph_fine / sph_coarse — Aerosol spherical fraction for total/fine/coarse mode (unitless)\n  - mr / mi — Real and imaginary parts of aerosol refractive index (unitless; total/fine/coarse modes available)\n  - vd — Aerosol volume density (µm³ µm⁻²; fine/coarse modes and submodes also available)\n  - wind_speed — Ocean surface wind speed (m s⁻¹)\n",
+        "time_start": "2024-02-05T00:00:00.000Z",
+        "title": "PACE HARP2 Level-3 Global Mapped Aerosol Over Land Optical Properties, FastMAPOL Algorithm - Near Real-time (NRT) Data, version 4.0",
+        "updated": "2025-07-11T00:00:00.000Z",
+        "version_id": "4.0"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "OB_CLOUD",
+        "dataset_id": "PACE HARP2 Level-3 Global Mapped Aerosol Over Ocean Optical Properties, FastMAPOL Algorithm Data, version 4.0",
+        "entry_id": "PACE_HARP2_L3M_MAPOL_OCEAN_4.0",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C4126553056-OB_CLOUD",
+        "links": [
+          {
+            "href": "https://oceandata.sci.gsfc.nasa.gov/opendap/PACE_HARP2/L4SMI/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search?q=%22PACE_HARP2_L3M_MAPOL_OCEAN%22",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/data/reprocessing/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/files/obdaac-ancillary-data-sources.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-3%20Mapped/PACE-HARP2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/PACE",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/instruments/HARP2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://nasa.github.io/oceandata-notebooks/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/images/data/pace/txt/HARP2_Level-3m_MAPOL_OCEAN_Data_Structure.txt",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/images/data/pace/sample_data/PACE_HARP2.20250101.L3m.DAY.MAPOL_OCEAN.V3_0.1deg.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+          "OBPG"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "PACE"
+        ],
+        "processing_level_id": "3",
+        "score": 1.43,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "PACE_HARP2_L3M_MAPOL_OCEAN",
+        "summary": "MAPOL_OCEAN provides simultaneous aerosol and ocean color products using the Fast Multi-Angle Polarimetric Ocean and Land algorithm (FastMAPOL). The retrievals jointly solve for aerosol and ocean parameters with a coupled atmosphere and ocean vector radiative-transfer model, accelerated by deep neural networks to improve speed and accuracy. The retrieved aerosol properties are then used to derive angular water leaving signals through multi-angle atmospheric corrections. Use these products for advanced aerosol and ocean color studies, cross-sensor and cross-algorithm data product analysis.\n\nCore geophysical variables in this suite include:\n  - Rrs1/Rrs2 — Angular remote sensing reflectance before and after BRDF correction (sr⁻¹)\n  - chla_mapol — Chlorophyll-a concentration (mg m⁻³)\n  - aot / aot_fine / aot_coarse — Aerosol optical thickness for total/fine/coarse mode (unitless)\n  - ssa / ssa_fine / ssa_coarse — Aerosol single scattering albedo for total/fine/coarse mode (unitless)\n  - fmf / fvf — Aerosol fine mode fraction and fine mode volume fraction (unitless)\n  - angstrom — Aerosol Ångström exponent (unitless; reported for 440–670 nm and 440–870 nm)\n  - alh — Aerosol layer height (km)\n  - reff_fine / reff_coarse — Aerosol effective radius for fine/coarse mode (µm)\n  - veff_fine / veff_coarse — Aerosol effective variance for fine/coarse mode (unitless)\n  - sph / sph_fine / sph_coarse — Aerosol spherical fraction for total/fine/coarse mode (unitless)\n  - mr / mi — Real and imaginary parts of aerosol refractive index (unitless; total/fine/coarse modes available)\n  - vd — Aerosol volume density (µm³ µm⁻²; fine/coarse modes and submodes also available)\n  - wind_speed — Ocean surface wind speed (m s⁻¹)\n",
+        "time_start": "2024-02-05T00:00:00.000Z",
+        "title": "PACE HARP2 Level-3 Global Mapped Aerosol Over Ocean Optical Properties, FastMAPOL Algorithm Data, version 4.0",
+        "updated": "2025-07-11T00:00:00.000Z",
+        "version_id": "4.0"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "cloud_hosted": true,
+        "collection_data_type": "EXPEDITED",
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "OB_CLOUD",
+        "dataset_id": "PACE HARP2 Level-3 Global Mapped Aerosol Over Ocean Optical Properties, FastMAPOL Algorithm - Near Real-time (NRT) Data, version 4.0",
+        "entry_id": "PACE_HARP2_L3M_MAPOL_OCEAN_NRT_4.0",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C4126553027-OB_CLOUD",
+        "links": [
+          {
+            "href": "https://oceandata.sci.gsfc.nasa.gov/opendap/PACE_HARP2/L4SMI/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search?q=%22PACE_HARP2_L3M_MAPOL_OCEAN_NRT%22",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/data/reprocessing/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/files/obdaac-ancillary-data-sources.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-3%20Mapped/PACE-HARP2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/PACE",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/instruments/HARP2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://nasa.github.io/oceandata-notebooks/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/images/data/pace/txt/HARP2_Level-3m_MAPOL_OCEAN_Data_Structure.txt",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/images/data/pace/sample_data/PACE_HARP2.20250101.L3m.DAY.MAPOL_OCEAN.V3_0.1deg.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+          "OBPG"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "PACE"
+        ],
+        "processing_level_id": "3",
+        "score": 1.43,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "PACE_HARP2_L3M_MAPOL_OCEAN_NRT",
+        "summary": "  The Ocean Biology DAAC produces near real-time (NRT) products using the best-available combination of ancillary data from meteorological and ozone data. As such, the inputs and the calibration used are less than optimal. Near real-time products provide a snapshot of the data during a short time period within a single orbit. \n\nMAPOL_OCEAN provides simultaneous aerosol and ocean color products using the Fast Multi-Angle Polarimetric Ocean and Land algorithm (FastMAPOL). The retrievals jointly solve for aerosol and ocean parameters with a coupled atmosphere and ocean vector radiative-transfer model, accelerated by deep neural networks to improve speed and accuracy. The retrieved aerosol properties are then used to derive angular water leaving signals through multi-angle atmospheric corrections. Use these products for advanced aerosol and ocean color studies, cross-sensor and cross-algorithm data product analysis.\n\n Core geophysical variables in this suite include:\n  - Rrs1/Rrs2 — Angular remote sensing reflectance before and after BRDF correction (sr⁻¹)\n  - chla_mapol — Chlorophyll-a concentration (mg m⁻³)\n  - aot / aot_fine / aot_coarse — Aerosol optical thickness for total/fine/coarse mode (unitless)\n  - ssa / ssa_fine / ssa_coarse — Aerosol single scattering albedo for total/fine/coarse mode (unitless)\n  - fmf / fvf — Aerosol fine mode fraction and fine mode volume fraction (unitless)\n  - angstrom — Aerosol Ångström exponent (unitless; reported for 440–670 nm and 440–870 nm)\n  - alh — Aerosol layer height (km)\n  - reff_fine / reff_coarse — Aerosol effective radius for fine/coarse mode (µm)\n  - veff_fine / veff_coarse — Aerosol effective variance for fine/coarse mode (unitless)\n  - sph / sph_fine / sph_coarse — Aerosol spherical fraction for total/fine/coarse mode (unitless)\n  - mr / mi — Real and imaginary parts of aerosol refractive index (unitless; total/fine/coarse modes available)\n  - vd — Aerosol volume density (µm³ µm⁻²; fine/coarse modes and submodes also available)\n  - wind_speed — Ocean surface wind speed (m s⁻¹)\n",
+        "time_start": "2024-02-05T00:00:00.000Z",
+        "title": "PACE HARP2 Level-3 Global Mapped Aerosol Over Ocean Optical Properties, FastMAPOL Algorithm - Near Real-time (NRT) Data, version 4.0",
+        "updated": "2025-07-11T00:00:00.000Z",
+        "version_id": "4.0"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+        "association_details": {
+          "services": [
+            {
+              "concept_id": "S3144157208-OB_CLOUD"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V4197997084-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997102-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997066-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997097-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997077-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997068-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997094-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997080-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997087-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997072-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997082-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997055-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997075-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997063-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997092-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997090-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997057-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997061-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997100-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997059-OB_CLOUD"
+            },
+            {
+              "concept_id": "V4197997070-OB_CLOUD"
+            }
+          ]
+        },
+        "associations": {
+          "services": [
+            "S3144157208-OB_CLOUD"
+          ],
+          "variables": [
+            "V4197997084-OB_CLOUD",
+            "V4197997102-OB_CLOUD",
+            "V4197997066-OB_CLOUD",
+            "V4197997097-OB_CLOUD",
+            "V4197997077-OB_CLOUD",
+            "V4197997068-OB_CLOUD",
+            "V4197997094-OB_CLOUD",
+            "V4197997080-OB_CLOUD",
+            "V4197997087-OB_CLOUD",
+            "V4197997072-OB_CLOUD",
+            "V4197997082-OB_CLOUD",
+            "V4197997055-OB_CLOUD",
+            "V4197997075-OB_CLOUD",
+            "V4197997063-OB_CLOUD",
+            "V4197997092-OB_CLOUD",
+            "V4197997090-OB_CLOUD",
+            "V4197997057-OB_CLOUD",
+            "V4197997061-OB_CLOUD",
+            "V4197997100-OB_CLOUD",
+            "V4197997059-OB_CLOUD",
+            "V4197997070-OB_CLOUD"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "cloud_hosted": true,
+        "collection_data_type": "EXPEDITED",
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "OB_CLOUD",
+        "dataset_id": "PACE HARP2 Level-3 Global Mapped Aerosol Over Ocean Optical Properties, FastMAPOL Algorithm - Near Real-time (NRT) Data, version 3.0",
+        "entry_id": "PACE_HARP2_L3M_MAPOL_OCEAN_NRT_3.0",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": true,
+        "has_variables": true,
+        "id": "C3974353160-OB_CLOUD",
+        "links": [
+          {
+            "href": "https://oceandata.sci.gsfc.nasa.gov/opendap/PACE_HARP2/L4SMI/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search?q=%22PACE_HARP2_L3M_MAPOL_OCEAN_NRT%22",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/data/reprocessing/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/files/obdaac-ancillary-data-sources.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-3%20Mapped/PACE-HARP2/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/PACE",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://www.earthdata.nasa.gov/data/instruments/HARP2",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://nasa.github.io/oceandata-notebooks/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/images/data/pace/txt/HARP2_Level-3m_MAPOL_OCEAN_Data_Structure.txt",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://oceancolor.gsfc.nasa.gov/images/data/pace/sample_data/PACE_HARP2.20250101.L3m.DAY.MAPOL_OCEAN.V3_0.1deg.nc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
+          "OBPG"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "PACE"
+        ],
+        "processing_level_id": "3",
+        "score": 1.43,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": true,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "PACE_HARP2_L3M_MAPOL_OCEAN_NRT",
+        "summary": "  The Ocean Biology DAAC produces near real-time (NRT) products using the best-available combination of ancillary data from meteorological and ozone data. As such, the inputs and the calibration used are less than optimal. Near real-time products provide a snapshot of the data during a short time period within a single orbit. \n\nMAPOL_OCEAN provides simultaneous aerosol and ocean color products using the Fast Multi-Angle Polarimetric Ocean and Land algorithm (FastMAPOL). The retrievals jointly solve for aerosol and ocean parameters with a coupled atmosphere and ocean vector radiative-transfer model, accelerated by deep neural networks to improve speed and accuracy. The retrieved aerosol properties are then used to derive angular water leaving signals through multi-angle atmospheric corrections. Use these products for advanced aerosol and ocean color studies, cross-sensor and cross-algorithm data product analysis.\n\n Core geophysical variables in this suite include:\n  - Rrs1/Rrs2 — Angular remote sensing reflectance before and after BRDF correction (sr⁻¹)\n  - chla_mapol — Chlorophyll-a concentration (mg m⁻³)\n  - aot / aot_fine / aot_coarse — Aerosol optical thickness for total/fine/coarse mode (unitless)\n  - ssa / ssa_fine / ssa_coarse — Aerosol single scattering albedo for total/fine/coarse mode (unitless)\n  - fmf / fvf — Aerosol fine mode fraction and fine mode volume fraction (unitless)\n  - angstrom — Aerosol Ångström exponent (unitless; reported for 440–670 nm and 440–870 nm)\n  - alh — Aerosol layer height (km)\n  - reff_fine / reff_coarse — Aerosol effective radius for fine/coarse mode (µm)\n  - veff_fine / veff_coarse — Aerosol effective variance for fine/coarse mode (unitless)\n  - sph / sph_fine / sph_coarse — Aerosol spherical fraction for total/fine/coarse mode (unitless)\n  - mr / mi — Real and imaginary parts of aerosol refractive index (unitless; total/fine/coarse modes available)\n  - vd — Aerosol volume density (µm³ µm⁻²; fine/coarse modes and submodes also available)\n  - wind_speed — Ocean surface wind speed (m s⁻¹)\n",
+        "time_start": "2024-02-05T00:00:00.000Z",
+        "title": "PACE HARP2 Level-3 Global Mapped Aerosol Over Ocean Optical Properties, FastMAPOL Algorithm - Near Real-time (NRT) Data, version 3.0",
+        "updated": "2025-07-11T00:00:00.000Z",
+        "version_id": "3.0"
+      }
+    ],
+    "id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?keyword=aerosol&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=10&sort_key=-score",
+    "title": "ECHO dataset metadata",
+    "updated": "2026-05-26T20:36:29.083Z"
+  }
+}

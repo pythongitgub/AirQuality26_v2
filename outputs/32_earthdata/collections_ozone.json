@@ -1,0 +1,3160 @@
+{
+  "_meta": {
+    "bytes": 69215,
+    "content_type": "application/json;charset=utf-8",
+    "http_status": 200,
+    "sha256": "52db5169b78658cdcae356a806b0b52a1816142e287a8506de3fed546e496e5a",
+    "url": "https://cmr.earthdata.nasa.gov/search/collections.json?keyword=ozone&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=10&sort_key=-score"
+  },
+  "feed": {
+    "entry": [
+      {
+        "archive_center": "CEDA",
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "cloud_hosted": false,
+        "coordinate_system": "CARTESIAN",
+        "data_center": "SCIOPS",
+        "dataset_id": "TOMS - Total Ozone Mapping Spectrometer Data offered by the British Atmospheric Data Center",
+        "entry_id": "BADC_TOMS_ONLINE",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C1214584267-SCIOPS",
+        "links": [
+          {
+            "href": "https://ozoneaq.gsfc.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://data.ceda.ac.uk/badc/toms",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "CEDA"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "EP-TOMS",
+          "Meteor-3",
+          "Nimbus-7"
+        ],
+        "score": 1.5840001,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "BADC_TOMS_ONLINE",
+        "summary": "The Total Ozone Mapping Spectrometer (TOMS) is an instrument built and operated by the National Aeronautics and Space Administration (NASA). The instrument uses backscattered ultraviolet radiance to infer total column ozone measurements. The data consists of daily gridded averages of total ozone covering the entire globe. The original Nimbus-7 TOMS operated from November 1978 until May 1993. Meteor-3 TOMS was launched in August 1991 and operated until December 1994.\n      \nAfter a gap of one and a half years, two new TOMS instruments began operation in 1996: Earth-Probe TOMS was launched on 2nd July 1996 and started to produce data on 25th July. ADEOS TOMS was launched on 17th August 1996 and started producing data on 11th Sept. The satellites were originally placed in different orbits, giving complete global coverage with the ADEOS data, while Earth-Probe had complete coverage at the poles with an increased ability to measure UV-absorbing aerosols in the troposphere. ADEOS failed in June 1997 and Earth-Probe was subsequently placed in a higher orbit to give global coverage. Earth-Probe TOMS continues to operate successfully.\n      \nLink to the data set home page:\nhttps://archive.ceda.ac.uk/\n      \n[Summary Extracted from the BADC Home Page]\n",
+        "time_start": "1978-11-01T00:00:00.000Z",
+        "title": "TOMS - Total Ozone Mapping Spectrometer Data offered by the British Atmospheric Data Center",
+        "version_id": "Not provided"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/LA/ACDB",
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "cloud_hosted": false,
+        "coordinate_system": "CARTESIAN",
+        "data_center": "SCIOPS",
+        "dataset_id": "Total Ozone Mapping Spectrometer (TOMS) Ozone, Aerosol, UV and Reflectivity Data and Images from Earth Probe-TOMS (EP-TOMS)",
+        "entry_id": "EP-TOMS",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C1214591799-SCIOPS",
+        "links": [
+          {
+            "href": "https://ozoneaq.gsfc.nasa.gov/data/toms/",
+            "hreflang": "en-US",
+            "length": "0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://science.nasa.gov/missions/toms",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://ozoneaq.gsfc.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/LA/ACDB"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "EP-TOMS"
+        ],
+        "score": 1.5840001,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "EP-TOMS",
+        "summary": "The Earth Probe-Total Ozone Mapping Spectrometer (EP-TOMS) spacecraft\nwas launched on July 2, 1996 from a Pegasus rocket. The launch of\nEP-TOMS continues the global measurements of ozone that began with the\nTOMS instrument on Nimbus-7 and Meteor-3 (1978-1994).\n\nEP-TOMS ozone data is obtained 3 or 4 times per day and is processed to\nASCII data (in Dobson units).\n\nNimbus-7, Meteor-3, and ADEOS TOMS data are also available.",
+        "time_start": "1996-08-01T00:00:00.000Z",
+        "title": "Total Ozone Mapping Spectrometer (TOMS) Ozone, Aerosol, UV and Reflectivity Data and Images from Earth Probe-TOMS (EP-TOMS)",
+        "version_id": "Not provided"
+      },
+      {
+        "archive_center": "CN/FENGYUN",
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "cloud_hosted": false,
+        "coordinate_system": "CARTESIAN",
+        "data_center": "SCIOPS",
+        "dataset_id": "FY3A Total Ozone Unit (TOU) Level 1 data Product",
+        "dif_ids": [
+          "FY3A_TOU_L1"
+        ],
+        "entry_id": "FY3A_TOU_L1",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C1214597973-SCIOPS",
+        "links": [
+          {
+            "href": "http://satellite.nsmc.org.cn/portalsite/default.aspx",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "CN/FENGYUN"
+        ],
+        "original_format": "DIF10",
+        "platforms": [
+          "FY-3A"
+        ],
+        "score": 1.5840001,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "FY3A_TOU_L1",
+        "summary": "Level 1 data set of FY-3A Total Ozone Unit (TOU):\n\nL1 data set contains all TOU sensor data including atmospheric radiance and solar flux for 6 spectral bands,it also contains in-flight calibration data for solar flux and geo location data",
+        "time_start": "2008-05-29T00:00:00.000Z",
+        "title": "FY3A Total Ozone Unit (TOU) Level 1 data Product",
+        "version_id": "Not provided"
+      },
+      {
+        "archive_center": "U-BREMEN/IUP",
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "cloud_hosted": false,
+        "coordinate_system": "CARTESIAN",
+        "data_center": "SCIOPS",
+        "dataset_id": "Global Ozone Monitoring Experiment (GOME) Data Products from the Institute of Environmental Physics and Remote Sensing (IUP/ife), Germany",
+        "dif_ids": [
+          "IUP_IFE_GOME_IMAGES"
+        ],
+        "entry_id": "IUP_IFE_GOME_IMAGES",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C1214606752-SCIOPS",
+        "links": [
+          {
+            "href": "http://earth1.esrin.esa.it/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "http://www.dfd.dlr.de/info/AUC/GOME/index.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "http://www.iup.physik.uni-bremen.de/ifepage/gome.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "U-BREMEN/IUP"
+        ],
+        "original_format": "DIF10",
+        "platforms": [
+          "ERS-2"
+        ],
+        "score": 1.5840001,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "IUP_IFE_GOME_IMAGES",
+        "summary": "In collaboration with the DLR German Remote Sensing Data Center\n      (DLR/DFD), and the European Space Agency (ESA), the Bremen Institute\n      of Environmental Physics and Remote Sensing (ife/iup) provided near\n      real-time GOME ozone maps during the arctic winter 1997 (January 24,\n      1997 - March 31, 1997). The delivery of near-real-time total ozone\n      maps and vertical profiles by ife/iup supported the coordination of\n      aircraft and balloon experiments as part of the European arctic winter\n      campaign in and around Kiruna, Sweden (POLSTAR, POLECAT,\n      ADEOS-Validation).\n      \n      The investigation of the GOME vertical profile distribution in the\n      northern hemisphere in connection with the dynamics of the polar\n      vortex and ozone loss during winter/spring 1997 is one major goal in\n      the campaign activities. Preliminary height-resolved ozone and total\n      column ozone images are presented. Near-real-time height-resolved\n      ozone maps are only available for the time of the arctic campaign\n      until March 31, 1997. Since the support of NRT GOME Level-2 data\n      (total ozone) has been continued, total ozone maps from the same day\n      are still provided on this web site. The 1-day total ozone images are\n      updated every six hours.\n      \n      The ozone maps are produced at ife/iup using the Level-2 data (total\n      columns of ozone) provided from the new Kiruna-based GDP (GOME Data\n      Processor) of the DLR/DFD. The ESA station in Kiruna is one of five\n      ground stations receiving the global ERS-2 transmission. Ten out of\n      the daily fourteen GOME orbits are transmitted to Kiruna. In the near\n      future three additional orbits from the Mapolamos and Gatineau\n      stations will be also available. The ozone vertical profiles are\n      generated at the University of Bremen using the GDP Level-1 data\n      (radiometrically calibrated sun and earthshine spectra).\n      \n      GOME Global Ozone Distributions\n      -------------------------------\n      With the current scan strategy (960-km swath) it takes GOME three days\n      to achieve global coverage (for details see the GOME instrument\n      description). For each month (beginning with July 1996) the plots on\n      this page show four three-day periods of GOME measured total ozone\n      values as indicated in the plot titles. This gives an impression of\n      the evolution of the global ozone distribution during one month.\n      \n      Vertical column amounts of ozone are operationally derived from the\n      GOME spectra at DLR-DFD using the DOAS method. At ife/iup the\n      irregularly spaced measurement points are gridded to a regular\n      lat-long grid before being mapped. White space on the maps is due to\n      data gaps.\n      \n      [Summary Adapted from the IUP/ife Home Page]",
+        "time_start": "1995-06-27T00:00:00.000Z",
+        "title": "Global Ozone Monitoring Experiment (GOME) Data Products from the Institute of Environmental Physics and Remote Sensing (IUP/ife), Germany",
+        "version_id": "Not provided"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT4181356044-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181358581-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181375853-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181322731-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181327067-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804290196-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181312389-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181379602-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181334397-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804247271-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804251674-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181334923-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803956225-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181381990-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804306048-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181375541-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804058595-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181321712-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181345599-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181344904-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181317572-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804106714-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181346298-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804314166-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181345917-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803977379-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804070764-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181363653-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181314369-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181338239-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181339448-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181316371-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804142281-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181337893-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181316577-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181332555-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181341496-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181365594-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181332958-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181327687-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181332751-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181339478-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181332519-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181367495-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181323892-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181372201-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181354564-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181344271-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181342008-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181326975-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181356424-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181353589-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181341102-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181330893-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181354410-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181339438-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804029082-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181379446-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181353021-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181317058-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181325217-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804320972-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181321964-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804060821-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181329445-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181333016-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181337223-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181315422-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181339254-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181365110-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804259124-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804159760-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181351559-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803944922-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181330994-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804256665-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181351537-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181360714-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181379809-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181332624-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803980467-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181320762-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181332079-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181354475-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181330314-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181357280-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181381327-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181352182-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181334638-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181331489-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803983112-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181315208-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181377454-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181346859-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181348649-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804244822-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181342116-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181324115-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804214636-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181313302-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804317134-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181377379-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804186992-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181345909-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804116264-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181337576-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181344851-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181356021-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181356547-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181324178-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181319441-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181317749-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181332662-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181342920-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181375899-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181319190-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803942803-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181369123-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804059410-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804259071-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804188521-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181331436-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181347193-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181351619-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181317883-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181358078-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181320600-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181313437-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804194752-ESDIS"
+            },
+            {
+              "concept_id": "CIT4076062193-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804117682-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181339389-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181317612-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181332083-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181318741-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181332131-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181320775-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804193700-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803952463-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181338241-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181320779-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181380575-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181327123-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181336018-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181359221-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181320794-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803994839-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181351094-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181361113-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181318463-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804219274-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803943937-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181340052-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181323669-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181313640-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181329672-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181334774-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181338078-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803946714-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181370947-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181345697-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181333795-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181316878-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181345090-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181324487-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181360765-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804245399-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804105564-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181347028-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181353146-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181336017-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181322738-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804129598-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804190602-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181361418-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181319431-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181334083-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S3267470083-GES_DISC"
+            },
+            {
+              "concept_id": "S1962070864-POCLOUD"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V2623769314-GES_DISC"
+            },
+            {
+              "concept_id": "V2623771149-GES_DISC"
+            },
+            {
+              "concept_id": "V2623788028-GES_DISC"
+            },
+            {
+              "concept_id": "V2623774220-GES_DISC"
+            },
+            {
+              "concept_id": "V2623784988-GES_DISC"
+            },
+            {
+              "concept_id": "V2623788276-GES_DISC"
+            },
+            {
+              "concept_id": "V2623776452-GES_DISC"
+            },
+            {
+              "concept_id": "V2623771618-GES_DISC"
+            },
+            {
+              "concept_id": "V2623783187-GES_DISC"
+            },
+            {
+              "concept_id": "V2623770703-GES_DISC"
+            },
+            {
+              "concept_id": "V2623778626-GES_DISC"
+            },
+            {
+              "concept_id": "V2623765370-GES_DISC"
+            },
+            {
+              "concept_id": "V2623766791-GES_DISC"
+            },
+            {
+              "concept_id": "V2623772825-GES_DISC"
+            },
+            {
+              "concept_id": "V2623767827-GES_DISC"
+            },
+            {
+              "concept_id": "V2623788181-GES_DISC"
+            },
+            {
+              "concept_id": "V2623771422-GES_DISC"
+            },
+            {
+              "concept_id": "V2623774339-GES_DISC"
+            },
+            {
+              "concept_id": "V2623772579-GES_DISC"
+            },
+            {
+              "concept_id": "V2623784176-GES_DISC"
+            },
+            {
+              "concept_id": "V2623786182-GES_DISC"
+            },
+            {
+              "concept_id": "V2623779921-GES_DISC"
+            },
+            {
+              "concept_id": "V2623783803-GES_DISC"
+            },
+            {
+              "concept_id": "V2623766439-GES_DISC"
+            },
+            {
+              "concept_id": "V2623775911-GES_DISC"
+            },
+            {
+              "concept_id": "V2623783565-GES_DISC"
+            },
+            {
+              "concept_id": "V2623784972-GES_DISC"
+            },
+            {
+              "concept_id": "V2623778828-GES_DISC"
+            },
+            {
+              "concept_id": "V2623784057-GES_DISC"
+            },
+            {
+              "concept_id": "V2623764578-GES_DISC"
+            },
+            {
+              "concept_id": "V2623763181-GES_DISC"
+            },
+            {
+              "concept_id": "V2623776099-GES_DISC"
+            },
+            {
+              "concept_id": "V2623781579-GES_DISC"
+            },
+            {
+              "concept_id": "V2623776262-GES_DISC"
+            },
+            {
+              "concept_id": "V2623782903-GES_DISC"
+            },
+            {
+              "concept_id": "V2623773524-GES_DISC"
+            },
+            {
+              "concept_id": "V2623776048-GES_DISC"
+            },
+            {
+              "concept_id": "V2623776517-GES_DISC"
+            },
+            {
+              "concept_id": "V2623775254-GES_DISC"
+            },
+            {
+              "concept_id": "V2623784349-GES_DISC"
+            },
+            {
+              "concept_id": "V2623766264-GES_DISC"
+            },
+            {
+              "concept_id": "V2623776994-GES_DISC"
+            },
+            {
+              "concept_id": "V2623766711-GES_DISC"
+            },
+            {
+              "concept_id": "V2623762439-GES_DISC"
+            },
+            {
+              "concept_id": "V2623784959-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT4181356044-ESDIS",
+            "CIT4181358581-ESDIS",
+            "CIT4181375853-ESDIS",
+            "CIT4181322731-ESDIS",
+            "CIT4181327067-ESDIS",
+            "CIT3804290196-ESDIS",
+            "CIT4181312389-ESDIS",
+            "CIT4181379602-ESDIS",
+            "CIT4181334397-ESDIS",
+            "CIT3804247271-ESDIS",
+            "CIT3804251674-ESDIS",
+            "CIT4181334923-ESDIS",
+            "CIT3803956225-ESDIS",
+            "CIT4181381990-ESDIS",
+            "CIT3804306048-ESDIS",
+            "CIT4181375541-ESDIS",
+            "CIT3804058595-ESDIS",
+            "CIT4181321712-ESDIS",
+            "CIT4181345599-ESDIS",
+            "CIT4181344904-ESDIS",
+            "CIT4181317572-ESDIS",
+            "CIT3804106714-ESDIS",
+            "CIT4181346298-ESDIS",
+            "CIT3804314166-ESDIS",
+            "CIT4181345917-ESDIS",
+            "CIT3803977379-ESDIS",
+            "CIT3804070764-ESDIS",
+            "CIT4181363653-ESDIS",
+            "CIT4181314369-ESDIS",
+            "CIT4181338239-ESDIS",
+            "CIT4181339448-ESDIS",
+            "CIT4181316371-ESDIS",
+            "CIT3804142281-ESDIS",
+            "CIT4181337893-ESDIS",
+            "CIT4181316577-ESDIS",
+            "CIT4181332555-ESDIS",
+            "CIT4181341496-ESDIS",
+            "CIT4181365594-ESDIS",
+            "CIT4181332958-ESDIS",
+            "CIT4181327687-ESDIS",
+            "CIT4181332751-ESDIS",
+            "CIT4181339478-ESDIS",
+            "CIT4181332519-ESDIS",
+            "CIT4181367495-ESDIS",
+            "CIT4181323892-ESDIS",
+            "CIT4181372201-ESDIS",
+            "CIT4181354564-ESDIS",
+            "CIT4181344271-ESDIS",
+            "CIT4181342008-ESDIS",
+            "CIT4181326975-ESDIS",
+            "CIT4181356424-ESDIS",
+            "CIT4181353589-ESDIS",
+            "CIT4181341102-ESDIS",
+            "CIT4181330893-ESDIS",
+            "CIT4181354410-ESDIS",
+            "CIT4181339438-ESDIS",
+            "CIT3804029082-ESDIS",
+            "CIT4181379446-ESDIS",
+            "CIT4181353021-ESDIS",
+            "CIT4181317058-ESDIS",
+            "CIT4181325217-ESDIS",
+            "CIT3804320972-ESDIS",
+            "CIT4181321964-ESDIS",
+            "CIT3804060821-ESDIS",
+            "CIT4181329445-ESDIS",
+            "CIT4181333016-ESDIS",
+            "CIT4181337223-ESDIS",
+            "CIT4181315422-ESDIS",
+            "CIT4181339254-ESDIS",
+            "CIT4181365110-ESDIS",
+            "CIT3804259124-ESDIS",
+            "CIT3804159760-ESDIS",
+            "CIT4181351559-ESDIS",
+            "CIT3803944922-ESDIS",
+            "CIT4181330994-ESDIS",
+            "CIT3804256665-ESDIS",
+            "CIT4181351537-ESDIS",
+            "CIT4181360714-ESDIS",
+            "CIT4181379809-ESDIS",
+            "CIT4181332624-ESDIS",
+            "CIT3803980467-ESDIS",
+            "CIT4181320762-ESDIS",
+            "CIT4181332079-ESDIS",
+            "CIT4181354475-ESDIS",
+            "CIT4181330314-ESDIS",
+            "CIT4181357280-ESDIS",
+            "CIT4181381327-ESDIS",
+            "CIT4181352182-ESDIS",
+            "CIT4181334638-ESDIS",
+            "CIT4181331489-ESDIS",
+            "CIT3803983112-ESDIS",
+            "CIT4181315208-ESDIS",
+            "CIT4181377454-ESDIS",
+            "CIT4181346859-ESDIS",
+            "CIT4181348649-ESDIS",
+            "CIT3804244822-ESDIS",
+            "CIT4181342116-ESDIS",
+            "CIT4181324115-ESDIS",
+            "CIT3804214636-ESDIS",
+            "CIT4181313302-ESDIS",
+            "CIT3804317134-ESDIS",
+            "CIT4181377379-ESDIS",
+            "CIT3804186992-ESDIS",
+            "CIT4181345909-ESDIS",
+            "CIT3804116264-ESDIS",
+            "CIT4181337576-ESDIS",
+            "CIT4181344851-ESDIS",
+            "CIT4181356021-ESDIS",
+            "CIT4181356547-ESDIS",
+            "CIT4181324178-ESDIS",
+            "CIT4181319441-ESDIS",
+            "CIT4181317749-ESDIS",
+            "CIT4181332662-ESDIS",
+            "CIT4181342920-ESDIS",
+            "CIT4181375899-ESDIS",
+            "CIT4181319190-ESDIS",
+            "CIT3803942803-ESDIS",
+            "CIT4181369123-ESDIS",
+            "CIT3804059410-ESDIS",
+            "CIT3804259071-ESDIS",
+            "CIT3804188521-ESDIS",
+            "CIT4181331436-ESDIS",
+            "CIT4181347193-ESDIS",
+            "CIT4181351619-ESDIS",
+            "CIT4181317883-ESDIS",
+            "CIT4181358078-ESDIS",
+            "CIT4181320600-ESDIS",
+            "CIT4181313437-ESDIS",
+            "CIT3804194752-ESDIS",
+            "CIT4076062193-ESDIS",
+            "CIT3804117682-ESDIS",
+            "CIT4181339389-ESDIS",
+            "CIT4181317612-ESDIS",
+            "CIT4181332083-ESDIS",
+            "CIT4181318741-ESDIS",
+            "CIT4181332131-ESDIS",
+            "CIT4181320775-ESDIS",
+            "CIT3804193700-ESDIS",
+            "CIT3803952463-ESDIS",
+            "CIT4181338241-ESDIS",
+            "CIT4181320779-ESDIS",
+            "CIT4181380575-ESDIS",
+            "CIT4181327123-ESDIS",
+            "CIT4181336018-ESDIS",
+            "CIT4181359221-ESDIS",
+            "CIT4181320794-ESDIS",
+            "CIT3803994839-ESDIS",
+            "CIT4181351094-ESDIS",
+            "CIT4181361113-ESDIS",
+            "CIT4181318463-ESDIS",
+            "CIT3804219274-ESDIS",
+            "CIT3803943937-ESDIS",
+            "CIT4181340052-ESDIS",
+            "CIT4181323669-ESDIS",
+            "CIT4181313640-ESDIS",
+            "CIT4181329672-ESDIS",
+            "CIT4181334774-ESDIS",
+            "CIT4181338078-ESDIS",
+            "CIT3803946714-ESDIS",
+            "CIT4181370947-ESDIS",
+            "CIT4181345697-ESDIS",
+            "CIT4181333795-ESDIS",
+            "CIT4181316878-ESDIS",
+            "CIT4181345090-ESDIS",
+            "CIT4181324487-ESDIS",
+            "CIT4181360765-ESDIS",
+            "CIT3804245399-ESDIS",
+            "CIT3804105564-ESDIS",
+            "CIT4181347028-ESDIS",
+            "CIT4181353146-ESDIS",
+            "CIT4181336017-ESDIS",
+            "CIT4181322738-ESDIS",
+            "CIT3804129598-ESDIS",
+            "CIT3804190602-ESDIS",
+            "CIT4181361418-ESDIS",
+            "CIT4181319431-ESDIS",
+            "CIT4181334083-ESDIS"
+          ],
+          "services": [
+            "S3267470083-GES_DISC",
+            "S1962070864-POCLOUD"
+          ],
+          "variables": [
+            "V2623769314-GES_DISC",
+            "V2623771149-GES_DISC",
+            "V2623788028-GES_DISC",
+            "V2623774220-GES_DISC",
+            "V2623784988-GES_DISC",
+            "V2623788276-GES_DISC",
+            "V2623776452-GES_DISC",
+            "V2623771618-GES_DISC",
+            "V2623783187-GES_DISC",
+            "V2623770703-GES_DISC",
+            "V2623778626-GES_DISC",
+            "V2623765370-GES_DISC",
+            "V2623766791-GES_DISC",
+            "V2623772825-GES_DISC",
+            "V2623767827-GES_DISC",
+            "V2623788181-GES_DISC",
+            "V2623771422-GES_DISC",
+            "V2623774339-GES_DISC",
+            "V2623772579-GES_DISC",
+            "V2623784176-GES_DISC",
+            "V2623786182-GES_DISC",
+            "V2623779921-GES_DISC",
+            "V2623783803-GES_DISC",
+            "V2623766439-GES_DISC",
+            "V2623775911-GES_DISC",
+            "V2623783565-GES_DISC",
+            "V2623784972-GES_DISC",
+            "V2623778828-GES_DISC",
+            "V2623784057-GES_DISC",
+            "V2623764578-GES_DISC",
+            "V2623763181-GES_DISC",
+            "V2623776099-GES_DISC",
+            "V2623781579-GES_DISC",
+            "V2623776262-GES_DISC",
+            "V2623782903-GES_DISC",
+            "V2623773524-GES_DISC",
+            "V2623776048-GES_DISC",
+            "V2623776517-GES_DISC",
+            "V2623775254-GES_DISC",
+            "V2623784349-GES_DISC",
+            "V2623766264-GES_DISC",
+            "V2623776994-GES_DISC",
+            "V2623766711-GES_DISC",
+            "V2623762439-GES_DISC",
+            "V2623784959-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "collection_data_type": "SCIENCE_QUALITY",
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "OMI/Aura Ozone(O3) Total Column 1-Orbit L2 Swath 13x24 km V003 (OMTO3) at GES DISC",
+        "entry_id": "OMTO3_003",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1239966818-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/OMTO3_003.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/OMTO3_003.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://aura.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level2/OMTO3.003/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1239966818-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://aura.gesdisc.eosdis.nasa.gov/opendap/Aura_OMI_Level2/OMTO3.003/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://aura.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level2/OMTO3.003/doc/README.OMTO3.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/OMI/README.OMI_DUG.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/repository/Mission/OMI/3.3_ScienceDataProductDocumentation/3.3.4_ProductGenerationAlgorithm/ATBD-OMI-02.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/repository/Mission/OMI/3.3_ScienceDataProductDocumentation/3.3.2_ProductRequirements_Designs/OMTO3_FileSpec.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/repository/Mission/OMI/3.3_ScienceDataProductDocumentation/3.3.2_ProductRequirements_Designs/OMTO3_ReleaseDetails_V003.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://aura.gsfc.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://www.knmiprojects.nl/projects/ozone-monitoring-instrument",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "http://projects.knmi.nl/omi/research/documents/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura"
+        ],
+        "processing_level_id": "2",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": false,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "OMTO3",
+        "summary": "The Aura Ozone Monitoring Instrument (OMI) Level-2 Total Column Ozone Data Product OMTO3 (Version 003) is available from the NASA Goddard Earth Sciences Data and Information Services Center (GES DISC) for the public access. OMI provides two Level-2 (OMTO3 and OMDOAO3) total column ozone products at pixel resolution (13 x 24 km at nadir) that are based on two different algorithms. This level-2 global total column ozone product (OMTO3) is based on the enhanced TOMS version-8 algorithm that essentially uses the ultraviolet radiance data at 317.5 and 331.2 nm. OMI hyper-spectral measurements help in the corrections for the factors that induce uncertainty in ozone retrievals (e.g., cloud and aerosol, sea-glint effects, profile shape sensitivity, SO2 and other trace gas contamination). In addition to the total ozone values this product also contains some auxiliary derived and ancillary input parameters including N-values, effective Lambertian scene-reflectivity, UV aerosol index, SO2 index, cloud fraction, cloud pressure, ozone below clouds, terrain height, geolocation, solar and satellite viewing angles, and quality flags. The shortname for this Level-2 OMI total column ozone product is OMTO3. The algorithm lead for this product is NASA OMI scientist  Dr. Pawan K. Bhartia.\n\nThe OMTO3 files are stored in the version 5 EOS Hierarchical Data Format (HDF-EOS5). Each file contains data from the day lit portion of an orbit (~53 minutes). There are approximately 14 orbits per day. The maximum file size for the OMTO3 data product is approximately 35 MB.",
+        "time_start": "2004-10-01T00:00:00.000Z",
+        "title": "OMI/Aura Ozone(O3) Total Column 1-Orbit L2 Swath 13x24 km V003 (OMTO3) at GES DISC",
+        "updated": "2012-03-21T00:00:00.000Z",
+        "version_id": "003"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT3857558973-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804032538-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181340617-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181324495-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181361427-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804263541-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181355271-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804292218-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804106714-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804262794-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181322740-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803963043-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181374339-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181355035-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181383140-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181327128-ESDIS"
+            },
+            {
+              "concept_id": "CIT4076029458-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181339377-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804127322-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181358624-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804321110-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181361745-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181336795-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804383787-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181361113-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804206324-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181329471-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804193700-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804214636-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803946212-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804001805-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181356134-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803992944-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804290517-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181366413-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804159311-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181345878-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382526-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181336102-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181320776-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804184228-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804264950-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181311778-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181344072-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181339982-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804195987-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181376694-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181357306-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181363899-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804320621-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181349634-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804295951-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181378801-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804366122-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181362385-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803974483-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181314954-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804269607-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181325507-ESDIS"
+            },
+            {
+              "concept_id": "CIT4106706292-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181329409-ESDIS"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3938008802-GES_DISC"
+            },
+            {
+              "concept_id": "V3938009070-GES_DISC"
+            },
+            {
+              "concept_id": "V3938008839-GES_DISC"
+            },
+            {
+              "concept_id": "V3938008858-GES_DISC"
+            },
+            {
+              "concept_id": "V3938009315-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT3857558973-ESDIS",
+            "CIT3804032538-ESDIS",
+            "CIT4181340617-ESDIS",
+            "CIT4181324495-ESDIS",
+            "CIT4181361427-ESDIS",
+            "CIT3804263541-ESDIS",
+            "CIT4181355271-ESDIS",
+            "CIT3804292218-ESDIS",
+            "CIT3804106714-ESDIS",
+            "CIT3804262794-ESDIS",
+            "CIT4181322740-ESDIS",
+            "CIT3803963043-ESDIS",
+            "CIT4181374339-ESDIS",
+            "CIT4181355035-ESDIS",
+            "CIT4181383140-ESDIS",
+            "CIT4181327128-ESDIS",
+            "CIT4076029458-ESDIS",
+            "CIT4181339377-ESDIS",
+            "CIT3804127322-ESDIS",
+            "CIT4181358624-ESDIS",
+            "CIT3804321110-ESDIS",
+            "CIT4181361745-ESDIS",
+            "CIT4181336795-ESDIS",
+            "CIT3804383787-ESDIS",
+            "CIT4181361113-ESDIS",
+            "CIT3804206324-ESDIS",
+            "CIT4181329471-ESDIS",
+            "CIT3804193700-ESDIS",
+            "CIT3804214636-ESDIS",
+            "CIT3803946212-ESDIS",
+            "CIT3804001805-ESDIS",
+            "CIT4181356134-ESDIS",
+            "CIT3803992944-ESDIS",
+            "CIT3804290517-ESDIS",
+            "CIT4181366413-ESDIS",
+            "CIT3804159311-ESDIS",
+            "CIT4181345878-ESDIS",
+            "CIT4181382526-ESDIS",
+            "CIT4181336102-ESDIS",
+            "CIT4181320776-ESDIS",
+            "CIT3804184228-ESDIS",
+            "CIT3804264950-ESDIS",
+            "CIT4181311778-ESDIS",
+            "CIT4181344072-ESDIS",
+            "CIT4181339982-ESDIS",
+            "CIT3804195987-ESDIS",
+            "CIT4181376694-ESDIS",
+            "CIT4181357306-ESDIS",
+            "CIT4181363899-ESDIS",
+            "CIT3804320621-ESDIS",
+            "CIT4181349634-ESDIS",
+            "CIT3804295951-ESDIS",
+            "CIT4181378801-ESDIS",
+            "CIT3804366122-ESDIS",
+            "CIT4181362385-ESDIS",
+            "CIT3803974483-ESDIS",
+            "CIT4181314954-ESDIS",
+            "CIT3804269607-ESDIS",
+            "CIT4181325507-ESDIS",
+            "CIT4106706292-ESDIS",
+            "CIT4181329409-ESDIS"
+          ],
+          "variables": [
+            "V3938008802-GES_DISC",
+            "V3938009070-GES_DISC",
+            "V3938008839-GES_DISC",
+            "V3938008858-GES_DISC",
+            "V3938009315-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "OMI/Aura TOMS-Like Ozone and Radiative Cloud Fraction L3 1 day 0.25 degree x 0.25 degree V004 (OMTO3e) at GES DISC",
+        "entry_id": "OMTO3e_004",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C3377057279-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/OMTO3e_004.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/OMTO3e_004.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level3/OMTO3e.004/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3377057279-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMTO3e.004/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level3/OMTO3e.004/doc/README.OMTO3e_004.txt",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/repository/Mission/OMI/3.3_ScienceDataProductDocumentation/3.3.2_ProductRequirements_Designs/README.OMI_DUG.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/repository/Mission/OMI/3.3_ScienceDataProductDocumentation/3.3.4_ProductGenerationAlgorithm/ATBD-OMI-02.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/OMI/OMTO3e_004.fs",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://aura.gsfc.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://www.knmiprojects.nl/projects/ozone-monitoring-instrument",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "OMTO3e",
+        "summary": "The OMI science team produces this Level-3 Aura/OMI Global TOMS-Like Total Column Ozone gridded product OMTO3e (0.25deg Lat/Lon grids). The OMTO3e product selects the best pixel (shortest path length) data from the good quality filtered level-2 total column ozone data (OMTO3) that fall in the 0.25 x 0.25 degree global grids. Each file contains total column ozone, radiative cloud fraction and solar and viewing zenith angles.\n\nThe OMTO3e files are stored in the version 5 EOS Hierarchical Data Format (HDF-EOS5). Each file contains daily data from approximately 15 orbits. The maximum file size for the OMTO3e data product is about 2.8 Mbytes.",
+        "time_start": "2004-10-01T00:00:00.000Z",
+        "title": "OMI/Aura TOMS-Like Ozone and Radiative Cloud Fraction L3 1 day 0.25 degree x 0.25 degree V004 (OMTO3e) at GES DISC",
+        "updated": "2024-10-17T00:00:00.000Z",
+        "version_id": "004"
+      },
+      {
+        "archive_center": "NASA/GSFC/OMISIPS",
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": false,
+        "cloud_hosted": false,
+        "collection_data_type": "NEAR_REAL_TIME",
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "OMINRT",
+        "dataset_id": "OMI/Aura TOMS-Like Ozone and Radiative Cloud Fraction L3 1 day 0.25 degree x 0.25 degree V004 (OMTO3e) NRT",
+        "entry_id": "OMTO3e_004",
+        "has_combine": false,
+        "has_formats": false,
+        "has_spatial_subsetting": false,
+        "has_temporal_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "id": "C4181337883-OMINRT",
+        "links": [
+          {
+            "href": "https://cmr.earthdata.nasa.gov/search/concepts/C1428966163-OMINRT.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://omisips1.omisips.eosdis.nasa.gov/outgoing/OMINRT/C4/OMTO3e/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://cmr.earthdata.nasa.gov/search/concepts/C3377057279-GES_DISC.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          }
+        ],
+        "online_access_flag": false,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/OMISIPS"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "OMTO3e",
+        "summary": "The OMI science team produces this Level-3 Aura/OMI Global TOMS-Like Total Column Ozone Near Real Time (NRT) gridded product OMTO3e (0.25deg Lat/Lon grids). The OMTO3e product selects the best pixel (shortest path length) data from the good quality filtered level-2 total column ozone data (OMTO3) that fall in the 0.25 x 0.25 degree global grids. Each file contains total column ozone, radiative cloud fraction and solar and viewing zenith angles.\n\nThe OMTO3e files are stored in the version 5 EOS Hierarchical Data Format (HDF-EOS5). Each file contains daily data from approximately 15 orbits. The maximum file size for the OMTO3e data product is about 2.8 Mbytes.",
+        "time_start": "2004-07-15T11:50:43.000Z",
+        "title": "OMI/Aura TOMS-Like Ozone and Radiative Cloud Fraction L3 1 day 0.25 degree x 0.25 degree V004 (OMTO3e) NRT",
+        "updated": "2017-10-16T13:55:41.000Z",
+        "version_id": "004"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT4076012293-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181320777-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804131806-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181319135-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804240768-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804039302-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804021140-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804002102-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181329274-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181364629-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181348816-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181339656-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181339982-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181378887-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181355271-ESDIS"
+            },
+            {
+              "concept_id": "CIT4106699787-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181371035-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181374203-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803977398-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181316229-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181369486-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804293396-ESDIS"
+            },
+            {
+              "concept_id": "CIT4076062193-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181338382-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804003412-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181359791-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181355921-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804212233-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803994839-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181317679-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181378509-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181380039-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181345878-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181334367-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181343672-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181336795-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382905-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382526-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181378723-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181374321-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181358624-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181371683-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181377395-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803957252-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181317867-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181359172-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181340617-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181370959-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803963043-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181337830-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804214636-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181368110-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181333006-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181334079-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803967743-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181328313-ESDIS"
+            },
+            {
+              "concept_id": "CIT4076045910-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S2739607260-GES_DISC"
+            },
+            {
+              "concept_id": "S3385907677-GES_DISC"
+            }
+          ],
+          "tools": [
+            {
+              "concept_id": "TL2140660116-GES_DISC"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3496198323-GES_DISC"
+            },
+            {
+              "concept_id": "V3496198465-GES_DISC"
+            },
+            {
+              "concept_id": "V3496198489-GES_DISC"
+            },
+            {
+              "concept_id": "V3496198377-GES_DISC"
+            },
+            {
+              "concept_id": "V3496198326-GES_DISC"
+            },
+            {
+              "concept_id": "V3496198404-GES_DISC"
+            },
+            {
+              "concept_id": "V3496198315-GES_DISC"
+            },
+            {
+              "concept_id": "V3496198450-GES_DISC"
+            },
+            {
+              "concept_id": "V3496198434-GES_DISC"
+            },
+            {
+              "concept_id": "V3496198387-GES_DISC"
+            },
+            {
+              "concept_id": "V3496198312-GES_DISC"
+            },
+            {
+              "concept_id": "V3496198302-GES_DISC"
+            },
+            {
+              "concept_id": "V3496198204-GES_DISC"
+            },
+            {
+              "concept_id": "V3496198318-GES_DISC"
+            }
+          ],
+          "visualizations": [
+            {
+              "concept_id": "VIS3974543374-ESDIS"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT4076012293-ESDIS",
+            "CIT4181320777-ESDIS",
+            "CIT3804131806-ESDIS",
+            "CIT4181319135-ESDIS",
+            "CIT3804240768-ESDIS",
+            "CIT3804039302-ESDIS",
+            "CIT3804021140-ESDIS",
+            "CIT3804002102-ESDIS",
+            "CIT4181329274-ESDIS",
+            "CIT4181364629-ESDIS",
+            "CIT4181348816-ESDIS",
+            "CIT4181339656-ESDIS",
+            "CIT4181339982-ESDIS",
+            "CIT4181378887-ESDIS",
+            "CIT4181355271-ESDIS",
+            "CIT4106699787-ESDIS",
+            "CIT4181371035-ESDIS",
+            "CIT4181374203-ESDIS",
+            "CIT3803977398-ESDIS",
+            "CIT4181316229-ESDIS",
+            "CIT4181369486-ESDIS",
+            "CIT3804293396-ESDIS",
+            "CIT4076062193-ESDIS",
+            "CIT4181338382-ESDIS",
+            "CIT3804003412-ESDIS",
+            "CIT4181359791-ESDIS",
+            "CIT4181355921-ESDIS",
+            "CIT3804212233-ESDIS",
+            "CIT3803994839-ESDIS",
+            "CIT4181317679-ESDIS",
+            "CIT4181378509-ESDIS",
+            "CIT4181380039-ESDIS",
+            "CIT4181345878-ESDIS",
+            "CIT4181334367-ESDIS",
+            "CIT4181343672-ESDIS",
+            "CIT4181336795-ESDIS",
+            "CIT4181382905-ESDIS",
+            "CIT4181382526-ESDIS",
+            "CIT4181378723-ESDIS",
+            "CIT4181374321-ESDIS",
+            "CIT4181358624-ESDIS",
+            "CIT4181371683-ESDIS",
+            "CIT4181377395-ESDIS",
+            "CIT3803957252-ESDIS",
+            "CIT4181317867-ESDIS",
+            "CIT4181359172-ESDIS",
+            "CIT4181340617-ESDIS",
+            "CIT4181370959-ESDIS",
+            "CIT3803963043-ESDIS",
+            "CIT4181337830-ESDIS",
+            "CIT3804214636-ESDIS",
+            "CIT4181368110-ESDIS",
+            "CIT4181333006-ESDIS",
+            "CIT4181334079-ESDIS",
+            "CIT3803967743-ESDIS",
+            "CIT4181328313-ESDIS",
+            "CIT4076045910-ESDIS"
+          ],
+          "services": [
+            "S2739607260-GES_DISC",
+            "S3385907677-GES_DISC"
+          ],
+          "tools": [
+            "TL2140660116-GES_DISC"
+          ],
+          "variables": [
+            "V3496198323-GES_DISC",
+            "V3496198465-GES_DISC",
+            "V3496198489-GES_DISC",
+            "V3496198377-GES_DISC",
+            "V3496198326-GES_DISC",
+            "V3496198404-GES_DISC",
+            "V3496198315-GES_DISC",
+            "V3496198450-GES_DISC",
+            "V3496198434-GES_DISC",
+            "V3496198387-GES_DISC",
+            "V3496198312-GES_DISC",
+            "V3496198302-GES_DISC",
+            "V3496198204-GES_DISC",
+            "V3496198318-GES_DISC"
+          ],
+          "visualizations": [
+            "VIS3974543374-ESDIS"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "OMI/Aura Ozone (O3) DOAS Total Column Daily L3 1 day 0.25 degree x 0.25 degree V3 (OMDOAO3e) at GES DISC",
+        "entry_id": "OMDOAO3e_003",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1266136037-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/OMDOAO3e_003.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/OMDOAO3e_003.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://acdisc.gsfc.nasa.gov/data/Aura_OMI_Level3/OMDOAO3e.003/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://giovanni.gsfc.nasa.gov/giovanni/#dataKeyword=OMDOAO3e",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1266136037-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMDOAO3e.003/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://acdisc.gsfc.nasa.gov/data/Aura_OMI_Level3/OMDOAO3e.003/doc/OMDOAO3e_OSIPS_README_V003.doc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/repository/Mission/OMI/3.3_ScienceDataProductDocumentation/3.3.2_ProductRequirements_Designs/README.OMI_DUG.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/repository/Mission/OMI/3.3_ScienceDataProductDocumentation/3.3.2_ProductRequirements_Designs/OMDOAO3e_FileSpec.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://aura.gsfc.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://www.knmiprojects.nl/projects/ozone-monitoring-instrument",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://disc1.gsfc.nasa.gov/daac-bin/wms_omi?service=WMS&version=1.1.1&request=GetCapabilities",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://disc1.gsfc.nasa.gov/daac-bin/wms_omi?version=1.1.1&service=WMS&request=GetMap&SRS=EPSG:4326&WIDTH=600&HEIGHT=300&LAYERS=OMDOAO3e_ColumnAmountO3&TRANSPARENT=TRUE&FORMAT=image/png&bbox=-180,-90,180,90",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/daac-bin/wcsL3?service=WCS&version=1.0.0&request=GetCapabilities",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/daac-bin/wcsL3?service=WCS&version=1.0.0&request=describeCoverage&Coverage=OMDOAO3e:ColumnAmountO3",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/daac-bin/wcsL3?service=WCS&version=1.0.0&request=getCoverage&CRS=CRS:84&format=netCDF&resx=0.25&resy=0.25&bbox=-179.875,-89.875,179.875,89.875&coverage=OMDOAO3e:ColumnAmountO3",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://worldview.earthdata.nasa.gov/?l=Reference_Labels_15m(hidden),Reference_Features_15m(hidden),Coastlines_15m,OMI_Ozone_DOAS_Total_Column,OCI_PACE_True_Color(hidden),VIIRS_NOAA21_CorrectedReflectance_TrueColor(hidden),VIIRS_NOAA20_CorrectedReflectance_TrueColor(hidden),VIIRS_SNPP_CorrectedReflectance_TrueColor(hidden),MODIS_Aqua_CorrectedReflectance_TrueColor(hidden),MODIS_Terra_CorrectedReflectance_TrueColor&lg=true&t=2026-03-06-T13%3A47%3A22Z",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": false,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "OMDOAO3e",
+        "summary": "The OMI science team produces this Level-3 Aura/OMI Global OMDOAO3e Data Products (0.25deg Lat/Lon grids). This Level-3 global total column ozone product is derived from OMDOAO3 which is based on the Differential Absorption Spectroscopy (DOAS) fitting technique that essentially uses the OMI visible radiance values between 331.1 and 336.1 nm. In addition to the total ozone column (best quality data, satisfying the shortest path length) and its precision this product also contains some ancillary parameters such as cloud fraction, cloud height, etc. The short name for this Level-3 OMI ozone product is OMDOAO3e and the lead Algorithm scientist for this product and for OMDOAO3 (the data source of OMDOAO3e) is Dr. Pepijn Veefkind from KNMI.\n\nThe OMDOAO3e product files are stored in the version 5 Hierarchical Data Format (HDF-EOS5). Each daily file contains data from the day lit portion of the orbits (approximately 14 orbits) and is roughly 8 MB in size.",
+        "time_start": "2004-10-01T00:00:00.000Z",
+        "title": "OMI/Aura Ozone (O3) DOAS Total Column Daily L3 1 day 0.25 degree x 0.25 degree V3 (OMDOAO3e) at GES DISC",
+        "updated": "2012-03-12T00:00:00.000Z",
+        "version_id": "003"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT3804029145-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181340052-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181325120-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181329786-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181320682-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181334083-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804007925-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181357317-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804177848-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804125744-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804089937-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181311774-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804029090-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181325277-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181351321-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804033661-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181322738-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804039347-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804021971-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804032538-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181324726-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804214636-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804314594-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803980467-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S1962070864-POCLOUD"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3433759383-GES_DISC"
+            },
+            {
+              "concept_id": "V3433758425-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757433-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757268-GES_DISC"
+            },
+            {
+              "concept_id": "V3433758772-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757681-GES_DISC"
+            },
+            {
+              "concept_id": "V3433758211-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757891-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757908-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757848-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757830-GES_DISC"
+            },
+            {
+              "concept_id": "V3433759429-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757289-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757958-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757718-GES_DISC"
+            },
+            {
+              "concept_id": "V3433758191-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757725-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757502-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757357-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757335-GES_DISC"
+            },
+            {
+              "concept_id": "V3433759221-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757296-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757944-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757621-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757688-GES_DISC"
+            },
+            {
+              "concept_id": "V3433759409-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757905-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757872-GES_DISC"
+            },
+            {
+              "concept_id": "V3433759453-GES_DISC"
+            },
+            {
+              "concept_id": "V3433759626-GES_DISC"
+            },
+            {
+              "concept_id": "V3433758187-GES_DISC"
+            },
+            {
+              "concept_id": "V3433758123-GES_DISC"
+            },
+            {
+              "concept_id": "V3433759528-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757976-GES_DISC"
+            },
+            {
+              "concept_id": "V3433758564-GES_DISC"
+            },
+            {
+              "concept_id": "V3433759007-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757916-GES_DISC"
+            },
+            {
+              "concept_id": "V3433758217-GES_DISC"
+            },
+            {
+              "concept_id": "V3433759494-GES_DISC"
+            },
+            {
+              "concept_id": "V3433757764-GES_DISC"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT3804029145-ESDIS",
+            "CIT4181340052-ESDIS",
+            "CIT4181325120-ESDIS",
+            "CIT4181329786-ESDIS",
+            "CIT4181320682-ESDIS",
+            "CIT4181334083-ESDIS",
+            "CIT3804007925-ESDIS",
+            "CIT4181357317-ESDIS",
+            "CIT3804177848-ESDIS",
+            "CIT3804125744-ESDIS",
+            "CIT3804089937-ESDIS",
+            "CIT4181311774-ESDIS",
+            "CIT3804029090-ESDIS",
+            "CIT4181325277-ESDIS",
+            "CIT4181351321-ESDIS",
+            "CIT3804033661-ESDIS",
+            "CIT4181322738-ESDIS",
+            "CIT3804039347-ESDIS",
+            "CIT3804021971-ESDIS",
+            "CIT3804032538-ESDIS",
+            "CIT4181324726-ESDIS",
+            "CIT3804214636-ESDIS",
+            "CIT3804314594-ESDIS",
+            "CIT3803980467-ESDIS"
+          ],
+          "services": [
+            "S1962070864-POCLOUD"
+          ],
+          "variables": [
+            "V3433759383-GES_DISC",
+            "V3433758425-GES_DISC",
+            "V3433757433-GES_DISC",
+            "V3433757268-GES_DISC",
+            "V3433758772-GES_DISC",
+            "V3433757681-GES_DISC",
+            "V3433758211-GES_DISC",
+            "V3433757891-GES_DISC",
+            "V3433757908-GES_DISC",
+            "V3433757848-GES_DISC",
+            "V3433757830-GES_DISC",
+            "V3433759429-GES_DISC",
+            "V3433757289-GES_DISC",
+            "V3433757958-GES_DISC",
+            "V3433757718-GES_DISC",
+            "V3433758191-GES_DISC",
+            "V3433757725-GES_DISC",
+            "V3433757502-GES_DISC",
+            "V3433757357-GES_DISC",
+            "V3433757335-GES_DISC",
+            "V3433759221-GES_DISC",
+            "V3433757296-GES_DISC",
+            "V3433757944-GES_DISC",
+            "V3433757621-GES_DISC",
+            "V3433757688-GES_DISC",
+            "V3433759409-GES_DISC",
+            "V3433757905-GES_DISC",
+            "V3433757872-GES_DISC",
+            "V3433759453-GES_DISC",
+            "V3433759626-GES_DISC",
+            "V3433758187-GES_DISC",
+            "V3433758123-GES_DISC",
+            "V3433759528-GES_DISC",
+            "V3433757976-GES_DISC",
+            "V3433758564-GES_DISC",
+            "V3433759007-GES_DISC",
+            "V3433757916-GES_DISC",
+            "V3433758217-GES_DISC",
+            "V3433759494-GES_DISC",
+            "V3433757764-GES_DISC"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "OMI/Aura Ozone (O3) Total Column Daily L2 Global Gridded 0.25 degree x 0.25 degree V004 (OMTO3G) at GES DISC",
+        "entry_id": "OMTO3G_004",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C3377057175-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/OMTO3G_004.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/OMTO3G_004.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://acdisc.gsfc.nasa.gov/data/Aura_OMI_Level2G/OMTO3G.004/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3377057175-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level2G/OMTO3G.004/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/s4pa/Aura_OMI_Level2G/OMTO3G.004/doc/README.OMTO3G_004.txt",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/repository/Mission/OMI/3.3_ScienceDataProductDocumentation/3.3.2_ProductRequirements_Designs/README.OMI_DUG.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/repository/Mission/OMI/3.3_ScienceDataProductDocumentation/3.3.4_ProductGenerationAlgorithm/ATBD-OMI-02.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/OMI/OMTO3G_004.fs",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://aura.gsfc.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://www.knmiprojects.nl/projects/ozone-monitoring-instrument",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura"
+        ],
+        "processing_level_id": "2G",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": false,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "OMTO3G",
+        "summary": "This Level-2G daily global gridded product OMTO3G is based on the pixel level OMI Level-2 Total Ozone Product OMTO3. The OMTO3 product is from the enhanced TOMS version-8 algorithm that essentially uses the ultraviolet radiance data at 317.5 and 331.2 nm. The OMTO3G data product is a special Level-2 Global Gridded Product where pixel level data are binned into 0.25x0.25 degree global grids. It contains the data for all L2 scenes that have observation time for the 24-hour period beginning at 00:00:00 UTC. All data pixels that fall in a grid box are saved without averaging. Scientists can apply a data filtering scheme of their choice and create new gridded products.\n\nThe OMTO3G data product contains almost all parameters that are contained in the OMTO3. For example, in addition to the total column ozone it also contains cloud fraction, cloud pressure, terrain height, geolocation, solar and satellite viewing angles, and quality flags.\n\nThe OMTO3G files are stored in the version 5 EOS Hierarchical Data Format (HDF-EOS5). Each file contains daily data from approximately 15 orbits. The maximum file size for the OMTO3G data product is about 150 Mbytes.",
+        "time_start": "2004-10-01T00:00:00.000Z",
+        "title": "OMI/Aura Ozone (O3) Total Column Daily L2 Global Gridded 0.25 degree x 0.25 degree V004 (OMTO3G) at GES DISC",
+        "updated": "2024-10-16T00:00:00.000Z",
+        "version_id": "004"
+      },
+      {
+        "archive_center": "NASA/GSFC/SED/ESD/TISL/GESDISC",
+        "association_details": {
+          "citations": [
+            {
+              "concept_id": "CIT3804106714-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804184228-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803946212-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181355035-ESDIS"
+            },
+            {
+              "concept_id": "CIT3857558973-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804366122-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804193700-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803974483-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181325507-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181340617-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804195987-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181362385-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803992944-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181374339-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804269607-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181361745-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181324495-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181329471-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181344072-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181336102-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181329409-ESDIS"
+            },
+            {
+              "concept_id": "CIT3803963043-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181376694-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804127322-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804321110-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804032538-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181361113-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181356134-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804001805-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181357306-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181339377-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181320776-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804264950-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181378801-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181361427-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181311778-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804159311-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181336795-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804292218-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181358624-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804295951-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804206324-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181349634-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804320621-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804290517-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181355271-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181339982-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181322740-ESDIS"
+            },
+            {
+              "concept_id": "CIT4106706292-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804263541-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181363899-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804383787-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181382526-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181366413-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181327128-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804214636-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181383140-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181314954-ESDIS"
+            },
+            {
+              "concept_id": "CIT4076029458-ESDIS"
+            },
+            {
+              "concept_id": "CIT4181345878-ESDIS"
+            },
+            {
+              "concept_id": "CIT3804262794-ESDIS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S3385907677-GES_DISC"
+            },
+            {
+              "concept_id": "S2739607260-GES_DISC"
+            }
+          ],
+          "tools": [
+            {
+              "concept_id": "TL2140660116-GES_DISC"
+            }
+          ],
+          "variables": [
+            {
+              "concept_id": "V3496201617-GES_DISC"
+            },
+            {
+              "concept_id": "V3496201620-GES_DISC"
+            },
+            {
+              "concept_id": "V3496201610-GES_DISC"
+            },
+            {
+              "concept_id": "V3496201622-GES_DISC"
+            },
+            {
+              "concept_id": "V3496201608-GES_DISC"
+            }
+          ],
+          "visualizations": [
+            {
+              "concept_id": "VIS3974543399-ESDIS"
+            }
+          ]
+        },
+        "associations": {
+          "citations": [
+            "CIT3804106714-ESDIS",
+            "CIT3804184228-ESDIS",
+            "CIT3803946212-ESDIS",
+            "CIT4181355035-ESDIS",
+            "CIT3857558973-ESDIS",
+            "CIT3804366122-ESDIS",
+            "CIT3804193700-ESDIS",
+            "CIT3803974483-ESDIS",
+            "CIT4181325507-ESDIS",
+            "CIT4181340617-ESDIS",
+            "CIT3804195987-ESDIS",
+            "CIT4181362385-ESDIS",
+            "CIT3803992944-ESDIS",
+            "CIT4181374339-ESDIS",
+            "CIT3804269607-ESDIS",
+            "CIT4181361745-ESDIS",
+            "CIT4181324495-ESDIS",
+            "CIT4181329471-ESDIS",
+            "CIT4181344072-ESDIS",
+            "CIT4181336102-ESDIS",
+            "CIT4181329409-ESDIS",
+            "CIT3803963043-ESDIS",
+            "CIT4181376694-ESDIS",
+            "CIT3804127322-ESDIS",
+            "CIT3804321110-ESDIS",
+            "CIT3804032538-ESDIS",
+            "CIT4181361113-ESDIS",
+            "CIT4181356134-ESDIS",
+            "CIT3804001805-ESDIS",
+            "CIT4181357306-ESDIS",
+            "CIT4181339377-ESDIS",
+            "CIT4181320776-ESDIS",
+            "CIT3804264950-ESDIS",
+            "CIT4181378801-ESDIS",
+            "CIT4181361427-ESDIS",
+            "CIT4181311778-ESDIS",
+            "CIT3804159311-ESDIS",
+            "CIT4181336795-ESDIS",
+            "CIT3804292218-ESDIS",
+            "CIT4181358624-ESDIS",
+            "CIT3804295951-ESDIS",
+            "CIT3804206324-ESDIS",
+            "CIT4181349634-ESDIS",
+            "CIT3804320621-ESDIS",
+            "CIT3804290517-ESDIS",
+            "CIT4181355271-ESDIS",
+            "CIT4181339982-ESDIS",
+            "CIT4181322740-ESDIS",
+            "CIT4106706292-ESDIS",
+            "CIT3804263541-ESDIS",
+            "CIT4181363899-ESDIS",
+            "CIT3804383787-ESDIS",
+            "CIT4181382526-ESDIS",
+            "CIT4181366413-ESDIS",
+            "CIT4181327128-ESDIS",
+            "CIT3804214636-ESDIS",
+            "CIT4181383140-ESDIS",
+            "CIT4181314954-ESDIS",
+            "CIT4076029458-ESDIS",
+            "CIT4181345878-ESDIS",
+            "CIT3804262794-ESDIS"
+          ],
+          "services": [
+            "S3385907677-GES_DISC",
+            "S2739607260-GES_DISC"
+          ],
+          "tools": [
+            "TL2140660116-GES_DISC"
+          ],
+          "variables": [
+            "V3496201617-GES_DISC",
+            "V3496201620-GES_DISC",
+            "V3496201610-GES_DISC",
+            "V3496201622-GES_DISC",
+            "V3496201608-GES_DISC"
+          ],
+          "visualizations": [
+            "VIS3974543399-ESDIS"
+          ]
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "browse_flag": true,
+        "cloud_hosted": true,
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "coordinate_system": "CARTESIAN",
+        "data_center": "GES_DISC",
+        "dataset_id": "OMI/Aura TOMS-Like Ozone and Radiative Cloud Fraction L3 1 day 0.25 degree x 0.25 degree V3 (OMTO3e) at GES DISC",
+        "entry_id": "OMTO3e_003",
+        "has_combine": false,
+        "has_formats": true,
+        "has_spatial_subsetting": true,
+        "has_temporal_subsetting": true,
+        "has_transforms": false,
+        "has_variables": true,
+        "id": "C1266136071-GES_DISC",
+        "links": [
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/OMTO3e_003.png",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://disc.gsfc.nasa.gov/datacollection/OMTO3e_003.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level3/OMTO3e.003/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://giovanni.gsfc.nasa.gov/giovanni/#dataKeyword=OMTO3e",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          },
+          {
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1266136071-GES_DISC",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMTO3e.003/contents.html",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+          },
+          {
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level3/OMTO3e.003/doc/OMTO3e_OSIPS_README_V003.doc",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://docserver.gesdisc.eosdis.nasa.gov/repository/Mission/OMI/3.3_ScienceDataProductDocumentation/3.3.2_ProductRequirements_Designs/README.OMI_DUG.pdf",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://aura.gsfc.nasa.gov/",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://www.knmiprojects.nl/projects/ozone-monitoring-instrument",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://www.knmi.nl/research/publications",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+          },
+          {
+            "href": "https://disc1.gsfc.nasa.gov/daac-bin/wms_omi?service=WMS&version=1.1.1&request=GetCapabilities",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+          },
+          {
+            "href": "https://worldview.earthdata.nasa.gov/?l=Reference_Labels_15m(hidden),Reference_Features_15m(hidden),Coastlines_15m,OMI_Ozone_TOMS_Total_Column,OCI_PACE_True_Color(hidden),VIIRS_NOAA21_CorrectedReflectance_TrueColor(hidden),VIIRS_NOAA20_CorrectedReflectance_TrueColor(hidden),VIIRS_SNPP_CorrectedReflectance_TrueColor(hidden),MODIS_Aqua_CorrectedReflectance_TrueColor(hidden),MODIS_Terra_CorrectedReflectance_TrueColor&lg=true&t=2026-03-17-T12%3A21%3A36Z",
+            "hreflang": "en-US",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+          }
+        ],
+        "online_access_flag": true,
+        "orbit_parameters": {},
+        "organizations": [
+          "NASA/GSFC/SED/ESD/TISL/GESDISC"
+        ],
+        "original_format": "UMM_JSON",
+        "platforms": [
+          "Aura"
+        ],
+        "processing_level_id": "3",
+        "score": 1.32,
+        "service_features": {
+          "esi": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          },
+          "harmony": {
+            "has_combine": false,
+            "has_formats": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true,
+            "has_transforms": false,
+            "has_variables": true
+          },
+          "opendap": {
+            "has_combine": false,
+            "has_formats": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false,
+            "has_transforms": false,
+            "has_variables": false
+          }
+        },
+        "short_name": "OMTO3e",
+        "summary": "The OMI science team produces this Level-3 Aura/OMI Global TOMS-Like Total Column Ozone gridded product OMTO3e (0.25deg Lat/Lon grids). The OMTO3e product selects the best pixel (shortest path length) data from the good quality filtered level-2 total column ozone data (OMTO3) that fall in the 0.25 x 0.25 degree global grids. Each file contains total column ozone, radiative cloud fraction and solar and viewing zenith angles.\n\nThe OMTO3e files are stored in the version 5 EOS Hierarchical Data Format (HDF-EOS5). Each file contains daily data from approximately 15 orbits. The maximum file size for the OMTO3e data product is about 2.8 Mbytes.",
+        "time_start": "2004-10-01T00:00:00.000Z",
+        "title": "OMI/Aura TOMS-Like Ozone and Radiative Cloud Fraction L3 1 day 0.25 degree x 0.25 degree V3 (OMTO3e) at GES DISC",
+        "updated": "2012-03-22T00:00:00.000Z",
+        "version_id": "003"
+      }
+    ],
+    "id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?keyword=ozone&bounding_box=-1.1%2C50.6%2C0.7%2C51.8&temporal=2024-01-01T00%3A00%3A00Z%2C2026-05-26T23%3A59%3A59Z&page_size=10&sort_key=-score",
+    "title": "ECHO dataset metadata",
+    "updated": "2026-05-26T20:36:30.096Z"
+  }
+}

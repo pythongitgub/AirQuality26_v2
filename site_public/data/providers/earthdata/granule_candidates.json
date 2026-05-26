@@ -1,0 +1,525 @@
+[
+  {
+    "collection_concept_id": "C1693440801-GES_DISC",
+    "collection_short_name": "SNDRAQIL3CMCCP",
+    "collection_title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Comprehensive Quality Control Gridded Monthly V2 (SNDRAQIL3CMCCP) at GES DISC",
+    "download_links": [
+      "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/2026/SNDR.AQUA.AIRS.20260201.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260515161153.nc",
+      "s3://gesdisc-cumulus-prod-protected/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/2026/SNDR.AQUA.AIRS.20260201.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260515161153.nc",
+      "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+      "https://opendap.earthdata.nasa.gov/collections/C1693440801-GES_DISC/granules/SNDRAQIL3CMCCP.2%3ASNDR.AQUA.AIRS.20260201.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260515161153.nc",
+      "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3CMCCP_2.html",
+      "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+      "https://airs.jpl.nasa.gov/index.html"
+    ],
+    "id": "G4188188021-GES_DISC",
+    "links_count": 12,
+    "opendap_links": [
+      "https://opendap.earthdata.nasa.gov/collections/C1693440801-GES_DISC/granules/SNDRAQIL3CMCCP.2%3ASNDR.AQUA.AIRS.20260201.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260515161153.nc",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/"
+    ],
+    "producer_granule_id": "SNDR.AQUA.AIRS.20260201.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260515161153.nc",
+    "time_end": "2026-03-01T00:00:00.000Z",
+    "time_start": "2026-02-01T00:00:00.000Z",
+    "title": "SNDRAQIL3CMCCP.2:SNDR.AQUA.AIRS.20260201.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260515161153.nc",
+    "updated": "2026-05-15T16:49:54.000Z"
+  },
+  {
+    "collection_concept_id": "C1693440801-GES_DISC",
+    "collection_short_name": "SNDRAQIL3CMCCP",
+    "collection_title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Comprehensive Quality Control Gridded Monthly V2 (SNDRAQIL3CMCCP) at GES DISC",
+    "download_links": [
+      "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/2026/SNDR.AQUA.AIRS.20260101.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260326195516.nc",
+      "s3://gesdisc-cumulus-prod-protected/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/2026/SNDR.AQUA.AIRS.20260101.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260326195516.nc",
+      "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+      "https://opendap.earthdata.nasa.gov/collections/C1693440801-GES_DISC/granules/SNDRAQIL3CMCCP.2%3ASNDR.AQUA.AIRS.20260101.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260326195516.nc",
+      "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3CMCCP_2.html",
+      "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+      "https://airs.jpl.nasa.gov/index.html"
+    ],
+    "id": "G4106559559-GES_DISC",
+    "links_count": 12,
+    "opendap_links": [
+      "https://opendap.earthdata.nasa.gov/collections/C1693440801-GES_DISC/granules/SNDRAQIL3CMCCP.2%3ASNDR.AQUA.AIRS.20260101.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260326195516.nc",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/"
+    ],
+    "producer_granule_id": "SNDR.AQUA.AIRS.20260101.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260326195516.nc",
+    "time_end": "2026-02-01T00:00:00.000Z",
+    "time_start": "2026-01-01T00:00:00.000Z",
+    "title": "SNDRAQIL3CMCCP.2:SNDR.AQUA.AIRS.20260101.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260326195516.nc",
+    "updated": "2026-03-26T20:31:59.000Z"
+  },
+  {
+    "collection_concept_id": "C1693440801-GES_DISC",
+    "collection_short_name": "SNDRAQIL3CMCCP",
+    "collection_title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Comprehensive Quality Control Gridded Monthly V2 (SNDRAQIL3CMCCP) at GES DISC",
+    "download_links": [
+      "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/2025/SNDR.AQUA.AIRS.20251101.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260319190318.nc",
+      "s3://gesdisc-cumulus-prod-protected/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/2025/SNDR.AQUA.AIRS.20251101.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260319190318.nc",
+      "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+      "https://opendap.earthdata.nasa.gov/collections/C1693440801-GES_DISC/granules/SNDRAQIL3CMCCP.2%3ASNDR.AQUA.AIRS.20251101.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260319190318.nc",
+      "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3CMCCP_2.html",
+      "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+      "https://airs.jpl.nasa.gov/index.html"
+    ],
+    "id": "G4092664180-GES_DISC",
+    "links_count": 12,
+    "opendap_links": [
+      "https://opendap.earthdata.nasa.gov/collections/C1693440801-GES_DISC/granules/SNDRAQIL3CMCCP.2%3ASNDR.AQUA.AIRS.20251101.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260319190318.nc",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/"
+    ],
+    "producer_granule_id": "SNDR.AQUA.AIRS.20251101.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260319190318.nc",
+    "time_end": "2025-12-01T00:00:00.000Z",
+    "time_start": "2025-11-01T00:00:00.000Z",
+    "title": "SNDRAQIL3CMCCP.2:SNDR.AQUA.AIRS.20251101.M01.L3_CLIMCAPS_QCC.std.v02_56.G.260319190318.nc",
+    "updated": "2026-03-19T19:33:48.000Z"
+  },
+  {
+    "collection_concept_id": "C1693440802-GES_DISC",
+    "collection_short_name": "SNDRAQIL3SDCCP",
+    "collection_title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Specific Quality Control Gridded Daily V2 (SNDRAQIL3SDCCP) at GES DISC",
+    "download_links": [
+      "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/2026/SNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161902.nc",
+      "s3://gesdisc-cumulus-prod-protected/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/2026/SNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161902.nc",
+      "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+      "https://opendap.earthdata.nasa.gov/collections/C1693440802-GES_DISC/granules/SNDRAQIL3SDCCP.2%3ASNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161902.nc",
+      "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3SDCCP_2.html",
+      "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+      "https://airs.jpl.nasa.gov/index.html"
+    ],
+    "id": "G4193271005-GES_DISC",
+    "links_count": 12,
+    "opendap_links": [
+      "https://opendap.earthdata.nasa.gov/collections/C1693440802-GES_DISC/granules/SNDRAQIL3SDCCP.2%3ASNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161902.nc",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/"
+    ],
+    "producer_granule_id": "SNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161902.nc",
+    "time_end": "2026-03-25T00:00:00.000Z",
+    "time_start": "2026-03-24T00:00:00.000Z",
+    "title": "SNDRAQIL3SDCCP.2:SNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161902.nc",
+    "updated": "2026-05-21T16:55:09.000Z"
+  },
+  {
+    "collection_concept_id": "C1693440802-GES_DISC",
+    "collection_short_name": "SNDRAQIL3SDCCP",
+    "collection_title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Specific Quality Control Gridded Daily V2 (SNDRAQIL3SDCCP) at GES DISC",
+    "download_links": [
+      "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/2026/SNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161841.nc",
+      "s3://gesdisc-cumulus-prod-protected/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/2026/SNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161841.nc",
+      "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+      "https://opendap.earthdata.nasa.gov/collections/C1693440802-GES_DISC/granules/SNDRAQIL3SDCCP.2%3ASNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161841.nc",
+      "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3SDCCP_2.html",
+      "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+      "https://airs.jpl.nasa.gov/index.html"
+    ],
+    "id": "G4193271018-GES_DISC",
+    "links_count": 12,
+    "opendap_links": [
+      "https://opendap.earthdata.nasa.gov/collections/C1693440802-GES_DISC/granules/SNDRAQIL3SDCCP.2%3ASNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161841.nc",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/"
+    ],
+    "producer_granule_id": "SNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161841.nc",
+    "time_end": "2026-03-24T00:00:00.000Z",
+    "time_start": "2026-03-23T00:00:00.000Z",
+    "title": "SNDRAQIL3SDCCP.2:SNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161841.nc",
+    "updated": "2026-05-21T16:55:09.000Z"
+  },
+  {
+    "collection_concept_id": "C1693440802-GES_DISC",
+    "collection_short_name": "SNDRAQIL3SDCCP",
+    "collection_title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Specific Quality Control Gridded Daily V2 (SNDRAQIL3SDCCP) at GES DISC",
+    "download_links": [
+      "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/2026/SNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161935.nc",
+      "s3://gesdisc-cumulus-prod-protected/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/2026/SNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161935.nc",
+      "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+      "https://opendap.earthdata.nasa.gov/collections/C1693440802-GES_DISC/granules/SNDRAQIL3SDCCP.2%3ASNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161935.nc",
+      "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3SDCCP_2.html",
+      "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+      "https://airs.jpl.nasa.gov/index.html"
+    ],
+    "id": "G4193271029-GES_DISC",
+    "links_count": 12,
+    "opendap_links": [
+      "https://opendap.earthdata.nasa.gov/collections/C1693440802-GES_DISC/granules/SNDRAQIL3SDCCP.2%3ASNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161935.nc",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/"
+    ],
+    "producer_granule_id": "SNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161935.nc",
+    "time_end": "2026-03-23T00:00:00.000Z",
+    "time_start": "2026-03-22T00:00:00.000Z",
+    "title": "SNDRAQIL3SDCCP.2:SNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCS.std.v02_56.G.260521161935.nc",
+    "updated": "2026-05-21T16:55:09.000Z"
+  },
+  {
+    "collection_concept_id": "C1693440803-GES_DISC",
+    "collection_short_name": "SNDRAQIL3SMCCP",
+    "collection_title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Specific Quality Control Gridded Monthly V2 (SNDRAQIL3SMCCP) at GES DISC",
+    "download_links": [
+      "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/2026/SNDR.AQUA.AIRS.20260201.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260515161153.nc",
+      "s3://gesdisc-cumulus-prod-protected/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/2026/SNDR.AQUA.AIRS.20260201.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260515161153.nc",
+      "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+      "https://opendap.earthdata.nasa.gov/collections/C1693440803-GES_DISC/granules/SNDRAQIL3SMCCP.2%3ASNDR.AQUA.AIRS.20260201.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260515161153.nc",
+      "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3SMCCP_2.html",
+      "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+      "https://airs.jpl.nasa.gov/index.html"
+    ],
+    "id": "G4188187465-GES_DISC",
+    "links_count": 11,
+    "opendap_links": [
+      "https://opendap.earthdata.nasa.gov/collections/C1693440803-GES_DISC/granules/SNDRAQIL3SMCCP.2%3ASNDR.AQUA.AIRS.20260201.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260515161153.nc",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/"
+    ],
+    "producer_granule_id": "SNDR.AQUA.AIRS.20260201.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260515161153.nc",
+    "time_end": "2026-03-01T00:00:00.000Z",
+    "time_start": "2026-02-01T00:00:00.000Z",
+    "title": "SNDRAQIL3SMCCP.2:SNDR.AQUA.AIRS.20260201.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260515161153.nc",
+    "updated": "2026-05-15T16:47:34.000Z"
+  },
+  {
+    "collection_concept_id": "C1693440803-GES_DISC",
+    "collection_short_name": "SNDRAQIL3SMCCP",
+    "collection_title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Specific Quality Control Gridded Monthly V2 (SNDRAQIL3SMCCP) at GES DISC",
+    "download_links": [
+      "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/2026/SNDR.AQUA.AIRS.20260101.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260326195516.nc",
+      "s3://gesdisc-cumulus-prod-protected/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/2026/SNDR.AQUA.AIRS.20260101.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260326195516.nc",
+      "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+      "https://opendap.earthdata.nasa.gov/collections/C1693440803-GES_DISC/granules/SNDRAQIL3SMCCP.2%3ASNDR.AQUA.AIRS.20260101.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260326195516.nc",
+      "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3SMCCP_2.html",
+      "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+      "https://airs.jpl.nasa.gov/index.html"
+    ],
+    "id": "G4106559579-GES_DISC",
+    "links_count": 11,
+    "opendap_links": [
+      "https://opendap.earthdata.nasa.gov/collections/C1693440803-GES_DISC/granules/SNDRAQIL3SMCCP.2%3ASNDR.AQUA.AIRS.20260101.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260326195516.nc",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/"
+    ],
+    "producer_granule_id": "SNDR.AQUA.AIRS.20260101.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260326195516.nc",
+    "time_end": "2026-02-01T00:00:00.000Z",
+    "time_start": "2026-01-01T00:00:00.000Z",
+    "title": "SNDRAQIL3SMCCP.2:SNDR.AQUA.AIRS.20260101.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260326195516.nc",
+    "updated": "2026-03-26T20:26:09.000Z"
+  },
+  {
+    "collection_concept_id": "C1693440803-GES_DISC",
+    "collection_short_name": "SNDRAQIL3SMCCP",
+    "collection_title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Specific Quality Control Gridded Monthly V2 (SNDRAQIL3SMCCP) at GES DISC",
+    "download_links": [
+      "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/2025/SNDR.AQUA.AIRS.20251101.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260319190318.nc",
+      "s3://gesdisc-cumulus-prod-protected/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/2025/SNDR.AQUA.AIRS.20251101.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260319190318.nc",
+      "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+      "https://opendap.earthdata.nasa.gov/collections/C1693440803-GES_DISC/granules/SNDRAQIL3SMCCP.2%3ASNDR.AQUA.AIRS.20251101.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260319190318.nc",
+      "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3SMCCP_2.html",
+      "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+      "https://airs.jpl.nasa.gov/index.html"
+    ],
+    "id": "G4092664781-GES_DISC",
+    "links_count": 11,
+    "opendap_links": [
+      "https://opendap.earthdata.nasa.gov/collections/C1693440803-GES_DISC/granules/SNDRAQIL3SMCCP.2%3ASNDR.AQUA.AIRS.20251101.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260319190318.nc",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/"
+    ],
+    "producer_granule_id": "SNDR.AQUA.AIRS.20251101.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260319190318.nc",
+    "time_end": "2025-12-01T00:00:00.000Z",
+    "time_start": "2025-11-01T00:00:00.000Z",
+    "title": "SNDRAQIL3SMCCP.2:SNDR.AQUA.AIRS.20251101.M01.L3_CLIMCAPS_QCS.std.v02_56.G.260319190318.nc",
+    "updated": "2026-03-19T19:33:50.000Z"
+  },
+  {
+    "collection_concept_id": "C2503251631-GES_DISC",
+    "collection_short_name": "MSAQSO2L4",
+    "collection_title": "Multi-Satellite Air Quality Sulfur Dioxide (SO2) Database Long-Term L4 Global V2 (MSAQSO2L4) at GES DISC",
+    "download_links": [
+      "https://data.gesdisc.earthdata.nasa.gov/data/SO2/MSAQSO2L4.2/MSAQSO2L4_2005-2024_v02-00_20250629.nc",
+      "s3://gesdisc-cumulus-prod-protected/SO2/MSAQSO2L4.2/MSAQSO2L4_2005-2024_v02-00_20250629.nc",
+      "https://measures.gesdisc.eosdis.nasa.gov/opendap/SO2/MSAQSO2L4.2/MSAQSO2L4_2005-2024_v02-00_20250629.nc",
+      "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+      "https://disc.gsfc.nasa.gov/datacollection/MSAQSO2L4_2.html",
+      "https://measures.gesdisc.eosdis.nasa.gov/data/SO2/MSAQSO2L4.2",
+      "https://measures.gesdisc.eosdis.nasa.gov/opendap/SO2/MSAQSO2L4.2",
+      "https://www.earthdata.nasa.gov/about/competitive-programs/measures/multi-decadal-sulfur-dioxide-climatology-satellite-instruments",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/MEaSUREs/Krotkov/README.MSAQSO2L4.V2.pdf",
+      "https://so2.gsfc.nasa.gov/measures.html"
+    ],
+    "id": "G3587574118-GES_DISC",
+    "links_count": 11,
+    "opendap_links": [
+      "https://measures.gesdisc.eosdis.nasa.gov/opendap/SO2/MSAQSO2L4.2/MSAQSO2L4_2005-2024_v02-00_20250629.nc",
+      "https://measures.gesdisc.eosdis.nasa.gov/opendap/SO2/MSAQSO2L4.2"
+    ],
+    "producer_granule_id": "MSAQSO2L4_2005-2024_v02-00_20250629.nc",
+    "time_end": "2024-12-31T23:59:59.000Z",
+    "time_start": "2005-01-01T00:00:00.000Z",
+    "title": "MSAQSO2L4.2:MSAQSO2L4_2005-2024_v02-00_20250629.nc",
+    "updated": "2025-06-30T22:34:51.000Z"
+  },
+  {
+    "collection_concept_id": "C1693440800-GES_DISC",
+    "collection_short_name": "SNDRAQIL3CDCCP",
+    "collection_title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS : Comprehensive Quality Control Gridded Daily V2 (SNDRAQIL3CDCCP) at GES DISC",
+    "download_links": [
+      "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/2026/SNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160454.nc",
+      "s3://gesdisc-cumulus-prod-protected/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/2026/SNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160454.nc",
+      "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+      "https://opendap.earthdata.nasa.gov/collections/C1693440800-GES_DISC/granules/SNDRAQIL3CDCCP.2%3ASNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160454.nc",
+      "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3CDCCP_2.html",
+      "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+      "https://airs.jpl.nasa.gov/index.html"
+    ],
+    "id": "G4193270523-GES_DISC",
+    "links_count": 12,
+    "opendap_links": [
+      "https://opendap.earthdata.nasa.gov/collections/C1693440800-GES_DISC/granules/SNDRAQIL3CDCCP.2%3ASNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160454.nc",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/"
+    ],
+    "producer_granule_id": "SNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160454.nc",
+    "time_end": "2026-03-25T00:00:00.000Z",
+    "time_start": "2026-03-24T00:00:00.000Z",
+    "title": "SNDRAQIL3CDCCP.2:SNDR.AQUA.AIRS.20260324.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160454.nc",
+    "updated": "2026-05-21T16:55:08.000Z"
+  },
+  {
+    "collection_concept_id": "C1693440800-GES_DISC",
+    "collection_short_name": "SNDRAQIL3CDCCP",
+    "collection_title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS : Comprehensive Quality Control Gridded Daily V2 (SNDRAQIL3CDCCP) at GES DISC",
+    "download_links": [
+      "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/2026/SNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160454.nc",
+      "s3://gesdisc-cumulus-prod-protected/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/2026/SNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160454.nc",
+      "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+      "https://opendap.earthdata.nasa.gov/collections/C1693440800-GES_DISC/granules/SNDRAQIL3CDCCP.2%3ASNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160454.nc",
+      "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3CDCCP_2.html",
+      "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+      "https://airs.jpl.nasa.gov/index.html"
+    ],
+    "id": "G4193270873-GES_DISC",
+    "links_count": 12,
+    "opendap_links": [
+      "https://opendap.earthdata.nasa.gov/collections/C1693440800-GES_DISC/granules/SNDRAQIL3CDCCP.2%3ASNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160454.nc",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/"
+    ],
+    "producer_granule_id": "SNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160454.nc",
+    "time_end": "2026-03-24T00:00:00.000Z",
+    "time_start": "2026-03-23T00:00:00.000Z",
+    "title": "SNDRAQIL3CDCCP.2:SNDR.AQUA.AIRS.20260323.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160454.nc",
+    "updated": "2026-05-21T16:55:09.000Z"
+  },
+  {
+    "collection_concept_id": "C1693440800-GES_DISC",
+    "collection_short_name": "SNDRAQIL3CDCCP",
+    "collection_title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS : Comprehensive Quality Control Gridded Daily V2 (SNDRAQIL3CDCCP) at GES DISC",
+    "download_links": [
+      "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/2026/SNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160455.nc",
+      "s3://gesdisc-cumulus-prod-protected/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/2026/SNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160455.nc",
+      "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+      "https://opendap.earthdata.nasa.gov/collections/C1693440800-GES_DISC/granules/SNDRAQIL3CDCCP.2%3ASNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160455.nc",
+      "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3CDCCP_2.html",
+      "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+      "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+      "https://airs.jpl.nasa.gov/index.html"
+    ],
+    "id": "G4193270948-GES_DISC",
+    "links_count": 12,
+    "opendap_links": [
+      "https://opendap.earthdata.nasa.gov/collections/C1693440800-GES_DISC/granules/SNDRAQIL3CDCCP.2%3ASNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160455.nc",
+      "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/"
+    ],
+    "producer_granule_id": "SNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160455.nc",
+    "time_end": "2026-03-23T00:00:00.000Z",
+    "time_start": "2026-03-22T00:00:00.000Z",
+    "title": "SNDRAQIL3CDCCP.2:SNDR.AQUA.AIRS.20260322.D01.L3_CLIMCAPS_QCC.std.v02_56.G.260521160455.nc",
+    "updated": "2026-05-21T16:55:08.000Z"
+  },
+  {
+    "collection_concept_id": "C3645629331-LARC_CLOUD",
+    "collection_short_name": "Low-Cost-Sensors-AQ_BEACO2N",
+    "collection_title": "Low Cost Sensors AQ BEACO2N Data",
+    "download_links": [
+      "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_CO2_2021-01-01_thru_2025-08-14.ict",
+      "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_CO2_2021-01-01_thru_2025-08-14.ict.met",
+      "s3://asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_CO2_2021-01-01_thru_2025-08-14.ict",
+      "s3://asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_CO2_2021-01-01_thru_2025-08-14.ict.met",
+      "https://data.asdc.earthdata.nasa.gov/s3credentials",
+      "https://beacon.berkeley.edu/about/#",
+      "https://doi.org/10.5194/amt-17-1051-2024",
+      "https://doi.org/10.5194/amt-14-5487-2021",
+      "https://asdc.larc.nasa.gov/citing-data",
+      "https://search.earthdata.nasa.gov/search/granules?p=C3645629331-LARC_CLOUD"
+    ],
+    "id": "G3799560866-LARC_CLOUD",
+    "links_count": 13,
+    "opendap_links": [],
+    "producer_granule_id": "Low-Cost-Sensors-AQ_BEACO2N_CO2_2021-01-01_thru_2025-08-14.ict",
+    "time_end": "2025-08-14T07:00:00.000Z",
+    "time_start": "2021-01-01T08:00:00.000Z",
+    "title": "Low-Cost-Sensors-AQ_BEACO2N_CO2_2021-01-01_thru_2025-08-14.ict",
+    "updated": "2025-10-07T20:00:57.210Z"
+  },
+  {
+    "collection_concept_id": "C3645629331-LARC_CLOUD",
+    "collection_short_name": "Low-Cost-Sensors-AQ_BEACO2N",
+    "collection_title": "Low Cost Sensors AQ BEACO2N Data",
+    "download_links": [
+      "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_PM2.5_2021-01-01_thru_2025-08-14.ict",
+      "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_PM2.5_2021-01-01_thru_2025-08-14.ict.met",
+      "s3://asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_PM2.5_2021-01-01_thru_2025-08-14.ict",
+      "s3://asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_PM2.5_2021-01-01_thru_2025-08-14.ict.met",
+      "https://data.asdc.earthdata.nasa.gov/s3credentials",
+      "https://beacon.berkeley.edu/about/#",
+      "https://doi.org/10.5194/amt-17-1051-2024",
+      "https://doi.org/10.5194/amt-14-5487-2021",
+      "https://asdc.larc.nasa.gov/citing-data",
+      "https://search.earthdata.nasa.gov/search/granules?p=C3645629331-LARC_CLOUD"
+    ],
+    "id": "G3799560869-LARC_CLOUD",
+    "links_count": 13,
+    "opendap_links": [],
+    "producer_granule_id": "Low-Cost-Sensors-AQ_BEACO2N_PM2.5_2021-01-01_thru_2025-08-14.ict",
+    "time_end": "2025-08-14T07:00:00.000Z",
+    "time_start": "2021-01-01T08:00:00.000Z",
+    "title": "Low-Cost-Sensors-AQ_BEACO2N_PM2.5_2021-01-01_thru_2025-08-14.ict",
+    "updated": "2025-10-07T20:01:03.307Z"
+  },
+  {
+    "collection_concept_id": "C3645629331-LARC_CLOUD",
+    "collection_short_name": "Low-Cost-Sensors-AQ_BEACO2N",
+    "collection_title": "Low Cost Sensors AQ BEACO2N Data",
+    "download_links": [
+      "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_O3_2021-01-01_thru_2025-08-14.ict",
+      "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_O3_2021-01-01_thru_2025-08-14.ict.met",
+      "s3://asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_O3_2021-01-01_thru_2025-08-14.ict",
+      "s3://asdc-prod-protected/FIELDCAMPAIGN/Low-Cost-Sensors-AQ/Low-Cost-Sensors-AQ_BEACO2N_1/Low-Cost-Sensors-AQ_BEACO2N_O3_2021-01-01_thru_2025-08-14.ict.met",
+      "https://data.asdc.earthdata.nasa.gov/s3credentials",
+      "https://beacon.berkeley.edu/about/#",
+      "https://doi.org/10.5194/amt-17-1051-2024",
+      "https://doi.org/10.5194/amt-14-5487-2021",
+      "https://asdc.larc.nasa.gov/citing-data",
+      "https://search.earthdata.nasa.gov/search/granules?p=C3645629331-LARC_CLOUD"
+    ],
+    "id": "G3799560874-LARC_CLOUD",
+    "links_count": 13,
+    "opendap_links": [],
+    "producer_granule_id": "Low-Cost-Sensors-AQ_BEACO2N_O3_2021-01-01_thru_2025-08-14.ict",
+    "time_end": "2025-08-14T07:00:00.000Z",
+    "time_start": "2021-01-01T08:00:00.000Z",
+    "title": "Low-Cost-Sensors-AQ_BEACO2N_O3_2021-01-01_thru_2025-08-14.ict",
+    "updated": "2025-10-07T20:00:58.069Z"
+  },
+  {
+    "collection_concept_id": "C1276812830-GES_DISC",
+    "collection_short_name": "M2T1NXAER",
+    "collection_title": "MERRA-2 tavg1_2d_aer_Nx: 2d,1-Hourly,Time-averaged,Single-Level,Assimilation,Aerosol Diagnostics 0.625 x 0.5 degree V5.12.4 (M2T1NXAER) at GES DISC",
+    "download_links": [
+      "https://data.gesdisc.earthdata.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/2026/05/MERRA2_400.tavg1_2d_aer_Nx.20260501.nc4",
+      "s3://gesdisc-cumulus-prod-protected/MERRA2/M2T1NXAER.5.12.4/2026/05/MERRA2_400.tavg1_2d_aer_Nx.20260501.nc4",
+      "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+      "https://opendap.earthdata.nasa.gov/collections/C1276812830-GES_DISC/granules/M2T1NXAER.5.12.4%3AMERRA2_400.tavg1_2d_aer_Nx.20260501.nc4",
+      "https://disc.gsfc.nasa.gov/information/howto?tags=MERRA",
+      "https://disc.gsfc.nasa.gov/datacollection/M2T1NXAER_5.12.4.html",
+      "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/",
+      "https://search.earthdata.nasa.gov/search/granules?p=C1276812830-GES_DISC",
+      "https://goldsmr4.gesdisc.eosdis.nasa.gov/opendap/MERRA2/M2T1NXAER.5.12.4/contents.html",
+      "https://goldsmr4.gesdisc.eosdis.nasa.gov/thredds/catalog/MERRA2_aggregation/M2T1NXAER.5.12.4/catalog.html"
+    ],
+    "id": "G4194357728-GES_DISC",
+    "links_count": 16,
+    "opendap_links": [
+      "https://opendap.earthdata.nasa.gov/collections/C1276812830-GES_DISC/granules/M2T1NXAER.5.12.4%3AMERRA2_400.tavg1_2d_aer_Nx.20260501.nc4",
+      "https://goldsmr4.gesdisc.eosdis.nasa.gov/opendap/MERRA2/M2T1NXAER.5.12.4/contents.html"
+    ],
+    "producer_granule_id": "MERRA2_400.tavg1_2d_aer_Nx.20260501.nc4",
+    "time_end": "2026-05-01T23:59:59.000Z",
+    "time_start": "2026-05-01T00:00:00.000Z",
+    "title": "M2T1NXAER.5.12.4:MERRA2_400.tavg1_2d_aer_Nx.20260501.nc4",
+    "updated": "2026-05-22T20:23:34.000Z"
+  },
+  {
+    "collection_concept_id": "C1276812830-GES_DISC",
+    "collection_short_name": "M2T1NXAER",
+    "collection_title": "MERRA-2 tavg1_2d_aer_Nx: 2d,1-Hourly,Time-averaged,Single-Level,Assimilation,Aerosol Diagnostics 0.625 x 0.5 degree V5.12.4 (M2T1NXAER) at GES DISC",
+    "download_links": [
+      "https://data.gesdisc.earthdata.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/2026/04/MERRA2_400.tavg1_2d_aer_Nx.20260430.nc4",
+      "s3://gesdisc-cumulus-prod-protected/MERRA2/M2T1NXAER.5.12.4/2026/04/MERRA2_400.tavg1_2d_aer_Nx.20260430.nc4",
+      "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+      "https://opendap.earthdata.nasa.gov/collections/C1276812830-GES_DISC/granules/M2T1NXAER.5.12.4%3AMERRA2_400.tavg1_2d_aer_Nx.20260430.nc4",
+      "https://disc.gsfc.nasa.gov/information/howto?tags=MERRA",
+      "https://disc.gsfc.nasa.gov/datacollection/M2T1NXAER_5.12.4.html",
+      "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/",
+      "https://search.earthdata.nasa.gov/search/granules?p=C1276812830-GES_DISC",
+      "https://goldsmr4.gesdisc.eosdis.nasa.gov/opendap/MERRA2/M2T1NXAER.5.12.4/contents.html",
+      "https://goldsmr4.gesdisc.eosdis.nasa.gov/thredds/catalog/MERRA2_aggregation/M2T1NXAER.5.12.4/catalog.html"
+    ],
+    "id": "G4194349970-GES_DISC",
+    "links_count": 16,
+    "opendap_links": [
+      "https://opendap.earthdata.nasa.gov/collections/C1276812830-GES_DISC/granules/M2T1NXAER.5.12.4%3AMERRA2_400.tavg1_2d_aer_Nx.20260430.nc4",
+      "https://goldsmr4.gesdisc.eosdis.nasa.gov/opendap/MERRA2/M2T1NXAER.5.12.4/contents.html"
+    ],
+    "producer_granule_id": "MERRA2_400.tavg1_2d_aer_Nx.20260430.nc4",
+    "time_end": "2026-04-30T23:59:59.000Z",
+    "time_start": "2026-04-30T00:00:00.000Z",
+    "title": "M2T1NXAER.5.12.4:MERRA2_400.tavg1_2d_aer_Nx.20260430.nc4",
+    "updated": "2026-05-22T20:46:01.000Z"
+  },
+  {
+    "collection_concept_id": "C1276812830-GES_DISC",
+    "collection_short_name": "M2T1NXAER",
+    "collection_title": "MERRA-2 tavg1_2d_aer_Nx: 2d,1-Hourly,Time-averaged,Single-Level,Assimilation,Aerosol Diagnostics 0.625 x 0.5 degree V5.12.4 (M2T1NXAER) at GES DISC",
+    "download_links": [
+      "https://data.gesdisc.earthdata.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/2026/04/MERRA2_400.tavg1_2d_aer_Nx.20260429.nc4",
+      "s3://gesdisc-cumulus-prod-protected/MERRA2/M2T1NXAER.5.12.4/2026/04/MERRA2_400.tavg1_2d_aer_Nx.20260429.nc4",
+      "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+      "https://opendap.earthdata.nasa.gov/collections/C1276812830-GES_DISC/granules/M2T1NXAER.5.12.4%3AMERRA2_400.tavg1_2d_aer_Nx.20260429.nc4",
+      "https://disc.gsfc.nasa.gov/information/howto?tags=MERRA",
+      "https://disc.gsfc.nasa.gov/datacollection/M2T1NXAER_5.12.4.html",
+      "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/",
+      "https://search.earthdata.nasa.gov/search/granules?p=C1276812830-GES_DISC",
+      "https://goldsmr4.gesdisc.eosdis.nasa.gov/opendap/MERRA2/M2T1NXAER.5.12.4/contents.html",
+      "https://goldsmr4.gesdisc.eosdis.nasa.gov/thredds/catalog/MERRA2_aggregation/M2T1NXAER.5.12.4/catalog.html"
+    ],
+    "id": "G4194364256-GES_DISC",
+    "links_count": 16,
+    "opendap_links": [
+      "https://opendap.earthdata.nasa.gov/collections/C1276812830-GES_DISC/granules/M2T1NXAER.5.12.4%3AMERRA2_400.tavg1_2d_aer_Nx.20260429.nc4",
+      "https://goldsmr4.gesdisc.eosdis.nasa.gov/opendap/MERRA2/M2T1NXAER.5.12.4/contents.html"
+    ],
+    "producer_granule_id": "MERRA2_400.tavg1_2d_aer_Nx.20260429.nc4",
+    "time_end": "2026-04-29T23:59:59.000Z",
+    "time_start": "2026-04-29T00:00:00.000Z",
+    "title": "M2T1NXAER.5.12.4:MERRA2_400.tavg1_2d_aer_Nx.20260429.nc4",
+    "updated": "2026-05-22T20:44:22.000Z"
+  }
+]
