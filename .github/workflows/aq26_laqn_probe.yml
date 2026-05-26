@@ -1,10 +1,10 @@
-name: AQ26 LAQN Provider Probe V3.4
+name: AQ26 LAQN Provider Probe V3.5
 
 on:
   workflow_dispatch:
     inputs:
       group_name:
-        description: "LAQN group name"
+        description: "LAQN group name. Use London first; keep case-sensitive capital L."
         required: true
         default: "London"
         type: string
@@ -14,12 +14,12 @@ on:
         default: false
         type: boolean
       probe_site_code:
-        description: "Optional LAQN site code. Leave blank to auto-select from site/species metadata."
+        description: "Optional LAQN site code. Leave blank to auto-select."
         required: false
         default: ""
         type: string
       probe_species_code:
-        description: "Optional LAQN species code. Leave blank to auto-select from site/species metadata."
+        description: "Optional LAQN species code. Leave blank to auto-select."
         required: false
         default: ""
         type: string
@@ -46,11 +46,10 @@ permissions:
 jobs:
   laqn-provider-probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
-
+    timeout-minutes: 30
     env:
       ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
-      AQ26_USER_AGENT: "AQ26/3.4 LAQN provider probe contact=${{ secrets.MAIL_TO }}"
+      AQ26_USER_AGENT: "AQ26/3.5 LAQN provider probe contact=${{ secrets.MAIL_TO }}"
       AQ26_LAQN_RUN_DATA_PROBE: ${{ inputs.run_data_probe }}
 
     steps:
@@ -97,7 +96,7 @@ jobs:
       - name: Upload LAQN provider artifact
         uses: actions/upload-artifact@v4
         with:
-          name: aq26-laqn-provider-probe
+          name: aq26-laqn-provider-probe-v35
           path: |
             outputs/31_laqn/**
             site_public/data/providers/laqn/**
@@ -108,18 +107,10 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add \
-            outputs/31_laqn \
-            site_public/data/providers/laqn \
-            configs/aq26_laqn.yml \
-            scripts/aq26_provider_laqn.py \
-            .github/workflows/aq26_laqn_probe.yml \
-            requirements-laqn.txt \
-            docs/laqn_provider_v34_notes.md \
-            README_AQ26_LAQN_V34.md
+          git add             outputs/31_laqn             site_public/data/providers/laqn             configs/aq26_laqn.yml             scripts/aq26_provider_laqn.py             .github/workflows/aq26_laqn_probe.yml             requirements-laqn.txt             docs/laqn_provider_v35_notes.md
           if git diff --cached --quiet; then
             echo "No LAQN changes to commit"
           else
-            git commit -m "Add AQ26 LAQN provider probe"
+            git commit -m "Harden AQ26 LAQN provider v3.5"
             git push
           fi

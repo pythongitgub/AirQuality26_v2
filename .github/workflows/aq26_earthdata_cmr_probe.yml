@@ -1,0 +1,75 @@
+name: AQ26 NASA Earthdata CMR Probe
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_collections:
+        description: "Maximum CMR collection candidates"
+        required: true
+        default: "10"
+        type: string
+      max_granules_per_collection:
+        description: "Tiny granule probe count per collection"
+        required: true
+        default: "3"
+        type: string
+      commit_outputs:
+        description: "Commit Earthdata discovery outputs back to the repository"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  earthdata-cmr-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      AQ26_USER_AGENT: "AQ26 NASA Earthdata CMR probe contact=${{ secrets.MAIL_TO }}"
+      EARTHDATA_USERNAME: ${{ secrets.EARTHDATA_USERNAME }}
+      EARTHDATA_PASSWORD: ${{ secrets.EARTHDATA_PASSWORD }}
+      EARTHDATA_TOKEN: ${{ secrets.EARTHDATA_TOKEN }}
+      EARTH_DATA_API_KEY: ${{ secrets.EARTH_DATA_API_KEY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install requirements
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests pyyaml
+
+      - name: Probe NASA Earthdata CMR
+        run: |
+          python scripts/aq26_provider_earthdata.py             --repo-root .             --config configs/aq26_earthdata.yml             --max-collections "${{ inputs.max_collections }}"             --max-granules-per-collection "${{ inputs.max_granules_per_collection }}"
+
+      - name: Upload Earthdata provider artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-earthdata-cmr-probe
+          path: |
+            outputs/32_earthdata/**
+            site_public/data/providers/earthdata/**
+          if-no-files-found: error
+
+      - name: Commit Earthdata outputs
+        if: ${{ inputs.commit_outputs }}
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add             outputs/32_earthdata             site_public/data/providers/earthdata             scripts/aq26_provider_earthdata.py             configs/aq26_earthdata.yml             .github/workflows/aq26_earthdata_cmr_probe.yml             docs/earthdata_cmr_provider_notes.md
+          if git diff --cached --quiet; then
+            echo "No Earthdata changes to commit"
+          else
+            git commit -m "Add AQ26 NASA Earthdata CMR discovery probe"
+            git push
+          fi
