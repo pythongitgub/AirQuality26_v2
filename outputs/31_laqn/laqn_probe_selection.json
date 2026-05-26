@@ -1,0 +1,15 @@
+{
+  "auto_selected": null,
+  "end_date": "2024-07-25",
+  "final_site_code": "BL0",
+  "final_species_code": "NO2",
+  "flat_site_species_rows": 642,
+  "manual_pair_used": {
+    "site_code": "BL0",
+    "species_code": "NO2"
+  },
+  "requested_site_code": "BL0",
+  "requested_species_code": "NO2",
+  "run_data_probe": true,
+  "start_date": "2024-07-22"
+}
