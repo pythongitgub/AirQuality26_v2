@@ -1,4 +1,4 @@
-# AQ26 WeeklyV2 V3.2 historical backfill policy
+# AQ26 WeeklyV2 V3.2.1 historical backfill policy
 history:
   weeks: 104
   default_end_date: "2026-05-25"
@@ -21,6 +21,8 @@ validation:
   external_submission_ready_requires_all_science_gates: true
 backfill:
   batch_weeks_recommended: 4
+  auto_next_missing_start_date: true
+  skip_existing_before_applying_batch_limit: true
   force_rebuild_default: false
   source_priority:
     - openaq_ground_aq
@@ -38,6 +40,13 @@ backfill:
     backfill_news_query_limit: 3
     gemini_enabled_during_backfill: false
     gemini_default_model: "gemini-3.5-flash"
+secret_aliases:
+  cdse_username_password_first: true
+  cdse_client_id_aliases: ["CDSE_ID", "CDSE_CLIENT_ID"]
+  cdse_client_secret_aliases: ["CDSE_SECRET", "CDSE_CLIENT_SECRET"]
+  gemini_model_aliases: ["AQ26_GEMINI_MODEL", "GEMINI_MODEL"]
+  newsapi_aliases: ["NEWSAPI_KEY", "NEWS_API_KEY"]
+  newsdata_aliases: ["NEWSDATA_API_KEY", "NEWS_DATA_IO_KEY", "NEWSDATA_KEY"]
 rollups:
   derive_drive_file_count_from_gdrive_source_record_count: true
   derive_satellite_product_count_from_satellite_metadata_records: true
