@@ -1,4 +1,4 @@
-name: AQ26 WeeklyV2 Historical Backfill V3.1
+name: AQ26 WeeklyV2 Historical Backfill V3.2
 
 on:
   workflow_dispatch:
@@ -31,6 +31,24 @@ on:
         type: choice
         options: ["false", "true"]
         default: "false"
+      newsapi_enabled:
+        description: "Enable NewsAPI during historical backfill (normally false to avoid 429 errors)"
+        required: true
+        type: choice
+        options: ["false", "true"]
+        default: "false"
+      gdelt_enabled:
+        description: "Enable throttled GDELT context during historical backfill"
+        required: true
+        type: choice
+        options: ["true", "false"]
+        default: "true"
+      gemini_enabled:
+        description: "Enable Gemini metadata summary during historical backfill"
+        required: true
+        type: choice
+        options: ["false", "true"]
+        default: "false"
 
 permissions:
   contents: write
@@ -53,6 +71,13 @@ jobs:
       AQ26_OPENAQ_ENABLED: "true"
       AQ26_CAMS_ENABLED: "true"
       AQ26_SYNC_GOOGLE_DRIVE: "true"
+      AQ26_NEWSAPI_ENABLED: ${{ inputs.newsapi_enabled }}
+      AQ26_NEWSDATA_ENABLED: "false"
+      AQ26_GDELT_ENABLED: ${{ inputs.gdelt_enabled }}
+      AQ26_GDELT_MIN_SECONDS: "6"
+      AQ26_BACKFILL_NEWS_QUERY_LIMIT: "3"
+      AQ26_GEMINI_ENABLED: ${{ inputs.gemini_enabled }}
+      AQ26_GEMINI_MODEL: ${{ secrets.AQ26_GEMINI_MODEL }}
       OPENAQ_API_KEY: ${{ secrets.OPENAQ_API_KEY }}
       WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
       OPENWEATHER_KEY: ${{ secrets.OPENWEATHER_KEY }}
@@ -143,13 +168,15 @@ jobs:
             $STRICT_FLAG \
             build-site-data
 
-      - name: Upload AQ26 V3.1 site-data artifact
+      - name: Upload AQ26 V3.2 site-data artifact
         uses: actions/upload-artifact@v4
         with:
-          name: aq26-weeklyv2-v31-site-data-${{ github.run_id }}
+          name: aq26-weeklyv2-v32-site-data-${{ github.run_id }}
           path: |
             site_public/data/**/*.json
             site_public/assets/aq26_charts_v3.js
+            site_public/data/latest_backfill_summary.json
+            site_public/data/latest_live_summary.json
             outputs/10_historical_backfill/history/*.json
             outputs/99_integrity/AQ26_WEEKLYV2_SITE_V3_VALIDATION.json
           if-no-files-found: warn
@@ -162,5 +189,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add site_public/data site_public/assets/aq26_charts_v3.js outputs/10_historical_backfill/history outputs/99_integrity/AQ26_WEEKLYV2_SITE_V3_VALIDATION.json || true
-          git commit -m "AQ26 WeeklyV2 V3.1 date-bound historical backfill" || echo "No changes to commit"
+          git commit -m "AQ26 WeeklyV2 V3.2 backfill hardening and chart feeds" || echo "No changes to commit"
           git push || true
