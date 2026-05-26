@@ -17,7 +17,7 @@
     "records_ok": 7,
     "records_total": 8,
     "records_warning": 1,
-    "retrieved_at_utc": "2026-05-26T19:37:25Z",
+    "retrieved_at_utc": "2026-05-26T19:49:23Z",
     "scientific_caveat": "LAQN is a validated London/urban comparator network. It is not Newhaven-specific evidence unless used explicitly as an urban/control comparator.",
     "site_species_flat_ready": true,
     "site_species_flat_rows": 642,
@@ -31,8 +31,8 @@
       "status": "ok"
     },
     "data_probe": {
-      "path": "site_public/data/providers/laqn/chart_safe/data_probe_BL0_NO2_2024-07-22_2024-07-25.json",
-      "rows": 73,
+      "path": "site_public/data/providers/laqn/chart_safe/data_probe_MY1_NO2_2024-07-22_2024-07-27.json",
+      "rows": 121,
       "status": "ok"
     },
     "groups": {
