@@ -1,0 +1,70 @@
+name: AQ26 Evidence Lake Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      provider:
+        description: "Provider to package"
+        required: true
+        default: "laqn"
+      source_subdir:
+        description: "Repository source folder to package"
+        required: true
+        default: "outputs/31_laqn"
+      commit_site_index:
+        description: "Commit compact website evidence-lake index back to repo"
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Build local evidence-lake package and website index
+        run: |
+          set -euxo pipefail
+          mkdir -p _evidence_lake_drive_sim
+          ARGS="--repo-root . --drive-root _evidence_lake_drive_sim --provider '${{ inputs.provider }}' --source-subdir '${{ inputs.source_subdir }}' --copy-mode copy --site-public site_public"
+          if [ "${{ inputs.commit_site_index }}" = "true" ]; then
+            ARGS="$ARGS --commit-site-ready"
+          fi
+          python scripts/aq26_drive_evidence_exporter.py $ARGS
+
+      - name: Upload evidence lake package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-evidence-lake-package-${{ inputs.provider }}
+          path: |
+            _evidence_lake_drive_sim/**
+            site_public/data/providers/${{ inputs.provider }}/evidence_lake/**
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Commit website index
+        if: ${{ inputs.commit_site_index }}
+        run: |
+          set -euxo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site_public/data/providers/${{ inputs.provider }}/evidence_lake || true
+          if git diff --cached --quiet; then
+            echo "No website evidence-lake index changes to commit."
+          else
+            git commit -m "Update AQ26 evidence lake website index for ${{ inputs.provider }}"
+            git push
+          fi
