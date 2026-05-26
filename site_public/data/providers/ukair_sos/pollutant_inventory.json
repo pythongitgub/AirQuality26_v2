@@ -1,0 +1,7 @@
+{
+  "count": 0,
+  "observed_properties": [],
+  "provider": "ukair_sos",
+  "retrieved_at_utc": "2026-05-26T15:05:59Z",
+  "source_url": "https://uk-air.defra.gov.uk/sos-ukair/sos?service=SOS&request=GetCapabilities&AcceptVersions=2.0.0"
+}

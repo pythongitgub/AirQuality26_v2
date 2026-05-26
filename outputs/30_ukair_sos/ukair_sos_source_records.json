@@ -1,0 +1,22 @@
+[
+  {
+    "date_uk": "2026-05-26",
+    "error": null,
+    "http_status": 200,
+    "notes": "UK-AIR SOS capabilities parsed successfully. This establishes provider readiness; observation harvesting should use explicit date windows.",
+    "output_path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/outputs/30_ukair_sos/ukair_sos_capabilities.xml",
+    "provenance_level": "official_machine_readable",
+    "provider": "Defra UK-AIR Sensor Observation Service",
+    "record_count": 5768,
+    "retrieved_at_uk": "2026-05-26T15:05:59Z",
+    "retrieved_at_utc": "2026-05-26T15:05:59Z",
+    "sha256": "d44434df39a1f8aaab3ce7a940e08b80df0ed5b423d4c3113544b1b460303f65",
+    "source_class": "official_ground_air",
+    "source_confidence": "official_regulatory_machine_readable",
+    "source_type": "ukair_sos",
+    "status": "ok",
+    "temporal_role": "historical_observation_provider_capability",
+    "title": "UK-AIR SOS GetCapabilities",
+    "url": "https://uk-air.defra.gov.uk/sos-ukair/sos?service=SOS&request=GetCapabilities&AcceptVersions=2.0.0"
+  }
+]
