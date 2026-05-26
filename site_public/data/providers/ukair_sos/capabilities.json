@@ -31086,7 +31086,7 @@
       "format": "http://www.opengis.net/waterml/2.0"
     }
   ],
-  "retrieved_at_utc": "2026-05-26T15:13:31Z",
+  "retrieved_at_utc": "2026-05-26T15:22:41Z",
   "root_tag": "Capabilities",
   "service_identification": {
     "Abstract": "This is an OGC standards based Sensor Observation Service interface to Defra's UK Air Information Resource (UK-AIR). The service supports the UK obligations to European air quality e-Reporting initiative & Defra Open Data policy. The SOS provides a machine readable access point for air pollution measurements funded by Defra, Scottish Government, Welsh Government & Department of the Environment Northern Ireland. The service is INSPIRE network services compliant. For more on the European air quality e-Reporting initiative go to https://uk-air.defra.gov.uk/data/compliance-xml-files",

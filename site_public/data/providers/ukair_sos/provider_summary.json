@@ -20,7 +20,7 @@
   ],
   "provider": "ukair_sos",
   "raw_sha256": "d44434df39a1f8aaab3ce7a940e08b80df0ed5b423d4c3113544b1b460303f65",
-  "retrieved_at_utc": "2026-05-26T15:13:31Z",
+  "retrieved_at_utc": "2026-05-26T15:22:41Z",
   "science_notes": [
     "Capabilities readiness is confirmed; this is not yet observation harvesting.",
     "Use explicit GetObservation/GetResult windows before adding UK-AIR SOS to pollutant timeseries.",

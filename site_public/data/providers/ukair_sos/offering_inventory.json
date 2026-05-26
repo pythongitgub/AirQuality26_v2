@@ -2,7 +2,7 @@
   "count_in_site_sample": 500,
   "count_total": 2884,
   "provider": "ukair_sos",
-  "retrieved_at_utc": "2026-05-26T15:13:31Z",
+  "retrieved_at_utc": "2026-05-26T15:22:41Z",
   "sample": [
     {
       "identifier": "http://environment.data.gov.uk/air-quality/so/GB_Offering_1",
