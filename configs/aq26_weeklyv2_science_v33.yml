@@ -60,3 +60,5 @@ outputs:
   history_dir: site_public/data/history
   weekly_index: site_public/data/weekly_index.json
   validation: outputs/99_integrity/AQ26_WEEKLYV2_SCIENCE_V33_VALIDATION.json
+
+# V3.3.1 hardening: CDSE username/password first; temporal roles; Google Drive dependencies.
