@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "attempts": [
+      {
+        "attempt": 1,
+        "bytes": 2891,
+        "content_type": "text/html",
+        "http_status": 400,
+        "sha256": "7a2127c481ab9bc219645e1f2c27d21913379b6f83d8cbe84a4afa1181a25823",
+        "url": "https://api.erg.ic.ac.uk/AirQuality/Information/IndexHealthAdvice/Json"
+      },
+      {
+        "attempt": 2,
+        "bytes": 2891,
+        "content_type": "text/html",
+        "http_status": 400,
+        "sha256": "7a2127c481ab9bc219645e1f2c27d21913379b6f83d8cbe84a4afa1181a25823",
+        "url": "https://api.erg.ic.ac.uk/AirQuality/Information/IndexHealthAdvice/Json"
+      },
+      {
+        "attempt": 3,
+        "bytes": 2891,
+        "content_type": "text/html",
+        "http_status": 400,
+        "sha256": "7a2127c481ab9bc219645e1f2c27d21913379b6f83d8cbe84a4afa1181a25823",
+        "url": "https://api.erg.ic.ac.uk/AirQuality/Information/IndexHealthAdvice/Json"
+      }
+    ],
+    "error": "http_status_400",
+    "http_status": null,
+    "url": "https://api.erg.ic.ac.uk/AirQuality/Information/IndexHealthAdvice/Json"
+  },
+  "provider": "laqn",
+  "requested_url": "https://api.erg.ic.ac.uk/AirQuality/Information/IndexHealthAdvice/Json",
+  "retrieved_at_utc": "2026-05-26T15:21:11Z",
+  "title": "LAQN index health advice"
+}

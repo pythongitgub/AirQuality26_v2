@@ -1,0 +1,16 @@
+{
+  "base_url": "https://api.erg.ic.ac.uk/AirQuality",
+  "data_probe_ready": false,
+  "data_probe_requested": false,
+  "group_name": "London",
+  "metadata_ready": true,
+  "name": "London Air Quality Network / Imperial ERG AirQuality API",
+  "provider": "laqn",
+  "records_ok": 4,
+  "records_total": 5,
+  "records_warning": 1,
+  "retrieved_at_utc": "2026-05-26T15:21:11Z",
+  "scientific_caveat": "LAQN is a validated London/urban comparator network. It is not Newhaven-specific evidence unless used explicitly as an urban/control comparator.",
+  "source_records_path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/outputs/31_laqn/laqn_source_records.json",
+  "status": "ok"
+}
