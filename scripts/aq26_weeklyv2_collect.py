@@ -16,6 +16,8 @@ except Exception:
 RUN_TS = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 RECORDS: List[Dict[str, Any]] = []
 WARNINGS: List[Dict[str, Any]] = []
+CURRENT_START_DATE = ""
+CURRENT_END_DATE = ""
 OPENAQ_SAFETY = {
     "run_ts": RUN_TS,
     "enabled": False,
@@ -138,6 +140,35 @@ def add_warning(provider: str, query: str, http_status=None, error: str = "", no
     })
 
 
+def temporal_role_for_record(name: str, typ: str, url: str, query: str, status: str) -> str:
+    """Conservative temporal classification for scientific backfill.
+
+    This prevents current/live context feeds from being presented as historical
+    observations for a past evidence window.
+    """
+    text = " ".join(str(x or "").lower() for x in [name, typ, url, query])
+    if status in {"skipped", "error"}:
+        return "failed_or_skipped"
+    if typ in {"satellite_auth", "ai_summary", "web_search_context", "low_cost_sensor_context"}:
+        return "current_context_only"
+    if typ in {"satellite_metadata"}:
+        return "catalogue_metadata"
+    if typ in {"official_search", "official_watch_url"}:
+        return "reference_document"
+    if typ in {"atmospheric_model"}:
+        return "model_reanalysis"
+    # Current/live APIs are not historical evidence unless explicitly date-bound.
+    if any(k in text for k in ["current weather", "current air", "waqi geospatial", "purpleair", "serpapi"]):
+        return "current_context_only"
+    if typ in {"ground_aq", "weather", "openaq"}:
+        return "historical_observation"
+    if typ in {"gdrive"}:
+        return "reference_document"
+    if typ in {"news_api", "news_api_warning"}:
+        return "current_context_only"
+    return "unknown"
+
+
 def add_record(name, typ, url, query, status, http_status, path=None, record_count=0, error="", notes=""):
     t = now_utc()
     u = uk_time(t)
@@ -158,6 +189,13 @@ def add_record(name, typ, url, query, status, http_status, path=None, record_cou
         "record_count": int(record_count or 0),
         "error": redact(error or ""),
         "notes": notes or "",
+        "evidence_window_start": CURRENT_START_DATE,
+        "evidence_window_end": CURRENT_END_DATE,
+        "observed_start": CURRENT_START_DATE if temporal_role_for_record(name, typ, url or "", query or "", status) in {"historical_observation", "model_reanalysis", "catalogue_metadata"} else "",
+        "observed_end": CURRENT_END_DATE if temporal_role_for_record(name, typ, url or "", query or "", status) in {"historical_observation", "model_reanalysis", "catalogue_metadata"} else "",
+        "published_at": "",
+        "temporal_role": temporal_role_for_record(name, typ, url or "", query or "", status),
+        "temporal_validity_warning": "current/live context only; do not interpret as historical observation" if temporal_role_for_record(name, typ, url or "", query or "", status) == "current_context_only" else "",
     }
     RECORDS.append(row)
     return row
@@ -531,6 +569,9 @@ def harvest_gdrive(out):
         }
         p = write_json(out / "08_gdrive_snapshot" / "gdrive_recursive_inventory.json", inventory)
         add_record("Google Drive recursive inventory", "gdrive", f"gdrive://{folder_id}", "recursive", "ok", None, p, len(files), notes="metadata only; file IDs hashed")
+    except ModuleNotFoundError as e:
+        p = write_json(out / "08_gdrive_snapshot" / "gdrive_error.json", {"error": repr(e), "dependency_fix": "Install google-api-python-client, google-auth, google-auth-httplib2 and google-auth-oauthlib."})
+        add_record("Google Drive recursive inventory", "gdrive", f"gdrive://{folder_id}", "recursive", "warning", None, p, 0, repr(e), notes="missing optional Google Drive dependency; requirements.txt should install google API packages")
     except Exception as e:
         p = write_json(out / "08_gdrive_snapshot" / "gdrive_error.json", {"error": repr(e)})
         add_record("Google Drive recursive inventory", "gdrive", f"gdrive://{folder_id}", "recursive", "error", None, p, 0, repr(e))
@@ -641,42 +682,87 @@ def harvest_cdse_auth_readiness(cfg, out):
     password = env_first("CDSE_PASSWORD")
     client_id = env_first("CDSE_ID", "CDSE_CLIENT_ID")
     client_secret = env_first("CDSE_SECRET", "CDSE_CLIENT_SECRET")
+    public_client = env_first("CDSE_PUBLIC_CLIENT_ID") or ccfg.get("public_client_id", "cdse-public")
     token_url = ccfg.get("token_url", "https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token")
+
     readiness = {
         "run_ts": RUN_TS,
         "cdse_username_present": bool(username),
         "cdse_password_present": bool(password),
+        "cdse_id_present": bool(client_id),
+        "cdse_secret_present": bool(client_secret),
         "cdse_client_id_present": bool(client_id),
         "cdse_client_secret_present": bool(client_secret),
         "cdse_token_ready": False,
+        "cdse_username_password_auth_ready": False,
+        "cdse_client_credentials_auth_ready": False,
+        "auth_route_used": "",
         "token_probe_attempted": False,
         "http_status": None,
-        "notes": "No token value is stored. WeeklyV2 does not download CDSE products."
+        "attempts": [],
+        "notes": "No token value is stored. Username/password is tried first because it has worked for this repository."
     }
-    if username and password:
-        # Public CDSE password-flow client is commonly cdse-public. If user has a client id, prefer it.
-        data = {
-            "grant_type": "password",
-            "username": username,
-            "password": password,
-            "client_id": client_id or "cdse-public",
-        }
+
+    def try_token(route, data):
+        readiness["token_probe_attempted"] = True
         try:
             r = requests.post(token_url, data=data, timeout=30)
-            readiness["token_probe_attempted"] = True
-            readiness["http_status"] = r.status_code
+            attempt = {"route": route, "http_status": r.status_code, "ok": bool(r.ok)}
             if r.ok:
                 js = r.json()
-                readiness["cdse_token_ready"] = bool(js.get("access_token"))
-                readiness["expires_in"] = js.get("expires_in")
+                attempt["has_access_token"] = bool(js.get("access_token"))
+                attempt["expires_in"] = js.get("expires_in")
+                if js.get("access_token"):
+                    readiness["cdse_token_ready"] = True
+                    readiness["auth_route_used"] = route
+                    readiness["http_status"] = r.status_code
+                    readiness["expires_in"] = js.get("expires_in")
+                    if route.startswith("password"):
+                        readiness["cdse_username_password_auth_ready"] = True
+                    if route.startswith("client_credentials"):
+                        readiness["cdse_client_credentials_auth_ready"] = True
             else:
-                readiness["error"] = redact(r.text[:500])
+                attempt["error"] = redact(r.text[:500])
+                # Keep the most useful non-secret error from the final failed route only.
+                readiness["error"] = attempt["error"]
+                readiness["http_status"] = r.status_code
+            readiness["attempts"].append(attempt)
         except Exception as exc:
-            readiness["token_probe_attempted"] = True
-            readiness["error"] = redact(repr(exc))
-    p = write_json(out / "15_optional_sources" / "cdse_auth_readiness.json", readiness)
-    add_record("CDSE auth readiness", "satellite_auth", token_url, "token_probe", "ok" if readiness.get("cdse_token_ready") else "warning", readiness.get("http_status"), p, 1, readiness.get("error", ""), notes="token readiness only; access token not stored")
+            attempt = {"route": route, "http_status": None, "ok": False, "error": redact(repr(exc))}
+            readiness["attempts"].append(attempt)
+            readiness["error"] = attempt["error"]
+        return readiness["cdse_token_ready"]
 
+    # Route 1: known-good repository credentials. Try public client first, so CDSE_ID/CDSE_SECRET cannot break password-flow auth.
+    if username and password:
+        if try_token("password:CDSE_USERNAME_CDSE_PASSWORD:public_client", {
+            "grant_type": "password", "username": username, "password": password, "client_id": public_client,
+        }):
+            pass
+        elif client_id and client_id != public_client:
+            try_token("password:CDSE_USERNAME_CDSE_PASSWORD:repo_client_id", {
+                "grant_type": "password", "username": username, "password": password, "client_id": client_id,
+            })
+
+    # Route 2: client credentials fallback only if username/password did not work.
+    if (not readiness["cdse_token_ready"]) and client_id and client_secret:
+        try_token("client_credentials:CDSE_ID_CDSE_SECRET", {
+            "grant_type": "client_credentials", "client_id": client_id, "client_secret": client_secret,
+        })
+
+    if not readiness["token_probe_attempted"]:
+        readiness["error"] = "No CDSE_USERNAME/CDSE_PASSWORD or CDSE_ID/CDSE_SECRET credentials were available."
+
+    if readiness.get("cdse_token_ready"):
+        readiness.pop("error", None)
+
+    p = write_json(out / "15_optional_sources" / "cdse_auth_readiness.json", readiness)
+    add_record(
+        "CDSE auth readiness", "satellite_auth", token_url, "token_probe",
+        "ok" if readiness.get("cdse_token_ready") else "warning",
+        readiness.get("http_status"), p, 1, readiness.get("error", ""),
+        notes="CDSE token readiness only; access token not stored; username/password tried before client credentials"
+    )
 
 def harvest_gemini_summary(cfg, out):
     gcfg = cfg.get("optional_sources", {}).get("gemini", {})
@@ -762,7 +848,7 @@ def build_backfill_and_gates(cfg, out, start_date, end_date):
     gates = {
         "automation_ready": True,
         "provenance_ready": True,
-        "redaction_ready": None,
+        "redaction_ready": not any(str(r.get("error", "")) and re.search(r"(?i)(api[_-]?key|token|secret|password|bearer\s+)[=: ]+[A-Za-z0-9_.-]{8,}", str(r.get("error", ""))) for r in RECORDS),
         "metoffice_ready": any(r["source_name"] == "Met Office DataHub land observations" and r["status"] == "ok" for r in RECORDS),
         "ground_aq_ready": observed["ground_aq"],
         "openaq_ready": any(r["source_name"].startswith("OpenAQ") and r["status"] == "ok" for r in RECORDS),

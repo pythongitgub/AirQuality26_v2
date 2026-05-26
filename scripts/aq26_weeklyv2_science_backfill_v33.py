@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AQ26 WeeklyV2 Science Backfill V3.3
+AQ26 WeeklyV2 Science Backfill V3.3.1
 ===================================
 
 A conservative, provenance-first historical backfill and site-data builder for the
@@ -562,6 +562,9 @@ def normalise_collector_summary(
     drive_count = safe_int(raw.get("drive_file_count")) or sum_record_counts(records, "gdrive")
 
     source_record_count = len(records) if records else safe_int(raw.get("source_record_count"))
+    temporal_role_counts = count_by(records, "temporal_role") if records else {}
+    current_context_count = temporal_role_counts.get("current_context_only", 0)
+    historical_observation_count = temporal_role_counts.get("historical_observation", 0)
     ok_count = status_counts.get("ok", safe_int(raw.get("ok_count")))
     warning_count = status_counts.get("warning", safe_int(raw.get("warning_count")))
     error_count = status_counts.get("error", safe_int(raw.get("error_count")))
@@ -589,7 +592,7 @@ def normalise_collector_summary(
     readiness["external_submission_ready"] = bool(readiness.get("external_submission_ready")) and all(readiness.get(k) is True for k in EXTERNAL_REQUIRED_GATES)
 
     out: Dict[str, Any] = {
-        "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+        "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
         "created_at_utc": now_utc(),
         "run_ts": raw.get("run_ts") or now_utc_dt().strftime("%Y%m%dT%H%M%SZ"),
         "date_window": window.as_dict(),
@@ -605,6 +608,9 @@ def normalise_collector_summary(
         "skipped_count": skipped_count,
         "source_type_counts": type_counts,
         "source_status_counts": status_counts,
+        "temporal_role_counts": temporal_role_counts,
+        "current_context_only_count": current_context_count,
+        "historical_observation_count": historical_observation_count,
         "satellite_product_count": satellite_count,
         "drive_file_count": drive_count,
         "drive_inventory_truncated": drive_inventory_truncated,
@@ -684,7 +690,7 @@ def run_one_window(args: argparse.Namespace, window: Window) -> Dict[str, Any]:
 
 def placeholder_for_window(window: Window) -> Dict[str, Any]:
     return {
-        "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+        "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
         "run_ts": f"BACKFILL_SLOT_{window.key}",
         "date_window": window.as_dict(),
         "status": "not_yet_harvested",
@@ -994,6 +1000,11 @@ def validate(site_root: Path, output_root: Path, history_end_date: dt.date, hist
             missing_gate_values = [g for g in SCIENCE_REQUIRED_GATES if readiness.get(g) is None and row.get(g) is None]
             if missing_gate_values:
                 issues.append(ValidationIssue("warning", "missing_science_gate_values", f"{w.key} lacks readiness values for {missing_gate_values}", str(index_path)))
+            if safe_int(row.get("current_context_only_count")) > 0:
+                sev = "error" if external_grade else "warning"
+                issues.append(ValidationIssue(sev, "current_context_only_sources_present", f"{w.key} contains {row.get('current_context_only_count')} current/context records; these must not be interpreted as historical measurements", str(index_path)))
+            if readiness.get("drive_ready") is False and safe_int(row.get("drive_file_count")) == 0:
+                issues.append(ValidationIssue("warning", "drive_inventory_not_ready", f"{w.key} has no ready Google Drive evidence inventory", str(index_path)))
     # JSON and CSV sanity.
     for p in list((site_root / "data").rglob("*.json")) + list((output_root / "99_integrity").rglob("*.json")):
         if p.exists():
