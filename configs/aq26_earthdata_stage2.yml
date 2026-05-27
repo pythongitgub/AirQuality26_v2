@@ -1,0 +1,25 @@
+outputs:
+  root: outputs/34_earthdata_stage2
+  site_root: site_public/data/providers/earthdata/stage2
+user_agent: AQ26 Earthdata Stage2 controlled discovery (no bulk downloads)
+search:
+  bounding_box: -1.1,50.6,0.7,51.8
+  temporal: 2024-01-01T00:00:00Z,2026-05-26T23:59:59Z
+  max_collections_per_keyword: 8
+  max_total_collections: 30
+  max_granules_per_collection: 3
+  keywords:
+  - M2T1NXAER
+  - MERRA-2 aerosol
+  - MERRA-2 PM2.5
+  - sulfur dioxide Level 4
+  - nitrogen dioxide tropospheric column
+  - carbon monoxide tropospheric
+  - ozone tropospheric
+  - aerosol optical depth MODIS
+  - VIIRS aerosol
+  - OMI NO2
+  - OMI SO2
+controls:
+  large_downloads_enabled: false
+  generic_tiny_download_enabled_by_default: false

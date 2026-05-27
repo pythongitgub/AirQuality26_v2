@@ -1,0 +1,38 @@
+base_url: https://api.erg.ic.ac.uk/AirQuality
+user_agent: AQ26 LAQN controlled historical backfill
+min_seconds_between_requests: 1.5
+outputs:
+  root: outputs/35_laqn_backfill
+  site_root: site_public/data/providers/laqn/backfill
+chart_safe_row_limit: 5000
+pairs:
+- site_code: MY1
+  species_code: NO2
+  start_date: '2024-07-22'
+  end_date: '2024-07-27'
+  role: known working roadside NO2 comparator
+- site_code: MY1
+  species_code: PM10
+  start_date: '2024-07-22'
+  end_date: '2024-07-27'
+  role: roadside particulate comparator
+- site_code: KC1
+  species_code: NO2
+  start_date: '2024-07-22'
+  end_date: '2024-07-27'
+  role: urban background NO2 comparator
+- site_code: BL0
+  species_code: PM25
+  start_date: '2024-07-22'
+  end_date: '2024-07-27'
+  role: urban background particulate comparator
+- site_code: WM0
+  species_code: PM25
+  start_date: '2024-07-22'
+  end_date: '2024-07-27'
+  role: Westminster PM2.5 comparator
+- site_code: BX2
+  species_code: PM25
+  start_date: '2024-07-22'
+  end_date: '2024-07-27'
+  role: outer London PM2.5 comparator

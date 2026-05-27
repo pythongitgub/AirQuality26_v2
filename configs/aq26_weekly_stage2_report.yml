@@ -1,0 +1,8 @@
+outputs:
+  root: outputs/36_weekly_stage2_integrated
+  site_root: site_public/data/providers/integrated_weekly_stage2
+inputs:
+  v331_weekly_index: site_public/data/weekly_index.json
+  v331_validation: outputs/99_integrity/AQ26_WEEKLYV2_SCIENCE_V33_VALIDATION.json
+  earthdata_stage2: outputs/34_earthdata_stage2/earthdata_stage2_summary.json
+  laqn_backfill: outputs/35_laqn_backfill/laqn_backfill_summary.json
