@@ -1,0 +1,12 @@
+{
+  "generated_at_utc": "2026-05-27T19:25:01Z",
+  "broad_facilities": 46,
+  "validated_overlays": 8,
+  "remaining_without_validated_overlay": 38,
+  "remaining_queried": 38,
+  "live_openaq_enabled": true,
+  "live_candidate_rows": 0,
+  "selected_candidate_overlays_needing_review": 0,
+  "errors": 76,
+  "note": "Candidate overlays are not validated; use for review queue only. Validated overlays come from the DEFRA/AURN overlay CSV."
+}

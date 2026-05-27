@@ -1,0 +1,382 @@
+[
+  {
+    "facility": "Allerton Waste Recovery Park",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Allerton Waste Recovery Park",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Allington Quarry Waste Management Facility",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Allington Quarry Waste Management Facility",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Ardley ERF",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Ardley ERF",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Beddington ERF",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Beddington ERF",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Bolton WtE",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Bolton WtE",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Chineham EfW",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Chineham EfW",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Cornwall ERC",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Cornwall ERC",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Crossness Sludge Plant",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Crossness Sludge Plant",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "CSWDC Coventry",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "CSWDC Coventry",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Devonport Dockyard",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Devonport Dockyard",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Dudley EfW",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Dudley EfW",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Eastcroft EfW",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Eastcroft EfW",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Exeter ERF",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Exeter ERF",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Fawley Incinerator",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Fawley Incinerator",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Ferrybridge MF2",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Ferrybridge MF2",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Glanford PS",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Glanford PS",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Gloucestershire Javelin Park",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Gloucestershire Javelin Park",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Great Blakenham EfW",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Great Blakenham EfW",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Greatmoor EfW",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Greatmoor EfW",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Hartlebury EfW",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Hartlebury EfW",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Isle of Man Incinerator",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Isle of Man Incinerator",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Isle of Wight Gasification",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Isle of Wight Gasification",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Kirklees EfW",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Kirklees EfW",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Lakeside EfW",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Lakeside EfW",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Lincoln ERF",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Lincoln ERF",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Marchwood ERF",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Marchwood ERF",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Milton Keynes WRP",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Milton Keynes WRP",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Newlincs EfW",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Newlincs EfW",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "North Hykeham Incinerator",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "North Hykeham Incinerator",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Peterborough ERF",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Peterborough ERF",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Portsmouth ERF",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Portsmouth ERF",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Red Moss Landfill",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Red Moss Landfill",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Shrewsbury Incinerator",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Shrewsbury Incinerator",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Stoke EfW",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Stoke EfW",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Teesside EfW",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Teesside EfW",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Thetford Incinerator",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Thetford Incinerator",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Westfield Incinerator",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Westfield Incinerator",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Wolverhampton EfW",
+    "source_point": "facility",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  },
+  {
+    "facility": "Wolverhampton EfW",
+    "source_point": "control",
+    "error": "openaq_error: HTTPError: HTTP Error 422: Unprocessable Entity"
+  }
+]
