@@ -1,0 +1,186 @@
+/* AQ26 public/mobile polish. Safe to load after the existing site CSS. */
+:root{
+  --aq26-ink:#071b33;
+  --aq26-sea:#0099a8;
+  --aq26-blue:#0d5f91;
+  --aq26-sky:#dff5ff;
+  --aq26-card:#ffffff;
+  --aq26-soft:#eef6fb;
+  --aq26-shadow:0 18px 45px rgba(7,27,51,.14);
+  --aq26-radius:22px;
+}
+
+html{scroll-behavior:smooth;}
+body{overflow-x:hidden;}
+
+.aq26-mobile-menu-toggle{
+  display:none;
+  align-items:center;
+  gap:.6rem;
+  border:1px solid rgba(7,27,51,.14);
+  background:linear-gradient(135deg,#ffffff,#eef8fc);
+  color:var(--aq26-ink);
+  border-radius:999px;
+  padding:.72rem .95rem;
+  font-weight:800;
+  letter-spacing:.01em;
+  box-shadow:0 10px 25px rgba(7,27,51,.12);
+  cursor:pointer;
+  min-height:44px;
+}
+
+.aq26-mobile-menu-toggle .aq26-burger{
+  width:24px;
+  height:18px;
+  position:relative;
+  display:inline-block;
+}
+.aq26-mobile-menu-toggle .aq26-burger span{
+  position:absolute;
+  left:0;
+  width:24px;
+  height:3px;
+  border-radius:999px;
+  background:var(--aq26-ink);
+  transition:transform .2s ease, opacity .2s ease, top .2s ease;
+}
+.aq26-mobile-menu-toggle .aq26-burger span:nth-child(1){top:0;}
+.aq26-mobile-menu-toggle .aq26-burger span:nth-child(2){top:7.5px;}
+.aq26-mobile-menu-toggle .aq26-burger span:nth-child(3){top:15px;}
+body.aq26-nav-open .aq26-mobile-menu-toggle .aq26-burger span:nth-child(1){top:7.5px; transform:rotate(45deg);}
+body.aq26-nav-open .aq26-mobile-menu-toggle .aq26-burger span:nth-child(2){opacity:0;}
+body.aq26-nav-open .aq26-mobile-menu-toggle .aq26-burger span:nth-child(3){top:7.5px; transform:rotate(-45deg);}
+
+.aq26-mobile-menu-panel{
+  display:none;
+  border:1px solid rgba(7,27,51,.11);
+  border-radius:26px;
+  background:rgba(255,255,255,.96);
+  box-shadow:var(--aq26-shadow);
+  margin:.85rem 1rem 1.1rem;
+  padding:.75rem;
+  backdrop-filter:blur(14px);
+}
+.aq26-mobile-menu-panel a{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:.7rem;
+  text-decoration:none;
+  color:var(--aq26-ink);
+  background:linear-gradient(135deg,#f8fcff,#eef7fb);
+  border:1px solid rgba(7,27,51,.08);
+  border-radius:18px;
+  padding:1rem 1.05rem;
+  margin:.45rem 0;
+  font-weight:800;
+  min-height:46px;
+}
+.aq26-mobile-menu-panel a::after{
+  content:"›";
+  color:var(--aq26-sea);
+  font-size:1.45rem;
+  line-height:1;
+}
+body.aq26-nav-open .aq26-mobile-menu-panel{display:block;}
+
+.aq26-mobile-brandbar{
+  display:none;
+  align-items:center;
+  justify-content:space-between;
+  gap:.75rem;
+  padding:.65rem .85rem;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(244,248,251,.92);
+  border-bottom:1px solid rgba(7,27,51,.08);
+  backdrop-filter:blur(16px);
+}
+.aq26-mobile-brandbar img{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  object-fit:contain;
+}
+.aq26-mobile-brandbar strong{
+  color:var(--aq26-ink);
+  font-size:1rem;
+  line-height:1.05;
+}
+.aq26-mobile-brandbar small{
+  display:block;
+  color:#577087;
+  font-weight:700;
+  margin-top:.16rem;
+}
+
+.aq26-skip-link{
+  position:absolute;
+  left:-9999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.aq26-skip-link:focus{
+  left:1rem;
+  top:1rem;
+  width:auto;
+  height:auto;
+  z-index:2000;
+  background:#fff;
+  color:var(--aq26-ink);
+  border-radius:999px;
+  padding:.75rem 1rem;
+  box-shadow:var(--aq26-shadow);
+}
+
+@media (max-width: 820px){
+  body{font-size:16px;}
+  .aq26-mobile-brandbar{display:flex;}
+  .aq26-mobile-menu-toggle{display:inline-flex;}
+  .aq26-mobile-nav-source{
+    display:none !important;
+  }
+  main, .container, .page, .wrap, .content{
+    max-width:100% !important;
+  }
+  .hero, .aq26-hero, [class*="hero"]{
+    min-height:auto !important;
+    padding:1.35rem 1rem !important;
+    border-radius:0 0 28px 28px !important;
+  }
+  h1{
+    font-size:clamp(2rem,9vw,3.2rem) !important;
+    line-height:1.03 !important;
+  }
+  h2{
+    font-size:clamp(1.35rem,5vw,2rem) !important;
+    line-height:1.12 !important;
+  }
+  .grid, [class*="grid"], .cards, [class*="cards"]{
+    grid-template-columns:1fr !important;
+  }
+  .card, [class*="card"]{
+    border-radius:var(--aq26-radius) !important;
+  }
+  table{
+    display:block;
+    width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .cookie-banner, [class*="cookie"]{
+    left:.75rem !important;
+    right:.75rem !important;
+    bottom:.75rem !important;
+    width:auto !important;
+    max-width:calc(100vw - 1.5rem) !important;
+    border-radius:20px !important;
+  }
+}
+
+@media (min-width: 821px){
+  .aq26-mobile-menu-panel{display:none !important;}
+}
