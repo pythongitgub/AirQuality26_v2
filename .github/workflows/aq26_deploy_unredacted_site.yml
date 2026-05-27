@@ -73,17 +73,18 @@ jobs:
           REMOTE_DIR="$HOSTINGER_PUBLIC_HTML_DIR/$REMOTE_SUBDIR"
           HASHED_PASSWORD="$(htpasswd -nbB aq26 "$SCC_UNREDACTED_PASSWORD" | cut -d: -f2-)"
           printf 'aq26:%s\n' "$HASHED_PASSWORD" > site_unredacted/.htpasswd
-          cat > site_unredacted/.htaccess <<EOF
-AuthType Basic
-AuthName "AQ26 Unredacted Evidence"
-AuthUserFile $REMOTE_DIR/.htpasswd
-Require valid-user
-Options -Indexes
-DirectoryIndex index.html
-<IfModule mod_headers.c>
-  Header set X-Robots-Tag "noindex, nofollow, noarchive"
-</IfModule>
-EOF
+          cat > site_unredacted/.htaccess <<'HTACCESS_EOF'
+          AuthType Basic
+          AuthName "AQ26 Unredacted Evidence"
+          AuthUserFile __REMOTE_DIR__/.htpasswd
+          Require valid-user
+          Options -Indexes
+          DirectoryIndex index.html
+          <IfModule mod_headers.c>
+            Header set X-Robots-Tag "noindex, nofollow, noarchive"
+          </IfModule>
+          HTACCESS_EOF
+          sed -i "s#__REMOTE_DIR__#$REMOTE_DIR#g" site_unredacted/.htaccess
           echo "remote_dir=$REMOTE_DIR" >> "$GITHUB_ENV"
 
       - name: Upload unredacted site to Hostinger
