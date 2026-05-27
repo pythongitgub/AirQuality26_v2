@@ -1,0 +1,68 @@
+name: AQ26 Apply Header Logo Branding
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply_public:
+        description: "Apply to site_public"
+        required: true
+        default: true
+        type: boolean
+      apply_unredacted:
+        description: "Apply to site_unredacted if present"
+        required: true
+        default: true
+        type: boolean
+      commit_outputs:
+        description: "Commit branding changes"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  brand:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Apply header logo to public site
+        if: ${{ inputs.apply_public }}
+        run: |
+          set -euo pipefail
+          if [ -d site_public ]; then
+            python scripts/aq26_apply_header_logo_branding.py \
+              --site-root site_public \
+              --asset-source website/assets
+          else
+            echo "::warning::site_public does not exist yet."
+          fi
+
+      - name: Apply header logo to unredacted site
+        if: ${{ inputs.apply_unredacted }}
+        run: |
+          set -euo pipefail
+          if [ -d site_unredacted ]; then
+            python scripts/aq26_apply_header_logo_branding.py \
+              --site-root site_unredacted \
+              --asset-source website/assets \
+              --summary site_unredacted/data/unredacted/header_branding_status.json
+          else
+            echo "::notice::site_unredacted not present in repo checkout; deploy workflow will build it dynamically."
+          fi
+
+      - name: Commit changes
+        if: ${{ inputs.commit_outputs }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add website/assets site_public/assets site_public/favicon.svg site_public/data/public_dashboard scripts/aq26_apply_header_logo_branding.py .github/workflows/aq26_apply_header_logo_branding.yml docs/AQ26_HEADER_LOGO_BRANDING_README.md || true
+          if git diff --cached --quiet; then
+            echo "No branding changes to commit."
+          else
+            git commit -m "Use AQ26 Air Quality header logo across public pages"
+            git push
+          fi
