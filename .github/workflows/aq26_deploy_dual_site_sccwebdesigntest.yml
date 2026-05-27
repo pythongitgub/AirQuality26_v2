@@ -94,10 +94,12 @@ jobs:
               --max-index-files "${{ inputs.max_index_files }}"
           else
             mkdir -p site_unredacted/assets site_unredacted/data/unredacted
-            python - <<'PY'
-from pathlib import Path
-Path("site_unredacted/index.html").write_text("<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>AQ26 Unredacted Review Area</title></head><body><h1>AQ26 Unredacted Review Area</h1><p>Builder script not found; fallback page created.</p></body></html>", encoding="utf-8")
-PY
+            printf '%s\n' \
+              '<!doctype html>' \
+              '<html lang="en">' \
+              '<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AQ26 Unredacted Review Area</title></head>' \
+              '<body><main><h1>AQ26 Unredacted Review Area</h1><p>Builder script not found; fallback page created.</p></main></body>' \
+              '</html>' > site_unredacted/index.html
           fi
 
       - name: Polish unredacted site mobile assets
@@ -121,25 +123,23 @@ PY
           mkdir -p site_unredacted
           htpasswd -bc site_unredacted/.htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
 
-          cat > site_unredacted/.htaccess <<'HTACCESS'
-DirectoryIndex index.html
-Options -Indexes
-AuthType Basic
-AuthName "AQ26 Unredacted Review"
-AuthUserFile __AUTH_USER_FILE__
-Require valid-user
-<IfModule mod_headers.c>
-  Header set X-Robots-Tag "noindex, nofollow, noarchive"
-</IfModule>
-HTACCESS
-
           REMOTE_DIR="${PUBLIC_HTML%/}/${{ inputs.remote_unredacted_subdir }}"
-          sed -i "s#__AUTH_USER_FILE__#${REMOTE_DIR}/.htpasswd#g" site_unredacted/.htaccess
+          {
+            echo 'DirectoryIndex index.html'
+            echo 'Options -Indexes'
+            echo 'AuthType Basic'
+            echo 'AuthName "AQ26 Unredacted Review"'
+            echo "AuthUserFile ${REMOTE_DIR}/.htpasswd"
+            echo 'Require valid-user'
+            echo '<IfModule mod_headers.c>'
+            echo '  Header set X-Robots-Tag "noindex, nofollow, noarchive"'
+            echo '</IfModule>'
+          } > site_unredacted/.htaccess
 
-          cat > site_unredacted/robots.txt <<'ROBOTS'
-User-agent: *
-Disallow: /
-ROBOTS
+          {
+            echo 'User-agent: *'
+            echo 'Disallow: /'
+          } > site_unredacted/robots.txt
 
           test -f site_unredacted/index.html
           test -f site_unredacted/.htaccess
