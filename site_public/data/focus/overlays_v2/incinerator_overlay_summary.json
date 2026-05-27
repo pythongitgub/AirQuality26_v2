@@ -1,0 +1,17 @@
+{
+  "generated_utc": "2026-05-27T19:43:54Z",
+  "broad_facilities": 46,
+  "validated_overlays": 8,
+  "remaining_facilities_total": 41,
+  "remaining_facilities": 5,
+  "live_openaq": true,
+  "requested_radius_km": 25.0,
+  "openaq_point_radius_cap_m": 25000,
+  "limit_per_query": 100,
+  "candidate_rows": 358,
+  "selected_candidates": 29,
+  "diagnostic_rows": 50,
+  "error_rows": 0,
+  "status": "candidate_discovery_complete",
+  "note": "New candidates are not validated. Promote only after manual/source review."
+}
