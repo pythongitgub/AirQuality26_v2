@@ -1,0 +1,53 @@
+name: AQ26 Build Vibrant Public Site
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit_outputs:
+        description: "Commit rebuilt site_public outputs"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build vibrant public site
+        run: |
+          set -euo pipefail
+          python scripts/aq26_build_public_site_vibrant.py \
+            --site-root site_public \
+            --asset-source website/assets \
+            --summary site_public/data/public_vibrant_site_summary.json
+
+      - name: Validate public pages are not blank
+        run: |
+          set -euo pipefail
+          for f in index.html archive.html comparisons.html source-records.html readiness.html methodology.html downloads.html about.html privacy.html cookies.html accessibility.html terms.html contact.html; do
+            test -s "site_public/$f"
+            grep -q "aq26_vibrant.css" "site_public/$f"
+          done
+          grep -q "Source records" site_public/index.html
+          grep -q "Comparison Dashboard" site_public/comparisons.html
+          grep -q "Readiness gates" site_public/readiness.html
+
+      - name: Commit rebuilt public site
+        if: ${{ inputs.commit_outputs }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site_public website/assets scripts/aq26_build_public_site_vibrant.py docs/AQ26_VIBRANT_PUBLIC_SITE_REBUILD.md
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Rebuild AQ26 vibrant public site"
+            git push
+          fi

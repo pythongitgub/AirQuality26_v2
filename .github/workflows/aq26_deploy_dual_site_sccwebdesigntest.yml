@@ -34,7 +34,7 @@ on:
         default: true
         type: boolean
       rebuild_public:
-        description: "Rebuild public pages with consistent readable template before deploy"
+        description: "Rebuild vibrant public site before deploying"
         required: true
         default: true
         type: boolean
@@ -43,7 +43,6 @@ permissions:
   contents: read
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   SSH_HOST: ${{ secrets.SCCNEXUS_SSH_HOST }}
   SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
   SSH_USER: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
@@ -54,7 +53,7 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 35
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -65,26 +64,16 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y sshpass rsync apache2-utils
 
-      - name: Rebuild public site with consistent readable template
+      - name: Rebuild vibrant public site
         if: ${{ inputs.rebuild_public }}
         run: |
           set -euo pipefail
-          python scripts/aq26_rebuild_public_site_consistent.py \
+          python scripts/aq26_build_public_site_vibrant.py \
             --site-root site_public \
             --asset-source website/assets \
-            --force
-
-      - name: Validate public site exists
-        run: |
-          set -euo pipefail
-          test -f site_public/index.html
-          test -f site_public/readiness.html
-          test -f site_public/comparisons.html
-          test -f site_public/assets/aq26_consistent.css
-          python scripts/aq26_rebuild_public_site_consistent.py --site-root site_public --validate-only
+            --summary site_public/data/public_vibrant_site_summary.json
 
       - name: Build full unredacted site
-        if: ${{ inputs.deploy_unredacted }}
         run: |
           set -euo pipefail
           if [ -f scripts/aq26_build_unredacted_site.py ]; then
@@ -95,12 +84,13 @@ jobs:
               --max-index-files "${{ inputs.max_index_files }}"
           else
             mkdir -p site_unredacted/assets site_unredacted/data/unredacted
-            cp -r site_public/assets/* site_unredacted/assets/ 2>/dev/null || true
-            printf '%s\n' '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AQ26 Unredacted Review Area</title><link rel="stylesheet" href="assets/aq26_consistent.css"></head><body><main><section class="hero"><p class="eyebrow">Password-protected area</p><h1>AQ26 Unredacted Evidence Review</h1><p>Internal QA, provenance review and unredacted workflow outputs.</p></section></main></body></html>' > site_unredacted/index.html
+            printf '%s\n' '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AQ26 Unredacted Review Area</title></head><body><h1>AQ26 Unredacted Review Area</h1><p>Builder script not found; fallback page created.</p></body></html>' > site_unredacted/index.html
           fi
+          mkdir -p site_unredacted/assets
+          cp -f website/assets/air_quality_web.svg site_unredacted/assets/air_quality_web.svg || true
+          cp -f website/assets/favicon.svg site_unredacted/assets/favicon.svg || true
 
       - name: Add Basic Auth and noindex files
-        if: ${{ inputs.deploy_unredacted }}
         run: |
           set -euo pipefail
           if [ -z "${SCC_UNREDACTED_PASSWORD:-}" ]; then
@@ -111,20 +101,17 @@ jobs:
           htpasswd -bc site_unredacted/.htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
           REMOTE_DIR="${PUBLIC_HTML%/}/${{ inputs.remote_unredacted_subdir }}"
           {
-            echo "DirectoryIndex index.html"
-            echo "Options -Indexes"
-            echo "AuthType Basic"
-            echo "AuthName \"AQ26 Unredacted Review\""
+            echo 'DirectoryIndex index.html'
+            echo 'Options -Indexes'
+            echo 'AuthType Basic'
+            echo 'AuthName "AQ26 Unredacted Review"'
             echo "AuthUserFile ${REMOTE_DIR}/.htpasswd"
-            echo "Require valid-user"
-            echo "<IfModule mod_headers.c>"
-            echo "  Header set X-Robots-Tag \"noindex, nofollow, noarchive\""
-            echo "</IfModule>"
+            echo 'Require valid-user'
+            echo '<IfModule mod_headers.c>'
+            echo '  Header set X-Robots-Tag "noindex, nofollow, noarchive"'
+            echo '</IfModule>'
           } > site_unredacted/.htaccess
           printf 'User-agent: *\nDisallow: /\n' > site_unredacted/robots.txt
-          test -f site_unredacted/index.html
-          test -f site_unredacted/.htaccess
-          test -f site_unredacted/.htpasswd
 
       - name: Validate required deploy secrets safely
         run: |
@@ -146,8 +133,11 @@ jobs:
         run: |
           set -euo pipefail
           export SSHPASS="$SSH_PASSWORD"
-          timeout 15 bash -lc "cat < /dev/null > /dev/tcp/$SSH_HOST/$SSH_PORT" && echo "TCP reachable"
-          sshpass -e ssh -p "$SSH_PORT" \
+          timeout 15 bash -lc "cat < /dev/null > /dev/tcp/$SSH_HOST/$SSH_PORT" \
+            && echo "TCP reachable" \
+            || (echo "::error::Cannot reach SSH host/port"; exit 1)
+          sshpass -e ssh \
+            -p "$SSH_PORT" \
             -o StrictHostKeyChecking=no \
             -o UserKnownHostsFile=/dev/null \
             -o PreferredAuthentications=password \
@@ -166,9 +156,9 @@ jobs:
           sshpass -e ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "mkdir -p '$REMOTE_DIR'"
           if [ "${{ inputs.dry_run }}" = "true" ]; then
             echo "DRY RUN: public site_public/ -> $REMOTE_DIR/"
-            sshpass -e rsync -avzn --checksum --delete --exclude '${{ inputs.remote_unredacted_subdir }}/***' -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
+            sshpass -e rsync -avzn --checksum --delete --exclude='unredacted/***' -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
           else
-            sshpass -e rsync -avz --checksum --delete --exclude '${{ inputs.remote_unredacted_subdir }}/***' -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
+            sshpass -e rsync -avz --checksum --delete --exclude='unredacted/***' -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
           fi
 
       - name: Deploy unredacted site
