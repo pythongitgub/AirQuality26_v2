@@ -1,0 +1,106 @@
+name: AQ26 Deploy Password-Protected Unredacted Site
+
+on:
+  workflow_dispatch:
+    inputs:
+      remote_subdir:
+        description: "Remote subdirectory under HOSTINGER_PUBLIC_HTML_DIR"
+        required: true
+        default: "unredacted"
+        type: string
+      dry_run:
+        description: "Show rsync actions without changing the server"
+        required: true
+        default: true
+        type: boolean
+      max_copy_mb:
+        description: "Maximum individual evidence file size copied into unredacted site"
+        required: true
+        default: "25"
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  build-and-deploy-unredacted:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+      SCCNEXUS_SSH_HOST: ${{ secrets.SCCNEXUS_SSH_HOST }}
+      SCCNEXUS_SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
+      SCCNEXUS_SSH_USERNAME: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
+      SCCNEXUS_SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
+      HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deploy tools
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y apache2-utils rsync sshpass
+
+      - name: Validate required secrets
+        run: |
+          test -n "$SCC_UNREDACTED_PASSWORD" || (echo "Missing SCC_UNREDACTED_PASSWORD" && exit 1)
+          test -n "$SCCNEXUS_SSH_HOST" || (echo "Missing SCCNEXUS_SSH_HOST" && exit 1)
+          test -n "$SCCNEXUS_SSH_USERNAME" || (echo "Missing SCCNEXUS_SSH_USERNAME" && exit 1)
+          test -n "$SCCNEXUS_SSH_PASSWORD" || (echo "Missing SCCNEXUS_SSH_PASSWORD" && exit 1)
+          test -n "$HOSTINGER_PUBLIC_HTML_DIR" || (echo "Missing HOSTINGER_PUBLIC_HTML_DIR" && exit 1)
+
+      - name: Build unredacted site package
+        run: |
+          python scripts/aq26_build_unredacted_site.py \
+            --repo-root . \
+            --site-root site_unredacted \
+            --max-copy-mb "${{ inputs.max_copy_mb }}" \
+            --public-url "https://sccwebdesigntest.co.uk/"
+
+      - name: Add Basic Auth files
+        run: |
+          REMOTE_SUBDIR="${{ inputs.remote_subdir }}"
+          REMOTE_SUBDIR="${REMOTE_SUBDIR#/}"
+          REMOTE_SUBDIR="${REMOTE_SUBDIR%/}"
+          REMOTE_DIR="$HOSTINGER_PUBLIC_HTML_DIR/$REMOTE_SUBDIR"
+          HASHED_PASSWORD="$(htpasswd -nbB aq26 "$SCC_UNREDACTED_PASSWORD" | cut -d: -f2-)"
+          printf 'aq26:%s\n' "$HASHED_PASSWORD" > site_unredacted/.htpasswd
+          cat > site_unredacted/.htaccess <<EOF
+AuthType Basic
+AuthName "AQ26 Unredacted Evidence"
+AuthUserFile $REMOTE_DIR/.htpasswd
+Require valid-user
+Options -Indexes
+DirectoryIndex index.html
+<IfModule mod_headers.c>
+  Header set X-Robots-Tag "noindex, nofollow, noarchive"
+</IfModule>
+EOF
+          echo "remote_dir=$REMOTE_DIR" >> "$GITHUB_ENV"
+
+      - name: Upload unredacted site to Hostinger
+        run: |
+          SSH_PORT="${SCCNEXUS_SSH_PORT:-22}"
+          SSH_OPTS="-p $SSH_PORT -o StrictHostKeyChecking=no"
+          sshpass -p "$SCCNEXUS_SSH_PASSWORD" ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "mkdir -p '$remote_dir'"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            rsync_opts="-avzn"
+          else
+            rsync_opts="-avz"
+          fi
+          sshpass -p "$SCCNEXUS_SSH_PASSWORD" rsync $rsync_opts -e "ssh $SSH_OPTS" site_unredacted/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$remote_dir/"
+
+      - name: Upload generated unredacted site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-unredacted-site-package
+          path: site_unredacted/**
+          if-no-files-found: error
