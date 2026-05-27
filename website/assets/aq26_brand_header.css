@@ -1,0 +1,52 @@
+/* AQ26 header brand: uses the full SCC Nexus Air Quality Report SVG in page headers.
+   The separate favicon/touch icon remains the compact symbol. */
+:root {
+  --aq26-brand-logo-width: clamp(180px, 22vw, 320px);
+  --aq26-brand-logo-height: auto;
+}
+
+.aq26-wide-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: min(360px, 100%);
+  max-width: 420px;
+  padding: 0.25rem 0;
+}
+
+.aq26-wide-brand img,
+img.aq26-wide-brand-img {
+  display: block;
+  width: var(--aq26-brand-logo-width);
+  max-width: 100%;
+  height: var(--aq26-brand-logo-height);
+  object-fit: contain;
+}
+
+.aq26-brand-injected {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 820px) {
+  :root {
+    --aq26-brand-logo-width: clamp(150px, 48vw, 240px);
+  }
+
+  .aq26-wide-brand {
+    max-width: 72vw;
+    padding: 0.2rem 0;
+  }
+
+  .aq26-wide-brand img,
+  img.aq26-wide-brand-img {
+    max-height: 52px;
+  }
+}
+
+/* If an older tiny square-only logo is immediately next to the injected wide logo,
+   reduce visual clutter without breaking layout. */
+.aq26-brand-injected + img[src*="favicon"],
+.aq26-brand-injected + img[src*="logo_web"] {
+  display: none !important;
+}
