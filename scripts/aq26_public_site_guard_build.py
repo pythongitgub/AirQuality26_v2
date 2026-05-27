@@ -1,34 +1,37 @@
 #!/usr/bin/env python3
-"""AQ26 public site guard builder.
+"""AQ26 public site guard build.
 
-Ensures site_public contains non-blank core pages before deployment.
-This is a safety net for generated/static sites: it does not replace the science
-pipeline, but prevents client-facing blank pages while backfill/charts are being
-rebuilt.
+Purpose:
+- Never let site_public be empty or missing core pages.
+- Create a professional client-safe shell if the scientific/backfill site has not yet been generated.
+- Add old URL aliases and stable download aliases.
+- Validate that core pages are non-blank before deployment.
+
+This is a safety net. It does not replace the WeeklyV2/Stage2 backfill outputs.
 """
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import shutil
 from datetime import datetime, timezone
 from pathlib import Path
-from html import escape
 
 CORE_PAGES = {
-    "index.html": ("Observatory", "AQ26 Environmental Intelligence Observatory", "Latest public evidence snapshot and weekly air-quality intelligence."),
-    "archive.html": ("Weekly Archive", "Weekly evidence archive", "Browse weekly evidence windows, run status and report bundles."),
-    "comparisons.html": ("Comparisons", "Interactive comparison charts", "Weekly comparisons across source coverage, readiness, filings and validated monitoring layers."),
-    "source-records.html": ("Source Records", "Source records", "Provider source records, provenance summaries and public source status."),
-    "readiness.html": ("Readiness", "Evidence readiness", "Validation gates translated into public-facing readiness indicators."),
-    "methodology.html": ("Methodology", "Methodology", "How AQ26 separates measured observations, model context, official records and provenance."),
-    "downloads.html": ("Downloads", "Downloads", "Redacted public evidence bundles and latest public reports."),
-    "about.html": ("About", "About AQ26", "Public environmental intelligence interface powered by a controlled evidence workflow."),
-    "privacy.html": ("Privacy", "Privacy", "Privacy and data handling notes for this static AQ26 website."),
-    "cookies.html": ("Cookies", "Cookies", "Essential local-storage preferences and optional chart libraries."),
-    "accessibility.html": ("Accessibility", "Accessibility", "Accessibility notes for the public AQ26 interface."),
-    "terms.html": ("Terms", "Terms", "Use of the AQ26 public website and evidence summaries."),
-    "contact.html": ("Contact", "Contact", "Contact and project enquiry details."),
+    "index.html": ("AQ26 Environmental Intelligence Observatory", "Overview", "A client-friendly weekly environmental intelligence dashboard."),
+    "archive.html": ("Weekly Archive", "Weekly evidence archive", "Browse weekly AQ26 evidence runs and readiness summaries."),
+    "comparisons.html": ("Comparisons", "Interactive comparison charts", "Charts will populate from validated weekly backfill outputs. Current fallback panels keep this page useful while data is warming up."),
+    "source-records.html": ("Source Records", "Source coverage and provenance", "A public summary of source classes, validation status and evidence coverage."),
+    "readiness.html": ("Readiness", "Evidence readiness", "Plain-English readiness indicators showing which data streams are live, warming up or under validation."),
+    "methodology.html": ("Methodology", "How AQ26 works", "AQ26 separates ground monitoring, official documents, weather and satellite/reanalysis context with provenance and validation."),
+    "downloads.html": ("Downloads", "Reports and evidence bundles", "Download the latest redacted public report and evidence bundle when available."),
+    "about.html": ("About AQ26", "About the project", "AQ26 brings together weekly air-quality and emissions-related evidence for accessible public review."),
+    "privacy.html": ("Privacy", "Privacy", "This static website uses essential local-storage preferences and publishes redacted evidence summaries."),
+    "cookies.html": ("Cookies", "Cookies", "AQ26 uses essential local-storage preferences and may load chart libraries for interactive visuals."),
+    "accessibility.html": ("Accessibility", "Accessibility", "AQ26 aims to provide readable, accessible summaries with responsive navigation."),
+    "terms.html": ("Terms", "Terms", "AQ26 outputs are informational and do not claim regulatory, legal, medical or causal determinations."),
+    "contact.html": ("Contact", "Contact", "Contact details and project ownership can be added here."),
 }
 
 ALIASES = {
@@ -37,213 +40,218 @@ ALIASES = {
     "evidence-downloads.html": "downloads.html",
 }
 
+NAV = [
+    ("Observatory", "index.html"),
+    ("Weekly Archive", "archive.html"),
+    ("Comparisons", "comparisons.html"),
+    ("Source Records", "source-records.html"),
+    ("Readiness", "readiness.html"),
+    ("Methodology", "methodology.html"),
+    ("Downloads", "downloads.html"),
+]
 
-def read_json(path: Path, default):
-    try:
-        if path.exists():
-            return json.loads(path.read_text(encoding="utf-8"))
-    except Exception:
-        return default
-    return default
+CSS = """
+:root{--ink:#061b35;--muted:#64748b;--bg:#eef6fb;--card:#fff;--a:#0d6ea8;--b:#21b6c7;--ok:#15803d;--warn:#b45309;--bad:#b91c1c}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#f7fbff 0%,#eaf4fa 100%);color:var(--ink);line-height:1.5}.topbar{background:#071c33;color:white;padding:.55rem 1.25rem;font-size:.88rem;display:flex;justify-content:space-between;gap:1rem}.brand{display:flex;align-items:center;gap:1rem;padding:1rem 1.35rem;background:white}.brand img{height:72px;max-width:260px}.nav{display:flex;flex-wrap:wrap;gap:.5rem;margin-left:auto}.nav a,.menu-btn{border:1px solid #d7e6f2;border-radius:999px;padding:.65rem 1rem;text-decoration:none;color:#071c33;background:#f7fbff;font-weight:800}.nav a:hover{background:#e3f3fb}.mobile-head{display:none}.hero{margin:0;padding:4rem 1.35rem;background:linear-gradient(120deg,rgba(8,42,74,.92),rgba(17,148,184,.78)),url('assets/aq26-hero.jpg');background-size:cover;color:white}.hero-inner{max-width:1100px}.eyebrow{letter-spacing:.24em;text-transform:uppercase;font-weight:900}.hero h1{font-size:clamp(2.1rem,5vw,4.2rem);line-height:1.02;margin:.8rem 0}.hero p{font-size:1.12rem;max-width:780px}.btns{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.5rem}.btn{display:inline-block;border-radius:.75rem;padding:.85rem 1.1rem;text-decoration:none;font-weight:900}.btn.primary{background:white;color:#071c33}.btn.secondary{background:rgba(255,255,255,.16);color:white;border:1px solid rgba(255,255,255,.45)}main{max-width:1180px;margin:0 auto;padding:2rem 1.25rem}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}.card{background:rgba(255,255,255,.92);border:1px solid #d8e7f2;border-radius:1.15rem;padding:1.25rem;box-shadow:0 12px 34px rgba(15,42,70,.08)}.card h3{margin:.1rem 0 .35rem}.metric{font-size:2.2rem;font-weight:950}.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.section{margin-top:1.4rem}.placeholder{border:1px dashed #a8c8de;background:#f8fcff}.footer{background:#071c33;color:white;margin-top:3rem;padding:2rem 1.35rem}.footer a{color:white;margin-right:1rem}.cookie{position:fixed;left:1rem;right:1rem;bottom:1rem;background:white;border:1px solid #d8e7f2;border-radius:1rem;padding:1rem;box-shadow:0 12px 28px rgba(0,0,0,.12);z-index:30}.cookie button{border:0;border-radius:.6rem;padding:.55rem .8rem;font-weight:800;margin-right:.5rem}.dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.small{color:var(--muted)}
+@media(max-width:820px){.topbar{font-size:.75rem}.brand{padding:.7rem 1rem}.brand img{height:54px}.mobile-head{display:flex;align-items:center;justify-content:space-between;width:100%;gap:1rem}.desktop-brand{display:none}.nav{display:none;position:absolute;left:1rem;right:1rem;top:82px;z-index:25;background:white;border:1px solid #d7e6f2;border-radius:1rem;padding:.8rem;box-shadow:0 16px 32px rgba(0,0,0,.14)}.nav.open{display:grid}.nav a{display:block}.menu-btn{display:inline-flex;background:#071c33;color:white;border:0}.hero{padding:2.4rem 1rem}.grid{grid-template-columns:1fr}.dl{grid-template-columns:1fr}.cookie{font-size:.86rem}}
+@media(min-width:821px){.menu-btn{display:none}}
+"""
 
+JS = """
+(function(){
+  const btn=document.querySelector('[data-menu-toggle]');
+  const nav=document.querySelector('[data-nav]');
+  if(btn&&nav){btn.addEventListener('click',()=>{const open=nav.classList.toggle('open');btn.setAttribute('aria-expanded',open?'true':'false');});}
+  document.querySelectorAll('[data-cookie-accept]').forEach(b=>b.addEventListener('click',()=>{localStorage.setItem('aq26_cookie_ok','1');document.querySelector('.cookie')?.remove();}));
+  if(localStorage.getItem('aq26_cookie_ok')==='1'){document.querySelector('.cookie')?.remove();}
+})();
+"""
 
-def is_blankish(path: Path) -> bool:
+def read_summary(site: Path) -> dict:
+    candidates = [
+        site / "data" / "latest_backfill_summary.json",
+        site / "data" / "weekly_integrated" / "summary.json",
+        site / "data" / "providers" / "integrated_weekly" / "summary.json",
+    ]
+    for p in candidates:
+        if p.exists():
+            try:
+                return json.loads(p.read_text(encoding="utf-8"))
+            except Exception:
+                pass
+    return {}
+
+def find_downloads(site: Path) -> dict:
+    d = site / "downloads"
+    out = {"zip": None, "pdf": None, "md": None}
+    if d.exists():
+        zips = sorted(d.glob("*.zip"), key=lambda p: p.stat().st_mtime, reverse=True)
+        pdfs = sorted(d.glob("*.pdf"), key=lambda p: p.stat().st_mtime, reverse=True)
+        mds = sorted(d.glob("*.md"), key=lambda p: p.stat().st_mtime, reverse=True)
+        if zips: out["zip"] = zips[0]
+        if pdfs: out["pdf"] = pdfs[0]
+        if mds: out["md"] = mds[0]
+    return out
+
+def copy_assets(site: Path, asset_source: Path):
+    assets = site / "assets"
+    assets.mkdir(parents=True, exist_ok=True)
+    (assets / "aq26_site.css").write_text(CSS, encoding="utf-8")
+    (assets / "aq26_site.js").write_text(JS, encoding="utf-8")
+    for name in ["logo_web.svg", "favicon.svg", "apple-touch-icon.png", "favicon-32x32.png", "favicon-16x16.png", "android-chrome-192x192.png", "android-chrome-512x512.png", "site.webmanifest"]:
+        src = asset_source / name
+        if src.exists():
+            shutil.copy2(src, assets / name)
+    if not (assets / "logo_web.svg").exists():
+        (assets / "logo_web.svg").write_text("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 80'><rect width='240' height='80' rx='16' fill='#071c33'/><text x='24' y='50' font-family='Arial' font-size='28' font-weight='700' fill='white'>SCC Nexus AQ26</text></svg>", encoding="utf-8")
+    if not (assets / "favicon.svg").exists():
+        shutil.copy2(assets / "logo_web.svg", assets / "favicon.svg")
+
+def nav_html(active: str) -> str:
+    return "".join(f"<a href='{href}'{' aria-current=page' if href==active else ''}>{html.escape(label)}</a>" for label, href in NAV)
+
+def base_page(site: Path, filename: str, title: str, heading: str, intro: str, summary: dict, body: str) -> str:
+    run_id = summary.get("run_id") or summary.get("run_ts") or "latest weekly run"
+    window = summary.get("window") or summary.get("week") or "current evidence window"
+    cards = ""
+    if filename == "index.html":
+        metrics = [
+            ("Source records", summary.get("source_records") or summary.get("records_total") or "—", "All source classes"),
+            ("OK records", summary.get("ok_records") or summary.get("records_ok") or "—", "Successful harvests"),
+            ("Warnings", summary.get("warnings") or summary.get("records_warning") or "—", "Provider warnings"),
+            ("Errors", summary.get("errors") or summary.get("records_error") or "0", "Should remain zero"),
+        ]
+        cards = "<section class='section grid'>" + "".join(f"<article class='card'><h3>{html.escape(str(k))}</h3><div class='metric'>{html.escape(str(v))}</div><p class='small'>{html.escape(str(desc))}</p></article>" for k,v,desc in metrics) + "</section>"
+    return f"""<!doctype html>
+<html lang='en'>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>{html.escape(title)} · AQ26</title>
+  <link rel='icon' type='image/svg+xml' href='assets/favicon.svg'>
+  <link rel='apple-touch-icon' href='assets/apple-touch-icon.png'>
+  <link rel='manifest' href='assets/site.webmanifest'>
+  <link rel='stylesheet' href='assets/aq26_site.css'>
+</head>
+<body>
+  <div class='topbar'><span>SCC Nexus · AQ26 environmental intelligence</span><span>Run {html.escape(str(run_id))} · {html.escape(str(window))}</span></div>
+  <header class='brand'>
+    <img class='desktop-brand' src='assets/logo_web.svg' alt='SCC Nexus AQ26'>
+    <div class='mobile-head'><strong>AQ26</strong><button class='menu-btn' data-menu-toggle aria-expanded='false'>☰ Menu</button></div>
+    <nav class='nav' data-nav>{nav_html(filename)}</nav>
+  </header>
+  <section class='hero'><div class='hero-inner'><div class='eyebrow'>AQ26 Environmental Intelligence Observatory</div><h1>{html.escape(heading)}</h1><p>{html.escape(intro)}</p><div class='btns'><a class='btn primary' href='archive.html'>View weekly archive</a><a class='btn secondary' href='downloads/latest-evidence.zip'>Download evidence ZIP</a></div></div></section>
+  <main>
+    {cards}
+    {body}
+  </main>
+  <footer class='footer'><strong>AQ26 WeeklyV2</strong><p>Controlled-review evidence dashboard. Public pages show redacted, client-friendly summaries; unredacted QA and provenance review is separate.</p><p><a href='about.html'>About</a><a href='privacy.html'>Privacy</a><a href='cookies.html'>Cookies</a><a href='accessibility.html'>Accessibility</a><a href='terms.html'>Terms</a><a href='contact.html'>Contact</a></p><p>© SCC Nexus / AQ26</p></footer>
+  <div class='cookie'><strong>Cookies on AQ26</strong><p>We use essential local-storage preferences for this banner and may load chart libraries for interactive charts. No advertising cookies are intentionally set by this static site.</p><button data-cookie-accept>Accept</button><a class='btn' href='cookies.html'>Cookie details</a></div>
+  <script src='assets/aq26_site.js'></script>
+</body>
+</html>"""
+
+def body_for(filename: str, downloads: dict) -> str:
+    if filename == "comparisons.html":
+        return """
+<section class='section card'><h2>Comparison charts</h2><p>Interactive weekly comparisons will appear here as the validated backfill grows. We avoid blank charts by showing the current status, available source coverage and next-data requirements.</p></section>
+<section class='section grid'>
+  <article class='card placeholder'><h3>Weekly source coverage</h3><p>Ready for chart payload: <code>source_coverage_by_week.json</code>.</p></article>
+  <article class='card placeholder'><h3>Readiness trend</h3><p>Ready for chart payload: <code>readiness_trend.json</code>.</p></article>
+  <article class='card placeholder'><h3>Pollutant explorer</h3><p>Populates after LAQN/OpenAQ historical backfill has validated value-bearing observations.</p></article>
+  <article class='card placeholder'><h3>Facility/control comparison</h3><p>Held until validated target/control logic, weather context and provenance gates pass.</p></article>
+</section>"""
+    if filename == "downloads.html":
+        z = "downloads/latest-evidence.zip" if (downloads.get("zip") or (Path("downloads/latest-evidence.zip"))) else "#"
+        return f"""
+<section class='section card'><h2>Latest downloads</h2><p>Public downloads are redacted, client-safe bundles only. Unredacted evidence remains behind the protected review area.</p></section>
+<section class='section dl'>
+  <article class='card'><h3>Evidence ZIP</h3><p>Latest redacted public evidence bundle, where available.</p><a class='btn primary' href='downloads/latest-evidence.zip'>Download latest evidence ZIP</a></article>
+  <article class='card'><h3>Weekly report</h3><p>Latest public PDF report, where available.</p><a class='btn primary' href='downloads/latest-report.pdf'>Download latest report PDF</a></article>
+</section>"""
+    if filename == "archive.html":
+        return """
+<section class='section card'><h2>Weekly archive</h2><p>The archive lists validated weekly runs and backfill windows. Backfilled weeks will appear as the weekly pipeline commits public summaries.</p></section>
+<section class='section card placeholder'><h3>Backfill status</h3><p>Run AQ26 WeeklyV2 Science Backfill or Stage2 follow-on to populate historical weekly cards.</p></section>"""
+    if filename == "readiness.html":
+        return """
+<section class='section grid'>
+  <article class='card'><h3>Public redaction</h3><p class='ok'>Public pages are redacted and client-safe.</p></article>
+  <article class='card'><h3>Ground monitoring</h3><p>LAQN/OpenAQ streams are being integrated into chart-ready outputs.</p></article>
+  <article class='card'><h3>Satellite context</h3><p class='warn'>Catalogue discovery is live; controlled extraction remains gated.</p></article>
+  <article class='card'><h3>External submission</h3><p class='bad'>Not yet ready for formal external scientific submission.</p></article>
+</section>"""
+    if filename == "source-records.html":
+        return """
+<section class='section card'><h2>Source records</h2><p>Each weekly run tracks provider status, record counts, retrieval windows and provenance. Detailed unredacted manifests are available in the protected review site.</p></section>"""
+    if filename == "methodology.html":
+        return """
+<section class='section card'><h2>Methodology</h2><p>AQ26 separates observed ground measurements, official/regulatory documents, weather, satellite/reanalysis context and current-context sources. Public outputs are caveated and do not claim causation.</p></section>"""
+    return "<section class='section card'><h2>Information</h2><p>This page is part of the AQ26 public client interface. Content is kept accessible, redacted and provenance-aware.</p></section>"
+
+def ensure_download_aliases(site: Path, downloads: dict):
+    d = site / "downloads"
+    d.mkdir(parents=True, exist_ok=True)
+    if downloads.get("zip"):
+        shutil.copy2(downloads["zip"], d / "latest-evidence.zip")
+    elif not (d / "latest-evidence.zip").exists():
+        (d / "latest-evidence.zip").write_text("AQ26 latest redacted evidence bundle is awaiting the next successful backfill run.\n", encoding="utf-8")
+    if downloads.get("pdf"):
+        shutil.copy2(downloads["pdf"], d / "latest-report.pdf")
+    elif not (d / "latest-report.pdf").exists():
+        (d / "latest-report.pdf").write_text("AQ26 latest report PDF is awaiting the next successful backfill run.\n", encoding="utf-8")
+
+def looks_blank(path: Path) -> bool:
     if not path.exists():
         return True
     txt = path.read_text(encoding="utf-8", errors="ignore")
-    body = txt.lower()
-    # Treat pages with only title/footer/nav and no cards/sections as too blank.
-    useful_markers = ["aq-card", "dashboard-grid", "download-card", "chart-card", "status-card", "source records", "latest evidence"]
-    return len(txt.strip()) < 1600 or not any(m in body for m in useful_markers)
+    stripped = " ".join(txt.split()).lower()
+    if len(stripped) < 900:
+        return True
+    # A page with only title/footer and no card/main content is blank for UX purposes.
+    return ("<main" not in stripped) or ("class='card'" not in stripped and 'class="card"' not in stripped)
 
+def write_pages(site: Path, asset_source: Path, force: bool):
+    site.mkdir(parents=True, exist_ok=True)
+    copy_assets(site, asset_source)
+    summary = read_summary(site)
+    downloads = find_downloads(site)
+    ensure_download_aliases(site, downloads)
+    for filename, (title, heading, intro) in CORE_PAGES.items():
+        p = site / filename
+        if force or looks_blank(p):
+            p.write_text(base_page(site, filename, title, heading, intro, summary, body_for(filename, downloads)), encoding="utf-8")
+    for alias, target in ALIASES.items():
+        (site / alias).write_text(f"<!doctype html><meta charset='utf-8'><meta http-equiv='refresh' content='0; url={html.escape(target)}'><title>Redirecting · AQ26</title><p>Redirecting to <a href='{html.escape(target)}'>{html.escape(target)}</a>.</p>", encoding="utf-8")
+    (site / "robots.txt").write_text("User-agent: *\nAllow: /\n", encoding="utf-8")
+    manifest = {"generated_at_utc": datetime.now(timezone.utc).isoformat(), "core_pages": sorted(CORE_PAGES), "aliases": ALIASES, "status": "public_guard_ready"}
+    (site / "data").mkdir(exist_ok=True)
+    (site / "data" / "public_guard_manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
-def copy_assets(site: Path, asset_source: Path):
-    (site / "assets").mkdir(parents=True, exist_ok=True)
-    if asset_source.exists():
-        for p in asset_source.iterdir():
-            if p.is_file():
-                shutil.copy2(p, site / "assets" / p.name)
-    # Ensure mobile css/js exist even if asset patch hasn't been applied.
-    css = site / "assets" / "aq26_mobile_nav.css"
-    if not css.exists():
-        css.write_text("""
-@media (max-width: 820px) {
-  .aq-nav { display: none !important; }
-  .aq-mobile-bar { display:flex !important; align-items:center; justify-content:space-between; gap:12px; padding:12px 16px; background:#071d33; color:white; position:sticky; top:0; z-index:999; }
-  .aq-mobile-menu { display:none; background:#0b2b49; padding:10px 16px; }
-  .aq-mobile-menu.open { display:block; }
-  .aq-mobile-menu a { display:block; color:white; text-decoration:none; padding:12px 8px; border-bottom:1px solid rgba(255,255,255,.15); font-weight:700; }
-  .aq-menu-button { border:1px solid rgba(255,255,255,.4); background:rgba(255,255,255,.08); color:white; border-radius:12px; padding:10px 14px; font-weight:800; }
-}
-@media (min-width: 821px) { .aq-mobile-bar, .aq-mobile-menu { display:none !important; } }
-""".strip()+"\n", encoding="utf-8")
-    js = site / "assets" / "aq26_mobile_nav.js"
-    if not js.exists():
-        js.write_text("""
-(function(){
-  function ready(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded',fn); }
-  ready(function(){
-    if(document.querySelector('.aq-mobile-bar')) return;
-    var nav = document.querySelector('.aq-nav');
-    var links = nav ? Array.from(nav.querySelectorAll('a')) : [];
-    if(!links.length){ links = Array.from(document.querySelectorAll('a')).filter(a => /html$|\/$/.test(a.getAttribute('href')||'')).slice(0,8); }
-    var bar=document.createElement('div'); bar.className='aq-mobile-bar';
-    bar.innerHTML='<strong>SCC Nexus · AQ26</strong><button class="aq-menu-button" aria-expanded="false">Menu ☰</button>';
-    var menu=document.createElement('div'); menu.className='aq-mobile-menu';
-    links.forEach(function(a){ var c=a.cloneNode(true); menu.appendChild(c); });
-    document.body.insertBefore(menu, document.body.firstChild);
-    document.body.insertBefore(bar, menu);
-    var btn=bar.querySelector('button'); btn.addEventListener('click',function(){ var open=menu.classList.toggle('open'); btn.setAttribute('aria-expanded', String(open)); });
-  });
-})();
-""".strip()+"\n", encoding="utf-8")
-
-
-def nav_html(active: str) -> str:
-    pages = [("index.html","Observatory"),("archive.html","Weekly Archive"),("comparisons.html","Comparisons"),("source-records.html","Source Records"),("readiness.html","Readiness"),("methodology.html","Methodology"),("downloads.html","Downloads")]
-    return "".join(f'<a class="{ "active" if href==active else "" }" href="{href}">{label}</a>' for href,label in pages)
-
-
-def collect_metrics(site: Path):
-    summary = read_json(site / "data" / "latest_backfill_summary.json", {})
-    weekly = read_json(site / "data" / "weekly_index.json", {})
-    def pick(*keys, default=0):
-        for k in keys:
-            if isinstance(summary, dict) and k in summary:
-                return summary[k]
-        return default
-    metrics = {
-        "Source records": pick("source_records", "source_records_total", default=72),
-        "OK records": pick("ok_records", "records_ok", default=67),
-        "Warnings": pick("warnings", "warning_records", default=5),
-        "Errors": pick("errors", "error_records", default=0),
-        "Satellite products": pick("satellite_products", default=350),
-        "Drive files": pick("drive_files", default=5000),
-    }
-    return metrics, summary, weekly
-
-
-def cards(metrics):
-    return "".join(f'<article class="aq-card"><span>{escape(k)}</span><strong>{escape(str(v))}</strong><p>{escape(desc(k))}</p></article>' for k,v in metrics.items())
-
-
-def desc(k):
-    return {
-        "Source records":"Public source classes and records",
-        "OK records":"Successful harvests",
-        "Warnings":"Provider warnings or gated items",
-        "Errors":"Should remain zero",
-        "Satellite products":"Catalogue/discovery records",
-        "Drive files":"Evidence archive inventory"
-    }.get(k,"Current status")
-
-
-def page(site: Path, filename: str, title: str, heading: str, intro: str, body: str) -> str:
-    nav = nav_html(filename)
-    return f'''<!doctype html>
-<html lang="en-GB">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{escape(title)} · AQ26</title>
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-  <link rel="manifest" href="assets/site.webmanifest">
-  <link rel="stylesheet" href="assets/aq26_mobile_nav.css">
-  <style>
-    :root{{--navy:#071d33;--blue:#0d79b8;--cyan:#21b9c7;--bg:#edf6fb;--ink:#071d33;--muted:#58708a;--card:#fff;}}
-    *{{box-sizing:border-box}} body{{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:linear-gradient(180deg,#f7fbff,#eaf5fb);color:var(--ink);line-height:1.55}}
-    .top{{background:#061d34;color:#fff;padding:12px 22px;font-weight:800;display:flex;justify-content:space-between;gap:14px;align-items:center}}
-    .brand{{display:flex;align-items:center;gap:18px;padding:24px 34px;background:white}} .brand img{{max-height:74px;max-width:280px}}
-    .aq-nav{{display:flex;flex-wrap:wrap;gap:10px;margin-left:auto}} .aq-nav a{{text-decoration:none;color:#071d33;font-weight:800;padding:10px 16px;border-radius:999px;background:#f0f6fb}} .aq-nav a.active{{background:#dff2fb;color:#00385f}}
-    .hero{{margin:0;padding:52px 34px;background:linear-gradient(135deg,rgba(6,29,52,.92),rgba(22,151,190,.84));color:white}} .hero h1{{font-size:clamp(2rem,5vw,4.1rem);line-height:1.02;margin:10px 0;max-width:920px}} .hero p{{font-size:1.12rem;max-width:860px}}
-    .wrap{{max-width:1180px;margin:0 auto;padding:28px 22px}} .dashboard-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}}
-    .aq-card,.chart-card,.download-card,.status-card{{background:rgba(255,255,255,.92);border:1px solid #cfe0ec;border-radius:22px;padding:22px;box-shadow:0 14px 35px rgba(3,32,55,.08)}}
-    .aq-card span{{text-transform:uppercase;letter-spacing:.12em;font-size:.78rem;color:#5b7187;font-weight:900}} .aq-card strong{{display:block;font-size:2.1rem;margin:.25rem 0;color:#09233e}}
-    .grid2{{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:22px}} h2{{font-size:1.75rem;margin:28px 0 10px}} .muted{{color:var(--muted)}}
-    .btn{{display:inline-block;background:#fff;color:#071d33;text-decoration:none;font-weight:900;padding:13px 18px;border-radius:13px;margin:6px 8px 0 0}} .btn.alt{{background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.4)}}
-    footer{{margin-top:48px;background:#061d34;color:#dceaf5;padding:32px}} footer a{{color:white;margin-right:14px;text-decoration:none;font-weight:700}}
-  </style>
-</head>
-<body>
-  <div class="top"><span>SCC Nexus · AQ26 environmental intelligence</span><span>Public client interface</span></div>
-  <header class="brand"><a href="index.html"><img src="assets/logo_web.svg" alt="SCC Nexus AQ26"></a><nav class="aq-nav">{nav}</nav></header>
-  <section class="hero"><p style="letter-spacing:.16em;text-transform:uppercase;font-weight:900">AQ26 Environmental Intelligence Observatory</p><h1>{escape(heading)}</h1><p>{escape(intro)}</p><a class="btn" href="archive.html">View weekly archive</a><a class="btn alt" href="downloads/latest-evidence.zip">Download evidence ZIP</a></section>
-  <main class="wrap">{body}</main>
-  <footer><strong>AQ26 WeeklyV2</strong><p>Client-friendly public dashboard. Technical validation, unredacted files and QA detail remain in the protected review area.</p><p><a href="about.html">About</a><a href="privacy.html">Privacy</a><a href="cookies.html">Cookies</a><a href="accessibility.html">Accessibility</a><a href="terms.html">Terms</a><a href="contact.html">Contact</a></p><p>© SCC Nexus / AQ26</p></footer>
-  <script src="assets/aq26_mobile_nav.js"></script>
-</body></html>'''
-
-
-def specific_body(filename: str, metrics, site: Path) -> str:
-    if filename == "index.html":
-        return f'<h2>Latest evidence status</h2><p class="muted">Current weekly run, source coverage and readiness snapshot.</p><section class="dashboard-grid">{cards(metrics)}</section><section class="grid2"><article class="status-card"><h3>What this means</h3><p>AQ26 brings together ground monitoring, weather context, official records and satellite catalogue discovery. Full attribution remains gated until validation passes.</p></article><article class="status-card"><h3>For reviewers</h3><p>The protected unredacted site contains QA, provenance and fuller evidence indexes.</p></article></section>'
-    if filename == "comparisons.html":
-        return '<h2>Interactive comparison charts</h2><p class="muted">Validated charts will appear here as the backfill populates. These panels prevent blank pages while protecting users from unfinished data.</p><section class="grid2"><article class="chart-card"><h3>Weekly source coverage</h3><p>Shows how many evidence sources were collected each week.</p><div id="weekly-source-coverage"></div></article><article class="chart-card"><h3>Readiness trend</h3><p>Shows whether evidence gates are improving over time.</p><div id="readiness-trend"></div></article><article class="chart-card"><h3>Official evidence queue</h3><p>Tracks official document candidates awaiting review.</p><div id="official-queue"></div></article><article class="chart-card"><h3>Pollutant explorer</h3><p>NO₂, PM2.5, PM10, O₃, SO₂ and CO charts will be enabled as validated backfill arrives.</p></article></section>'
-    if filename == "archive.html":
-        return '<h2>Weekly archive</h2><p class="muted">Weekly runs and reports are listed here. Backfill will progressively fill earlier windows.</p><section class="grid2"><article class="status-card"><h3>Backfill status</h3><p>Historical windows are being populated in controlled batches to preserve provenance and avoid unvalidated claims.</p></article><article class="status-card"><h3>Latest reports</h3><p>Use the Downloads page for stable latest report and evidence bundle links.</p></article></section>'
-    if filename == "downloads.html":
-        ensure_download_aliases(site)
-        return '<h2>Downloads</h2><p class="muted">Public downloads are redacted, client-safe bundles only.</p><section class="grid2"><article class="download-card"><h3>Latest evidence ZIP</h3><p>Redacted public evidence bundle from the latest successful run.</p><a class="btn" href="downloads/latest-evidence.zip">Download evidence ZIP</a></article><article class="download-card"><h3>Latest report PDF</h3><p>Client-friendly weekly report, where available.</p><a class="btn" href="downloads/latest-report.pdf">Download report PDF</a></article></section>'
-    if filename == "source-records.html":
-        return f'<h2>Source records</h2><p class="muted">Public summary of evidence sources. Detailed manifests remain protected.</p><section class="dashboard-grid">{cards(metrics)}</section>'
-    if filename == "readiness.html":
-        return '<h2>Evidence readiness</h2><section class="grid2"><article class="status-card"><h3>Public-ready evidence</h3><p>Redaction and basic source coverage are monitored before publication.</p></article><article class="status-card"><h3>Still validating</h3><p>Satellite extraction, facility-control comparison and formal external-submission readiness remain gated.</p></article></section>'
-    if filename == "methodology.html":
-        return '<h2>Methodology</h2><section class="grid2"><article class="status-card"><h3>Evidence separation</h3><p>AQ26 separates observed measurements, model/reanalysis context, official documents and current-context sources.</p></article><article class="status-card"><h3>Provenance</h3><p>Run IDs, source records, timestamps and checksums are retained behind the scenes for review.</p></article></section>'
-    return '<section class="status-card"><h2>Information</h2><p>This page is part of the AQ26 public interface. Detailed review material is kept in the protected unredacted area.</p></section>'
-
-
-def ensure_download_aliases(site: Path):
-    d = site / "downloads"
-    d.mkdir(parents=True, exist_ok=True)
-    zips = sorted(d.glob("*.zip"), key=lambda p: p.stat().st_mtime if p.exists() else 0, reverse=True)
-    pdfs = sorted(d.glob("*.pdf"), key=lambda p: p.stat().st_mtime if p.exists() else 0, reverse=True)
-    if zips:
-        shutil.copy2(zips[0], d / "latest-evidence.zip")
-    elif not (d / "latest-evidence.zip").exists():
-        (d / "latest-evidence.zip").write_text("AQ26 public evidence bundle pending next successful backfill.\n", encoding="utf-8")
-    if pdfs:
-        shutil.copy2(pdfs[0], d / "latest-report.pdf")
-    elif not (d / "latest-report.pdf").exists():
-        (d / "latest-report.pdf").write_text("AQ26 public report pending next successful backfill.\n", encoding="utf-8")
-
+def validate(site: Path) -> int:
+    problems = []
+    for name in CORE_PAGES:
+        if looks_blank(site / name):
+            problems.append(f"{name}: missing or blank")
+    for name in ["assets/aq26_site.css", "assets/aq26_site.js", "assets/favicon.svg"]:
+        if not (site / name).exists():
+            problems.append(f"{name}: missing")
+    result = {"ok": not problems, "problems": problems, "site_root": str(site)}
+    print(json.dumps(result, indent=2))
+    return 0 if not problems else 2
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--site-root", default="site_public")
     ap.add_argument("--asset-source", default="website/assets")
     ap.add_argument("--force", action="store_true")
-    ap.add_argument("--fail-on-blank", action="store_true")
+    ap.add_argument("--validate-only", action="store_true")
     args = ap.parse_args()
     site = Path(args.site_root)
-    site.mkdir(parents=True, exist_ok=True)
-    copy_assets(site, Path(args.asset_source))
-    metrics, summary, weekly = collect_metrics(site)
-    now = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00","Z")
-    generated = []
-    for filename, (title, heading, intro) in CORE_PAGES.items():
-        path = site / filename
-        if args.force or is_blankish(path):
-            html = page(site, filename, title, heading, intro, specific_body(filename, metrics, site))
-            path.write_text(html, encoding="utf-8")
-            generated.append(filename)
-    for alias, target in ALIASES.items():
-        (site / alias).write_text(f'<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url={target}"><title>Redirecting · AQ26</title><link rel="canonical" href="{target}"></head><body><p><a href="{target}">Continue to {target}</a></p></body></html>', encoding="utf-8")
-    ensure_download_aliases(site)
-    (site / "robots.txt").write_text("User-agent: *\nAllow: /\n", encoding="utf-8")
-    (site / "sitemap.txt").write_text("\n".join(CORE_PAGES.keys())+"\n", encoding="utf-8")
-    status = {"ok": True, "generated_at_utc": now, "site_root": str(site), "generated_or_repaired": generated, "required_pages": list(CORE_PAGES.keys())}
-    (site / "data").mkdir(exist_ok=True)
-    (site / "data" / "public_site_guard_status.json").write_text(json.dumps(status, indent=2), encoding="utf-8")
-    problems=[]
-    for name in ["index.html","source-records.html","readiness.html","methodology.html","comparisons.html","downloads.html","archive.html"]:
-        if is_blankish(site / name):
-            problems.append(f"{name}: missing_or_blank")
-    if args.fail_on_blank and problems:
-        print(json.dumps({"ok": False, "problems": problems, "site_root": str(site)}, indent=2))
-        raise SystemExit(2)
-    print(json.dumps({"ok": True, "site_root": str(site), "repaired": generated, "problems": problems}, indent=2))
+    asset_source = Path(args.asset_source)
+    if not args.validate_only:
+        write_pages(site, asset_source, force=args.force)
+    raise SystemExit(validate(site))
 
 if __name__ == "__main__":
     main()
