@@ -1,0 +1,126 @@
+name: AQ26 Remaining Incinerator Overlay Finder V2
+
+on:
+  workflow_dispatch:
+    inputs:
+      live_openaq:
+        description: "Query OpenAQ live. If false, create queue only."
+        required: true
+        default: true
+        type: boolean
+      max_facilities:
+        description: "Maximum remaining facilities to query. 0 = all. Use 3-5 for smoke test."
+        required: true
+        default: "5"
+        type: string
+      radius_km:
+        description: "Requested radius in km. OpenAQ point-radius calls are capped at 25 km."
+        required: true
+        default: "25"
+        type: string
+      limit_per_query:
+        description: "OpenAQ limit per query variant"
+        required: true
+        default: "100"
+        type: string
+      min_score:
+        description: "Minimum relevance score for selected review candidates"
+        required: true
+        default: "35"
+        type: string
+      write_page:
+        description: "Write site_public/incinerator-overlays.html"
+        required: true
+        default: true
+        type: boolean
+      commit_outputs:
+        description: "Commit overlay outputs back to repo"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  OPENAQ_API_KEY: ${{ secrets.OPENAQ_API_KEY }}
+
+jobs:
+  overlays-v2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure register directory exists
+        run: |
+          set -euo pipefail
+          mkdir -p configs/aq26_incinerator_register site_public/data/focus/overlays_v2
+          test -f configs/aq26_incinerator_register/UK_Incinerators_with_Controls_Full_v3.csv
+          test -f configs/aq26_incinerator_register/UK_Incinerators_with_DEFRA_Sites_v3_validated_Full.csv
+
+      - name: Run remaining overlay finder V2
+        run: |
+          set -euo pipefail
+          args=""
+          if [ "${{ inputs.live_openaq }}" = "true" ]; then
+            args="$args --live-openaq"
+          fi
+          if [ "${{ inputs.write_page }}" = "true" ]; then
+            args="$args --write-page"
+          fi
+          python scripts/aq26_find_remaining_incinerator_overlays_v2.py \
+            --broad-register configs/aq26_incinerator_register/UK_Incinerators_with_Controls_Full_v3.csv \
+            --validated-overlays configs/aq26_incinerator_register/UK_Incinerators_with_DEFRA_Sites_v3_validated_Full.csv \
+            --output-root site_public/data/focus/overlays_v2 \
+            --site-root site_public \
+            --radius-km "${{ inputs.radius_km }}" \
+            --limit-per-query "${{ inputs.limit_per_query }}" \
+            --max-facilities "${{ inputs.max_facilities }}" \
+            --min-score "${{ inputs.min_score }}" \
+            $args
+
+      - name: Summarise overlay outputs
+        run: |
+          set -euo pipefail
+          echo "--- incinerator_overlay_summary.json ---"
+          cat site_public/data/focus/overlays_v2/incinerator_overlay_summary.json
+          echo "--- candidate count ---"
+          python - <<'PY'
+import csv, pathlib
+for p in [
+ 'site_public/data/focus/overlays_v2/remaining_overlay_queue.csv',
+ 'site_public/data/focus/overlays_v2/candidate_monitoring_overlays.csv',
+ 'site_public/data/focus/overlays_v2/selected_candidate_overlays_needing_review.csv',
+ 'site_public/data/focus/overlays_v2/openaq_query_diagnostics.csv',
+]:
+    path=pathlib.Path(p)
+    n=sum(1 for _ in csv.DictReader(path.open(encoding='utf-8'))) if path.exists() else -1
+    print(f'{p}: {n}')
+PY
+
+      - name: Upload overlay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-incinerator-overlays-v2
+          path: |
+            site_public/data/focus/overlays_v2/
+            site_public/incinerator-overlays.html
+          if-no-files-found: warn
+
+      - name: Commit overlay outputs
+        if: ${{ inputs.commit_outputs }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site_public/data/focus/overlays_v2 site_public/incinerator-overlays.html || true
+          if git diff --cached --quiet; then
+            echo "No overlay output changes to commit."
+          else
+            git commit -m "Add AQ26 remaining incinerator overlay V2 outputs"
+            git pull --rebase
+            git push
+          fi
