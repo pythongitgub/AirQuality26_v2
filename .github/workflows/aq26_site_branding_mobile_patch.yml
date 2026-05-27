@@ -1,0 +1,63 @@
+name: AQ26 Apply Branding and Mobile Polish
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit_outputs:
+        description: "Commit polished generated site files back to repository"
+        required: true
+        type: boolean
+        default: true
+      include_unredacted:
+        description: "Also polish site_unredacted if it exists"
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Apply favicon, touch icon and mobile navigation
+        run: |
+          set -euo pipefail
+          ARGS=""
+          if [ "${{ inputs.include_unredacted }}" = "true" ]; then
+            ARGS="--include-unredacted"
+          fi
+          python scripts/aq26_apply_site_branding_mobile.py \
+            --site-root site_public \
+            --asset-source website/assets \
+            $ARGS
+
+      - name: Commit branding/mobile polish
+        if: ${{ inputs.commit_outputs }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add \
+            website/assets \
+            site_public \
+            site_unredacted \
+            scripts/aq26_apply_site_branding_mobile.py \
+            .github/workflows/aq26_site_branding_mobile_patch.yml \
+            docs/AQ26_BRANDING_MOBILE_PATCH.md || true
+          if git diff --cached --quiet; then
+            echo "No branding/mobile changes to commit"
+          else
+            git commit -m "Add AQ26 favicon touch icon and mobile navigation polish"
+            git push
+          fi
