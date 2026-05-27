@@ -1,0 +1,26 @@
+{
+  "run_ts": "20260527T182512Z",
+  "warning_count": 2,
+  "warnings": [
+    {
+      "run_ts": "20260527T182512Z",
+      "provider": "GDELT document API",
+      "query": "Newhaven Energy Recovery Facility Veolia",
+      "http_status": 429,
+      "warning_at_utc": "2026-05-27T18:25:49.958074+00:00",
+      "warning_at_uk": "2026-05-27T19:25:49.958074+01:00",
+      "error": "Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com for larger queries.\n\n",
+      "notes": "Non-critical news provider warning; contextual provider only."
+    },
+    {
+      "run_ts": "20260527T182512Z",
+      "provider": "GDELT document API",
+      "query": "Newhaven incinerator emissions",
+      "http_status": 429,
+      "warning_at_utc": "2026-05-27T18:26:29.272105+00:00",
+      "warning_at_uk": "2026-05-27T19:26:29.272105+01:00",
+      "error": "Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com for larger queries.\n\n",
+      "notes": "Non-critical news provider warning; contextual provider only."
+    }
+  ]
+}

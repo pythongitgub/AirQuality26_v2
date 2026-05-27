@@ -1,0 +1,11 @@
+{
+  "run_ts": "20260527T184450Z",
+  "methods_alignment": {
+    "dominici": "Causal language guarded; exposure/confounder/backfill readiness only.",
+    "martin": "Satellite catalogue supports remote-sensing context; extraction and ground-fusion next.",
+    "brauer": "Multi-source exposure-screening registry; no health-burden attribution yet.",
+    "anenberg": "NO2/SO2/CO/HCHO/O3/CH4/AER_AI trace-gas families prioritised.",
+    "damoulas": "Target/control graph, Drive inventory, gaps and alerts support digital-twin readiness.",
+    "optional_sources": "PurpleAir, SerpAPI, Earthdata CMR, CDSE auth and Gemini are integrated as cautious optional metadata/readiness streams."
+  }
+}

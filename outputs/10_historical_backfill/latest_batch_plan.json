@@ -1,27 +1,43 @@
 {
   "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_BATCH_PLAN_1",
-  "created_at_utc": "2026-05-27T05:11:51Z",
+  "created_at_utc": "2026-05-27T18:17:28Z",
   "backfill_start_date": "auto",
   "backfill_end_date": "2026-05-25",
   "auto_mode": "earliest_missing",
   "force": false,
   "selected_windows": [
     {
-      "start": "2024-08-19",
-      "end": "2024-08-26"
+      "start": "2024-09-16",
+      "end": "2024-09-23"
     },
     {
-      "start": "2024-08-26",
-      "end": "2024-09-02"
+      "start": "2024-09-23",
+      "end": "2024-09-30"
     },
     {
-      "start": "2024-09-02",
-      "end": "2024-09-09"
+      "start": "2024-09-30",
+      "end": "2024-10-07"
     },
     {
-      "start": "2024-09-09",
-      "end": "2024-09-16"
+      "start": "2024-10-07",
+      "end": "2024-10-14"
+    },
+    {
+      "start": "2024-10-14",
+      "end": "2024-10-21"
+    },
+    {
+      "start": "2024-10-21",
+      "end": "2024-10-28"
+    },
+    {
+      "start": "2024-10-28",
+      "end": "2024-11-04"
+    },
+    {
+      "start": "2024-11-04",
+      "end": "2024-11-11"
     }
   ],
-  "selected_count": 4
+  "selected_count": 8
 }

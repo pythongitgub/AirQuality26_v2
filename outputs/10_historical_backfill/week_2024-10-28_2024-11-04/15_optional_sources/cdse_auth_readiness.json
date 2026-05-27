@@ -1,0 +1,26 @@
+{
+  "run_ts": "20260527T184054Z",
+  "cdse_username_present": true,
+  "cdse_password_present": true,
+  "cdse_id_present": true,
+  "cdse_secret_present": true,
+  "cdse_client_id_present": true,
+  "cdse_client_secret_present": true,
+  "cdse_token_ready": true,
+  "cdse_username_password_auth_ready": true,
+  "cdse_client_credentials_auth_ready": false,
+  "auth_route_used": "password:CDSE_USERNAME_CDSE_PASSWORD:public_client",
+  "token_probe_attempted": true,
+  "http_status": 200,
+  "attempts": [
+    {
+      "route": "password:CDSE_USERNAME_CDSE_PASSWORD:public_client",
+      "http_status": 200,
+      "ok": true,
+      "has_access_token": true,
+      "expires_in": 1800
+    }
+  ],
+  "notes": "No token value is stored. Username/password is tried first because it has worked for this repository.",
+  "expires_in": 1800
+}

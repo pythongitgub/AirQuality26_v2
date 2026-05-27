@@ -1,0 +1,112 @@
+{
+  "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
+  "created_at_utc": "2026-05-27T18:25:12Z",
+  "run_ts": "20260527T182145Z",
+  "date_window": {
+    "start": "2024-09-23",
+    "end": "2024-09-30"
+  },
+  "status": "harvested",
+  "backfill_status": "harvested",
+  "collector_exit_code": 0,
+  "collector_date_window_exact_match": true,
+  "collector_raw_date_window": {
+    "start": "2024-09-23",
+    "end": "2024-09-30"
+  },
+  "source_record_count": 58,
+  "ok_count": 56,
+  "warning_count": 0,
+  "error_count": 0,
+  "skipped_count": 2,
+  "source_type_counts": {
+    "ai_summary": 1,
+    "atmospheric_model": 1,
+    "gdrive": 1,
+    "ground_aq": 15,
+    "low_cost_sensor_context": 1,
+    "news_api": 4,
+    "official_search": 12,
+    "official_watch_url": 4,
+    "satellite_auth": 1,
+    "satellite_metadata": 9,
+    "weather": 6,
+    "web_search_context": 3
+  },
+  "source_status_counts": {
+    "ok": 56,
+    "skipped": 2
+  },
+  "temporal_role_counts": {
+    "catalogue_metadata": 9,
+    "current_context_only": 18,
+    "failed_or_skipped": 2,
+    "historical_observation": 11,
+    "model_reanalysis": 1,
+    "reference_document": 17
+  },
+  "current_context_only_count": 18,
+  "historical_observation_count": 11,
+  "satellite_product_count": 350,
+  "drive_file_count": 5000,
+  "drive_inventory_truncated": true,
+  "drive_inventory_limit": 5000,
+  "high_priority_filings": 0,
+  "medium_priority_filings": 0,
+  "openaq_request_count": 15,
+  "news_warning_count": 0,
+  "readiness": {
+    "openaq_ready": true,
+    "redaction_ready": true,
+    "external_submission_ready": false,
+    "cdse_download_ready": null,
+    "cams_endpoint_configured": false,
+    "backfill_ready": true,
+    "gemini_summary_ready": true,
+    "metoffice_ready": true,
+    "openaq_safety_ready": true,
+    "drive_ready": true,
+    "ground_aq_ready": true,
+    "cams_data_ready": false,
+    "satellite_catalogue_ready": true,
+    "cams_key_present": true,
+    "satellite_extraction_ready": false,
+    "cdse_auth_ready": true,
+    "cdse_sentinelhub_ready": null,
+    "drive_inventory_truncated": true
+  },
+  "external_submission_ready": false,
+  "controlled_use_boundary": "WeeklyV2 is a controlled-review evidence harvester. It does not claim endorsement by WHO, UNEP, EEA, C40 Cities, or any named expert. It does not assert causal attribution unless explicit evidence gates pass.\n",
+  "provenance": {
+    "collector_output_root": "outputs/10_historical_backfill/week_2024-09-23_2024-09-30",
+    "collector_summary_relpath": "outputs/10_historical_backfill/week_2024-09-23_2024-09-30/00_weeklyv2/AQ26_WEEKLYV2_20260527T182145Z/AQ26_WEEKLYV2_MANIFEST_20260527T182145Z.json",
+    "collector_log_relpath": "outputs/98_logs/collector_2024-09-23_2024-09-30.log",
+    "source_records_present": true,
+    "source_records_required_fields": [
+      "source_name",
+      "source_type",
+      "status",
+      "retrieved_at_utc",
+      "retrieved_at_uk",
+      "date_uk",
+      "output_path",
+      "sha256"
+    ]
+  },
+  "review_positioning": {
+    "intended_review_audience": [
+      "WHO",
+      "UNEP",
+      "EEA",
+      "C40 Cities",
+      "independent academic expert review"
+    ],
+    "expert_critique_guardrail": "Outputs are framed for scrutiny by air-quality, exposure-science, atmospheric-modelling and environmental-policy experts; causal claims remain gated until source, confounder, uncertainty and validation requirements pass.",
+    "not_for_claims": [
+      "endorsement",
+      "regulatory breach determination",
+      "health outcome attribution",
+      "single-source causal attribution"
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "automation_ready": true,
+  "provenance_ready": true,
+  "redaction_ready": true,
+  "metoffice_ready": true,
+  "ground_aq_ready": true,
+  "openaq_ready": true,
+  "openaq_safety_ready": true,
+  "cams_key_present": true,
+  "cams_endpoint_configured": false,
+  "cams_data_ready": false,
+  "satellite_catalogue_ready": true,
+  "satellite_extraction_ready": false,
+  "official_filings_ready": true,
+  "drive_ready": true,
+  "drive_inventory_truncated": true,
+  "purpleair_context_ready": true,
+  "serpapi_context_ready": true,
+  "earthdata_key_present": true,
+  "earthdata_cmr_ready": false,
+  "cdse_auth_ready": true,
+  "gemini_summary_ready": true,
+  "backfill_ready": true,
+  "external_submission_ready": false,
+  "blocking_reasons": [
+    "External submission remains false until satellite pollutant extraction, official document review, ground QA, wind-sector analysis and uncertainty gates pass."
+  ]
+}

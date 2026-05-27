@@ -1,0 +1,16 @@
+{
+  "run_ts": "20260527T184450Z",
+  "warning_count": 1,
+  "warnings": [
+    {
+      "run_ts": "20260527T184450Z",
+      "provider": "GDELT document API",
+      "query": "Newhaven Energy Recovery Facility Veolia",
+      "http_status": null,
+      "warning_at_utc": "2026-05-27T18:45:25.670343+00:00",
+      "warning_at_uk": "2026-05-27T19:45:25.670343+01:00",
+      "error": "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='api.gdeltproject.org', port=443): Read timed out. (read timeout=35)\"))",
+      "notes": "Non-critical news provider warning; contextual provider only."
+    }
+  ]
+}

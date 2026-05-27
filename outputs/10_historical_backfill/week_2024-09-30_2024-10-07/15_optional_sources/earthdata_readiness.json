@@ -1,0 +1,11 @@
+{
+  "run_ts": "20260527T182512Z",
+  "earthdata_key_present": true,
+  "earthdata_cmr_ready": false,
+  "date_window": {
+    "start": "2024-09-30",
+    "end": "2024-10-07"
+  },
+  "notes": "CMR discovery only. No Earthdata file download/extraction in WeeklyV2.",
+  "record_count": 0
+}

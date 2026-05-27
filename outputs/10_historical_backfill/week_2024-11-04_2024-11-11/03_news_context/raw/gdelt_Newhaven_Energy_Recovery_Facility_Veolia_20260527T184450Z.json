@@ -1,0 +1,1 @@
+{"error": "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='api.gdeltproject.org', port=443): Read timed out. (read timeout=35)\"))"}

@@ -1,0 +1,20 @@
+{
+  "run_ts": "20260527T184054Z",
+  "cams_key_present": true,
+  "cams_endpoint_configured": false,
+  "cams_data_ready": false,
+  "variables_requested": [
+    "nitrogen_dioxide",
+    "sulphur_dioxide",
+    "carbon_monoxide",
+    "ozone",
+    "particulate_matter_2.5um",
+    "particulate_matter_10um"
+  ],
+  "date_window": {
+    "start": "2024-10-28",
+    "end": "2024-11-04"
+  },
+  "notes": "CAMS is not called unless CAMS_BASE_URL is configured. This avoids guessing endpoints.",
+  "status": "key_present_endpoint_missing"
+}

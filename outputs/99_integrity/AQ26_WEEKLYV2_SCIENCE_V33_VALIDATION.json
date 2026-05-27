@@ -1,12 +1,12 @@
 {
   "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_VALIDATION_1",
-  "created_at_utc": "2026-05-27T05:28:30Z",
+  "created_at_utc": "2026-05-27T18:49:12Z",
   "ok": true,
   "strict": true,
   "external_grade": false,
-  "issue_count": 33,
+  "issue_count": 41,
   "error_count": 0,
-  "warning_count": 33,
+  "warning_count": 41,
   "issues": [
     {
       "severity": "warning",
@@ -36,6 +36,54 @@
       "severity": "warning",
       "code": "missing_science_gate_values",
       "message": "2026-04-27_2026-05-04 lacks readiness values for ['ground_aq_ready', 'openaq_ready', 'satellite_catalogue_ready', 'redaction_ready']",
+      "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/weekly_index.json"
+    },
+    {
+      "severity": "warning",
+      "code": "current_context_only_sources_present",
+      "message": "2024-11-04_2024-11-11 contains 18 current/context records; these must not be interpreted as historical measurements",
+      "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/weekly_index.json"
+    },
+    {
+      "severity": "warning",
+      "code": "current_context_only_sources_present",
+      "message": "2024-10-28_2024-11-04 contains 18 current/context records; these must not be interpreted as historical measurements",
+      "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/weekly_index.json"
+    },
+    {
+      "severity": "warning",
+      "code": "current_context_only_sources_present",
+      "message": "2024-10-21_2024-10-28 contains 18 current/context records; these must not be interpreted as historical measurements",
+      "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/weekly_index.json"
+    },
+    {
+      "severity": "warning",
+      "code": "current_context_only_sources_present",
+      "message": "2024-10-14_2024-10-21 contains 18 current/context records; these must not be interpreted as historical measurements",
+      "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/weekly_index.json"
+    },
+    {
+      "severity": "warning",
+      "code": "current_context_only_sources_present",
+      "message": "2024-10-07_2024-10-14 contains 18 current/context records; these must not be interpreted as historical measurements",
+      "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/weekly_index.json"
+    },
+    {
+      "severity": "warning",
+      "code": "current_context_only_sources_present",
+      "message": "2024-09-30_2024-10-07 contains 18 current/context records; these must not be interpreted as historical measurements",
+      "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/weekly_index.json"
+    },
+    {
+      "severity": "warning",
+      "code": "current_context_only_sources_present",
+      "message": "2024-09-23_2024-09-30 contains 18 current/context records; these must not be interpreted as historical measurements",
+      "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/weekly_index.json"
+    },
+    {
+      "severity": "warning",
+      "code": "current_context_only_sources_present",
+      "message": "2024-09-16_2024-09-23 contains 18 current/context records; these must not be interpreted as historical measurements",
       "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/weekly_index.json"
     },
     {
@@ -210,8 +258,8 @@
   "summary": {
     "history_weeks_requested": 104,
     "weekly_rows": 104,
-    "harvested_rows": 16,
+    "harvested_rows": 24,
     "partial_harvest_rows": 4,
-    "not_yet_harvested_rows": 84
+    "not_yet_harvested_rows": 76
   }
 }

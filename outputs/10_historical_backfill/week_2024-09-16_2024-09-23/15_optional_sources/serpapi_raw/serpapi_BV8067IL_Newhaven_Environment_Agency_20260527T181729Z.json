@@ -1,0 +1,358 @@
+{
+  "search_metadata": {
+    "id": "6a1735a31fad3673ab109ca1",
+    "status": "Success",
+    "json_endpoint": "https://serpapi.com/searches/SSCVjuBaiAvGcf6cLSPjOQ/6a1735a31fad3673ab109ca1.json",
+    "pixel_position_endpoint": "https://serpapi.com/searches/SSCVjuBaiAvGcf6cLSPjOQ/6a1735a31fad3673ab109ca1.json_with_pixel_position",
+    "created_at": "2026-05-27 18:19:15 UTC",
+    "processed_at": "2026-05-27 18:19:15 UTC",
+    "google_url": "https://www.google.com/search?q=BV8067IL+Newhaven+Environment+Agency&oq=BV8067IL+Newhaven+Environment+Agency&sourceid=chrome&ie=UTF-8",
+    "raw_html_file": "https://serpapi.com/searches/SSCVjuBaiAvGcf6cLSPjOQ/6a1735a31fad3673ab109ca1.html",
+    "total_time_taken": 6.91
+  },
+  "search_parameters": {
+    "engine": "google",
+    "q": "BV8067IL Newhaven Environment Agency",
+    "google_domain": "google.com",
+    "device": "desktop"
+  },
+  "search_information": {
+    "query_displayed": "BV8067IL Newhaven Environment Agency",
+    "total_results": 238,
+    "time_taken_displayed": 0.2,
+    "organic_results_state": "Results for exact spelling"
+  },
+  "ai_overview": {
+    "page_token": "ueBmb3icxVXNkqJIEL7ve4yXbgUR_zqCmCiQRtq_LpV29EIgYIEIKKBo3_Zd9jX2RfZppijFBht7YidiY_NQSSb5V1X5Vf7518b2nH_--NuKom34RFFxHFeQ76ONWdF9l9LCk6dTK38TBrr1_XTgaiU95OiSaXO7qfJD27lv_abp2P3B60netVwYlogLpy610FzjiMd1SKkUXpxvtQ4WKmHF9CoDoKjLhfajJSkVhq62KyNKc7EB-A9JkEUgYI4ATDgqMOnIgM_K_CcLKAIZs0lWhzJr6pgkAUAU5YQJRbkSEonVC0-8y8OoBd7h5Zd8x4XP_xDiZAEKTpi4yMJtJWmiIkoNfbLCQhtAzuyWkiJ61yiDTHn3QsA4IytJSeWkqvFVN7oEFtKyRPEjNOJjsI5XSBTF4gyEcLB53DnBlnzvwC_lQNmNL-UL8RACRBkIdx9NLQPMqpStWzr5CMKkKYVpm_alGkTvvmuFbTkchCNxGQyHTE-baVAHlL7EdhtfM0xDtVT6O5GrTLVOt2vN1iNBgx5e4RBm4aCwWihtFqy1h5V-ha9-YEEg14bym0lOqOhKEmWihzlNSvAsC_gDZbrBv8SULMBnG6fXg6_kMi-3hoW5LH7qEBKoAAvXUjPZReeiVIibeGsMruFTdef2FjMysY3B9mMvkM-aJ6lzpyRPkvwCn4I1iwiEze3ns9f2coB8tl_lNBR_NoeiDOANUskvJ4MFkTwDmMkxArEAe-nFQbIRdNkOxoJ4s1FeyotzsHEK36tf092nJ0MobfubLs52f9dvdKWdMO_DVnczflcWbBMduuzxuT4Bxd3uu8t_8frr_y8e0tngn2eDX4QHOY-HxSc8QPzcg69mw7lT0tngnGeDfwcPovhpNqQtmeLqFg9HOYcH-6vZ8IGHc-av8QDv4KFzNv-Eh14RHvhCPOArILMhiwcnPxv4_GxI8fA7s2HyO7OBgMM8s_yg2K_R3YHRHY29Tl8rN7rxq7uXVgFjv06i07E6XcFfDoyVGz25mrF5VG3jiWdeopPxqGKF_2QapR3Hv7XoRlPuPwzN2NIOpvcgegc78D3X9KIHgExPP5XcTeBztFavO9bUbdaZFjJG-sxUa3qz573UZ_HQXbytyww7oVea3TXAajBjj-PTgR2Ohr1oL_hAH8zUoBHVdmVlPhbaR8N9C-O105ky3UhtqbEkHfZlayHZAfYdT47jqd4AR0eXZWOizZv13WRZG6uj_XSmQFJPyPGMvdo-BwYD6JIb6BxuARYBfNAzBHQgzAHEbxYUEiSWQl1TzfDAsXWmyjYber3J0iuG0Uouik5bjq2WQi_gqj8BS_ISvg",
+    "serpapi_link": "https://serpapi.com/search.json?engine=google_ai_overview&page_token=ueBmb3icxVXNkqJIEL7ve4yXbgUR_zqCmCiQRtq_LpV29EIgYIEIKKBo3_Zd9jX2RfZppijFBht7YidiY_NQSSb5V1X5Vf7518b2nH_--NuKom34RFFxHFeQ76ONWdF9l9LCk6dTK38TBrr1_XTgaiU95OiSaXO7qfJD27lv_abp2P3B60netVwYlogLpy610FzjiMd1SKkUXpxvtQ4WKmHF9CoDoKjLhfajJSkVhq62KyNKc7EB-A9JkEUgYI4ATDgqMOnIgM_K_CcLKAIZs0lWhzJr6pgkAUAU5YQJRbkSEonVC0-8y8OoBd7h5Zd8x4XP_xDiZAEKTpi4yMJtJWmiIkoNfbLCQhtAzuyWkiJ61yiDTHn3QsA4IytJSeWkqvFVN7oEFtKyRPEjNOJjsI5XSBTF4gyEcLB53DnBlnzvwC_lQNmNL-UL8RACRBkIdx9NLQPMqpStWzr5CMKkKYVpm_alGkTvvmuFbTkchCNxGQyHTE-baVAHlL7EdhtfM0xDtVT6O5GrTLVOt2vN1iNBgx5e4RBm4aCwWihtFqy1h5V-ha9-YEEg14bym0lOqOhKEmWihzlNSvAsC_gDZbrBv8SULMBnG6fXg6_kMi-3hoW5LH7qEBKoAAvXUjPZReeiVIibeGsMruFTdef2FjMysY3B9mMvkM-aJ6lzpyRPkvwCn4I1iwiEze3ns9f2coB8tl_lNBR_NoeiDOANUskvJ4MFkTwDmMkxArEAe-nFQbIRdNkOxoJ4s1FeyotzsHEK36tf092nJ0MobfubLs52f9dvdKWdMO_DVnczflcWbBMduuzxuT4Bxd3uu8t_8frr_y8e0tngn2eDX4QHOY-HxSc8QPzcg69mw7lT0tngnGeDfwcPovhpNqQtmeLqFg9HOYcH-6vZ8IGHc-av8QDv4KFzNv-Eh14RHvhCPOArILMhiwcnPxv4_GxI8fA7s2HyO7OBgMM8s_yg2K_R3YHRHY29Tl8rN7rxq7uXVgFjv06i07E6XcFfDoyVGz25mrF5VG3jiWdeopPxqGKF_2QapR3Hv7XoRlPuPwzN2NIOpvcgegc78D3X9KIHgExPP5XcTeBztFavO9bUbdaZFjJG-sxUa3qz573UZ_HQXbytyww7oVea3TXAajBjj-PTgR2Ohr1oL_hAH8zUoBHVdmVlPhbaR8N9C-O105ky3UhtqbEkHfZlayHZAfYdT47jqd4AR0eXZWOizZv13WRZG6uj_XSmQFJPyPGMvdo-BwYD6JIb6BxuARYBfNAzBHQgzAHEbxYUEiSWQl1TzfDAsXWmyjYber3J0iuG0Uouik5bjq2WQi_gqj8BS_ISvg"
+  },
+  "organic_results": [
+    {
+      "position": 1,
+      "title": "environmental permit issued - EPR/BV8067IL/V006",
+      "link": "https://www.gov.uk/government/publications/bn9-0ab-veolia-es-south-downs-ltd-environmental-permit-issued-eprbv8067ilv006",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.gov.uk/government/publications/bn9-0ab-veolia-es-south-downs-ltd-environmental-permit-issued-eprbv8067ilv006&ved=2ahUKEwjpjde0itqUAxU3EmIAHUgFL7MQFnoECCAQAQ",
+      "displayed_link": "https://www.gov.uk › Environment",
+      "favicon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_D_ok6Rj-_Dfb_PaUcbxeOhA.png",
+      "date": "Oct 17, 2022",
+      "snippet": "Installation name: Newhaven Energy Recovery Facility. Permit number: EPR/BV8067IL/V006. Updates to this page. Published 17 October 2022 ...",
+      "snippet_highlighted_words": [
+        "Newhaven",
+        "BV8067IL"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Installation name: Newhaven Energy Recovery Facility. Permit number: EPR/\nBV8067IL/V006. Updates to this page. Published 17 October 2022 ...",
+          "source_info_link": "https://www.gov.uk/government/publications/bn9-0ab-veolia-es-south-downs-ltd-environmental-permit-issued-eprbv8067ilv006",
+          "icon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_DwW8_sB2mVkHBEYpMf3xXqlv4HNWZqFm0dska9fRnTq0.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.gov.uk/government/publications/bn9-0ab-veolia-es-south-downs-ltd-environmental-permit-issued-eprbv8067ilv006&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.gov.uk%2Fgovernment%2Fpublications%2Fbn9-0ab-veolia-es-south-downs-ltd-environmental-permit-issued-eprbv8067ilv006",
+      "source": "GOV.UK"
+    },
+    {
+      "position": 2,
+      "title": "Information for Newhaven Incinerator, North Quay ...",
+      "link": "https://ukwin.org.uk/incinerators/library/East+Sussex/129",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://ukwin.org.uk/incinerators/library/East%2BSussex/129&ved=2ahUKEwjpjde0itqUAxU3EmIAHUgFL7MQFnoECBwQAQ",
+      "displayed_link": "https://ukwin.org.uk › incinerators › library › East+Sussex",
+      "favicon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_D8Lf_QAlrCDzRHq2mT1LbiY.png",
+      "snippet": "Environment Agency 2024 Pollution Inventory: Substances ; BV8067IL, Newhaven Energy Recovery Facility North Quay, Air, Particulate matter - PM10, 1,642 ; BV8067IL ...",
+      "snippet_highlighted_words": [
+        "BV8067IL, Newhaven Energy Recovery Facility North Quay"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Environment Agency 2024 Pollution Inventory: Substances ; BV8067IL, Newhaven Energy Recovery Facility North Quay, Air, Particulate matter - PM10, 1,642 ; BV8067IL ...",
+          "source_info_link": "https://ukwin.org.uk/incinerators/library/East+Sussex/129",
+          "icon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_D4Z6kHhO4gsqTSa5vJ9KGgyE0T-um7Z29jrTPENkdZj-.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://ukwin.org.uk/incinerators/library/East+Sussex/129&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fukwin.org.uk%2Fincinerators%2Flibrary%2FEast%2BSussex%2F129",
+      "source": "United Kingdom Without Incineration Network"
+    },
+    {
+      "position": 3,
+      "title": "Notice of variation and consolidation with introductory note",
+      "link": "https://assets.publishing.service.gov.uk/media/634d6259e90e0731a4dcff9c/Application_Variation_Notice_05102022__2_.pdf",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://assets.publishing.service.gov.uk/media/634d6259e90e0731a4dcff9c/Application_Variation_Notice_05102022__2_.pdf&ved=2ahUKEwjpjde0itqUAxU3EmIAHUgFL7MQFnoECCYQAQ",
+      "displayed_link": "https://assets.publishing.service.gov.uk › media",
+      "favicon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_D9FYpWl4XhKfAzg5LJrLOqw.png",
+      "date": "Dec 3, 2019",
+      "snippet": "The report shall, as a minimum requirement (as required by Chapter IV of the Industrial. Page 16. Permit number. EPR/BV8067IL/V006. 16.",
+      "snippet_highlighted_words": [
+        "BV8067IL"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "The report shall, as a minimum requirement (as required by Chapter IV of the Industrial. Page 16. Permit number. EPR/BV8067IL/V006. 16.",
+          "source_info_link": "https://assets.publishing.service.gov.uk/media/634d6259e90e0731a4dcff9c/Application_Variation_Notice_05102022__2_.pdf",
+          "icon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_D0Vc_AX2FjBERbUNh0GDdyPtnSUxERTxsf2AxBleAkRs.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://assets.publishing.service.gov.uk/media/634d6259e90e0731a4dcff9c/Application_Variation_Notice_05102022__2_.pdf&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fassets.publishing.service.gov.uk%2Fmedia%2F634d6259e90e0731a4dcff9c%2FApplication_Variation_Notice_05102022__2_.pdf",
+      "source": "GOV.UK"
+    },
+    {
+      "position": 4,
+      "title": "1 Annual Performance Report 2012 Newhaven Energy ...",
+      "link": "https://ukwin.org.uk/files/pdf/newhaven_2012.pdf",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://ukwin.org.uk/files/pdf/newhaven_2012.pdf&ved=2ahUKEwjpjde0itqUAxU3EmIAHUgFL7MQFnoECB0QAQ",
+      "displayed_link": "https://ukwin.org.uk › files › pdf › newhaven_2012",
+      "favicon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_D94yI1-S4mZnA_kPgCeqwtA.png",
+      "snippet": "Name of Company. Veolia ES Southdowns Ltd. Name of Plant. Newhaven Energy Recovery Facility. Permit Number. BV8067IL. Address. North Quay Road,. Newhaven.",
+      "snippet_highlighted_words": [
+        "BV8067IL"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Name of Company. Veolia ES Southdowns Ltd. Name of Plant. Newhaven Energy Recovery Facility. Permit Number. BV8067IL. Address. North Quay Road,. Newhaven.",
+          "source_info_link": "https://ukwin.org.uk/files/pdf/newhaven_2012.pdf",
+          "icon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_D83NyVpHOvKmCj7TDidSSDqilGUOnYeT6epeSIl0afAL.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://ukwin.org.uk/files/pdf/newhaven_2012.pdf&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fukwin.org.uk%2Ffiles%2Fpdf%2Fnewhaven_2012.pdf",
+      "source": "United Kingdom Without Incineration Network"
+    },
+    {
+      "position": 5,
+      "title": "Municipal waste incinerator annual reports for 2014",
+      "link": "https://www.whatdotheyknow.com/request/municipal_waste_incinerator_annu_3",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.whatdotheyknow.com/request/municipal_waste_incinerator_annu_3&ved=2ahUKEwjpjde0itqUAxU3EmIAHUgFL7MQFnoECCIQAQ",
+      "displayed_link": "https://www.whatdotheyknow.com › request › municip...",
+      "favicon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_D8CHb7OfRCEj6OErAaRhh_4.png",
+      "date": "Mar 25, 2015",
+      "snippet": "Newhaven ERF BV8067IL 4.1.4 Annual Performance Report2014.pdf. 202K ... Environment Agency · Supply of all Waste Brokers · Environment Agency ...",
+      "snippet_highlighted_words": [
+        "Newhaven ERF BV8067IL"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Newhaven ERF BV8067IL 4.1.4 Annual Performance Report2014.pdf. 202K ... Environment Agency · Supply of all Waste Brokers · Environment Agency ...",
+          "source_info_link": "https://www.whatdotheyknow.com/request/municipal_waste_incinerator_annu_3",
+          "icon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_D8BvQ5CyzbD4HTdJ98KRHzj_H3qYivjGrwVYfwhoIm7c.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.whatdotheyknow.com/request/municipal_waste_incinerator_annu_3&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.whatdotheyknow.com%2Frequest%2Fmunicipal_waste_incinerator_annu_3",
+      "source": "WhatDoTheyKnow"
+    },
+    {
+      "position": 6,
+      "title": "newhaven dust assessment v2 (pde). ...",
+      "link": "https://apps.eastsussex.gov.uk/environment/planning/applications/register/documents/datawright%20saved%20documents/scannedinfo/planning/lw-789-cm(eia)/newhaven%20dust%20assessment%20v2%20(pde).pdf",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://apps.eastsussex.gov.uk/environment/planning/applications/register/documents/datawright%2520saved%2520documents/scannedinfo/planning/lw-789-cm(eia)/newhaven%2520dust%2520assessment%2520v2%2520(pde).pdf&ved=2ahUKEwjpjde0itqUAxU3EmIAHUgFL7MQFnoECDMQAQ",
+      "displayed_link": "https://apps.eastsussex.gov.uk › lw-789-cm(eia)",
+      "favicon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_D5uQj8O6g4dwdYFryPHYXmI.png",
+      "snippet": "Adherence to this guidance will help to prevent dust emissions from the use of cement. Environment Agency Guidance. 3.10. Technical guidance note M17 Monitoring ...",
+      "snippet_highlighted_words": [
+        "Environment Agency"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Adherence to this guidance will help to prevent dust emissions from the use of cement. Environment Agency Guidance. 3.10. Technical guidance note M17 Monitoring ...",
+          "source_info_link": "https://apps.eastsussex.gov.uk/environment/planning/applications/register/documents/datawright%20saved%20documents/scannedinfo/planning/lw-789-cm(eia)/newhaven%20dust%20assessment%20v2%20(pde).pdf",
+          "icon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_D4iNsAG2rQmK3dwFXg5bVEQzXLLlrbrqHp93_b4XotS-.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://apps.eastsussex.gov.uk/environment/planning/applications/register/documents/datawright%20saved%20documents/scannedinfo/planning/lw-789-cm(eia)/newhaven%20dust%20assessment%20v2%20(pde).pdf&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fapps.eastsussex.gov.uk%2Fenvironment%2Fplanning%2Fapplications%2Fregister%2Fdocuments%2Fdatawright%2520saved%2520documents%2Fscannedinfo%2Fplanning%2Flw-789-cm%28eia%29%2Fnewhaven%2520dust%2520assessment%2520v2%2520%28pde%29.pdf",
+      "missing": [
+        "BV8067IL"
+      ],
+      "must_include": {
+        "word": "BV8067IL",
+        "link": "https://www.google.com/search?sca_esv=4521476c5740f22a&q=%22BV8067IL%22+Newhaven+Environment+Agency&sa=X&ved=2ahUKEwjpjde0itqUAxU3EmIAHUgFL7MQ5t4CegQIOxAB"
+      },
+      "source": "East Sussex County Council"
+    },
+    {
+      "position": 7,
+      "title": "Environmental Health",
+      "link": "https://nhvhealth.org/environmental-health/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://nhvhealth.org/environmental-health/&ved=2ahUKEwjpjde0itqUAxU3EmIAHUgFL7MQFnoECDgQAQ",
+      "displayed_link": "https://nhvhealth.org › environmental-health",
+      "snippet": "We work to make sure that ALL residents of New Haven have safe places to live, work, eat, and play. This relates to the air we breathe, the water we swim in, ...",
+      "snippet_highlighted_words": [
+        "ALL residents of New Haven have safe places to live, work, eat, and play"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "We work to make sure that ALL residents of New Haven have safe places to live, work, eat, and play. This relates to the air we breathe, the water we swim in, ...",
+          "source_info_link": "https://nhvhealth.org/environmental-health/"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://nhvhealth.org/environmental-health/&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fnhvhealth.org%2Fenvironmental-health%2F",
+      "missing": [
+        "BV8067IL",
+        "Agency"
+      ],
+      "source": "New Haven Health Department"
+    },
+    {
+      "position": 8,
+      "title": "Search Results | NSCEP | US EPA",
+      "link": "https://nepis.epa.gov/Exe/moresame.cgi?Source=D%3A%5CZYFILES%5CINDEX%20DATA%5C76THRU80%5CTXT%5C00000009%5C20015I5X.txt&span=5&start=0",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://nepis.epa.gov/Exe/moresame.cgi%3FSource%3DD%253A%255CZYFILES%255CINDEX%2520DATA%255C76THRU80%255CTXT%255C00000009%255C20015I5X.txt%26span%3D5%26start%3D0&ved=2ahUKEwjpjde0itqUAxU3EmIAHUgFL7MQFnoECDIQAQ",
+      "displayed_link": "https://nepis.epa.gov › Exe › moresame",
+      "favicon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_D38yb7lovv_02I8zbqIVi1k.png",
+      "snippet": "United States Environmental Protection Agency. Main menu. Environmental Topics · Laws & Regulations · About EPA. Menu. Environmental Topics · Laws & Regulations ...",
+      "snippet_highlighted_words": [
+        "Environmental",
+        "Agency",
+        "Environmental",
+        "Environmental"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "United States Environmental Protection Agency. Main menu. Environmental Topics · Laws & Regulations · About EPA. Menu. Environmental Topics · Laws & Regulations ...",
+          "source_info_link": "https://nepis.epa.gov/Exe/moresame.cgi?Source=D%3A%5CZYFILES%5CINDEX%20DATA%5C76THRU80%5CTXT%5C00000009%5C20015I5X.txt&span=5&start=0",
+          "icon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_D5QKPUjXeDN4r_h_bzKtMvDyE6p9SEpkWAHN3iKCS9MP.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://nepis.epa.gov/Exe/moresame.cgi?Source=D%3A%5CZYFILES%5CINDEX%20DATA%5C76THRU80%5CTXT%5C00000009%5C20015I5X.txt&span=5&start=0&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fnepis.epa.gov%2FExe%2Fmoresame.cgi%3FSource%3DD%253A%255CZYFILES%255CINDEX%2520DATA%255C76THRU80%255CTXT%255C00000009%255C20015I5X.txt%26span%3D5%26start%3D0",
+      "missing": [
+        "BV8067IL",
+        "Newhaven"
+      ],
+      "source": "U.S. Environmental Protection Agency (.gov)"
+    },
+    {
+      "position": 9,
+      "title": "Board of Alders Referrals | New Haven, CT",
+      "link": "https://www.newhavenct.gov/government/departments-divisions/city-plan/city-plan-commission/cpc-reports/board-of-alders-referrals",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.newhavenct.gov/government/departments-divisions/city-plan/city-plan-commission/cpc-reports/board-of-alders-referrals&ved=2ahUKEwjpjde0itqUAxU3EmIAHUgFL7MQFnoECEMQAQ",
+      "displayed_link": "https://www.newhavenct.gov › city-plan › cpc-reports",
+      "favicon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_D94_d3MFBfadExmveKDTPLw.png",
+      "snippet": "HUD Environmental Review Record · Community Environmental Benefit Agreements · Government » Departments & Divisions » City Plan » City Plan Commission » CPC ...",
+      "snippet_highlighted_words": [
+        "Environmental",
+        "Environmental"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "HUD Environmental Review Record · Community Environmental Benefit Agreements · Government » Departments & Divisions » City Plan » City Plan Commission » CPC ...",
+          "source_info_link": "https://www.newhavenct.gov/government/departments-divisions/city-plan/city-plan-commission/cpc-reports/board-of-alders-referrals",
+          "icon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_D7UpepA91CABZYgnGroXr8O_N_qRfoK4Z2q4WeY3XjsP.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.newhavenct.gov/government/departments-divisions/city-plan/city-plan-commission/cpc-reports/board-of-alders-referrals&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.newhavenct.gov%2Fgovernment%2Fdepartments-divisions%2Fcity-plan%2Fcity-plan-commission%2Fcpc-reports%2Fboard-of-alders-referrals",
+      "missing": [
+        "BV8067IL",
+        "Agency"
+      ],
+      "source": "City of New Haven, CT (.gov)"
+    },
+    {
+      "position": 10,
+      "title": "Enviro Review Contested At Turbulent Tweed Talk",
+      "link": "https://www.newhavenindependent.org/2023/04/03/tweed_east_haven_hearing/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.newhavenindependent.org/2023/04/03/tweed_east_haven_hearing/&ved=2ahUKEwjpjde0itqUAxU3EmIAHUgFL7MQFnoECDwQAQ",
+      "displayed_link": "https://www.newhavenindependent.org › 2023/04/03",
+      "favicon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_D0BzXsSfAWizS4WB9Qx3hGg.png",
+      "date": "Apr 3, 2023",
+      "snippet": "Carfora continued: “As currently proposed, this project will negatively impact the quality of the human environment for people in East Haven, in ...",
+      "snippet_highlighted_words": [
+        "environment"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Carfora continued: “As currently proposed, this project will negatively impact the quality of the human environment for people in East Haven, in ...",
+          "source_info_link": "https://www.newhavenindependent.org/2023/04/03/tweed_east_haven_hearing/",
+          "icon": "https://serpapi.com/searches/6a1735a31fad3673ab109ca1/images/suhEnNO5xo6cadQ_jzp_Dzh75pr2-lDuqu3wNsvOjS4wkOVHOds6WjAvIZC20VWl.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.newhavenindependent.org/2023/04/03/tweed_east_haven_hearing/&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.newhavenindependent.org%2F2023%2F04%2F03%2Ftweed_east_haven_hearing%2F",
+      "missing": [
+        "BV8067IL",
+        "Agency"
+      ],
+      "source": "New Haven Independent"
+    }
+  ],
+  "pagination": {
+    "current": 1,
+    "next": "https://www.google.com/search?q=BV8067IL+Newhaven+Environment+Agency&sca_esv=4521476c5740f22a&ei=qTUXaqmVL7ekiLMPyIq8mQs&start=10&sa=N&sstk=AU9db-BoihB7ERuFadYiwXuvFZoXZn18XT7h1dEoPLClLHou1zQ68KsHoCj763oT6KsQ9rpnRVIolb8rlBh04cj5NDmlO3FzNIogyg&ved=2ahUKEwjpjde0itqUAxU3EmIAHUgFL7MQ8NMDegQIKxAI",
+    "other_pages": {
+      "2": "https://www.google.com/search?q=BV8067IL+Newhaven+Environment+Agency&sca_esv=4521476c5740f22a&ei=qTUXaqmVL7ekiLMPyIq8mQs&start=10&sa=N&sstk=AU9db-BoihB7ERuFadYiwXuvFZoXZn18XT7h1dEoPLClLHou1zQ68KsHoCj763oT6KsQ9rpnRVIolb8rlBh04cj5NDmlO3FzNIogyg&ved=2ahUKEwjpjde0itqUAxU3EmIAHUgFL7MQ8tMDegQIKxAE",
+      "3": "https://www.google.com/search?q=BV8067IL+Newhaven+Environment+Agency&sca_esv=4521476c5740f22a&ei=qTUXaqmVL7ekiLMPyIq8mQs&start=20&sa=N&sstk=AU9db-BoihB7ERuFadYiwXuvFZoXZn18XT7h1dEoPLClLHou1zQ68KsHoCj763oT6KsQ9rpnRVIolb8rlBh04cj5NDmlO3FzNIogyg&ved=2ahUKEwjpjde0itqUAxU3EmIAHUgFL7MQ8tMDegQIKxAG"
+    }
+  },
+  "serpapi_pagination": {
+    "current": 1,
+    "next_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=BV8067IL+Newhaven+Environment+Agency&start=10",
+    "next": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=BV8067IL+Newhaven+Environment+Agency&start=10",
+    "other_pages": {
+      "2": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=BV8067IL+Newhaven+Environment+Agency&start=10",
+      "3": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=BV8067IL+Newhaven+Environment+Agency&start=20"
+    }
+  }
+}

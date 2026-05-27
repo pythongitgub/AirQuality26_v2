@@ -1,0 +1,30 @@
+{
+  "run_ts": "20260527T183325Z",
+  "gemini_key_present": true,
+  "gemini_model": "gemini-3.5-flash",
+  "gemini_summary_ready": true,
+  "http_status": 200,
+  "input_summary": {
+    "run_ts": "20260527T183325Z",
+    "records": 57,
+    "ok": 54,
+    "warning": 1,
+    "error": 0,
+    "source_types": [
+      "atmospheric_model",
+      "gdrive",
+      "ground_aq",
+      "low_cost_sensor_context",
+      "news_api",
+      "news_api_warning",
+      "official_search",
+      "official_watch_url",
+      "satellite_auth",
+      "satellite_metadata",
+      "weather",
+      "web_search_context"
+    ],
+    "controlled_use_boundary": "Neutral metadata-only summary. No raw evidence, no API keys, no causal attribution."
+  },
+  "summary_text": "### Air Quality Evidence Harvest Metadata Summary\n\n*   **Execution Timestamp:** 2026-05-27T18:33:25Z\n*   **Record Volume:** 57 total records (54 successful, 1 warning, 0 errors)\n*   **Ingested Source Types:** \n    *   Atmospheric models\n    *   Google Drive storage\n    *   Ground-level air quality measurements\n    *   Low-cost sensor contexts\n    *   News API (including warnings)\n    *   Official search indices and watch URLs\n    *   Satellite metadata and authentication endpoints\n    *   Weather data\n    *   Web search contexts\n*   **Controlled Use Boundary:** Neutral metadata-only summary. Contains no raw evidence, API credentials, or causal attributions."
+}
