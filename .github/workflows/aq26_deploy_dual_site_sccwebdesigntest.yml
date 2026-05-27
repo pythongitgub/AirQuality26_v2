@@ -34,7 +34,7 @@ on:
         default: true
         type: boolean
       force_public_polish:
-        description: "Regenerate public comparison/download/archive pages if they are blank"
+        description: "Regenerate public pages if they are missing/blank"
         required: true
         default: true
         type: boolean
@@ -66,18 +66,14 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y sshpass rsync apache2-utils
 
-      - name: Polish public site, mobile menu, aliases and no-blank pages
+      - name: Ensure public site exists and has no blank pages
         run: |
           set -euo pipefail
-          if [ ! -d site_public ]; then
-            echo "::error::site_public does not exist. Build the public site before deploying."
-            exit 1
-          fi
           args=""
           if [ "${{ inputs.force_public_polish }}" = "true" ]; then
-            args="--force-comparisons --force-downloads --force-archive"
+            args="--force"
           fi
-          python scripts/aq26_public_site_polish.py \
+          python scripts/aq26_public_site_guard_build.py \
             --site-root site_public \
             --asset-source website/assets \
             $args \
@@ -94,23 +90,12 @@ jobs:
               --max-index-files "${{ inputs.max_index_files }}"
           else
             mkdir -p site_unredacted/assets site_unredacted/data/unredacted
-            printf '%s\n' \
-              '<!doctype html>' \
-              '<html lang="en">' \
-              '<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AQ26 Unredacted Review Area</title></head>' \
-              '<body><main><h1>AQ26 Unredacted Review Area</h1><p>Builder script not found; fallback page created.</p></main></body>' \
-              '</html>' > site_unredacted/index.html
+            cp -a site_public/. site_unredacted/
           fi
-
-      - name: Polish unredacted site mobile assets
-        run: |
-          set -euo pipefail
-          if [ -d site_unredacted ]; then
-            python scripts/aq26_public_site_polish.py \
-              --site-root site_unredacted \
-              --asset-source website/assets \
-              --fail-on-blank || true
-          fi
+          python scripts/aq26_public_site_guard_build.py \
+            --site-root site_unredacted \
+            --asset-source website/assets \
+            --fail-on-blank || true
 
       - name: Add Basic Auth and noindex files
         run: |
@@ -119,28 +104,24 @@ jobs:
             echo "::error::SCC_UNREDACTED_PASSWORD is empty or unavailable."
             exit 1
           fi
-
           mkdir -p site_unredacted
           htpasswd -bc site_unredacted/.htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
-
           REMOTE_DIR="${PUBLIC_HTML%/}/${{ inputs.remote_unredacted_subdir }}"
           {
-            echo 'DirectoryIndex index.html'
-            echo 'Options -Indexes'
-            echo 'AuthType Basic'
-            echo 'AuthName "AQ26 Unredacted Review"'
+            echo "DirectoryIndex index.html"
+            echo "Options -Indexes"
+            echo "AuthType Basic"
+            echo "AuthName \"AQ26 Unredacted Review\""
             echo "AuthUserFile ${REMOTE_DIR}/.htpasswd"
-            echo 'Require valid-user'
-            echo '<IfModule mod_headers.c>'
-            echo '  Header set X-Robots-Tag "noindex, nofollow, noarchive"'
-            echo '</IfModule>'
+            echo "Require valid-user"
+            echo "<IfModule mod_headers.c>"
+            echo "  Header set X-Robots-Tag \"noindex, nofollow, noarchive\""
+            echo "</IfModule>"
           } > site_unredacted/.htaccess
-
           {
-            echo 'User-agent: *'
-            echo 'Disallow: /'
+            echo "User-agent: *"
+            echo "Disallow: /"
           } > site_unredacted/robots.txt
-
           test -f site_unredacted/index.html
           test -f site_unredacted/.htaccess
           test -f site_unredacted/.htpasswd
@@ -169,12 +150,10 @@ jobs:
         run: |
           set -euo pipefail
           export SSHPASS="$SSH_PASSWORD"
-
           echo "Testing TCP reachability to SSH host/port..."
           timeout 15 bash -lc "cat < /dev/null > /dev/tcp/$SSH_HOST/$SSH_PORT" \
             && echo "TCP reachable" \
             || (echo "::error::Cannot reach SSH host/port"; exit 1)
-
           echo "Testing password SSH login using SCCNEXUS_* secrets..."
           sshpass -e ssh \
             -p "$SSH_PORT" \
