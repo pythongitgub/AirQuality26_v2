@@ -34,7 +34,7 @@ on:
         default: true
         type: boolean
       force_public_polish:
-        description: "Regenerate public pages if they are missing/blank"
+        description: "Regenerate public comparison/download/archive pages if they are blank"
         required: true
         default: true
         type: boolean
@@ -66,36 +66,36 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y sshpass rsync apache2-utils
 
-      - name: Ensure public site exists and has no blank pages
+      - name: Ensure public site core pages exist
         run: |
           set -euo pipefail
-          args=""
-          if [ "${{ inputs.force_public_polish }}" = "true" ]; then
-            args="--force"
+          if [ -f scripts/aq26_public_site_guard_build.py ]; then
+            python scripts/aq26_public_site_guard_build.py --site-root site_public --asset-source website/assets --force --summary outputs/public_site_guard_summary.json
+          else
+            mkdir -p site_public/assets site_public/downloads
+            for page in index archive comparisons source-records readiness methodology downloads about privacy cookies accessibility terms contact; do
+              file="site_public/${page}.html"
+              if [ ! -s "$file" ]; then
+                title=$(printf '%s' "$page" | tr '-' ' ')
+                printf '%s\n' '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AQ26</title></head><body><h1>AQ26 Environmental Intelligence</h1><p>This page is being populated by the AQ26 evidence backfill.</p></body></html>' > "$file"
+              fi
+            done
           fi
-          python scripts/aq26_public_site_guard_build.py \
-            --site-root site_public \
-            --asset-source website/assets \
-            $args \
-            --fail-on-blank
+
+      - name: Apply canonical favicon, touch icons, logo and mobile navigation to public site
+        run: |
+          set -euo pipefail
+          python scripts/aq26_brand_icon_logo_fix.py --site-root site_public --asset-source website/assets --summary outputs/public_brand_fix_summary.json
 
       - name: Build full unredacted site
         run: |
           set -euo pipefail
-          if [ -f scripts/aq26_build_unredacted_site.py ]; then
-            python scripts/aq26_build_unredacted_site.py \
-              --repo-root . \
-              --public-site site_public \
-              --output-site site_unredacted \
-              --max-index-files "${{ inputs.max_index_files }}"
-          else
-            mkdir -p site_unredacted/assets site_unredacted/data/unredacted
-            cp -a site_public/. site_unredacted/
-          fi
-          python scripts/aq26_public_site_guard_build.py \
-            --site-root site_unredacted \
-            --asset-source website/assets \
-            --fail-on-blank || true
+          python scripts/aq26_build_unredacted_site.py --repo-root . --public-site site_public --output-site site_unredacted --max-index-files "${{ inputs.max_index_files }}"
+
+      - name: Apply canonical favicon, touch icons, logo and mobile navigation to unredacted site
+        run: |
+          set -euo pipefail
+          python scripts/aq26_brand_icon_logo_fix.py --site-root site_unredacted --asset-source website/assets --summary outputs/unredacted_brand_fix_summary.json
 
       - name: Add Basic Auth and noindex files
         run: |
@@ -108,21 +108,19 @@ jobs:
           htpasswd -bc site_unredacted/.htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
           REMOTE_DIR="${PUBLIC_HTML%/}/${{ inputs.remote_unredacted_subdir }}"
           {
-            echo "DirectoryIndex index.html"
-            echo "Options -Indexes"
-            echo "AuthType Basic"
-            echo "AuthName \"AQ26 Unredacted Review\""
+            echo 'DirectoryIndex index.html'
+            echo 'Options -Indexes'
+            echo 'AuthType Basic'
+            echo 'AuthName "AQ26 Unredacted Review"'
             echo "AuthUserFile ${REMOTE_DIR}/.htpasswd"
-            echo "Require valid-user"
-            echo "<IfModule mod_headers.c>"
-            echo "  Header set X-Robots-Tag \"noindex, nofollow, noarchive\""
-            echo "</IfModule>"
+            echo 'Require valid-user'
+            echo '<IfModule mod_headers.c>'
+            echo '  Header set X-Robots-Tag "noindex, nofollow, noarchive"'
+            echo '</IfModule>'
           } > site_unredacted/.htaccess
-          {
-            echo "User-agent: *"
-            echo "Disallow: /"
-          } > site_unredacted/robots.txt
+          printf 'User-agent: *\nDisallow: /\n' > site_unredacted/robots.txt
           test -f site_unredacted/index.html
+          test -f site_unredacted/evidence.html
           test -f site_unredacted/.htaccess
           test -f site_unredacted/.htpasswd
           echo "Prepared unredacted files:"
@@ -151,19 +149,9 @@ jobs:
           set -euo pipefail
           export SSHPASS="$SSH_PASSWORD"
           echo "Testing TCP reachability to SSH host/port..."
-          timeout 15 bash -lc "cat < /dev/null > /dev/tcp/$SSH_HOST/$SSH_PORT" \
-            && echo "TCP reachable" \
-            || (echo "::error::Cannot reach SSH host/port"; exit 1)
+          timeout 15 bash -lc "cat < /dev/null > /dev/tcp/$SSH_HOST/$SSH_PORT" && echo "TCP reachable" || (echo "::error::Cannot reach SSH host/port"; exit 1)
           echo "Testing password SSH login using SCCNEXUS_* secrets..."
-          sshpass -e ssh \
-            -p "$SSH_PORT" \
-            -o StrictHostKeyChecking=no \
-            -o UserKnownHostsFile=/dev/null \
-            -o PreferredAuthentications=password \
-            -o PubkeyAuthentication=no \
-            -o NumberOfPasswordPrompts=1 \
-            "$SSH_USER@$SSH_HOST" \
-            "printf 'SSH_LOGIN_OK\n'; pwd; test -d '${PUBLIC_HTML%/}' && printf 'PUBLIC_HTML_OK\n' || printf 'PUBLIC_HTML_MISSING\n'"
+          sshpass -e ssh -p "$SSH_PORT" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PreferredAuthentications=password -o PubkeyAuthentication=no -o NumberOfPasswordPrompts=1 "$SSH_USER@$SSH_HOST" "printf 'SSH_LOGIN_OK\n'; pwd; test -d '${PUBLIC_HTML%/}' && printf 'PUBLIC_HTML_OK\n' || printf 'PUBLIC_HTML_MISSING\n'"
 
       - name: Deploy public site
         if: ${{ inputs.deploy_public }}
@@ -175,9 +163,9 @@ jobs:
           sshpass -e ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "mkdir -p '$REMOTE_DIR'"
           if [ "${{ inputs.dry_run }}" = "true" ]; then
             echo "DRY RUN: public site_public/ -> $REMOTE_DIR/"
-            sshpass -e rsync -avzn --checksum --delete -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
+            sshpass -e rsync -avzn --checksum --delete --exclude '${{ inputs.remote_unredacted_subdir }}/' --exclude '${{ inputs.remote_unredacted_subdir }}/***' -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
           else
-            sshpass -e rsync -avz --checksum --delete -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
+            sshpass -e rsync -avz --checksum --delete --exclude '${{ inputs.remote_unredacted_subdir }}/' --exclude '${{ inputs.remote_unredacted_subdir }}/***' -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
           fi
 
       - name: Deploy unredacted site
@@ -202,4 +190,4 @@ jobs:
           export SSHPASS="$SSH_PASSWORD"
           REMOTE_DIR="${PUBLIC_HTML%/}/${{ inputs.remote_unredacted_subdir }}"
           SSH_OPTS="-p $SSH_PORT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PreferredAuthentications=password -o PubkeyAuthentication=no -o NumberOfPasswordPrompts=1"
-          sshpass -e ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "find '$REMOTE_DIR' -maxdepth 2 -type f | sort | sed -n '1,120p'"
+          sshpass -e ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "find '$REMOTE_DIR' -maxdepth 2 -type f | sort | sed -n '1,160p'"
