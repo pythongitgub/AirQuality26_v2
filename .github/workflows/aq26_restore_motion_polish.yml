@@ -1,0 +1,53 @@
+name: AQ26 Restore Moving Banners and Public Polish
+
+on:
+  workflow_dispatch:
+    inputs:
+      site_root:
+        description: "Site root to rebuild/polish"
+        required: true
+        default: "site_public"
+        type: string
+      force:
+        description: "Force regenerate core pages from consistent moving-banner template"
+        required: true
+        default: true
+        type: boolean
+      commit_outputs:
+        description: "Commit changed site files"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Restore moving banners and readable public pages
+        run: |
+          set -euo pipefail
+          python scripts/aq26_restore_motion_polish.py \
+            --site-root "${{ inputs.site_root }}" \
+            --asset-source website/assets \
+            ${{ inputs.force && '--force' || '' }} \
+            --summary "${{ inputs.site_root }}/data/public_dashboard/motion_polish_status.json"
+
+      - name: Commit outputs
+        if: ${{ inputs.commit_outputs }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${{ inputs.site_root }}" scripts/aq26_restore_motion_polish.py .github/workflows/aq26_restore_motion_polish.yml || true
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Restore AQ26 moving banners and readable public pages"
+            git push
+          fi
