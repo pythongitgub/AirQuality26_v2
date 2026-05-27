@@ -54,22 +54,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Ensure register directory exists
+      - name: Validate required files
+        shell: bash
         run: |
           set -euo pipefail
-          mkdir -p configs/aq26_incinerator_register site_public/data/focus/overlays_v2
+          mkdir -p configs/aq26_incinerator_register site_public/data/focus/overlays_v2 site_public
           test -f configs/aq26_incinerator_register/UK_Incinerators_with_Controls_Full_v3.csv
           test -f configs/aq26_incinerator_register/UK_Incinerators_with_DEFRA_Sites_v3_validated_Full.csv
+          test -f scripts/aq26_find_remaining_incinerator_overlays_v2.py
 
       - name: Run remaining overlay finder V2
+        shell: bash
         run: |
           set -euo pipefail
-          args=""
+          args=()
           if [ "${{ inputs.live_openaq }}" = "true" ]; then
-            args="$args --live-openaq"
+            args+=("--live-openaq")
           fi
           if [ "${{ inputs.write_page }}" = "true" ]; then
-            args="$args --write-page"
+            args+=("--write-page")
           fi
           python scripts/aq26_find_remaining_incinerator_overlays_v2.py \
             --broad-register configs/aq26_incinerator_register/UK_Incinerators_with_Controls_Full_v3.csv \
@@ -80,26 +83,20 @@ jobs:
             --limit-per-query "${{ inputs.limit_per_query }}" \
             --max-facilities "${{ inputs.max_facilities }}" \
             --min-score "${{ inputs.min_score }}" \
-            $args
+            "${args[@]}"
 
       - name: Summarise overlay outputs
+        shell: bash
         run: |
           set -euo pipefail
           echo "--- incinerator_overlay_summary.json ---"
-          cat site_public/data/focus/overlays_v2/incinerator_overlay_summary.json
-          echo "--- candidate count ---"
-          python - <<'PY'
-import csv, pathlib
-for p in [
- 'site_public/data/focus/overlays_v2/remaining_overlay_queue.csv',
- 'site_public/data/focus/overlays_v2/candidate_monitoring_overlays.csv',
- 'site_public/data/focus/overlays_v2/selected_candidate_overlays_needing_review.csv',
- 'site_public/data/focus/overlays_v2/openaq_query_diagnostics.csv',
-]:
-    path=pathlib.Path(p)
-    n=sum(1 for _ in csv.DictReader(path.open(encoding='utf-8'))) if path.exists() else -1
-    print(f'{p}: {n}')
-PY
+          if [ -f site_public/data/focus/overlays_v2/incinerator_overlay_summary.json ]; then
+            cat site_public/data/focus/overlays_v2/incinerator_overlay_summary.json
+          else
+            echo "Summary file missing"
+          fi
+          echo "--- row counts ---"
+          python -c "import csv, pathlib; paths=['site_public/data/focus/overlays_v2/remaining_overlay_queue.csv','site_public/data/focus/overlays_v2/candidate_monitoring_overlays.csv','site_public/data/focus/overlays_v2/selected_candidate_overlays_needing_review.csv','site_public/data/focus/overlays_v2/openaq_query_diagnostics.csv']; [print(f'{p}: '+str(sum(1 for _ in csv.DictReader(pathlib.Path(p).open(encoding='utf-8'))) if pathlib.Path(p).exists() else -1)) for p in paths]"
 
       - name: Upload overlay artifact
         uses: actions/upload-artifact@v4
@@ -112,6 +109,7 @@ PY
 
       - name: Commit overlay outputs
         if: ${{ inputs.commit_outputs }}
+        shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
