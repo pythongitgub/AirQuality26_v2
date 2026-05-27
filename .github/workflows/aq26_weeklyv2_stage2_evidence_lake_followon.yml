@@ -1,0 +1,264 @@
+name: AQ26 WeeklyV2 Stage2 Evidence Lake Follow-on
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_v331_first:
+        description: "Run AQ26 WeeklyV2 Science Backfill V3.3.1 before Stage2"
+        required: true
+        default: false
+        type: boolean
+      backfill_start_date:
+        description: "V3.3.1 backfill start date or auto"
+        required: true
+        default: "auto"
+        type: string
+      backfill_end_date:
+        description: "V3.3.1 last allowed backfill window end date"
+        required: true
+        default: "2026-05-25"
+        type: string
+      backfill_limit_windows:
+        description: "Number of V3.3.1 missing weekly windows to harvest if run_v331_first=true"
+        required: true
+        default: "2"
+        type: string
+      history_end_date:
+        description: "Public archive end date"
+        required: true
+        default: "2026-05-25"
+        type: string
+      history_weeks:
+        description: "Number of public weekly rows"
+        required: true
+        default: "104"
+        type: string
+      run_earthdata_stage2:
+        description: "Run NASA Earthdata CMR scorecard"
+        required: true
+        default: true
+        type: boolean
+      run_laqn_backfill:
+        description: "Run controlled LAQN historical backfill"
+        required: true
+        default: true
+        type: boolean
+      laqn_max_pairs:
+        description: "Maximum LAQN configured site/species pairs to harvest"
+        required: true
+        default: "6"
+        type: string
+      upload_to_gdrive:
+        description: "Upload Stage2 outputs to Google Drive using GDRIVE_SERVICE_ACCOUNT + GDRIVE_FOLDER_ID"
+        required: true
+        default: false
+        type: boolean
+      commit_outputs:
+        description: "Commit Stage2 outputs and site JSON back to repository"
+        required: true
+        default: true
+        type: boolean
+  schedule:
+    - cron: "31 6 * * 1"
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: aq26-weeklyv2-stage2-evidence-lake-followon
+  cancel-in-progress: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  PYTHONUNBUFFERED: "1"
+
+  # WeeklyV2 / V3.3.1 controls
+  AQ26_HISTORY_END_DATE: ${{ inputs.history_end_date || '2026-05-25' }}
+  AQ26_HISTORY_WEEKS: ${{ inputs.history_weeks || '104' }}
+  AQ26_BACKFILL_START_DATE: ${{ inputs.backfill_start_date || 'auto' }}
+  AQ26_BACKFILL_END_DATE: ${{ inputs.backfill_end_date || '2026-05-25' }}
+  AQ26_BACKFILL_LIMIT_WINDOWS: ${{ inputs.backfill_limit_windows || '2' }}
+  AQ26_BACKFILL_AUTO_MODE: earliest_missing
+  AQ26_BACKFILL_FORCE: "false"
+  AQ26_STRICT_VALIDATION: "true"
+  AQ26_EXTERNAL_GRADE_VALIDATION: "false"
+  AQ26_NEWSAPI_ENABLED: "false"
+  AQ26_NEWSDATA_ENABLED: "false"
+  AQ26_GDELT_ENABLED: "true"
+  AQ26_GDELT_MIN_SECONDS: "8"
+  AQ26_BACKFILL_NEWS_QUERY_LIMIT: "2"
+  AQ26_GEMINI_ENABLED: "false"
+
+  # Existing AQ provider secrets / aliases
+  OPENAQ_API_KEY: ${{ secrets.OPENAQ_API_KEY }}
+  WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
+  OPENWEATHER_KEY: ${{ secrets.OPENWEATHER_KEY }}
+  PURPLE_AIR_API_KEY: ${{ secrets.PURPLE_AIR_API_KEY }}
+
+  # Met Office aliases
+  METOFFICE_API_KEY: ${{ secrets.METOFFICE_API_KEY }}
+  MET_OFFICE_API_KEY: ${{ secrets.MET_OFFICE_API_KEY }}
+  MET_OFFICE_LAND_OBSERVATIONS: ${{ secrets.MET_OFFICE_LAND_OBSERVATIONS }}
+
+  # News/search aliases
+  NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+  NEWSAPI_KEY: ${{ secrets.NEWS_API_KEY }}
+  NEWS_DATA_IO_KEY: ${{ secrets.NEWS_DATA_IO_KEY }}
+  NEWSDATA_API_KEY: ${{ secrets.NEWS_DATA_IO_KEY }}
+  SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
+
+  # Satellite/model aliases
+  CAMS_API_KEY: ${{ secrets.CAMS_API_KEY }}
+  EARTHDATA_USERNAME: ${{ secrets.EARTHDATA_USERNAME }}
+  EARTHDATA_PASSWORD: ${{ secrets.EARTHDATA_PASSWORD }}
+  EARTHDATA_TOKEN: ${{ secrets.EARTHDATA_TOKEN }}
+  EARTH_DATA_API_KEY: ${{ secrets.EARTH_DATA_API_KEY }}
+  CDSE_USERNAME: ${{ secrets.CDSE_USERNAME }}
+  CDSE_PASSWORD: ${{ secrets.CDSE_PASSWORD }}
+  CDSE_ID: ${{ secrets.CDSE_ID }}
+  CDSE_SECRET: ${{ secrets.CDSE_SECRET }}
+  CDSE_CLIENT_ID: ${{ secrets.CDSE_ID }}
+  CDSE_CLIENT_SECRET: ${{ secrets.CDSE_SECRET }}
+
+  # Google Drive
+  GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+  GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
+  GDRIVE_SERVICE_ACCOUNT_JSON: ${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}
+  GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
+
+  # Gemini / email / deployment
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+  AQ26_GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+  MAIL_FROM: ${{ secrets.MAIL_FROM }}
+  MAIL_TO: ${{ secrets.MAIL_TO }}
+  SMTP_HOST: ${{ secrets.SMTP_HOST }}
+  SMTP_PORT: ${{ secrets.SMTP_PORT }}
+  SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+  SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+  HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+  SCCNEXUS_SSH_HOST: ${{ secrets.SCCNEXUS_SSH_HOST }}
+  SCCNEXUS_SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
+  SCCNEXUS_SSH_USERNAME: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
+  SCCNEXUS_SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
+
+jobs:
+  stage2-followon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install requirements
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install requests pyyaml pandas pyarrow matplotlib google-api-python-client google-auth google-auth-httplib2 google-auth-oauthlib
+
+      - name: Secret alias diagnostics without values
+        run: |
+          python scripts/aq26_weeklyv2_science_backfill_v33.py diagnose-secrets \
+            --repo-root . \
+            --output-root outputs \
+            --site-root site_public \
+            --history-end-date "$AQ26_HISTORY_END_DATE" \
+            --history-weeks "$AQ26_HISTORY_WEEKS"
+
+      - name: Optional run AQ26 WeeklyV2 Science Backfill V3.3.1 first
+        if: ${{ github.event_name == 'schedule' || inputs.run_v331_first }}
+        run: |
+          STRICT_FLAG="--strict"
+          python scripts/aq26_weeklyv2_science_backfill_v33.py run-batch \
+            --repo-root . \
+            --collector-script scripts/aq26_weeklyv2_collect.py \
+            --config configs/aq26_weekly_v2_sources.yml \
+            --output-root outputs \
+            --site-root site_public \
+            --history-end-date "$AQ26_HISTORY_END_DATE" \
+            --history-weeks "$AQ26_HISTORY_WEEKS" \
+            --backfill-start-date "$AQ26_BACKFILL_START_DATE" \
+            --auto-mode "$AQ26_BACKFILL_AUTO_MODE" \
+            --backfill-end-date "$AQ26_BACKFILL_END_DATE" \
+            --backfill-limit-windows "$AQ26_BACKFILL_LIMIT_WINDOWS" \
+            $STRICT_FLAG
+
+      - name: Run NASA Earthdata Stage2 scorecard
+        if: ${{ github.event_name == 'schedule' || inputs.run_earthdata_stage2 }}
+        run: |
+          python scripts/aq26_earthdata_stage2_scorecard_subset.py \
+            --repo-root . \
+            --config configs/aq26_earthdata_stage2.yml
+
+      - name: Run controlled LAQN historical backfill
+        if: ${{ github.event_name == 'schedule' || inputs.run_laqn_backfill }}
+        run: |
+          python scripts/aq26_laqn_backfill_checkpointed.py \
+            --repo-root . \
+            --config configs/aq26_laqn_backfill.yml \
+            --max-pairs "${{ inputs.laqn_max_pairs || '6' }}"
+
+      - name: Build Stage2 integrated report from V3.3.1 + LAQN + Earthdata
+        run: |
+          python scripts/aq26_weekly_stage2_integrated_report.py \
+            --repo-root . \
+            --config configs/aq26_weekly_stage2_report.yml
+
+      - name: Upload Stage2 outputs to Google Drive evidence lake
+        if: ${{ inputs.upload_to_gdrive }}
+        run: |
+          python scripts/aq26_stage2_drive_sync.py --source outputs/34_earthdata_stage2 --prefix AQ26_EARTHDATA_STAGE2 || true
+          python scripts/aq26_stage2_drive_sync.py --source outputs/35_laqn_backfill --prefix AQ26_LAQN_BACKFILL || true
+          python scripts/aq26_stage2_drive_sync.py --source outputs/36_weekly_stage2_integrated --prefix AQ26_WEEKLY_STAGE2 || true
+
+      - name: Upload Stage2 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-weeklyv2-stage2-followon-${{ github.run_id }}
+          path: |
+            outputs/34_earthdata_stage2/**
+            outputs/35_laqn_backfill/**
+            outputs/36_weekly_stage2_integrated/**
+            site_public/data/providers/earthdata/stage2/**
+            site_public/data/providers/laqn/backfill/**
+            site_public/data/providers/integrated_weekly_stage2/**
+          if-no-files-found: warn
+
+      - name: Commit Stage2 generated data
+        if: ${{ inputs.commit_outputs }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            outputs/34_earthdata_stage2 \
+            outputs/35_laqn_backfill \
+            outputs/36_weekly_stage2_integrated \
+            site_public/data/providers/earthdata/stage2 \
+            site_public/data/providers/laqn/backfill \
+            site_public/data/providers/integrated_weekly_stage2 \
+            scripts/aq26_common_evidence.py \
+            scripts/aq26_earthdata_stage2_scorecard_subset.py \
+            scripts/aq26_laqn_backfill_checkpointed.py \
+            scripts/aq26_weekly_stage2_integrated_report.py \
+            scripts/aq26_stage2_drive_sync.py \
+            configs/aq26_earthdata_stage2.yml \
+            configs/aq26_laqn_backfill.yml \
+            configs/aq26_weekly_stage2_report.yml \
+            .github/workflows/aq26_weeklyv2_stage2_evidence_lake_followon.yml \
+            docs/AQ26_WEEKLYV2_STAGE2_FOLLOWON_README.md \
+            requirements.txt || true
+          if git diff --cached --quiet; then
+            echo "No Stage2 changes to commit."
+          else
+            git commit -m "Add AQ26 WeeklyV2 Stage2 evidence lake follow-on"
+            git push
+          fi
