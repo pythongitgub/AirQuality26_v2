@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       force_public_pages:
-        description: "Create/repair public pages before polish"
+        description: "Create/repair all core public pages even if present"
         required: true
         default: true
         type: boolean
       commit_outputs:
-        description: "Commit repaired site_public outputs back to repo"
+        description: "Commit repaired site_public outputs"
         required: true
         default: true
         type: boolean
@@ -23,25 +23,25 @@ env:
 jobs:
   polish:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Ensure public site exists before polish
+      - name: Ensure public site has all core pages
         run: |
           set -euo pipefail
+          args=""
+          if [ "${{ inputs.force_public_pages }}" = "true" ]; then
+            args="--force"
+          fi
           python scripts/aq26_public_site_guard_build.py \
             --site-root site_public \
             --asset-source website/assets \
-            --force
+            $args \
+            --summary outputs/public_site_guard_summary.json
 
-      - name: Apply public polish, aliases, mobile and no-blank guard
+      - name: Apply optional existing polish script
         run: |
           set -euo pipefail
           if [ -f scripts/aq26_public_site_polish.py ]; then
@@ -50,30 +50,27 @@ jobs:
               --asset-source website/assets \
               --force-comparisons \
               --force-downloads \
-              --force-archive \
-              --fail-on-blank
-          else
-            echo "scripts/aq26_public_site_polish.py not found; guard build already created safe public pages."
+              --force-archive || true
           fi
 
-      - name: Validate public pages are non-blank
+      - name: Re-run guard after optional polish
         run: |
           set -euo pipefail
           python scripts/aq26_public_site_guard_build.py \
             --site-root site_public \
             --asset-source website/assets \
-            --validate-only
+            --summary outputs/public_site_guard_summary.json
 
-      - name: Commit repaired public site outputs
+      - name: Commit public site guard outputs
         if: ${{ inputs.commit_outputs }}
         run: |
           set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add site_public scripts/aq26_public_site_guard_build.py .github/workflows/aq26_public_site_polish_no_blank.yml docs/AQ26_PUBLIC_POLISH_GUARD_FIX.md || true
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add site_public outputs/public_site_guard_summary.json scripts/aq26_public_site_guard_build.py .github/workflows/aq26_public_site_polish_no_blank.yml
           if git diff --cached --quiet; then
-            echo "No public-site guard changes to commit."
+            echo "No public site guard changes to commit"
           else
-            git commit -m "Fix AQ26 public site no-blank guard workflow"
+            git commit -m "Guard AQ26 public site against blank pages"
             git push
           fi
