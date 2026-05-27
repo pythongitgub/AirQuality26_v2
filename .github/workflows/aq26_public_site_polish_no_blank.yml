@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       force_public_pages:
-        description: "Create/repair all core public pages even if present"
+        description: "Create/repair all public pages before validation"
         required: true
         default: true
         type: boolean
@@ -23,43 +23,18 @@ env:
 jobs:
   polish:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Ensure public site has all core pages
+      - name: Build and validate public site shell
         run: |
           set -euo pipefail
           args=""
           if [ "${{ inputs.force_public_pages }}" = "true" ]; then
-            args="--force"
+            args="--force-public-pages"
           fi
-          python scripts/aq26_public_site_guard_build.py \
-            --site-root site_public \
-            --asset-source website/assets \
-            $args \
-            --summary outputs/public_site_guard_summary.json
-
-      - name: Apply optional existing polish script
-        run: |
-          set -euo pipefail
-          if [ -f scripts/aq26_public_site_polish.py ]; then
-            python scripts/aq26_public_site_polish.py \
-              --site-root site_public \
-              --asset-source website/assets \
-              --force-comparisons \
-              --force-downloads \
-              --force-archive || true
-          fi
-
-      - name: Re-run guard after optional polish
-        run: |
-          set -euo pipefail
-          python scripts/aq26_public_site_guard_build.py \
-            --site-root site_public \
-            --asset-source website/assets \
-            --summary outputs/public_site_guard_summary.json
+          python scripts/aq26_public_site_guard_build.py             --site-root site_public             --asset-source website/assets             $args             --fail-on-blank             --summary site_public/data/public_site_guard_summary.json
 
       - name: Commit public site guard outputs
         if: ${{ inputs.commit_outputs }}
@@ -67,10 +42,10 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add site_public outputs/public_site_guard_summary.json scripts/aq26_public_site_guard_build.py .github/workflows/aq26_public_site_polish_no_blank.yml
+          git add scripts/aq26_public_site_guard_build.py site_public .github/workflows/aq26_public_site_polish_no_blank.yml
           if git diff --cached --quiet; then
             echo "No public site guard changes to commit"
           else
-            git commit -m "Guard AQ26 public site against blank pages"
+            git commit -m "Repair AQ26 public site no-blank guard"
             git push
           fi
