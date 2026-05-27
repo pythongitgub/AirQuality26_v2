@@ -1,0 +1,93 @@
+name: AQ26 Remaining Incinerator Overlay Finder
+
+on:
+  workflow_dispatch:
+    inputs:
+      live_openaq:
+        description: "Query OpenAQ live for candidate monitoring overlays"
+        required: true
+        default: true
+        type: boolean
+      max_facilities:
+        description: "Limit remaining facilities to query; 0 = all"
+        required: true
+        default: "0"
+        type: string
+      radius_km:
+        description: "Search radius around facility/control coordinates"
+        required: true
+        default: "50"
+        type: string
+      limit_per_query:
+        description: "OpenAQ locations per facility/control query"
+        required: true
+        default: "50"
+        type: string
+      write_page:
+        description: "Write public overlay status page"
+        required: true
+        default: true
+        type: boolean
+      commit_outputs:
+        description: "Commit generated overlay outputs back to repository"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+env:
+  OPENAQ_API_KEY: ${{ secrets.OPENAQ_API_KEY }}
+
+jobs:
+  overlays:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Find remaining incinerator overlays
+        run: |
+          set -euo pipefail
+          args=""
+          if [ "${{ inputs.live_openaq }}" = "true" ]; then args="$args --live-openaq"; fi
+          if [ "${{ inputs.write_page }}" = "true" ]; then args="$args --write-page"; fi
+          python scripts/aq26_find_remaining_incinerator_overlays.py \
+            --broad-register configs/aq26_incinerator_register/UK_Incinerators_with_Controls_Full_v3.csv \
+            --validated-overlay configs/aq26_incinerator_register/UK_Incinerators_with_DEFRA_Sites_v3_validated_Full.csv \
+            --site-root site_public \
+            --output-dir site_public/data/focus/overlays \
+            --max-facilities "${{ inputs.max_facilities }}" \
+            --radius-km "${{ inputs.radius_km }}" \
+            --limit-per-query "${{ inputs.limit_per_query }}" \
+            $args
+
+      - name: Upload overlay outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-incinerator-overlays
+          path: |
+            site_public/data/focus/overlays/**
+            site_public/incinerator-overlays.html
+          if-no-files-found: error
+
+      - name: Commit overlay outputs
+        if: ${{ inputs.commit_outputs }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site_public/data/focus/overlays site_public/incinerator-overlays.html configs/aq26_incinerator_register scripts/aq26_find_remaining_incinerator_overlays.py docs/AQ26_REMAINING_INCINERATOR_OVERLAYS.md .github/workflows/aq26_remaining_incinerator_overlays.yml
+          if git diff --cached --quiet; then
+            echo "No overlay changes to commit."
+          else
+            git commit -m "Build remaining incinerator monitoring overlay queue"
+            git push
+          fi
