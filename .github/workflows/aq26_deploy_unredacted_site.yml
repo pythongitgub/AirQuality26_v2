@@ -9,12 +9,12 @@ on:
         default: "unredacted"
         type: string
       dry_run:
-        description: "Preview deployment only"
+        description: "Dry run only; do not upload"
         required: true
         default: true
         type: boolean
       max_copy_mb:
-        description: "Safety cap for generated unredacted payload size"
+        description: "Maximum site_unredacted size to deploy"
         required: true
         default: "25"
         type: string
@@ -23,116 +23,143 @@ permissions:
   contents: read
 
 jobs:
-  build-and-deploy-unredacted:
+  deploy-unredacted:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+
     env:
-      SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+      REMOTE_SUBDIR: ${{ inputs.remote_subdir }}
+      DRY_RUN: ${{ inputs.dry_run }}
+      MAX_COPY_MB: ${{ inputs.max_copy_mb }}
       HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
       SCCNEXUS_SSH_HOST: ${{ secrets.SCCNEXUS_SSH_HOST }}
       SCCNEXUS_SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
       SCCNEXUS_SSH_USERNAME: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
       SCCNEXUS_SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
+      SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+      - name: Install deploy tools
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y sshpass apache2-utils rsync
 
       - name: Build unredacted site
         run: |
-          python scripts/aq26_build_unredacted_site.py
-          test -f site_unredacted/index.html
-          test -f site_unredacted/robots.txt
-          echo "Built files:"
-          find site_unredacted -maxdepth 3 -type f -print
-
-      - name: Install deploy tools
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y sshpass rsync apache2-utils
-
-      - name: Validate required secrets
-        run: |
-          missing=0
-          for name in SCC_UNREDACTED_PASSWORD HOSTINGER_PUBLIC_HTML_DIR SCCNEXUS_SSH_HOST SCCNEXUS_SSH_PORT SCCNEXUS_SSH_USERNAME SCCNEXUS_SSH_PASSWORD; do
-            if [ -z "${!name:-}" ]; then
-              echo "Missing required secret: $name"
-              missing=1
-            fi
-          done
-          if [ "$missing" -ne 0 ]; then
-            exit 1
+          set -euo pipefail
+          if [ -f scripts/aq26_build_unredacted_site.py ]; then
+            python scripts/aq26_build_unredacted_site.py --output site_unredacted
+          else
+            mkdir -p site_unredacted
+            cat > site_unredacted/index.html <<'HTML'
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <meta name="robots" content="noindex,nofollow,noarchive">
+            <title>AQ26 Unredacted Evidence Review</title>
+            <style>
+              body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;margin:0;background:#0f172a;color:#e5e7eb}
+              main{max-width:980px;margin:0 auto;padding:48px 20px}
+              .card{background:#111827;border:1px solid #334155;border-radius:24px;padding:28px;box-shadow:0 18px 50px rgba(0,0,0,.25)}
+              h1{font-size:clamp(2rem,4vw,3.5rem);margin:0 0 12px}
+              p{line-height:1.6;color:#cbd5e1}
+              .badge{display:inline-block;background:#0369a1;color:white;border-radius:999px;padding:8px 12px;font-weight:700}
+            </style>
+          </head>
+          <body>
+            <main>
+              <div class="card">
+                <span class="badge">Restricted</span>
+                <h1>AQ26 Unredacted Evidence Review</h1>
+                <p>This password-protected area is for internal QA, provenance review and unredacted evidence checks.</p>
+                <p>If you can see this page after logging in, the protected deployment is working.</p>
+              </div>
+            </main>
+          </body>
+          </html>
+          HTML
           fi
 
-      - name: Add Basic Auth files
-        shell: bash
+      - name: Add Basic Auth and no-index files
         run: |
           set -euo pipefail
-          REMOTE_SUBDIR="${{ inputs.remote_subdir }}"
-          REMOTE_SUBDIR="${REMOTE_SUBDIR#/}"
-          REMOTE_SUBDIR="${REMOTE_SUBDIR%/}"
-          REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}/${REMOTE_SUBDIR}"
-          echo "REMOTE_DIR=$REMOTE_DIR" >> "$GITHUB_ENV"
 
-          # Create htpasswd with bcrypt via apache2-utils; username is aq26.
-          htpasswd -bcB site_unredacted/.htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
+          : "${HOSTINGER_PUBLIC_HTML_DIR:?HOSTINGER_PUBLIC_HTML_DIR secret is required}"
+          : "${SCC_UNREDACTED_PASSWORD:?SCC_UNREDACTED_PASSWORD secret is required}"
 
-          cat > site_unredacted/.htaccess <<EOF
-DirectoryIndex index.html
-Options -Indexes
-AuthType Basic
-AuthName "AQ26 Unredacted Review"
-AuthUserFile ${REMOTE_DIR}/.htpasswd
-Require valid-user
-<FilesMatch "^\\.(htaccess|htpasswd)$">
-  Require all denied
-</FilesMatch>
-Header set X-Robots-Tag "noindex, nofollow, noarchive"
-EOF
-          echo "Created Basic Auth files. Sanitised .htaccess preview:"
-          sed 's#AuthUserFile .*#AuthUserFile [remote path hidden]#' site_unredacted/.htaccess
+          mkdir -p site_unredacted
+
+          REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}/${REMOTE_SUBDIR#/}"
+
+          htpasswd -bc site_unredacted/.htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
+
+          {
+            echo "DirectoryIndex index.html"
+            echo "Options -Indexes"
+            echo "AuthType Basic"
+            echo "AuthName \"AQ26 restricted evidence review\""
+            echo "AuthUserFile ${REMOTE_DIR}/.htpasswd"
+            echo "Require valid-user"
+            echo "<IfModule mod_headers.c>"
+            echo "  Header set X-Robots-Tag \"noindex, nofollow, noarchive\""
+            echo "</IfModule>"
+          } > site_unredacted/.htaccess
+
+          {
+            echo "User-agent: *"
+            echo "Disallow: /"
+          } > site_unredacted/robots.txt
+
+          test -f site_unredacted/index.html
+          test -f site_unredacted/.htaccess
+          test -f site_unredacted/.htpasswd
+
+          echo "Prepared protected site files:"
+          find site_unredacted -maxdepth 1 -type f -printf "%f\n" | sort
 
       - name: Safety size check
         run: |
-          BYTES=$(du -sb site_unredacted | awk '{print $1}')
-          MAX=$(( ${{ inputs.max_copy_mb }} * 1024 * 1024 ))
-          echo "site_unredacted bytes=$BYTES max=$MAX"
-          if [ "$BYTES" -gt "$MAX" ]; then
-            echo "Refusing deployment: generated unredacted payload exceeds max_copy_mb."
+          set -euo pipefail
+          SIZE_MB=$(du -sm site_unredacted | awk '{print $1}')
+          echo "site_unredacted size: ${SIZE_MB} MB"
+          if [ "$SIZE_MB" -gt "$MAX_COPY_MB" ]; then
+            echo "Refusing to deploy: size ${SIZE_MB} MB exceeds MAX_COPY_MB=${MAX_COPY_MB}"
             exit 1
           fi
 
-      - name: Ensure remote directory exists
+      - name: Deploy to Hostinger subdirectory
         run: |
-          sshpass -p "$SCCNEXUS_SSH_PASSWORD" ssh -p "$SCCNEXUS_SSH_PORT" \
-            -o StrictHostKeyChecking=no \
-            "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" \
-            "mkdir -p '$REMOTE_DIR' && chmod 755 '$REMOTE_DIR'"
+          set -euo pipefail
 
-      - name: Dry-run deploy
-        if: ${{ inputs.dry_run }}
-        run: |
-          sshpass -p "$SCCNEXUS_SSH_PASSWORD" rsync -avz --dry-run \
-            -e "ssh -p $SCCNEXUS_SSH_PORT -o StrictHostKeyChecking=no" \
-            site_unredacted/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          : "${SCCNEXUS_SSH_HOST:?SCCNEXUS_SSH_HOST secret is required}"
+          : "${SCCNEXUS_SSH_USERNAME:?SCCNEXUS_SSH_USERNAME secret is required}"
+          : "${SCCNEXUS_SSH_PASSWORD:?SCCNEXUS_SSH_PASSWORD secret is required}"
+          : "${SCCNEXUS_SSH_PORT:?SCCNEXUS_SSH_PORT secret is required}"
+          : "${HOSTINGER_PUBLIC_HTML_DIR:?HOSTINGER_PUBLIC_HTML_DIR secret is required}"
 
-      - name: Deploy
-        if: ${{ !inputs.dry_run }}
-        run: |
+          REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}/${REMOTE_SUBDIR#/}"
+          SSH_OPTS="-p ${SCCNEXUS_SSH_PORT} -o StrictHostKeyChecking=no"
+
+          echo "Remote target: ${REMOTE_DIR}"
+
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "Dry run: showing files that would be uploaded"
+            find site_unredacted -maxdepth 2 -type f -printf "%p\n" | sort
+            exit 0
+          fi
+
+          sshpass -p "$SCCNEXUS_SSH_PASSWORD" ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "mkdir -p '$REMOTE_DIR'"
+
           sshpass -p "$SCCNEXUS_SSH_PASSWORD" rsync -avz \
-            -e "ssh -p $SCCNEXUS_SSH_PORT -o StrictHostKeyChecking=no" \
-            site_unredacted/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
-          sshpass -p "$SCCNEXUS_SSH_PASSWORD" ssh -p "$SCCNEXUS_SSH_PORT" \
-            -o StrictHostKeyChecking=no \
-            "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" \
-            "find '$REMOTE_DIR' -maxdepth 2 -type f -printf '%p %s bytes\n' | sort | head -50"
+            -e "ssh $SSH_OPTS" \
+            site_unredacted/ \
+            "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
 
-      - name: Post-deploy URL note
-        run: |
-          echo "Expected URL: https://sccwebdesigntest.co.uk/${{ inputs.remote_subdir }}/"
-          echo "If a login prompt appears, use username aq26 and the SCC_UNREDACTED_PASSWORD secret value."
+          echo "Remote file listing:"
+          sshpass -p "$SCCNEXUS_SSH_PASSWORD" ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "ls -la '$REMOTE_DIR' && test -f '$REMOTE_DIR/index.html' && test -f '$REMOTE_DIR/.htaccess' && test -f '$REMOTE_DIR/.htpasswd'"
