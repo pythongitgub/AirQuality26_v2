@@ -1,0 +1,83 @@
+name: AQ26 Apply White Header Branding
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply_public:
+        description: "Apply to site_public"
+        required: true
+        default: true
+        type: boolean
+      apply_unredacted:
+        description: "Apply to site_unredacted if present"
+        required: true
+        default: true
+        type: boolean
+      force_core_pages:
+        description: "Create/repair core pages before branding"
+        required: true
+        default: true
+        type: boolean
+      commit_outputs:
+        description: "Commit branded site files"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  brand:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Apply public white header branding
+        if: ${{ inputs.apply_public }}
+        run: |
+          set -euo pipefail
+          EXTRA=""
+          if [ "${{ inputs.force_core_pages }}" = "true" ]; then EXTRA="--force"; fi
+          python scripts/aq26_apply_white_header_branding.py \
+            --site-root site_public \
+            --asset-source website/assets \
+            --public \
+            $EXTRA \
+            --summary site_public/data/branding/white_header_summary.json
+
+      - name: Apply unredacted white header branding
+        if: ${{ inputs.apply_unredacted }}
+        run: |
+          set -euo pipefail
+          EXTRA=""
+          if [ "${{ inputs.force_core_pages }}" = "true" ]; then EXTRA="--force"; fi
+          if [ -d site_unredacted ]; then
+            python scripts/aq26_apply_white_header_branding.py \
+              --site-root site_unredacted \
+              --asset-source website/assets \
+              --unredacted \
+              $EXTRA \
+              --summary site_unredacted/data/branding/white_header_summary.json
+          else
+            echo "site_unredacted not present; skipping. It is normally built by the dual-site deploy workflow."
+          fi
+
+      - name: Commit branding outputs
+        if: ${{ inputs.commit_outputs }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/aq26_apply_white_header_branding.py website/assets site_public site_unredacted 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No branding changes to commit."
+          else
+            git commit -m "Apply AQ26 white header branding"
+            git push
+          fi
