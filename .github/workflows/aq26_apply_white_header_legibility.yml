@@ -1,0 +1,68 @@
+name: AQ26 Apply White Header Legibility Fix
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply_public:
+        description: "Apply to site_public"
+        required: true
+        default: true
+        type: boolean
+      apply_unredacted:
+        description: "Apply to site_unredacted if present"
+        required: true
+        default: true
+        type: boolean
+      force_core_pages:
+        description: "Create/repair missing core pages before branding"
+        required: true
+        default: true
+        type: boolean
+      commit_outputs:
+        description: "Commit modified site files"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  brand:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Apply public white header legibility fix
+        if: ${{ inputs.apply_public }}
+        run: |
+          set -euo pipefail
+          args=""
+          if [ "${{ inputs.force_core_pages }}" = "true" ]; then args="--force-core-pages"; fi
+          python scripts/aq26_apply_white_header_legibility.py --site-root site_public --asset-source website/assets $args --summary site_public/data/white_header_legibility_summary.json
+      - name: Apply unredacted white header legibility fix
+        if: ${{ inputs.apply_unredacted }}
+        run: |
+          set -euo pipefail
+          if [ -d site_unredacted ]; then
+            args=""
+            if [ "${{ inputs.force_core_pages }}" = "true" ]; then args="--force-core-pages"; fi
+            python scripts/aq26_apply_white_header_legibility.py --site-root site_unredacted --asset-source website/assets $args --summary site_unredacted/data/unredacted/white_header_legibility_summary.json
+          else
+            echo "site_unredacted not present in checkout; deploy workflow will build and brand it."
+          fi
+      - name: Commit outputs
+        if: ${{ inputs.commit_outputs }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/aq26_apply_white_header_legibility.py website/assets site_public site_unredacted .github/workflows/aq26_apply_white_header_legibility.yml || true
+          if git diff --cached --quiet; then
+            echo "No branding changes to commit."
+          else
+            git commit -m "Fix AQ26 white header branding legibility"
+            git push
+          fi
