@@ -1,0 +1,69 @@
+name: AQ26 Public Site Polish and No-Blank Guard
+
+on:
+  workflow_dispatch:
+    inputs:
+      force_public_pages:
+        description: "Regenerate friendly fallback pages even if files already exist"
+        required: true
+        default: true
+        type: boolean
+      commit_outputs:
+        description: "Commit polished site_public outputs back to repository"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Polish public site and prevent blank pages
+        run: |
+          set -euo pipefail
+          args=""
+          if [ "${{ inputs.force_public_pages }}" = "true" ]; then
+            args="--force-comparisons --force-downloads --force-archive"
+          fi
+          python scripts/aq26_public_site_polish.py \
+            --site-root site_public \
+            --asset-source website/assets \
+            $args \
+            --fail-on-blank
+
+      - name: Upload polished site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-public-site-polished
+          path: |
+            site_public/**
+          if-no-files-found: error
+
+      - name: Commit polished public site
+        if: ${{ inputs.commit_outputs }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add site_public scripts/aq26_public_site_polish.py website/assets || true
+          if git diff --cached --quiet; then
+            echo "No polished site changes to commit"
+          else
+            git commit -m "Polish AQ26 public site mobile navigation and no-blank pages"
+            git push
+          fi

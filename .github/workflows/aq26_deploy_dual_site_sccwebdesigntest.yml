@@ -26,10 +26,15 @@ on:
       max_index_files:
         description: "Maximum files to index into unredacted evidence browser"
         required: true
-        default: "250"
+        default: "1000"
         type: string
       auth_debug:
         description: "Run safe SSH diagnostics before deploy"
+        required: true
+        default: true
+        type: boolean
+      force_public_polish:
+        description: "Regenerate public comparison/download/archive pages if they are blank"
         required: true
         default: true
         type: boolean
@@ -61,6 +66,23 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y sshpass rsync apache2-utils
 
+      - name: Polish public site, mobile menu, aliases and no-blank pages
+        run: |
+          set -euo pipefail
+          if [ ! -d site_public ]; then
+            echo "::error::site_public does not exist. Build the public site before deploying."
+            exit 1
+          fi
+          args=""
+          if [ "${{ inputs.force_public_polish }}" = "true" ]; then
+            args="--force-comparisons --force-downloads --force-archive"
+          fi
+          python scripts/aq26_public_site_polish.py \
+            --site-root site_public \
+            --asset-source website/assets \
+            $args \
+            --fail-on-blank
+
       - name: Build full unredacted site
         run: |
           set -euo pipefail
@@ -72,9 +94,20 @@ jobs:
               --max-index-files "${{ inputs.max_index_files }}"
           else
             mkdir -p site_unredacted/assets site_unredacted/data/unredacted
-            cat > site_unredacted/index.html <<'HTML'
-          <!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AQ26 Unredacted Review Area</title></head><body><h1>AQ26 Unredacted Review Area</h1><p>Builder script not found; fallback page created.</p></body></html>
-          HTML
+            python - <<'PY'
+from pathlib import Path
+Path("site_unredacted/index.html").write_text("<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>AQ26 Unredacted Review Area</title></head><body><h1>AQ26 Unredacted Review Area</h1><p>Builder script not found; fallback page created.</p></body></html>", encoding="utf-8")
+PY
+          fi
+
+      - name: Polish unredacted site mobile assets
+        run: |
+          set -euo pipefail
+          if [ -d site_unredacted ]; then
+            python scripts/aq26_public_site_polish.py \
+              --site-root site_unredacted \
+              --asset-source website/assets \
+              --fail-on-blank || true
           fi
 
       - name: Add Basic Auth and noindex files
@@ -89,30 +122,30 @@ jobs:
           htpasswd -bc site_unredacted/.htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
 
           cat > site_unredacted/.htaccess <<'HTACCESS'
-          DirectoryIndex index.html
-          Options -Indexes
-          AuthType Basic
-          AuthName "AQ26 Unredacted Review"
-          AuthUserFile __AUTH_USER_FILE__
-          Require valid-user
-          <IfModule mod_headers.c>
-            Header set X-Robots-Tag "noindex, nofollow, noarchive"
-          </IfModule>
-          HTACCESS
+DirectoryIndex index.html
+Options -Indexes
+AuthType Basic
+AuthName "AQ26 Unredacted Review"
+AuthUserFile __AUTH_USER_FILE__
+Require valid-user
+<IfModule mod_headers.c>
+  Header set X-Robots-Tag "noindex, nofollow, noarchive"
+</IfModule>
+HTACCESS
 
           REMOTE_DIR="${PUBLIC_HTML%/}/${{ inputs.remote_unredacted_subdir }}"
           sed -i "s#__AUTH_USER_FILE__#${REMOTE_DIR}/.htpasswd#g" site_unredacted/.htaccess
 
           cat > site_unredacted/robots.txt <<'ROBOTS'
-          User-agent: *
-          Disallow: /
-          ROBOTS
+User-agent: *
+Disallow: /
+ROBOTS
 
           test -f site_unredacted/index.html
           test -f site_unredacted/.htaccess
           test -f site_unredacted/.htpasswd
           echo "Prepared unredacted files:"
-          find site_unredacted -maxdepth 2 -type f | sort | head -80
+          find site_unredacted -maxdepth 2 -type f | sort | head -120
 
       - name: Validate required deploy secrets safely
         run: |
@@ -138,7 +171,7 @@ jobs:
           export SSHPASS="$SSH_PASSWORD"
 
           echo "Testing TCP reachability to SSH host/port..."
-          timeout 10 bash -lc "cat < /dev/null > /dev/tcp/$SSH_HOST/$SSH_PORT" \
+          timeout 15 bash -lc "cat < /dev/null > /dev/tcp/$SSH_HOST/$SSH_PORT" \
             && echo "TCP reachable" \
             || (echo "::error::Cannot reach SSH host/port"; exit 1)
 
@@ -158,18 +191,14 @@ jobs:
         run: |
           set -euo pipefail
           export SSHPASS="$SSH_PASSWORD"
-          if [ ! -d site_public ]; then
-            echo "::error::site_public does not exist. Build the public site before deploying."
-            exit 1
-          fi
           REMOTE_DIR="${PUBLIC_HTML%/}"
           SSH_OPTS="-p $SSH_PORT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PreferredAuthentications=password -o PubkeyAuthentication=no -o NumberOfPasswordPrompts=1"
           sshpass -e ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "mkdir -p '$REMOTE_DIR'"
           if [ "${{ inputs.dry_run }}" = "true" ]; then
             echo "DRY RUN: public site_public/ -> $REMOTE_DIR/"
-            sshpass -e rsync -avzn --checksum -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
+            sshpass -e rsync -avzn --checksum --delete -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
           else
-            sshpass -e rsync -avz --checksum -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
+            sshpass -e rsync -avz --checksum --delete -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
           fi
 
       - name: Deploy unredacted site
@@ -182,9 +211,9 @@ jobs:
           sshpass -e ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "mkdir -p '$REMOTE_DIR'"
           if [ "${{ inputs.dry_run }}" = "true" ]; then
             echo "DRY RUN: unredacted site_unredacted/ -> $REMOTE_DIR/"
-            sshpass -e rsync -avzn --checksum -e "ssh $SSH_OPTS" site_unredacted/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
+            sshpass -e rsync -avzn --checksum --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
           else
-            sshpass -e rsync -avz --checksum -e "ssh $SSH_OPTS" site_unredacted/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
+            sshpass -e rsync -avz --checksum --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
           fi
 
       - name: Remote listing after deploy
@@ -194,4 +223,4 @@ jobs:
           export SSHPASS="$SSH_PASSWORD"
           REMOTE_DIR="${PUBLIC_HTML%/}/${{ inputs.remote_unredacted_subdir }}"
           SSH_OPTS="-p $SSH_PORT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PreferredAuthentications=password -o PubkeyAuthentication=no -o NumberOfPasswordPrompts=1"
-          sshpass -e ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "find '$REMOTE_DIR' -maxdepth 2 -type f | sort | sed -n '1,80p'"
+          sshpass -e ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "find '$REMOTE_DIR' -maxdepth 2 -type f | sort | sed -n '1,120p'"
