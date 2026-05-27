@@ -1,0 +1,448 @@
+{
+  "search_metadata": {
+    "id": "6a167daadbb9ff25b5ce3ba2",
+    "status": "Success",
+    "json_endpoint": "https://serpapi.com/searches/C7ILeRcUKa9Z2EBTODsNcQ/6a167daadbb9ff25b5ce3ba2.json",
+    "pixel_position_endpoint": "https://serpapi.com/searches/C7ILeRcUKa9Z2EBTODsNcQ/6a167daadbb9ff25b5ce3ba2.json_with_pixel_position",
+    "created_at": "2026-05-27 05:14:18 UTC",
+    "processed_at": "2026-05-27 05:14:18 UTC",
+    "google_url": "https://www.google.com/search?q=Veolia+Newhaven+annual+monitoring+report&oq=Veolia+Newhaven+annual+monitoring+report&sourceid=chrome&ie=UTF-8",
+    "raw_html_file": "https://serpapi.com/searches/C7ILeRcUKa9Z2EBTODsNcQ/6a167daadbb9ff25b5ce3ba2.html",
+    "total_time_taken": 0.71
+  },
+  "search_parameters": {
+    "engine": "google",
+    "q": "Veolia Newhaven annual monitoring report",
+    "google_domain": "google.com",
+    "device": "desktop"
+  },
+  "search_information": {
+    "query_displayed": "Veolia Newhaven annual monitoring report",
+    "total_results": 4640,
+    "time_taken_displayed": 0.17,
+    "organic_results_state": "Results for exact spelling"
+  },
+  "related_questions": [
+    {
+      "question": "How much does the CEO of Veolia earn?",
+      "type": "ai_overview",
+      "page_token": "gXGQUnicHdBLbqMwAABQzWWybPAArRIpGpUGCHRiCX_Bm8rYIR_swCROIOzmLnOqOU2rLt4F3t9_5nhu__-4H5zrr8v5fBiGp33X7c3uSXV2Lq-Ps5oraUwtVbt8fnkGvxq1im9Z9PYniwoKbtsHCClnCbXBtF1HVzEhiQG01Sl5KA_k8qSzeg3zwlAPJn0Kf7qwYChjBGbYR280pYHwFo1q87hO46n2E7jbaCEBlJocMOfsTg27sLUuEO8C0hpASRKQEpaorEJooqOw-Y1jcIQlg9wIWfOxRCz2UXqdKrsAmCtPWZjszlXIz4woapy0sCPJq9taUO34GGp_H2DPbdSUo_igx_oUlVWZONw6WbXmQmNT1HFvZQoQRd2xoP1vEguH6Qh5qfEXB_miqHw1CoLetR1GsT68y0k3Ypg16r7yZ9-fq4_GumV_6fafg4SEIw",
+      "serpapi_ai_overview_link": "https://serpapi.com/search.json?engine=google_ai_overview&page_token=gXGQUnicHdBLbqMwAABQzWWybPAArRIpGpUGCHRiCX_Bm8rYIR_swCROIOzmLnOqOU2rLt4F3t9_5nhu__-4H5zrr8v5fBiGp33X7c3uSXV2Lq-Ps5oraUwtVbt8fnkGvxq1im9Z9PYniwoKbtsHCClnCbXBtF1HVzEhiQG01Sl5KA_k8qSzeg3zwlAPJn0Kf7qwYChjBGbYR280pYHwFo1q87hO46n2E7jbaCEBlJocMOfsTg27sLUuEO8C0hpASRKQEpaorEJooqOw-Y1jcIQlg9wIWfOxRCz2UXqdKrsAmCtPWZjszlXIz4woapy0sCPJq9taUO34GGp_H2DPbdSUo_igx_oUlVWZONw6WbXmQmNT1HFvZQoQRd2xoP1vEguH6Qh5qfEXB_miqHw1CoLetR1GsT68y0k3Ypg16r7yZ9-fq4_GumV_6fafg4SEIw",
+      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJUVzR6TFhsU1ZscEJOVkJVYWtGaE9FVlRSVE40YW1GcllXWkJWREJGVG5sV1ZsSTNXbkpuYkhod1FrbE5SakJoZG1OdGVXRjZhR0Y2VEhoMlNqWlJZV2hxV1VoTFdXMWFhMGwyVFRsT05ra3dWemN4U0RSalVqSlNTRFJ3UW5GZmR4SVhjVzR3VjJGeGJVcExXbUpKYTFCSlVHeEtabWh0VVZFYUlrRktTMHhHYlV3M1RIaG5lV3hKU1VFelMyeHNUVVIwZEZSbFRFZGpPRWRRTTJjIiwiZmN2IjoiMyIsImVpIjoicW4wV2FxbUpLWmJJa1BJUGxKZmhtUVEiLCJxYyI6IkNpaDJaVzlzYVdFZ2JtVjNhR0YyWlc0Z1lXNXVkV0ZzSUcxdmJtbDBiM0pwYm1jZ2NtVndiM0owRUFCOW9xQlpQdyIsInF1ZXN0aW9uIjoiSG93IG11Y2ggZG9lcyB0aGUgQ0VPIG9mIFZlb2xpYSBlYXJuPyIsImxrIjoiR2lSb2IzY2diWFZqYUNCa2IyVnpJSFJvWlNCalpXOGdiMllnZG1WdmJHbGhJR1ZoY200IiwiYnMiOiJjNDNQdndyQ01CQUdjRnd6LVdlUlRBZTJUZzZhRjhnZ2dnN1N6VDIyWnhOc2V5V0pMWDBPWDFnaWhnNGlPTl92LS02T1pTdzlVZ18xSTlkUUVEcndHbUZfeUlCdWNFR3FqQUpVdHBGaXpSUDlCWE9rQUxzUnNnMmJuMXlNbWdZS3ZIcTVmTjdGZ3MtTWlfUXpZQ1hialRvMFZzcVc2RHoweXFPRm5PcFdOVVBnWWRpVHJRb3BCTi1PVGYtRjJKa2w0Y18zNVhHZFJlWEJlQWRZdHhVTmlFNktsSzkwZE4xUE41MjhBQSIsImlkIjoiZmNfcW4wV2FxbUpLWmJJa1BJUGxKZmhtUVFfNCJ9",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJUVzR6TFhsU1ZscEJOVkJVYWtGaE9FVlRSVE40YW1GcllXWkJWREJGVG5sV1ZsSTNXbkpuYkhod1FrbE5SakJoZG1OdGVXRjZhR0Y2VEhoMlNqWlJZV2hxV1VoTFdXMWFhMGwyVFRsT05ra3dWemN4U0RSalVqSlNTRFJ3UW5GZmR4SVhjVzR3VjJGeGJVcExXbUpKYTFCSlVHeEtabWh0VVZFYUlrRktTMHhHYlV3M1RIaG5lV3hKU1VFelMyeHNUVVIwZEZSbFRFZGpPRWRRTTJjIiwiZmN2IjoiMyIsImVpIjoicW4wV2FxbUpLWmJJa1BJUGxKZmhtUVEiLCJxYyI6IkNpaDJaVzlzYVdFZ2JtVjNhR0YyWlc0Z1lXNXVkV0ZzSUcxdmJtbDBiM0pwYm1jZ2NtVndiM0owRUFCOW9xQlpQdyIsInF1ZXN0aW9uIjoiSG93IG11Y2ggZG9lcyB0aGUgQ0VPIG9mIFZlb2xpYSBlYXJuPyIsImxrIjoiR2lSb2IzY2diWFZqYUNCa2IyVnpJSFJvWlNCalpXOGdiMllnZG1WdmJHbGhJR1ZoY200IiwiYnMiOiJjNDNQdndyQ01CQUdjRnd6LVdlUlRBZTJUZzZhRjhnZ2dnN1N6VDIyWnhOc2V5V0pMWDBPWDFnaWhnNGlPTl92LS02T1pTdzlVZ18xSTlkUUVEcndHbUZfeUlCdWNFR3FqQUpVdHBGaXpSUDlCWE9rQUxzUnNnMmJuMXlNbWdZS3ZIcTVmTjdGZ3MtTWlfUXpZQ1hialRvMFZzcVc2RHoweXFPRm5PcFdOVVBnWWRpVHJRb3BCTi1PVGYtRjJKa2w0Y18zNVhHZFJlWEJlQWRZdHhVTmlFNktsSzkwZE4xUE41MjhBQSIsImlkIjoiZmNfcW4wV2FxbUpLWmJJa1BJUGxKZmhtUVFfNCJ9"
+    },
+    {
+      "question": "Is Veolia in debt?",
+      "type": "featured_snippet",
+      "snippet": "Total debt on the balance sheet as of December 2025 : €20.11 Billion.",
+      "title": "Total debt - Veolia (VIE.PA) - Companies Market Cap",
+      "link": "https://companiesmarketcap.com/eur/veolia/total-debt/#:~:text=Total%20debt%20on%20the%20balance,December%202025%20%3A%20%E2%82%AC20.11%20Billion",
+      "displayed_link": "https://companiesmarketcap.com › eur › veolia › total-debt",
+      "source_logo": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/KSs6Lue11mfURu24xmeuy-J5pC_9IFMd2g5cr_4qVDg.png",
+      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJUVzR6TFhsU1ZscEJOVkJVYWtGaE9FVlRSVE40YW1GcllXWkJWREJGVG5sV1ZsSTNXbkpuYkhod1FrbE5SakJoZG1OdGVXRjZhR0Y2VEhoMlNqWlJZV2hxV1VoTFdXMWFhMGwyVFRsT05ra3dWemN4U0RSalVqSlNTRFJ3UW5GZmR4SVhjVzR3VjJGeGJVcExXbUpKYTFCSlVHeEtabWh0VVZFYUlrRktTMHhHYlV3M1RIaG5lV3hKU1VFelMyeHNUVVIwZEZSbFRFZGpPRWRRTTJjIiwiZmN2IjoiMyIsImVpIjoicW4wV2FxbUpLWmJJa1BJUGxKZmhtUVEiLCJxYyI6IkNpaDJaVzlzYVdFZ2JtVjNhR0YyWlc0Z1lXNXVkV0ZzSUcxdmJtbDBiM0pwYm1jZ2NtVndiM0owRUFCOW9xQlpQdyIsInF1ZXN0aW9uIjoiSXMgVmVvbGlhIGluIGRlYnQ/IiwibGsiOiJHaEZwY3lCMlpXOXNhV0VnYVc0Z1pHVmlkQSIsImJzIjoiYzQzUHZ3ckNNQkFHY0Z3ei1XZVJUQWUyVGc2YUY4Z2dnZzdTelQyMlp4TnNleVdKTFgwT1gxZ2loZzRpT05fdi0tNk9aU3c5VWdfMUk5ZFFFRHJ3R21GX3lJQnVjRUdxakFKVXRwRml6UlA5QlhPa0FMc1JzZzJibjF5TW1nWUt2SHE1Zk43RmdzLU1pX1F6WUNYYmpUbzBWc3FXNkR6MHlxT0ZuT3BXTlVQZ1lkaVRyUW9wQk4tT1RmLUYySmtsNGNfMzVYR2RSZVhCZUFkWXR4VU5pRTZLbEs5MGROMVBONTI4QUEiLCJpZCI6ImZjX3FuMFdhcW1KS1piSWtQSVBsSmZobVFRXzQifQ==",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJUVzR6TFhsU1ZscEJOVkJVYWtGaE9FVlRSVE40YW1GcllXWkJWREJGVG5sV1ZsSTNXbkpuYkhod1FrbE5SakJoZG1OdGVXRjZhR0Y2VEhoMlNqWlJZV2hxV1VoTFdXMWFhMGwyVFRsT05ra3dWemN4U0RSalVqSlNTRFJ3UW5GZmR4SVhjVzR3VjJGeGJVcExXbUpKYTFCSlVHeEtabWh0VVZFYUlrRktTMHhHYlV3M1RIaG5lV3hKU1VFelMyeHNUVVIwZEZSbFRFZGpPRWRRTTJjIiwiZmN2IjoiMyIsImVpIjoicW4wV2FxbUpLWmJJa1BJUGxKZmhtUVEiLCJxYyI6IkNpaDJaVzlzYVdFZ2JtVjNhR0YyWlc0Z1lXNXVkV0ZzSUcxdmJtbDBiM0pwYm1jZ2NtVndiM0owRUFCOW9xQlpQdyIsInF1ZXN0aW9uIjoiSXMgVmVvbGlhIGluIGRlYnQ%2FIiwibGsiOiJHaEZwY3lCMlpXOXNhV0VnYVc0Z1pHVmlkQSIsImJzIjoiYzQzUHZ3ckNNQkFHY0Z3ei1XZVJUQWUyVGc2YUY4Z2dnZzdTelQyMlp4TnNleVdKTFgwT1gxZ2loZzRpT05fdi0tNk9aU3c5VWdfMUk5ZFFFRHJ3R21GX3lJQnVjRUdxakFKVXRwRml6UlA5QlhPa0FMc1JzZzJibjF5TW1nWUt2SHE1Zk43RmdzLU1pX1F6WUNYYmpUbzBWc3FXNkR6MHlxT0ZuT3BXTlVQZ1lkaVRyUW9wQk4tT1RmLUYySmtsNGNfMzVYR2RSZVhCZUFkWXR4VU5pRTZLbEs5MGROMVBONTI4QUEiLCJpZCI6ImZjX3FuMFdhcW1KS1piSWtQSVBsSmZobVFRXzQifQ%3D%3D"
+    },
+    {
+      "question": "Is Veolia the largest water company in the world?",
+      "type": "ai_overview",
+      "page_token": "3NhpTXicHdBfkpowHADg6WX2cU2g2q4zTmfQRKQSJZAAeemEREX58Wfd7KK-9Qo9Q0_V07TTG3zz_fwN56758-lX7dzwNp9MxnF8PvX9CQ7Ppm8n-u3emYnRAJU2zXz2ZYa_Hc2CfJhgeTVBIvB7fMdTcbFhiehRrfhr3tLvGvWON8aPyXSbwUvPKcgE21SFsKt8umXYxtZnWq4ZiIs6x55Umqq2bGCfrSIuAUrbUrUjUV0W9apCQ2Mf9bJCyiuhvosLyEPOWUY2YwZ2Z9F0bxv3WXiusyF7yC4I0_B0S3w6syLyGFYbs34ZUgBU-JYzOTAtEBb0KxKeuMVrtWRd6ZUId9tczmJRb6rcoUwgJB9BwXy4GY-udkRGpLa36hIUZUFd2jj9z3wVBJKKDK1eYy54f07EsM2IcukDPJvRsybqNWt7dGh7n-c8Sr1hH3fBVAgJdnw6mo-F__T_evHj2Lr5cO1PfwFV0Yve",
+      "serpapi_ai_overview_link": "https://serpapi.com/search.json?engine=google_ai_overview&page_token=3NhpTXicHdBfkpowHADg6WX2cU2g2q4zTmfQRKQSJZAAeemEREX58Wfd7KK-9Qo9Q0_V07TTG3zz_fwN56758-lX7dzwNp9MxnF8PvX9CQ7Ppm8n-u3emYnRAJU2zXz2ZYa_Hc2CfJhgeTVBIvB7fMdTcbFhiehRrfhr3tLvGvWON8aPyXSbwUvPKcgE21SFsKt8umXYxtZnWq4ZiIs6x55Umqq2bGCfrSIuAUrbUrUjUV0W9apCQ2Mf9bJCyiuhvosLyEPOWUY2YwZ2Z9F0bxv3WXiusyF7yC4I0_B0S3w6syLyGFYbs34ZUgBU-JYzOTAtEBb0KxKeuMVrtWRd6ZUId9tczmJRb6rcoUwgJB9BwXy4GY-udkRGpLa36hIUZUFd2jj9z3wVBJKKDK1eYy54f07EsM2IcukDPJvRsybqNWt7dGh7n-c8Sr1hH3fBVAgJdnw6mo-F__T_evHj2Lr5cO1PfwFV0Yve",
+      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJUVzR6TFhsU1ZscEJOVkJVYWtGaE9FVlRSVE40YW1GcllXWkJWREJGVG5sV1ZsSTNXbkpuYkhod1FrbE5SakJoZG1OdGVXRjZhR0Y2VEhoMlNqWlJZV2hxV1VoTFdXMWFhMGwyVFRsT05ra3dWemN4U0RSalVqSlNTRFJ3UW5GZmR4SVhjVzR3VjJGeGJVcExXbUpKYTFCSlVHeEtabWh0VVZFYUlrRktTMHhHYlV3M1RIaG5lV3hKU1VFelMyeHNUVVIwZEZSbFRFZGpPRWRRTTJjIiwiZmN2IjoiMyIsImVpIjoicW4wV2FxbUpLWmJJa1BJUGxKZmhtUVEiLCJxYyI6IkNpaDJaVzlzYVdFZ2JtVjNhR0YyWlc0Z1lXNXVkV0ZzSUcxdmJtbDBiM0pwYm1jZ2NtVndiM0owRUFCOW9xQlpQdyIsInF1ZXN0aW9uIjoiSXMgVmVvbGlhIHRoZSBsYXJnZXN0IHdhdGVyIGNvbXBhbnkgaW4gdGhlIHdvcmxkPyIsImxrIjoiYzVNeXlDeFdLRXZOejhsTVZDakpTRlhJU1N4S1R5MHVVU2hQTEVrdFVrak96eTFJekt0VXlNd0RTNWJuRi1Xa0FBQSIsImJzIjoiYzQzUHZ3ckNNQkFHY0Z3ei1XZVJUQWUyVGc2YUY4Z2dnZzdTelQyMlp4TnNleVdKTFgwT1gxZ2loZzRpT05fdi0tNk9aU3c5VWdfMUk5ZFFFRHJ3R21GX3lJQnVjRUdxakFKVXRwRml6UlA5QlhPa0FMc1JzZzJibjF5TW1nWUt2SHE1Zk43RmdzLU1pX1F6WUNYYmpUbzBWc3FXNkR6MHlxT0ZuT3BXTlVQZ1lkaVRyUW9wQk4tT1RmLUYySmtsNGNfMzVYR2RSZVhCZUFkWXR4VU5pRTZLbEs5MGROMVBONTI4QUEiLCJpZCI6ImZjX3FuMFdhcW1KS1piSWtQSVBsSmZobVFRXzQifQ==",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJUVzR6TFhsU1ZscEJOVkJVYWtGaE9FVlRSVE40YW1GcllXWkJWREJGVG5sV1ZsSTNXbkpuYkhod1FrbE5SakJoZG1OdGVXRjZhR0Y2VEhoMlNqWlJZV2hxV1VoTFdXMWFhMGwyVFRsT05ra3dWemN4U0RSalVqSlNTRFJ3UW5GZmR4SVhjVzR3VjJGeGJVcExXbUpKYTFCSlVHeEtabWh0VVZFYUlrRktTMHhHYlV3M1RIaG5lV3hKU1VFelMyeHNUVVIwZEZSbFRFZGpPRWRRTTJjIiwiZmN2IjoiMyIsImVpIjoicW4wV2FxbUpLWmJJa1BJUGxKZmhtUVEiLCJxYyI6IkNpaDJaVzlzYVdFZ2JtVjNhR0YyWlc0Z1lXNXVkV0ZzSUcxdmJtbDBiM0pwYm1jZ2NtVndiM0owRUFCOW9xQlpQdyIsInF1ZXN0aW9uIjoiSXMgVmVvbGlhIHRoZSBsYXJnZXN0IHdhdGVyIGNvbXBhbnkgaW4gdGhlIHdvcmxkPyIsImxrIjoiYzVNeXlDeFdLRXZOejhsTVZDakpTRlhJU1N4S1R5MHVVU2hQTEVrdFVrak96eTFJekt0VXlNd0RTNWJuRi1Xa0FBQSIsImJzIjoiYzQzUHZ3ckNNQkFHY0Z3ei1XZVJUQWUyVGc2YUY4Z2dnZzdTelQyMlp4TnNleVdKTFgwT1gxZ2loZzRpT05fdi0tNk9aU3c5VWdfMUk5ZFFFRHJ3R21GX3lJQnVjRUdxakFKVXRwRml6UlA5QlhPa0FMc1JzZzJibjF5TW1nWUt2SHE1Zk43RmdzLU1pX1F6WUNYYmpUbzBWc3FXNkR6MHlxT0ZuT3BXTlVQZ1lkaVRyUW9wQk4tT1RmLUYySmtsNGNfMzVYR2RSZVhCZUFkWXR4VU5pRTZLbEs5MGROMVBONTI4QUEiLCJpZCI6ImZjX3FuMFdhcW1KS1piSWtQSVBsSmZobVFRXzQifQ%3D%3D"
+    },
+    {
+      "question": "How does Veolia treat its employees?",
+      "type": "ai_overview",
+      "page_token": "XIO4G3icHdDNbpswAABg7WV6bHBSOi1SVMkt9mALKwYbm0tFDImLf6DEJYRb36VPtafZ1PN3-z4-zavTf79NyvvhvF2tLpfL7anvT6a9lb1d1eerkytZG3Oopd7ef78HD0e5i95j-PgWw4yC9_0VhAxnQYrQGynPYe7QJLUi1ZKEMkC0snO579hzaz3jC7lLFxg0myGSmHWiYKIq1X-AP3PMkpbFcxNUoHpSo-AQE9tMrW4cdeiZYO-Eg74oUNa6pMsW8sjXP0ZRirAuhykHJpbU_2F67lvqx7RLL3Uwx0SbNOcM15EaWyevrW2SXBvAl_0sAVzngCjayTUrFNxjYFobukg186GDXHDkc-1roc1II5MdosHWGBBK-teMDr-LqPK5DRaKWCCpGSqaqCJAiHLW8Q38JfSAidbXLLs5ymm3ufn63L0crd8OY3_6BwpehkQ",
+      "serpapi_ai_overview_link": "https://serpapi.com/search.json?engine=google_ai_overview&page_token=XIO4G3icHdDNbpswAABg7WV6bHBSOi1SVMkt9mALKwYbm0tFDImLf6DEJYRb36VPtafZ1PN3-z4-zavTf79NyvvhvF2tLpfL7anvT6a9lb1d1eerkytZG3Oopd7ef78HD0e5i95j-PgWw4yC9_0VhAxnQYrQGynPYe7QJLUi1ZKEMkC0snO579hzaz3jC7lLFxg0myGSmHWiYKIq1X-AP3PMkpbFcxNUoHpSo-AQE9tMrW4cdeiZYO-Eg74oUNa6pMsW8sjXP0ZRirAuhykHJpbU_2F67lvqx7RLL3Uwx0SbNOcM15EaWyevrW2SXBvAl_0sAVzngCjayTUrFNxjYFobukg186GDXHDkc-1roc1II5MdosHWGBBK-teMDr-LqPK5DRaKWCCpGSqaqCJAiHLW8Q38JfSAidbXLLs5ymm3ufn63L0crd8OY3_6BwpehkQ",
+      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJUVzR6TFhsU1ZscEJOVkJVYWtGaE9FVlRSVE40YW1GcllXWkJWREJGVG5sV1ZsSTNXbkpuYkhod1FrbE5SakJoZG1OdGVXRjZhR0Y2VEhoMlNqWlJZV2hxV1VoTFdXMWFhMGwyVFRsT05ra3dWemN4U0RSalVqSlNTRFJ3UW5GZmR4SVhjVzR3VjJGeGJVcExXbUpKYTFCSlVHeEtabWh0VVZFYUlrRktTMHhHYlV3M1RIaG5lV3hKU1VFelMyeHNUVVIwZEZSbFRFZGpPRWRRTTJjIiwiZmN2IjoiMyIsImVpIjoicW4wV2FxbUpLWmJJa1BJUGxKZmhtUVEiLCJxYyI6IkNpaDJaVzlzYVdFZ2JtVjNhR0YyWlc0Z1lXNXVkV0ZzSUcxdmJtbDBiM0pwYm1jZ2NtVndiM0owRUFCOW9xQlpQdyIsInF1ZXN0aW9uIjoiSG93IGRvZXMgVmVvbGlhIHRyZWF0IGl0cyBlbXBsb3llZXM/IiwibGsiOiJHaU5vYjNjZ1pHOWxjeUIyWlc5c2FXRWdkSEpsWVhRZ2FYUnpJR1Z0Y0d4dmVXVmxjdyIsImJzIjoiYzQzUHZ3ckNNQkFHY0Z3ei1XZVJUQWUyVGc2YUY4Z2dnZzdTelQyMlp4TnNleVdKTFgwT1gxZ2loZzRpT05fdi0tNk9aU3c5VWdfMUk5ZFFFRHJ3R21GX3lJQnVjRUdxakFKVXRwRml6UlA5QlhPa0FMc1JzZzJibjF5TW1nWUt2SHE1Zk43RmdzLU1pX1F6WUNYYmpUbzBWc3FXNkR6MHlxT0ZuT3BXTlVQZ1lkaVRyUW9wQk4tT1RmLUYySmtsNGNfMzVYR2RSZVhCZUFkWXR4VU5pRTZLbEs5MGROMVBONTI4QUEiLCJpZCI6ImZjX3FuMFdhcW1KS1piSWtQSVBsSmZobVFRXzQifQ==",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJUVzR6TFhsU1ZscEJOVkJVYWtGaE9FVlRSVE40YW1GcllXWkJWREJGVG5sV1ZsSTNXbkpuYkhod1FrbE5SakJoZG1OdGVXRjZhR0Y2VEhoMlNqWlJZV2hxV1VoTFdXMWFhMGwyVFRsT05ra3dWemN4U0RSalVqSlNTRFJ3UW5GZmR4SVhjVzR3VjJGeGJVcExXbUpKYTFCSlVHeEtabWh0VVZFYUlrRktTMHhHYlV3M1RIaG5lV3hKU1VFelMyeHNUVVIwZEZSbFRFZGpPRWRRTTJjIiwiZmN2IjoiMyIsImVpIjoicW4wV2FxbUpLWmJJa1BJUGxKZmhtUVEiLCJxYyI6IkNpaDJaVzlzYVdFZ2JtVjNhR0YyWlc0Z1lXNXVkV0ZzSUcxdmJtbDBiM0pwYm1jZ2NtVndiM0owRUFCOW9xQlpQdyIsInF1ZXN0aW9uIjoiSG93IGRvZXMgVmVvbGlhIHRyZWF0IGl0cyBlbXBsb3llZXM%2FIiwibGsiOiJHaU5vYjNjZ1pHOWxjeUIyWlc5c2FXRWdkSEpsWVhRZ2FYUnpJR1Z0Y0d4dmVXVmxjdyIsImJzIjoiYzQzUHZ3ckNNQkFHY0Z3ei1XZVJUQWUyVGc2YUY4Z2dnZzdTelQyMlp4TnNleVdKTFgwT1gxZ2loZzRpT05fdi0tNk9aU3c5VWdfMUk5ZFFFRHJ3R21GX3lJQnVjRUdxakFKVXRwRml6UlA5QlhPa0FMc1JzZzJibjF5TW1nWUt2SHE1Zk43RmdzLU1pX1F6WUNYYmpUbzBWc3FXNkR6MHlxT0ZuT3BXTlVQZ1lkaVRyUW9wQk4tT1RmLUYySmtsNGNfMzVYR2RSZVhCZUFkWXR4VU5pRTZLbEs5MGROMVBONTI4QUEiLCJpZCI6ImZjX3FuMFdhcW1KS1piSWtQSVBsSmZobVFRXzQifQ%3D%3D"
+    }
+  ],
+  "ai_overview": {
+    "page_token": "cz91NXicxVXLcuo4EN3PfwybJNjmESBVrluyEUQ4AQQhuWTjMrIR4IccC-KQ3fzL_M_s52tGNjYxBJKaWzU1vVBb7VZ3S-qj88ef3jJw__7tr8V6HfIbSYrjuEwZo55TJsyXLL4NiDRnHo_I4gdnm4g4S1sli4j5Tmn7qlZLhKtyyVmqL4H8ZL34PeN5htwhGnq9-cLHuJSGUM2ZxZ2VyPC24pIpicH9vdoWkzIvO0F5NOgZIJq6ZOiWK7LSKg8kyxcO4L8UBIEuFAU40fSERxsB7esYGAIk1Lhoo4UxEy1JAgCEKFH6qVyJwNSrp6Wrr_rrJnjHebFnlmiHP_Q4GcBEJEyWIP24kjzRKckdWTrikz4gPbNjSYow9lHuC-WdCQJwXJhMkpKukqpGe9tgny4rC8KP0FSLwSqeUwjhFxckgk3j9hY30bkDz1Jg5MdZ-Xrcx4BKNhXdJ0uzSChFWpIFST8injSl_tCS2e2kfjfxKtV602zoIyArc7vzKhu3q9p1LJGZ8POYZTu2uTDlH-lcqSh1uVVtNC9TNBC-hwMvwmFSs3jXe64tNrh8V9aUDyzo6bXRw80gcUKnriQxJnZ8YMkF7-a6-KCFbmCZ7i6AVmwcw8DD9DKzWxOTKYKfOiQNdAIL-1IL2aGbGSf7pYcb24fPze3jWyzMU98YhB97wVrRPUl9cEponPzWtRysRURQ4b7s7FaF2QFqxX5FeSht544hAvgIqekvt4AFmD4DQqGYgljHRn5xON0IzbYjjgMebVTrHk6nwHNPvlffy9mnpyA0b_ujLi52P7yd3z0Y-L4PKo1uh4bPXl2eeQqy32J8utuZP_sXrz_5n_GQcQPLuOEUHtB3eMDiuQdfccOuU3JucHfcwM7gAcJP3JC3ZI6rYzy8oQM8LL_ihg887DJ_jQd8Bg_tnfsnPBin8KCdw0PKDUU8uIfcoB1yQ46HX-GG8a9wQwoOZ6cOiWKzomcJA_aiq_G12xnAzV3_se7EwCU9GUTuSP-eMOb--sa3bO_SXNo3WqW33tqXpjCwG8cuvaiPDvOW1kXfiRfWqxNcWEGwsbwLnwXLNYuWAb2InJBF65LvRUyVrcYW8_d7gvD1Ag6DR0150Q2MX7wVComnaQHDLXPe8eVuw7AmU-41CZvV0LUzZ-H7pF5bNYZ6z3Y6Dm9V-fC5_vMh7ITe8_ugFnn2jPv9oBopAx9Mx1cPXbNb06ftSvRqvt3SEY86T6Rf_Sm3N25aDVe7cnVzT8HqcSWX_IiooglqFIijfqKAAH0KsHi1sJ5gscSJZTr8VW227ObMnjlzZU5atu2UfLrehup1vcSDSFX-Aet7G4Y",
+    "serpapi_link": "https://serpapi.com/search.json?engine=google_ai_overview&page_token=cz91NXicxVXLcuo4EN3PfwybJNjmESBVrluyEUQ4AQQhuWTjMrIR4IccC-KQ3fzL_M_s52tGNjYxBJKaWzU1vVBb7VZ3S-qj88ef3jJw__7tr8V6HfIbSYrjuEwZo55TJsyXLL4NiDRnHo_I4gdnm4g4S1sli4j5Tmn7qlZLhKtyyVmqL4H8ZL34PeN5htwhGnq9-cLHuJSGUM2ZxZ2VyPC24pIpicH9vdoWkzIvO0F5NOgZIJq6ZOiWK7LSKg8kyxcO4L8UBIEuFAU40fSERxsB7esYGAIk1Lhoo4UxEy1JAgCEKFH6qVyJwNSrp6Wrr_rrJnjHebFnlmiHP_Q4GcBEJEyWIP24kjzRKckdWTrikz4gPbNjSYow9lHuC-WdCQJwXJhMkpKukqpGe9tgny4rC8KP0FSLwSqeUwjhFxckgk3j9hY30bkDz1Jg5MdZ-Xrcx4BKNhXdJ0uzSChFWpIFST8injSl_tCS2e2kfjfxKtV602zoIyArc7vzKhu3q9p1LJGZ8POYZTu2uTDlH-lcqSh1uVVtNC9TNBC-hwMvwmFSs3jXe64tNrh8V9aUDyzo6bXRw80gcUKnriQxJnZ8YMkF7-a6-KCFbmCZ7i6AVmwcw8DD9DKzWxOTKYKfOiQNdAIL-1IL2aGbGSf7pYcb24fPze3jWyzMU98YhB97wVrRPUl9cEponPzWtRysRURQ4b7s7FaF2QFqxX5FeSht544hAvgIqekvt4AFmD4DQqGYgljHRn5xON0IzbYjjgMebVTrHk6nwHNPvlffy9mnpyA0b_ujLi52P7yd3z0Y-L4PKo1uh4bPXl2eeQqy32J8utuZP_sXrz_5n_GQcQPLuOEUHtB3eMDiuQdfccOuU3JucHfcwM7gAcJP3JC3ZI6rYzy8oQM8LL_ihg887DJ_jQd8Bg_tnfsnPBin8KCdw0PKDUU8uIfcoB1yQ46HX-GG8a9wQwoOZ6cOiWKzomcJA_aiq_G12xnAzV3_se7EwCU9GUTuSP-eMOb--sa3bO_SXNo3WqW33tqXpjCwG8cuvaiPDvOW1kXfiRfWqxNcWEGwsbwLnwXLNYuWAb2InJBF65LvRUyVrcYW8_d7gvD1Ag6DR0150Q2MX7wVComnaQHDLXPe8eVuw7AmU-41CZvV0LUzZ-H7pF5bNYZ6z3Y6Dm9V-fC5_vMh7ITe8_ugFnn2jPv9oBopAx9Mx1cPXbNb06ftSvRqvt3SEY86T6Rf_Sm3N25aDVe7cnVzT8HqcSWX_IiooglqFIijfqKAAH0KsHi1sJ5gscSJZTr8VW227ObMnjlzZU5atu2UfLrehup1vcSDSFX-Aet7G4Y"
+  },
+  "organic_results": [
+    {
+      "position": 1,
+      "title": "Veolia North America Issues Annual Sustainability Report ...",
+      "link": "https://www.veolianorthamerica.com/media/press-releases/veolia-north-america-issues-annual-sustainability-report-detailing-regional",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.veolianorthamerica.com/media/press-releases/veolia-north-america-issues-annual-sustainability-report-detailing-regional&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQFnoECB0QAQ",
+      "displayed_link": "https://www.veolianorthamerica.com › press-releases › v...",
+      "favicon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfIv08vknQOMvd6SNZEXl2l8.png",
+      "date": "Sep 10, 2024",
+      "snippet": "Veolia North America (VNA) released its annual Sustainability Report, featuring the company's regional performance on a wide range of environmental, social and ...",
+      "snippet_highlighted_words": [
+        "Veolia",
+        "annual",
+        "Report"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Veolia North America (VNA) released its annual Sustainability Report, featuring the company's regional performance on a wide range of environmental, social and ...",
+          "source_info_link": "https://www.veolianorthamerica.com/media/press-releases/veolia-north-america-issues-annual-sustainability-report-detailing-regional",
+          "icon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfJDtUZVsIKSyHW6zrOplL2vjGG2FNbv5Tkx0Bm__ypjd.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.veolianorthamerica.com/media/press-releases/veolia-north-america-issues-annual-sustainability-report-detailing-regional&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.veolianorthamerica.com%2Fmedia%2Fpress-releases%2Fveolia-north-america-issues-annual-sustainability-report-detailing-regional",
+      "source": "Veolia North America"
+    },
+    {
+      "position": 2,
+      "title": "Financial publications - Veolia",
+      "link": "https://www.veolia.com/en/veolia-group/finance/financial-publications",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.veolia.com/en/veolia-group/finance/financial-publications&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQFnoECBgQAQ",
+      "displayed_link": "https://www.veolia.com › veolia-group › finance › finan...",
+      "favicon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfH633xKFXhe6CO8asWDPclg.png",
+      "snippet": "Financial results, reports, universal registration document... Access all financial publications of Veolia. 2025 full year results. Access the presentation.",
+      "snippet_highlighted_words": [
+        "Access all financial publications of Veolia"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Financial results, reports, universal registration document... Access all financial publications of Veolia. 2025 full year results. Access the presentation.",
+          "source_info_link": "https://www.veolia.com/en/veolia-group/finance/financial-publications",
+          "icon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfGsiDXrXC6z5u1UzBnMydvlGqGzeetQ0g-rZ_TO-daR4.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.veolia.com/en/veolia-group/finance/financial-publications&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.veolia.com%2Fen%2Fveolia-group%2Ffinance%2Ffinancial-publications",
+      "missing": [
+        "monitoring"
+      ],
+      "must_include": {
+        "word": "monitoring",
+        "link": "https://www.google.com/search?sca_esv=89d8bdbef1fc9dde&q=Veolia+Newhaven+annual+%22monitoring%22+report&sa=X&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ5t4CegQIHBAB"
+      },
+      "source": "veolia.com"
+    },
+    {
+      "position": 3,
+      "title": "EfW Annual Performance Report Newhaven ERF 2019.xlsm",
+      "link": "https://ukwin.org.uk/library/129-AnnualPerformanceReport-2019.pdf",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://ukwin.org.uk/library/129-AnnualPerformanceReport-2019.pdf&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQFnoECCQQAQ",
+      "displayed_link": "https://ukwin.org.uk › library › 129-AnnualPerfor...",
+      "favicon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfLX0brDZrVb3NKKC1PoCh9E.png",
+      "date": "Jan 24, 2020",
+      "snippet": "This report is required under the Industrial Emissions Directive Article 55(2) requirements on reporting and public information on waste ...",
+      "snippet_highlighted_words": [
+        "report",
+        "reporting"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "This report is required under the Industrial Emissions Directive Article 55(2) requirements on reporting and public information on waste ...",
+          "source_info_link": "https://ukwin.org.uk/library/129-AnnualPerformanceReport-2019.pdf",
+          "icon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfCQHKbaGBPVlKyORpvbELIZpO2oQDXGJ-HenE6r_Ndft.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://ukwin.org.uk/library/129-AnnualPerformanceReport-2019.pdf&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fukwin.org.uk%2Flibrary%2F129-AnnualPerformanceReport-2019.pdf",
+      "source": "United Kingdom Without Incineration Network"
+    },
+    {
+      "position": 4,
+      "title": "Innovation for ecological transformation - Institut Veolia",
+      "link": "https://www.institut.veolia.org/sites/g/files/dvc2551/files/document/2023/11/Veolia_FACTS_25_2023_GB_Web_Interactif_V3%20%281%29.pdf",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.institut.veolia.org/sites/g/files/dvc2551/files/document/2023/11/Veolia_FACTS_25_2023_GB_Web_Interactif_V3%2520%25281%2529.pdf&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQFnoECCIQAQ",
+      "displayed_link": "https://www.institut.veolia.org › files › 2023/11",
+      "favicon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfJ64PPx7XXQDZEsJUgYVAlM.png",
+      "snippet": "It focuses on a wide range of issues related to the future of urban living as well as sustainable production and consumption (cities, urban services, ...",
+      "about_this_result": {
+        "source": {
+          "description": "It focuses on a wide range of issues related to the future of urban living as well as sustainable production and consumption (cities, urban services, ...",
+          "source_info_link": "https://www.institut.veolia.org/sites/g/files/dvc2551/files/document/2023/11/Veolia_FACTS_25_2023_GB_Web_Interactif_V3%20%281%29.pdf",
+          "icon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfF1lLl_Knu4UUux2x1PLHb0RSgM8MDoEfCgeQWWWyaXP.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.institut.veolia.org/sites/g/files/dvc2551/files/document/2023/11/Veolia_FACTS_25_2023_GB_Web_Interactif_V3%20%281%29.pdf&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.institut.veolia.org%2Fsites%2Fg%2Ffiles%2Fdvc2551%2Ffiles%2Fdocument%2F2023%2F11%2FVeolia_FACTS_25_2023_GB_Web_Interactif_V3%2520%25281%2529.pdf",
+      "source": "Institut Veolia"
+    },
+    {
+      "position": 5,
+      "title": "Veolia",
+      "link": "https://nowfornature.org/company/veolia/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://nowfornature.org/company/veolia/&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQFnoECBkQAQ",
+      "displayed_link": "https://nowfornature.org › company › veolia",
+      "favicon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfNq5mMO_naZYIZ3uxGrfiSw.png",
+      "snippet": "Veolia submitted its strategic 2024-2027 GreenUp Strategic Program to 'Its Now for Nature' and met all criteria to be part of the campaign.",
+      "snippet_highlighted_words": [
+        "Veolia"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Veolia submitted its strategic 2024-2027 GreenUp Strategic Program to 'Its Now for Nature' and met all criteria to be part of the campaign.",
+          "source_info_link": "https://nowfornature.org/company/veolia/",
+          "icon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfFHMhZN1HEm9WenEN6wghSAxNe6m_vUMmEzl9i5ZY3Y2.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://nowfornature.org/company/veolia/&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fnowfornature.org%2Fcompany%2Fveolia%2F",
+      "source": "Now For Nature"
+    },
+    {
+      "position": 6,
+      "title": "Veolia Posts Strong Yearly Results",
+      "link": "https://www.waste360.com/industry-insights/veolia-posts-strong-yearly-results-advancing-environmental-security-in-the-u-s-",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.waste360.com/industry-insights/veolia-posts-strong-yearly-results-advancing-environmental-security-in-the-u-s-&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQFnoECCsQAQ",
+      "displayed_link": "https://www.waste360.com › Industry Insights",
+      "favicon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfGxhO2zuv0MRPeJjOsjZ4ts.png",
+      "date": "Mar 4, 2026",
+      "snippet": "Veolia, the world leader in environmental services, released powerful 2025 financial results that demonstrated the success of its GreenUp ...",
+      "snippet_highlighted_words": [
+        "Veolia"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Veolia, the world leader in environmental services, released powerful 2025 financial results that demonstrated the success of its GreenUp ...",
+          "source_info_link": "https://www.waste360.com/industry-insights/veolia-posts-strong-yearly-results-advancing-environmental-security-in-the-u-s-",
+          "icon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfF3tysKmm3N36f3muddAdMi2zWgdITpIam3PUopNx_v4.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.waste360.com/industry-insights/veolia-posts-strong-yearly-results-advancing-environmental-security-in-the-u-s-&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.waste360.com%2Findustry-insights%2Fveolia-posts-strong-yearly-results-advancing-environmental-security-in-the-u-s-",
+      "source": "Waste360"
+    },
+    {
+      "position": 7,
+      "title": "2024 ANNUAL RESULTS - Veolia",
+      "link": "https://www.veolia.com/en/our-media/press-releases/2024-annual-results",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.veolia.com/en/our-media/press-releases/2024-annual-results&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQFnoECC0QAQ",
+      "displayed_link": "https://www.veolia.com › our-media › press-releases › 2...",
+      "favicon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfLcVVaMFYTfFUpXDhsz3wpk.png",
+      "date": "Feb 27, 2025",
+      "snippet": "Strong 2024 results, with all targets achieved or exceeded, a reflection of strict and agile management, with enhanced operating efficiency ...",
+      "snippet_highlighted_words": [
+        "Strong 2024 results"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Strong 2024 results, with all targets achieved or exceeded, a reflection of strict and agile management, with enhanced operating efficiency ...",
+          "source_info_link": "https://www.veolia.com/en/our-media/press-releases/2024-annual-results",
+          "icon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfAOQP91lggKdLWr9KWFGoiRnMokOc7-sWbsOdM2MM5It.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.veolia.com/en/our-media/press-releases/2024-annual-results&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.veolia.com%2Fen%2Four-media%2Fpress-releases%2F2024-annual-results",
+      "missing": [
+        "monitoring"
+      ],
+      "must_include": {
+        "word": "monitoring",
+        "link": "https://www.google.com/search?sca_esv=89d8bdbef1fc9dde&q=Veolia+Newhaven+annual+%22monitoring%22+report&sa=X&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ5t4CegQIQhAB"
+      },
+      "source": "veolia.com"
+    },
+    {
+      "position": 8,
+      "title": "ANNUAL ENVIRONMENTAL REPORT",
+      "link": "https://epawebapp.epa.ie/licences/lic_eDMS/090151b28048421a.pdf",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://epawebapp.epa.ie/licences/lic_eDMS/090151b28048421a.pdf&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQFnoECDAQAQ",
+      "displayed_link": "https://epawebapp.epa.ie › licences › lic_eDMS",
+      "date": "Mar 28, 2013",
+      "snippet": "Promotes pollution prevention and waste minimisation by reusing and recycling materials. •. Continual improvement through the setting and ...",
+      "about_this_result": {
+        "source": {
+          "description": "Promotes pollution prevention and waste minimisation by reusing and recycling materials. •. Continual improvement through the setting and ...",
+          "source_info_link": "https://epawebapp.epa.ie/licences/lic_eDMS/090151b28048421a.pdf"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://epawebapp.epa.ie/licences/lic_eDMS/090151b28048421a.pdf&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fepawebapp.epa.ie%2Flicences%2Flic_eDMS%2F090151b28048421a.pdf",
+      "source": "EPA.ie"
+    },
+    {
+      "position": 9,
+      "title": "Sustainable Development Goals",
+      "link": "https://www.veoliawatertechnologies.com/sites/g/files/dvc2476/files/document/2022/06/SustainableDevelopmentGoalsReport%20%281%29.pdf",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.veoliawatertechnologies.com/sites/g/files/dvc2476/files/document/2022/06/SustainableDevelopmentGoalsReport%2520%25281%2529.pdf&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQFnoECCwQAQ",
+      "displayed_link": "https://www.veoliawatertechnologies.com › 2022/06",
+      "favicon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfNJJsdJzsRFe09xjvKY1xAA.png",
+      "snippet": "Goal 12 encourages large companies to adopt sustainable practices and to integrate sustainability performance into their reporting cycle to better manage ...",
+      "snippet_highlighted_words": [
+        "reporting"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Goal 12 encourages large companies to adopt sustainable practices and to integrate sustainability performance into their reporting cycle to better manage ...",
+          "source_info_link": "https://www.veoliawatertechnologies.com/sites/g/files/dvc2476/files/document/2022/06/SustainableDevelopmentGoalsReport%20%281%29.pdf",
+          "icon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfK6lRCHUTXZYZaWRxTmvBkcYYuIN9LbwflVzv9lA31HE.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.veoliawatertechnologies.com/sites/g/files/dvc2476/files/document/2022/06/SustainableDevelopmentGoalsReport%20%281%29.pdf&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.veoliawatertechnologies.com%2Fsites%2Fg%2Ffiles%2Fdvc2476%2Ffiles%2Fdocument%2F2022%2F06%2FSustainableDevelopmentGoalsReport%2520%25281%2529.pdf",
+      "source": "Veolia Water Technologies"
+    },
+    {
+      "position": 10,
+      "title": "Incinerator Annual Monitoring Reporting",
+      "link": "https://www.data.gov.uk/dataset/0de19ba3-9c2f-417c-b092-4a6baaf9744d/incinerator-annual-monitoring-reporting",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.data.gov.uk/dataset/0de19ba3-9c2f-417c-b092-4a6baaf9744d/incinerator-annual-monitoring-reporting&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQFnoECCoQAQ",
+      "displayed_link": "https://www.data.gov.uk › dataset › incinerator-annual-...",
+      "favicon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfEqUrejveecJIVBK4e3lyJo.png",
+      "date": "Apr 17, 2026",
+      "snippet": "Operators of permitted incinerators have a requirement to provide an annual monitoring report under a condition in their permits.",
+      "snippet_highlighted_words": [
+        "annual monitoring report"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Operators of permitted incinerators have a requirement to provide an annual monitoring report under a condition in their permits.",
+          "source_info_link": "https://www.data.gov.uk/dataset/0de19ba3-9c2f-417c-b092-4a6baaf9744d/incinerator-annual-monitoring-reporting",
+          "icon": "https://serpapi.com/searches/6a167daadbb9ff25b5ce3ba2/images/QkHZxr9AET05lwAon4gIfF0jhx99qcA-q32Ri5CjtmDTwion7qwGT9E9kNmQbKUH.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.data.gov.uk/dataset/0de19ba3-9c2f-417c-b092-4a6baaf9744d/incinerator-annual-monitoring-reporting&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.data.gov.uk%2Fdataset%2F0de19ba3-9c2f-417c-b092-4a6baaf9744d%2Fincinerator-annual-monitoring-reporting",
+      "missing": [
+        "Veolia",
+        "Newhaven"
+      ],
+      "source": "UK Gov Data"
+    }
+  ],
+  "related_searches": [
+    {
+      "block_position": 1,
+      "query": "Veolia newhaven annual monitoring report pdf",
+      "link": "https://www.google.com/search?sca_esv=89d8bdbef1fc9dde&q=Veolia+newhaven+annual+monitoring+report+pdf&sa=X&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ1QJ6BAguEAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+newhaven+annual+monitoring+report+pdf"
+    },
+    {
+      "block_position": 1,
+      "query": "Veolia newhaven annual monitoring report 2022",
+      "link": "https://www.google.com/search?sca_esv=89d8bdbef1fc9dde&q=Veolia+newhaven+annual+monitoring+report+2022&sa=X&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ1QJ6BAhAEAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+newhaven+annual+monitoring+report+2022"
+    },
+    {
+      "block_position": 1,
+      "query": "Veolia newhaven annual monitoring report 2020",
+      "link": "https://www.google.com/search?sca_esv=89d8bdbef1fc9dde&q=Veolia+newhaven+annual+monitoring+report+2020&sa=X&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ1QJ6BAgvEAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+newhaven+annual+monitoring+report+2020"
+    },
+    {
+      "block_position": 1,
+      "query": "Veolia annual report",
+      "link": "https://www.google.com/search?sca_esv=89d8bdbef1fc9dde&q=Veolia+annual+report&sa=X&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ1QJ6BAgyEAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+annual+report"
+    },
+    {
+      "block_position": 1,
+      "query": "Veolia annual Report ( PDF)",
+      "link": "https://www.google.com/search?sca_esv=89d8bdbef1fc9dde&q=Veolia+annual+Report+(+PDF)&sa=X&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ1QJ6BAg3EAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+annual+Report+%28+PDF%29"
+    },
+    {
+      "block_position": 1,
+      "query": "Veolia annual revenue in usd",
+      "link": "https://www.google.com/search?sca_esv=89d8bdbef1fc9dde&q=Veolia+annual+revenue+in+usd&sa=X&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ1QJ6BAg6EAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+annual+revenue+in+usd"
+    },
+    {
+      "block_position": 1,
+      "query": "Veolia annual Report 2023",
+      "link": "https://www.google.com/search?sca_esv=89d8bdbef1fc9dde&q=Veolia+annual+Report+2023&sa=X&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ1QJ6BAg5EAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+annual+Report+2023"
+    },
+    {
+      "block_position": 1,
+      "query": "Veolia annual report 2024",
+      "link": "https://www.google.com/search?sca_esv=89d8bdbef1fc9dde&q=Veolia+annual+report+2024&sa=X&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ1QJ6BAgzEAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+annual+report+2024"
+    }
+  ],
+  "pagination": {
+    "current": 1,
+    "next": "https://www.google.com/search?q=Veolia+Newhaven+annual+monitoring+report&sca_esv=89d8bdbef1fc9dde&ei=qn0WaqmJKZbIkPIPlJfhmQQ&start=10&sa=N&sstk=AU9db-CcglKOtU69ZeWHiq21aLWK89-NfnMJibA1385RMk_XnJVPVm6T5lLansrcyPSyEaClR1dtHagfqz8VJKZ09Q2pqNIV65HClA&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ8NMDegQIKBAW",
+    "other_pages": {
+      "2": "https://www.google.com/search?q=Veolia+Newhaven+annual+monitoring+report&sca_esv=89d8bdbef1fc9dde&ei=qn0WaqmJKZbIkPIPlJfhmQQ&start=10&sa=N&sstk=AU9db-CcglKOtU69ZeWHiq21aLWK89-NfnMJibA1385RMk_XnJVPVm6T5lLansrcyPSyEaClR1dtHagfqz8VJKZ09Q2pqNIV65HClA&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ8tMDegQIKBAE",
+      "3": "https://www.google.com/search?q=Veolia+Newhaven+annual+monitoring+report&sca_esv=89d8bdbef1fc9dde&ei=qn0WaqmJKZbIkPIPlJfhmQQ&start=20&sa=N&sstk=AU9db-CcglKOtU69ZeWHiq21aLWK89-NfnMJibA1385RMk_XnJVPVm6T5lLansrcyPSyEaClR1dtHagfqz8VJKZ09Q2pqNIV65HClA&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ8tMDegQIKBAG",
+      "4": "https://www.google.com/search?q=Veolia+Newhaven+annual+monitoring+report&sca_esv=89d8bdbef1fc9dde&ei=qn0WaqmJKZbIkPIPlJfhmQQ&start=30&sa=N&sstk=AU9db-CcglKOtU69ZeWHiq21aLWK89-NfnMJibA1385RMk_XnJVPVm6T5lLansrcyPSyEaClR1dtHagfqz8VJKZ09Q2pqNIV65HClA&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ8tMDegQIKBAI",
+      "5": "https://www.google.com/search?q=Veolia+Newhaven+annual+monitoring+report&sca_esv=89d8bdbef1fc9dde&ei=qn0WaqmJKZbIkPIPlJfhmQQ&start=40&sa=N&sstk=AU9db-CcglKOtU69ZeWHiq21aLWK89-NfnMJibA1385RMk_XnJVPVm6T5lLansrcyPSyEaClR1dtHagfqz8VJKZ09Q2pqNIV65HClA&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ8tMDegQIKBAK",
+      "6": "https://www.google.com/search?q=Veolia+Newhaven+annual+monitoring+report&sca_esv=89d8bdbef1fc9dde&ei=qn0WaqmJKZbIkPIPlJfhmQQ&start=50&sa=N&sstk=AU9db-CcglKOtU69ZeWHiq21aLWK89-NfnMJibA1385RMk_XnJVPVm6T5lLansrcyPSyEaClR1dtHagfqz8VJKZ09Q2pqNIV65HClA&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ8tMDegQIKBAM",
+      "7": "https://www.google.com/search?q=Veolia+Newhaven+annual+monitoring+report&sca_esv=89d8bdbef1fc9dde&ei=qn0WaqmJKZbIkPIPlJfhmQQ&start=60&sa=N&sstk=AU9db-CcglKOtU69ZeWHiq21aLWK89-NfnMJibA1385RMk_XnJVPVm6T5lLansrcyPSyEaClR1dtHagfqz8VJKZ09Q2pqNIV65HClA&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ8tMDegQIKBAO",
+      "8": "https://www.google.com/search?q=Veolia+Newhaven+annual+monitoring+report&sca_esv=89d8bdbef1fc9dde&ei=qn0WaqmJKZbIkPIPlJfhmQQ&start=70&sa=N&sstk=AU9db-CcglKOtU69ZeWHiq21aLWK89-NfnMJibA1385RMk_XnJVPVm6T5lLansrcyPSyEaClR1dtHagfqz8VJKZ09Q2pqNIV65HClA&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ8tMDegQIKBAQ",
+      "9": "https://www.google.com/search?q=Veolia+Newhaven+annual+monitoring+report&sca_esv=89d8bdbef1fc9dde&ei=qn0WaqmJKZbIkPIPlJfhmQQ&start=80&sa=N&sstk=AU9db-CcglKOtU69ZeWHiq21aLWK89-NfnMJibA1385RMk_XnJVPVm6T5lLansrcyPSyEaClR1dtHagfqz8VJKZ09Q2pqNIV65HClA&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ8tMDegQIKBAS",
+      "10": "https://www.google.com/search?q=Veolia+Newhaven+annual+monitoring+report&sca_esv=89d8bdbef1fc9dde&ei=qn0WaqmJKZbIkPIPlJfhmQQ&start=90&sa=N&sstk=AU9db-CcglKOtU69ZeWHiq21aLWK89-NfnMJibA1385RMk_XnJVPVm6T5lLansrcyPSyEaClR1dtHagfqz8VJKZ09Q2pqNIV65HClA&ved=2ahUKEwiphpb42tiUAxUWJEQIHZRLOEMQ8tMDegQIKBAU"
+    }
+  },
+  "serpapi_pagination": {
+    "current": 1,
+    "next_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+Newhaven+annual+monitoring+report&start=10",
+    "next": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+Newhaven+annual+monitoring+report&start=10",
+    "other_pages": {
+      "2": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+Newhaven+annual+monitoring+report&start=10",
+      "3": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+Newhaven+annual+monitoring+report&start=20",
+      "4": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+Newhaven+annual+monitoring+report&start=30",
+      "5": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+Newhaven+annual+monitoring+report&start=40",
+      "6": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+Newhaven+annual+monitoring+report&start=50",
+      "7": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+Newhaven+annual+monitoring+report&start=60",
+      "8": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+Newhaven+annual+monitoring+report&start=70",
+      "9": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+Newhaven+annual+monitoring+report&start=80",
+      "10": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Veolia+Newhaven+annual+monitoring+report&start=90"
+    }
+  }
+}

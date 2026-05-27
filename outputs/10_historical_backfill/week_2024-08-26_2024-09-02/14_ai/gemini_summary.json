@@ -1,0 +1,29 @@
+{
+  "run_ts": "20260527T051629Z",
+  "gemini_key_present": true,
+  "gemini_model": "gemini-3.5-flash",
+  "gemini_summary_ready": true,
+  "http_status": 200,
+  "input_summary": {
+    "run_ts": "20260527T051629Z",
+    "records": 57,
+    "ok": 55,
+    "warning": 0,
+    "error": 0,
+    "source_types": [
+      "atmospheric_model",
+      "gdrive",
+      "ground_aq",
+      "low_cost_sensor_context",
+      "news_api",
+      "official_search",
+      "official_watch_url",
+      "satellite_auth",
+      "satellite_metadata",
+      "weather",
+      "web_search_context"
+    ],
+    "controlled_use_boundary": "Neutral metadata-only summary. No raw evidence, no API keys, no causal attribution."
+  },
+  "summary_text": "### Metadata Summary: Air-Quality Evidence Ingestion\n\n*   **Execution Timestamp:** 2026-05-27T05:16:29Z\n*   **Record Ingestion Status:** 57 total records processed (55 successful, 0 warnings, 0 errors).\n*   **Data Source Types (11 total):** Atmospheric models, ground-level air quality indexes (`ground_aq`), low-cost sensor context, satellite metadata and authorization channels, weather platforms, news APIs, official watch/search URLs, and general web search context.\n*   **Controlled Use Boundary:** Strictly limited to neutral, non-causal metadata representation. This summary contains no raw environmental evidence, API credentials, causal attributions, or external performance validations."
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": "AQ26_CHART_WEEKLY_RECORD_COUNTS_V33_1",
-  "created_at_utc": "2026-05-26T14:08:01Z",
+  "created_at_utc": "2026-05-27T05:28:30Z",
   "labels": [
     "2024-06-03",
     "2024-06-10",
@@ -121,10 +121,10 @@
       58,
       58,
       58,
-      null,
-      null,
-      null,
-      null,
+      58,
+      58,
+      58,
+      58,
       null,
       null,
       null,
@@ -227,10 +227,10 @@
       53,
       53,
       54,
-      null,
-      null,
-      null,
-      null,
+      56,
+      56,
+      56,
+      56,
       null,
       null,
       null,
@@ -333,10 +333,10 @@
       2,
       2,
       1,
-      null,
-      null,
-      null,
-      null,
+      0,
+      0,
+      0,
+      0,
       null,
       null,
       null,
@@ -439,10 +439,10 @@
       1,
       1,
       1,
-      null,
-      null,
-      null,
-      null,
+      0,
+      0,
+      0,
+      0,
       null,
       null,
       null,
@@ -545,10 +545,10 @@
       2,
       2,
       2,
-      null,
-      null,
-      null,
-      null,
+      2,
+      2,
+      2,
+      2,
       null,
       null,
       null,
@@ -703,22 +703,22 @@
     {
       "start": "2024-08-19",
       "end": "2024-08-26",
-      "status": "not_yet_harvested"
+      "status": "harvested"
     },
     {
       "start": "2024-08-26",
       "end": "2024-09-02",
-      "status": "not_yet_harvested"
+      "status": "harvested"
     },
     {
       "start": "2024-09-02",
       "end": "2024-09-09",
-      "status": "not_yet_harvested"
+      "status": "harvested"
     },
     {
       "start": "2024-09-09",
       "end": "2024-09-16",
-      "status": "not_yet_harvested"
+      "status": "harvested"
     },
     {
       "start": "2024-09-16",

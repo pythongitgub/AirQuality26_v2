@@ -1,6 +1,6 @@
 {
   "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_INDEX_1",
-  "created_at_utc": "2026-05-26T14:08:01Z",
+  "created_at_utc": "2026-05-27T05:28:30Z",
   "history_end_date": "2026-05-25",
   "history_weeks_requested": 104,
   "canonical_policy": {
@@ -141,7 +141,7 @@
       "_source_summary_path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/history/week_2026-04-27_2026-05-04.json"
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2026-04-20_2026-04-27",
       "date_window": {
         "start": "2026-04-20",
@@ -168,7 +168,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2026-04-13_2026-04-20",
       "date_window": {
         "start": "2026-04-13",
@@ -195,7 +195,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2026-04-06_2026-04-13",
       "date_window": {
         "start": "2026-04-06",
@@ -222,7 +222,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2026-03-30_2026-04-06",
       "date_window": {
         "start": "2026-03-30",
@@ -249,7 +249,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2026-03-23_2026-03-30",
       "date_window": {
         "start": "2026-03-23",
@@ -276,7 +276,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2026-03-16_2026-03-23",
       "date_window": {
         "start": "2026-03-16",
@@ -303,7 +303,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2026-03-09_2026-03-16",
       "date_window": {
         "start": "2026-03-09",
@@ -330,7 +330,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2026-03-02_2026-03-09",
       "date_window": {
         "start": "2026-03-02",
@@ -357,7 +357,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2026-02-23_2026-03-02",
       "date_window": {
         "start": "2026-02-23",
@@ -384,7 +384,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2026-02-16_2026-02-23",
       "date_window": {
         "start": "2026-02-16",
@@ -411,7 +411,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2026-02-09_2026-02-16",
       "date_window": {
         "start": "2026-02-09",
@@ -438,7 +438,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2026-02-02_2026-02-09",
       "date_window": {
         "start": "2026-02-02",
@@ -465,7 +465,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2026-01-26_2026-02-02",
       "date_window": {
         "start": "2026-01-26",
@@ -492,7 +492,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2026-01-19_2026-01-26",
       "date_window": {
         "start": "2026-01-19",
@@ -519,7 +519,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2026-01-12_2026-01-19",
       "date_window": {
         "start": "2026-01-12",
@@ -546,7 +546,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2026-01-05_2026-01-12",
       "date_window": {
         "start": "2026-01-05",
@@ -573,7 +573,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-12-29_2026-01-05",
       "date_window": {
         "start": "2025-12-29",
@@ -600,7 +600,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-12-22_2025-12-29",
       "date_window": {
         "start": "2025-12-22",
@@ -627,7 +627,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-12-15_2025-12-22",
       "date_window": {
         "start": "2025-12-15",
@@ -654,7 +654,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-12-08_2025-12-15",
       "date_window": {
         "start": "2025-12-08",
@@ -681,7 +681,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-12-01_2025-12-08",
       "date_window": {
         "start": "2025-12-01",
@@ -708,7 +708,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-11-24_2025-12-01",
       "date_window": {
         "start": "2025-11-24",
@@ -735,7 +735,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-11-17_2025-11-24",
       "date_window": {
         "start": "2025-11-17",
@@ -762,7 +762,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-11-10_2025-11-17",
       "date_window": {
         "start": "2025-11-10",
@@ -789,7 +789,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-11-03_2025-11-10",
       "date_window": {
         "start": "2025-11-03",
@@ -816,7 +816,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-10-27_2025-11-03",
       "date_window": {
         "start": "2025-10-27",
@@ -843,7 +843,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-10-20_2025-10-27",
       "date_window": {
         "start": "2025-10-20",
@@ -870,7 +870,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-10-13_2025-10-20",
       "date_window": {
         "start": "2025-10-13",
@@ -897,7 +897,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-10-06_2025-10-13",
       "date_window": {
         "start": "2025-10-06",
@@ -924,7 +924,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-09-29_2025-10-06",
       "date_window": {
         "start": "2025-09-29",
@@ -951,7 +951,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-09-22_2025-09-29",
       "date_window": {
         "start": "2025-09-22",
@@ -978,7 +978,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-09-15_2025-09-22",
       "date_window": {
         "start": "2025-09-15",
@@ -1005,7 +1005,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-09-08_2025-09-15",
       "date_window": {
         "start": "2025-09-08",
@@ -1032,7 +1032,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-09-01_2025-09-08",
       "date_window": {
         "start": "2025-09-01",
@@ -1059,7 +1059,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-08-25_2025-09-01",
       "date_window": {
         "start": "2025-08-25",
@@ -1086,7 +1086,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-08-18_2025-08-25",
       "date_window": {
         "start": "2025-08-18",
@@ -1113,7 +1113,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-08-11_2025-08-18",
       "date_window": {
         "start": "2025-08-11",
@@ -1140,7 +1140,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-08-04_2025-08-11",
       "date_window": {
         "start": "2025-08-04",
@@ -1167,7 +1167,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-07-28_2025-08-04",
       "date_window": {
         "start": "2025-07-28",
@@ -1194,7 +1194,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-07-21_2025-07-28",
       "date_window": {
         "start": "2025-07-21",
@@ -1221,7 +1221,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-07-14_2025-07-21",
       "date_window": {
         "start": "2025-07-14",
@@ -1248,7 +1248,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-07-07_2025-07-14",
       "date_window": {
         "start": "2025-07-07",
@@ -1275,7 +1275,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-06-30_2025-07-07",
       "date_window": {
         "start": "2025-06-30",
@@ -1302,7 +1302,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-06-23_2025-06-30",
       "date_window": {
         "start": "2025-06-23",
@@ -1329,7 +1329,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-06-16_2025-06-23",
       "date_window": {
         "start": "2025-06-16",
@@ -1356,7 +1356,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-06-09_2025-06-16",
       "date_window": {
         "start": "2025-06-09",
@@ -1383,7 +1383,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-06-02_2025-06-09",
       "date_window": {
         "start": "2025-06-02",
@@ -1410,7 +1410,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-05-26_2025-06-02",
       "date_window": {
         "start": "2025-05-26",
@@ -1437,7 +1437,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-05-19_2025-05-26",
       "date_window": {
         "start": "2025-05-19",
@@ -1464,7 +1464,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-05-12_2025-05-19",
       "date_window": {
         "start": "2025-05-12",
@@ -1491,7 +1491,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-05-05_2025-05-12",
       "date_window": {
         "start": "2025-05-05",
@@ -1518,7 +1518,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-04-28_2025-05-05",
       "date_window": {
         "start": "2025-04-28",
@@ -1545,7 +1545,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-04-21_2025-04-28",
       "date_window": {
         "start": "2025-04-21",
@@ -1572,7 +1572,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-04-14_2025-04-21",
       "date_window": {
         "start": "2025-04-14",
@@ -1599,7 +1599,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-04-07_2025-04-14",
       "date_window": {
         "start": "2025-04-07",
@@ -1626,7 +1626,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-03-31_2025-04-07",
       "date_window": {
         "start": "2025-03-31",
@@ -1653,7 +1653,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-03-24_2025-03-31",
       "date_window": {
         "start": "2025-03-24",
@@ -1680,7 +1680,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-03-17_2025-03-24",
       "date_window": {
         "start": "2025-03-17",
@@ -1707,7 +1707,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-03-10_2025-03-17",
       "date_window": {
         "start": "2025-03-10",
@@ -1734,7 +1734,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-03-03_2025-03-10",
       "date_window": {
         "start": "2025-03-03",
@@ -1761,7 +1761,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-02-24_2025-03-03",
       "date_window": {
         "start": "2025-02-24",
@@ -1788,7 +1788,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-02-17_2025-02-24",
       "date_window": {
         "start": "2025-02-17",
@@ -1815,7 +1815,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-02-10_2025-02-17",
       "date_window": {
         "start": "2025-02-10",
@@ -1842,7 +1842,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-02-03_2025-02-10",
       "date_window": {
         "start": "2025-02-03",
@@ -1869,7 +1869,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-01-27_2025-02-03",
       "date_window": {
         "start": "2025-01-27",
@@ -1896,7 +1896,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-01-20_2025-01-27",
       "date_window": {
         "start": "2025-01-20",
@@ -1923,7 +1923,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-01-13_2025-01-20",
       "date_window": {
         "start": "2025-01-13",
@@ -1950,7 +1950,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2025-01-06_2025-01-13",
       "date_window": {
         "start": "2025-01-06",
@@ -1977,7 +1977,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2024-12-30_2025-01-06",
       "date_window": {
         "start": "2024-12-30",
@@ -2004,7 +2004,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2024-12-23_2024-12-30",
       "date_window": {
         "start": "2024-12-23",
@@ -2031,7 +2031,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2024-12-16_2024-12-23",
       "date_window": {
         "start": "2024-12-16",
@@ -2058,7 +2058,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2024-12-09_2024-12-16",
       "date_window": {
         "start": "2024-12-09",
@@ -2085,7 +2085,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2024-12-02_2024-12-09",
       "date_window": {
         "start": "2024-12-02",
@@ -2112,7 +2112,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2024-11-25_2024-12-02",
       "date_window": {
         "start": "2024-11-25",
@@ -2139,7 +2139,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2024-11-18_2024-11-25",
       "date_window": {
         "start": "2024-11-18",
@@ -2166,7 +2166,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2024-11-11_2024-11-18",
       "date_window": {
         "start": "2024-11-11",
@@ -2193,7 +2193,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2024-11-04_2024-11-11",
       "date_window": {
         "start": "2024-11-04",
@@ -2220,7 +2220,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2024-10-28_2024-11-04",
       "date_window": {
         "start": "2024-10-28",
@@ -2247,7 +2247,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2024-10-21_2024-10-28",
       "date_window": {
         "start": "2024-10-21",
@@ -2274,7 +2274,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2024-10-14_2024-10-21",
       "date_window": {
         "start": "2024-10-14",
@@ -2301,7 +2301,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2024-10-07_2024-10-14",
       "date_window": {
         "start": "2024-10-07",
@@ -2328,7 +2328,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2024-09-30_2024-10-07",
       "date_window": {
         "start": "2024-09-30",
@@ -2355,7 +2355,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2024-09-23_2024-09-30",
       "date_window": {
         "start": "2024-09-23",
@@ -2382,7 +2382,7 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
       "run_ts": "BACKFILL_SLOT_2024-09-16_2024-09-23",
       "date_window": {
         "start": "2024-09-16",
@@ -2409,112 +2409,456 @@
       }
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
-      "run_ts": "BACKFILL_SLOT_2024-09-09_2024-09-16",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
+      "created_at_utc": "2026-05-27T05:28:30Z",
+      "run_ts": "20260527T052419Z",
       "date_window": {
         "start": "2024-09-09",
         "end": "2024-09-16"
       },
-      "status": "not_yet_harvested",
-      "backfill_status": "not_yet_harvested",
-      "source_record_count": 0,
-      "ok_count": 0,
+      "status": "harvested",
+      "backfill_status": "harvested",
+      "collector_exit_code": 0,
+      "collector_date_window_exact_match": true,
+      "collector_raw_date_window": {
+        "start": "2024-09-09",
+        "end": "2024-09-16"
+      },
+      "source_record_count": 58,
+      "ok_count": 56,
       "warning_count": 0,
       "error_count": 0,
-      "skipped_count": 0,
-      "satellite_product_count": 0,
-      "drive_file_count": 0,
+      "skipped_count": 2,
+      "source_type_counts": {
+        "ai_summary": 1,
+        "atmospheric_model": 1,
+        "gdrive": 1,
+        "ground_aq": 15,
+        "low_cost_sensor_context": 1,
+        "news_api": 4,
+        "official_search": 12,
+        "official_watch_url": 4,
+        "satellite_auth": 1,
+        "satellite_metadata": 9,
+        "weather": 6,
+        "web_search_context": 3
+      },
+      "source_status_counts": {
+        "ok": 56,
+        "skipped": 2
+      },
+      "temporal_role_counts": {
+        "catalogue_metadata": 9,
+        "current_context_only": 18,
+        "failed_or_skipped": 2,
+        "historical_observation": 11,
+        "model_reanalysis": 1,
+        "reference_document": 17
+      },
+      "current_context_only_count": 18,
+      "historical_observation_count": 11,
+      "satellite_product_count": 350,
+      "drive_file_count": 5000,
+      "drive_inventory_truncated": true,
+      "drive_inventory_limit": 5000,
       "high_priority_filings": 0,
       "medium_priority_filings": 0,
-      "openaq_request_count": 0,
+      "openaq_request_count": 15,
       "news_warning_count": 0,
-      "readiness": {},
+      "readiness": {
+        "gemini_summary_ready": true,
+        "drive_inventory_truncated": true,
+        "external_submission_ready": false,
+        "openaq_ready": true,
+        "cdse_download_ready": null,
+        "metoffice_ready": true,
+        "cams_key_present": true,
+        "satellite_catalogue_ready": true,
+        "cdse_auth_ready": true,
+        "backfill_ready": true,
+        "satellite_extraction_ready": false,
+        "cams_data_ready": false,
+        "redaction_ready": true,
+        "cams_endpoint_configured": false,
+        "cdse_sentinelhub_ready": null,
+        "ground_aq_ready": true,
+        "openaq_safety_ready": true,
+        "drive_ready": true
+      },
       "external_submission_ready": false,
-      "history_slot_integrity": {
-        "evidence_status": "pending",
-        "notes": "Placeholder only. This row must not be used as historical evidence until source-specific backfill creates real source records."
-      }
+      "controlled_use_boundary": "WeeklyV2 is a controlled-review evidence harvester. It does not claim endorsement by WHO, UNEP, EEA, C40 Cities, or any named expert. It does not assert causal attribution unless explicit evidence gates pass.\n",
+      "provenance": {
+        "collector_output_root": "outputs/10_historical_backfill/week_2024-09-09_2024-09-16",
+        "collector_summary_relpath": "outputs/10_historical_backfill/week_2024-09-09_2024-09-16/00_weeklyv2/AQ26_WEEKLYV2_20260527T052419Z/AQ26_WEEKLYV2_MANIFEST_20260527T052419Z.json",
+        "collector_log_relpath": "outputs/98_logs/collector_2024-09-09_2024-09-16.log",
+        "source_records_present": true,
+        "source_records_required_fields": [
+          "source_name",
+          "source_type",
+          "status",
+          "retrieved_at_utc",
+          "retrieved_at_uk",
+          "date_uk",
+          "output_path",
+          "sha256"
+        ]
+      },
+      "review_positioning": {
+        "intended_review_audience": [
+          "WHO",
+          "UNEP",
+          "EEA",
+          "C40 Cities",
+          "independent academic expert review"
+        ],
+        "expert_critique_guardrail": "Outputs are framed for scrutiny by air-quality, exposure-science, atmospheric-modelling and environmental-policy experts; causal claims remain gated until source, confounder, uncertainty and validation requirements pass.",
+        "not_for_claims": [
+          "endorsement",
+          "regulatory breach determination",
+          "health outcome attribution",
+          "single-source causal attribution"
+        ]
+      },
+      "_source_summary_path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/history/week_2024-09-09_2024-09-16.json"
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
-      "run_ts": "BACKFILL_SLOT_2024-09-02_2024-09-09",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
+      "created_at_utc": "2026-05-27T05:24:19Z",
+      "run_ts": "20260527T052021Z",
       "date_window": {
         "start": "2024-09-02",
         "end": "2024-09-09"
       },
-      "status": "not_yet_harvested",
-      "backfill_status": "not_yet_harvested",
-      "source_record_count": 0,
-      "ok_count": 0,
+      "status": "harvested",
+      "backfill_status": "harvested",
+      "collector_exit_code": 0,
+      "collector_date_window_exact_match": true,
+      "collector_raw_date_window": {
+        "start": "2024-09-02",
+        "end": "2024-09-09"
+      },
+      "source_record_count": 58,
+      "ok_count": 56,
       "warning_count": 0,
       "error_count": 0,
-      "skipped_count": 0,
-      "satellite_product_count": 0,
-      "drive_file_count": 0,
+      "skipped_count": 2,
+      "source_type_counts": {
+        "ai_summary": 1,
+        "atmospheric_model": 1,
+        "gdrive": 1,
+        "ground_aq": 15,
+        "low_cost_sensor_context": 1,
+        "news_api": 4,
+        "official_search": 12,
+        "official_watch_url": 4,
+        "satellite_auth": 1,
+        "satellite_metadata": 9,
+        "weather": 6,
+        "web_search_context": 3
+      },
+      "source_status_counts": {
+        "ok": 56,
+        "skipped": 2
+      },
+      "temporal_role_counts": {
+        "catalogue_metadata": 9,
+        "current_context_only": 18,
+        "failed_or_skipped": 2,
+        "historical_observation": 11,
+        "model_reanalysis": 1,
+        "reference_document": 17
+      },
+      "current_context_only_count": 18,
+      "historical_observation_count": 11,
+      "satellite_product_count": 350,
+      "drive_file_count": 5000,
+      "drive_inventory_truncated": true,
+      "drive_inventory_limit": 5000,
       "high_priority_filings": 0,
       "medium_priority_filings": 0,
-      "openaq_request_count": 0,
+      "openaq_request_count": 15,
       "news_warning_count": 0,
-      "readiness": {},
+      "readiness": {
+        "gemini_summary_ready": true,
+        "drive_inventory_truncated": true,
+        "external_submission_ready": false,
+        "openaq_ready": true,
+        "cdse_download_ready": null,
+        "metoffice_ready": true,
+        "cams_key_present": true,
+        "satellite_catalogue_ready": true,
+        "cdse_auth_ready": true,
+        "backfill_ready": true,
+        "satellite_extraction_ready": false,
+        "cams_data_ready": false,
+        "redaction_ready": true,
+        "cams_endpoint_configured": false,
+        "cdse_sentinelhub_ready": null,
+        "ground_aq_ready": true,
+        "openaq_safety_ready": true,
+        "drive_ready": true
+      },
       "external_submission_ready": false,
-      "history_slot_integrity": {
-        "evidence_status": "pending",
-        "notes": "Placeholder only. This row must not be used as historical evidence until source-specific backfill creates real source records."
-      }
+      "controlled_use_boundary": "WeeklyV2 is a controlled-review evidence harvester. It does not claim endorsement by WHO, UNEP, EEA, C40 Cities, or any named expert. It does not assert causal attribution unless explicit evidence gates pass.\n",
+      "provenance": {
+        "collector_output_root": "outputs/10_historical_backfill/week_2024-09-02_2024-09-09",
+        "collector_summary_relpath": "outputs/10_historical_backfill/week_2024-09-02_2024-09-09/00_weeklyv2/AQ26_WEEKLYV2_20260527T052021Z/AQ26_WEEKLYV2_MANIFEST_20260527T052021Z.json",
+        "collector_log_relpath": "outputs/98_logs/collector_2024-09-02_2024-09-09.log",
+        "source_records_present": true,
+        "source_records_required_fields": [
+          "source_name",
+          "source_type",
+          "status",
+          "retrieved_at_utc",
+          "retrieved_at_uk",
+          "date_uk",
+          "output_path",
+          "sha256"
+        ]
+      },
+      "review_positioning": {
+        "intended_review_audience": [
+          "WHO",
+          "UNEP",
+          "EEA",
+          "C40 Cities",
+          "independent academic expert review"
+        ],
+        "expert_critique_guardrail": "Outputs are framed for scrutiny by air-quality, exposure-science, atmospheric-modelling and environmental-policy experts; causal claims remain gated until source, confounder, uncertainty and validation requirements pass.",
+        "not_for_claims": [
+          "endorsement",
+          "regulatory breach determination",
+          "health outcome attribution",
+          "single-source causal attribution"
+        ]
+      },
+      "_source_summary_path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/history/week_2024-09-02_2024-09-09.json"
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
-      "run_ts": "BACKFILL_SLOT_2024-08-26_2024-09-02",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
+      "created_at_utc": "2026-05-27T05:20:21Z",
+      "run_ts": "20260527T051629Z",
       "date_window": {
         "start": "2024-08-26",
         "end": "2024-09-02"
       },
-      "status": "not_yet_harvested",
-      "backfill_status": "not_yet_harvested",
-      "source_record_count": 0,
-      "ok_count": 0,
+      "status": "harvested",
+      "backfill_status": "harvested",
+      "collector_exit_code": 0,
+      "collector_date_window_exact_match": true,
+      "collector_raw_date_window": {
+        "start": "2024-08-26",
+        "end": "2024-09-02"
+      },
+      "source_record_count": 58,
+      "ok_count": 56,
       "warning_count": 0,
       "error_count": 0,
-      "skipped_count": 0,
-      "satellite_product_count": 0,
-      "drive_file_count": 0,
+      "skipped_count": 2,
+      "source_type_counts": {
+        "ai_summary": 1,
+        "atmospheric_model": 1,
+        "gdrive": 1,
+        "ground_aq": 15,
+        "low_cost_sensor_context": 1,
+        "news_api": 4,
+        "official_search": 12,
+        "official_watch_url": 4,
+        "satellite_auth": 1,
+        "satellite_metadata": 9,
+        "weather": 6,
+        "web_search_context": 3
+      },
+      "source_status_counts": {
+        "ok": 56,
+        "skipped": 2
+      },
+      "temporal_role_counts": {
+        "catalogue_metadata": 9,
+        "current_context_only": 18,
+        "failed_or_skipped": 2,
+        "historical_observation": 11,
+        "model_reanalysis": 1,
+        "reference_document": 17
+      },
+      "current_context_only_count": 18,
+      "historical_observation_count": 11,
+      "satellite_product_count": 350,
+      "drive_file_count": 5000,
+      "drive_inventory_truncated": true,
+      "drive_inventory_limit": 5000,
       "high_priority_filings": 0,
       "medium_priority_filings": 0,
-      "openaq_request_count": 0,
+      "openaq_request_count": 15,
       "news_warning_count": 0,
-      "readiness": {},
+      "readiness": {
+        "gemini_summary_ready": true,
+        "drive_inventory_truncated": true,
+        "external_submission_ready": false,
+        "openaq_ready": true,
+        "cdse_download_ready": null,
+        "metoffice_ready": true,
+        "cams_key_present": true,
+        "satellite_catalogue_ready": true,
+        "cdse_auth_ready": true,
+        "backfill_ready": true,
+        "satellite_extraction_ready": false,
+        "cams_data_ready": false,
+        "redaction_ready": true,
+        "cams_endpoint_configured": false,
+        "cdse_sentinelhub_ready": null,
+        "ground_aq_ready": true,
+        "openaq_safety_ready": true,
+        "drive_ready": true
+      },
       "external_submission_ready": false,
-      "history_slot_integrity": {
-        "evidence_status": "pending",
-        "notes": "Placeholder only. This row must not be used as historical evidence until source-specific backfill creates real source records."
-      }
+      "controlled_use_boundary": "WeeklyV2 is a controlled-review evidence harvester. It does not claim endorsement by WHO, UNEP, EEA, C40 Cities, or any named expert. It does not assert causal attribution unless explicit evidence gates pass.\n",
+      "provenance": {
+        "collector_output_root": "outputs/10_historical_backfill/week_2024-08-26_2024-09-02",
+        "collector_summary_relpath": "outputs/10_historical_backfill/week_2024-08-26_2024-09-02/00_weeklyv2/AQ26_WEEKLYV2_20260527T051629Z/AQ26_WEEKLYV2_MANIFEST_20260527T051629Z.json",
+        "collector_log_relpath": "outputs/98_logs/collector_2024-08-26_2024-09-02.log",
+        "source_records_present": true,
+        "source_records_required_fields": [
+          "source_name",
+          "source_type",
+          "status",
+          "retrieved_at_utc",
+          "retrieved_at_uk",
+          "date_uk",
+          "output_path",
+          "sha256"
+        ]
+      },
+      "review_positioning": {
+        "intended_review_audience": [
+          "WHO",
+          "UNEP",
+          "EEA",
+          "C40 Cities",
+          "independent academic expert review"
+        ],
+        "expert_critique_guardrail": "Outputs are framed for scrutiny by air-quality, exposure-science, atmospheric-modelling and environmental-policy experts; causal claims remain gated until source, confounder, uncertainty and validation requirements pass.",
+        "not_for_claims": [
+          "endorsement",
+          "regulatory breach determination",
+          "health outcome attribution",
+          "single-source causal attribution"
+        ]
+      },
+      "_source_summary_path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/history/week_2024-08-26_2024-09-02.json"
     },
     {
-      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
-      "run_ts": "BACKFILL_SLOT_2024-08-19_2024-08-26",
+      "schema_version": "AQ26_WEEKLYV2_SCIENCE_V331_HISTORY_1",
+      "created_at_utc": "2026-05-27T05:16:29Z",
+      "run_ts": "20260527T051152Z",
       "date_window": {
         "start": "2024-08-19",
         "end": "2024-08-26"
       },
-      "status": "not_yet_harvested",
-      "backfill_status": "not_yet_harvested",
-      "source_record_count": 0,
-      "ok_count": 0,
+      "status": "harvested",
+      "backfill_status": "harvested",
+      "collector_exit_code": 0,
+      "collector_date_window_exact_match": true,
+      "collector_raw_date_window": {
+        "start": "2024-08-19",
+        "end": "2024-08-26"
+      },
+      "source_record_count": 58,
+      "ok_count": 56,
       "warning_count": 0,
       "error_count": 0,
-      "skipped_count": 0,
-      "satellite_product_count": 0,
-      "drive_file_count": 0,
+      "skipped_count": 2,
+      "source_type_counts": {
+        "ai_summary": 1,
+        "atmospheric_model": 1,
+        "gdrive": 1,
+        "ground_aq": 15,
+        "low_cost_sensor_context": 1,
+        "news_api": 4,
+        "official_search": 12,
+        "official_watch_url": 4,
+        "satellite_auth": 1,
+        "satellite_metadata": 9,
+        "weather": 6,
+        "web_search_context": 3
+      },
+      "source_status_counts": {
+        "ok": 56,
+        "skipped": 2
+      },
+      "temporal_role_counts": {
+        "catalogue_metadata": 9,
+        "current_context_only": 18,
+        "failed_or_skipped": 2,
+        "historical_observation": 11,
+        "model_reanalysis": 1,
+        "reference_document": 17
+      },
+      "current_context_only_count": 18,
+      "historical_observation_count": 11,
+      "satellite_product_count": 350,
+      "drive_file_count": 5000,
+      "drive_inventory_truncated": true,
+      "drive_inventory_limit": 5000,
       "high_priority_filings": 0,
       "medium_priority_filings": 0,
-      "openaq_request_count": 0,
+      "openaq_request_count": 15,
       "news_warning_count": 0,
-      "readiness": {},
+      "readiness": {
+        "gemini_summary_ready": true,
+        "drive_inventory_truncated": true,
+        "external_submission_ready": false,
+        "openaq_ready": true,
+        "cdse_download_ready": null,
+        "metoffice_ready": true,
+        "cams_key_present": true,
+        "satellite_catalogue_ready": true,
+        "cdse_auth_ready": true,
+        "backfill_ready": true,
+        "satellite_extraction_ready": false,
+        "cams_data_ready": false,
+        "redaction_ready": true,
+        "cams_endpoint_configured": false,
+        "cdse_sentinelhub_ready": null,
+        "ground_aq_ready": true,
+        "openaq_safety_ready": true,
+        "drive_ready": true
+      },
       "external_submission_ready": false,
-      "history_slot_integrity": {
-        "evidence_status": "pending",
-        "notes": "Placeholder only. This row must not be used as historical evidence until source-specific backfill creates real source records."
-      }
+      "controlled_use_boundary": "WeeklyV2 is a controlled-review evidence harvester. It does not claim endorsement by WHO, UNEP, EEA, C40 Cities, or any named expert. It does not assert causal attribution unless explicit evidence gates pass.\n",
+      "provenance": {
+        "collector_output_root": "outputs/10_historical_backfill/week_2024-08-19_2024-08-26",
+        "collector_summary_relpath": "outputs/10_historical_backfill/week_2024-08-19_2024-08-26/00_weeklyv2/AQ26_WEEKLYV2_20260527T051152Z/AQ26_WEEKLYV2_MANIFEST_20260527T051152Z.json",
+        "collector_log_relpath": "outputs/98_logs/collector_2024-08-19_2024-08-26.log",
+        "source_records_present": true,
+        "source_records_required_fields": [
+          "source_name",
+          "source_type",
+          "status",
+          "retrieved_at_utc",
+          "retrieved_at_uk",
+          "date_uk",
+          "output_path",
+          "sha256"
+        ]
+      },
+      "review_positioning": {
+        "intended_review_audience": [
+          "WHO",
+          "UNEP",
+          "EEA",
+          "C40 Cities",
+          "independent academic expert review"
+        ],
+        "expert_critique_guardrail": "Outputs are framed for scrutiny by air-quality, exposure-science, atmospheric-modelling and environmental-policy experts; causal claims remain gated until source, confounder, uncertainty and validation requirements pass.",
+        "not_for_claims": [
+          "endorsement",
+          "regulatory breach determination",
+          "health outcome attribution",
+          "single-source causal attribution"
+        ]
+      },
+      "_source_summary_path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/history/week_2024-08-19_2024-08-26.json"
     },
     {
       "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",

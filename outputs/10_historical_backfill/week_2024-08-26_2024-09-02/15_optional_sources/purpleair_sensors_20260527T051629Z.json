@@ -1,0 +1,13 @@
+{
+  "api_version" : "V1.2.0-1.1.45",
+  "time_stamp" : 1779859100,
+  "data_time_stamp" : 1779859087,
+  "location_type" : 0,
+  "max_age" : 604800,
+  "firmware_default_version" : "7.02",
+  "fields" : ["sensor_index","last_seen","name","latitude","longitude","pm2.5_atm","pm2.5_cf_1"],
+  "data" : [
+    [30159,1779859026,"Lower Woodingdean Outside",50.827717,-0.067248,12.6,12.6],
+    [212623,1779858575,"Hanover, Brighton",50.825848,-0.129072,10.9,10.9]
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "run_ts": "20260527T051152Z",
+  "enabled": true,
+  "request_count": 5,
+  "max_requests_per_run": 8,
+  "min_seconds_between_requests": 8.0,
+  "stopped_reason": "completed_low_rate_plan",
+  "rate_limit_seen": false,
+  "auth_error_seen": false,
+  "status_codes": [
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "site_ids": [
+    "newhaven_incinerator",
+    "lewes",
+    "eastbourne",
+    "brighton",
+    "seaford_control"
+  ],
+  "notes": "OpenAQ is intentionally low-rate: no pagination storm, no repeated retries, stop on 401/403/429."
+}

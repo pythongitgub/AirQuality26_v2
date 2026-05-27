@@ -1,0 +1,29 @@
+{
+  "run_ts": "20260527T052021Z",
+  "gemini_key_present": true,
+  "gemini_model": "gemini-3.5-flash",
+  "gemini_summary_ready": true,
+  "http_status": 200,
+  "input_summary": {
+    "run_ts": "20260527T052021Z",
+    "records": 57,
+    "ok": 55,
+    "warning": 0,
+    "error": 0,
+    "source_types": [
+      "atmospheric_model",
+      "gdrive",
+      "ground_aq",
+      "low_cost_sensor_context",
+      "news_api",
+      "official_search",
+      "official_watch_url",
+      "satellite_auth",
+      "satellite_metadata",
+      "weather",
+      "web_search_context"
+    ],
+    "controlled_use_boundary": "Neutral metadata-only summary. No raw evidence, no API keys, no causal attribution."
+  },
+  "summary_text": "### Air-Quality Evidence Harvest Summary\n\n*   **Execution Timestamp (`run_ts`):** 2026-05-27T05:20:21Z\n*   **Total Records Evaluated:** 57\n*   **Process Status:** 55 Successful (OK), 0 Warnings, 0 Errors\n*   **Identified Source Types:** \n    *   Atmospheric Models (`atmospheric_model`)\n    *   Cloud Storage (`gdrive`)\n    *   Ground Air-Quality Monitoring (`ground_aq`)\n    *   Low-Cost Sensor Context (`low_cost_sensor_context`)\n    *   News APIs (`news_api`)\n    *   Official Search Queries (`official_search`)\n    *   Official Watch URLs (`official_watch_url`)\n    *   Satellite Authentication Services (`satellite_auth`)\n    *   Satellite Metadata (`satellite_metadata`)\n    *   Weather Data (`weather`)\n    *   Web Search Context (`web_search_context`)\n*   **Use Boundary Compliance:** Summary restricted to metadata parameters. No raw evidence, API keys, or causal attributions are included."
+}
