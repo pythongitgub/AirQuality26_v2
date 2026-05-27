@@ -1,7 +1,6 @@
 {
   "name": "AQ26 Environmental Intelligence Observatory",
   "short_name": "AQ26",
-  "description": "Weekly air-quality and environmental intelligence dashboard.",
   "icons": [
     {
       "src": "assets/android-chrome-192x192.png",
@@ -12,14 +11,9 @@
       "src": "assets/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
-    },
-    {
-      "src": "assets/apple-touch-icon.png",
-      "sizes": "180x180",
-      "type": "image/png"
     }
   ],
-  "theme_color": "#07243a",
-  "background_color": "#f4f8fb",
+  "theme_color": "#071b33",
+  "background_color": "#eef6fb",
   "display": "standalone"
 }
