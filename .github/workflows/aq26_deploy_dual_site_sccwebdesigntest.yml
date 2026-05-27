@@ -4,144 +4,194 @@ on:
   workflow_dispatch:
     inputs:
       deploy_public:
-        description: "Deploy public site to HOSTINGER_PUBLIC_HTML_DIR"
-        type: boolean
+        description: "Deploy public site_public to HOSTINGER_PUBLIC_HTML_DIR"
         required: true
         default: true
+        type: boolean
       deploy_unredacted:
-        description: "Deploy password-protected unredacted site to /unredacted"
-        type: boolean
+        description: "Deploy site_unredacted to HOSTINGER_PUBLIC_HTML_DIR/unredacted"
         required: true
         default: true
-      dry_run:
-        description: "Dry run only"
         type: boolean
-        required: true
-        default: true
       remote_unredacted_subdir:
-        description: "Remote subfolder for protected site"
-        type: string
+        description: "Remote subfolder for password-protected internal site"
         required: true
         default: "unredacted"
-      max_index_files:
-        description: "Maximum files listed on unredacted evidence page"
         type: string
+      dry_run:
+        description: "Dry run only"
+        required: true
+        default: true
+        type: boolean
+      max_index_files:
+        description: "Maximum files to index into unredacted evidence browser"
         required: true
         default: "250"
+        type: string
+      auth_debug:
+        description: "Run safe SSH diagnostics before deploy"
+        required: true
+        default: true
+        type: boolean
 
 permissions:
   contents: read
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  SSH_HOST: ${{ secrets.SCCNEXUS_SSH_HOST }}
+  SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
+  SSH_USER: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
+  SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
+  PUBLIC_HTML: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+  SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+
 jobs:
-  deploy-sites:
+  deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    env:
-      SSH_HOST: ${{ secrets.SCCNEXUS_SSH_HOST }}
-      SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
-      SSH_USER: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
-      SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
-      PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
-      SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install deploy tools
+      - name: Install deployment tools
         run: |
+          set -euo pipefail
           sudo apt-get update -y
           sudo apt-get install -y sshpass rsync apache2-utils
 
-      - name: Validate required secrets
+      - name: Build full unredacted site
         run: |
           set -euo pipefail
-          for v in SSH_HOST SSH_PORT SSH_USER SSH_PASSWORD PUBLIC_HTML_DIR; do
-            if [ -z "${!v:-}" ]; then
-              echo "Missing required secret/env: $v" >&2
-              exit 1
-            fi
-          done
-          if [ "${{ inputs.deploy_unredacted }}" = "true" ] && [ -z "${SCC_UNREDACTED_PASSWORD:-}" ]; then
-            echo "Missing SCC_UNREDACTED_PASSWORD" >&2
+          if [ -f scripts/aq26_build_unredacted_site.py ]; then
+            python scripts/aq26_build_unredacted_site.py \
+              --repo-root . \
+              --public-site site_public \
+              --output-site site_unredacted \
+              --max-index-files "${{ inputs.max_index_files }}"
+          else
+            mkdir -p site_unredacted/assets site_unredacted/data/unredacted
+            cat > site_unredacted/index.html <<'HTML'
+          <!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AQ26 Unredacted Review Area</title></head><body><h1>AQ26 Unredacted Review Area</h1><p>Builder script not found; fallback page created.</p></body></html>
+          HTML
+          fi
+
+      - name: Add Basic Auth and noindex files
+        run: |
+          set -euo pipefail
+          if [ -z "${SCC_UNREDACTED_PASSWORD:-}" ]; then
+            echo "::error::SCC_UNREDACTED_PASSWORD is empty or unavailable."
             exit 1
           fi
 
-      - name: Build unredacted full site
-        if: ${{ inputs.deploy_unredacted }}
-        run: |
-          python scripts/aq26_build_unredacted_site.py \
-            --repo-root . \
-            --public-site site_public \
-            --output-site site_unredacted \
-            --max-index-files "${{ inputs.max_index_files }}"
+          mkdir -p site_unredacted
+          htpasswd -bc site_unredacted/.htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
 
-      - name: Add Basic Auth to unredacted site
-        if: ${{ inputs.deploy_unredacted }}
+          cat > site_unredacted/.htaccess <<'HTACCESS'
+          DirectoryIndex index.html
+          Options -Indexes
+          AuthType Basic
+          AuthName "AQ26 Unredacted Review"
+          AuthUserFile __AUTH_USER_FILE__
+          Require valid-user
+          <IfModule mod_headers.c>
+            Header set X-Robots-Tag "noindex, nofollow, noarchive"
+          </IfModule>
+          HTACCESS
+
+          REMOTE_DIR="${PUBLIC_HTML%/}/${{ inputs.remote_unredacted_subdir }}"
+          sed -i "s#__AUTH_USER_FILE__#${REMOTE_DIR}/.htpasswd#g" site_unredacted/.htaccess
+
+          cat > site_unredacted/robots.txt <<'ROBOTS'
+          User-agent: *
+          Disallow: /
+          ROBOTS
+
+          test -f site_unredacted/index.html
+          test -f site_unredacted/.htaccess
+          test -f site_unredacted/.htpasswd
+          echo "Prepared unredacted files:"
+          find site_unredacted -maxdepth 2 -type f | sort | head -80
+
+      - name: Validate required deploy secrets safely
         run: |
           set -euo pipefail
-          AUTH_FILE_ABS="${PUBLIC_HTML_DIR}/${{ inputs.remote_unredacted_subdir }}/.htpasswd"
-          htpasswd -bc site_unredacted/.htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
-          {
-            echo 'DirectoryIndex index.html'
-            echo 'Options -Indexes'
-            echo 'AuthType Basic'
-            echo 'AuthName "AQ26 Unredacted Review Area"'
-            echo "AuthUserFile ${AUTH_FILE_ABS}"
-            echo 'Require valid-user'
-            echo 'Header set X-Robots-Tag "noindex, nofollow, noarchive"'
-          } > site_unredacted/.htaccess
-          test -s site_unredacted/index.html
-          test -s site_unredacted/.htaccess
-          test -s site_unredacted/.htpasswd
+          missing=0
+          for name in SSH_HOST SSH_PORT SSH_USER SSH_PASSWORD PUBLIC_HTML; do
+            val="${!name:-}"
+            if [ -z "$val" ]; then
+              echo "::error::$name is empty or unavailable."
+              missing=1
+            else
+              echo "$name present; length=${#val}"
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then exit 1; fi
+          echo "Remote public html path length=${#PUBLIC_HTML}"
+          echo "Unredacted remote subdir=${{ inputs.remote_unredacted_subdir }}"
 
-      - name: Verify SSH password login
+      - name: Safe SSH diagnostic
+        if: ${{ inputs.auth_debug }}
         run: |
           set -euo pipefail
           export SSHPASS="$SSH_PASSWORD"
-          sshpass -e ssh -p "$SSH_PORT" \
+
+          echo "Testing TCP reachability to SSH host/port..."
+          timeout 10 bash -lc "cat < /dev/null > /dev/tcp/$SSH_HOST/$SSH_PORT" \
+            && echo "TCP reachable" \
+            || (echo "::error::Cannot reach SSH host/port"; exit 1)
+
+          echo "Testing password SSH login using SCCNEXUS_* secrets..."
+          sshpass -e ssh \
+            -p "$SSH_PORT" \
             -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=/dev/null \
             -o PreferredAuthentications=password \
             -o PubkeyAuthentication=no \
-            "$SSH_USER@$SSH_HOST" "pwd && mkdir -p '$PUBLIC_HTML_DIR' && ls -ld '$PUBLIC_HTML_DIR'"
+            -o NumberOfPasswordPrompts=1 \
+            "$SSH_USER@$SSH_HOST" \
+            "printf 'SSH_LOGIN_OK\n'; pwd; test -d '${PUBLIC_HTML%/}' && printf 'PUBLIC_HTML_OK\n' || printf 'PUBLIC_HTML_MISSING\n'"
 
       - name: Deploy public site
         if: ${{ inputs.deploy_public }}
         run: |
           set -euo pipefail
+          export SSHPASS="$SSH_PASSWORD"
           if [ ! -d site_public ]; then
-            echo "site_public folder not present" >&2
+            echo "::error::site_public does not exist. Build the public site before deploying."
             exit 1
           fi
-          export SSHPASS="$SSH_PASSWORD"
-          SSH_CMD="sshpass -e ssh -p $SSH_PORT -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no"
-          RSYNC_ARGS="-avz --exclude '.git' --exclude '__pycache__'"
+          REMOTE_DIR="${PUBLIC_HTML%/}"
+          SSH_OPTS="-p $SSH_PORT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PreferredAuthentications=password -o PubkeyAuthentication=no -o NumberOfPasswordPrompts=1"
+          sshpass -e ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "mkdir -p '$REMOTE_DIR'"
           if [ "${{ inputs.dry_run }}" = "true" ]; then
-            RSYNC_ARGS="$RSYNC_ARGS --dry-run"
+            echo "DRY RUN: public site_public/ -> $REMOTE_DIR/"
+            sshpass -e rsync -avzn --checksum -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
+          else
+            sshpass -e rsync -avz --checksum -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
           fi
-          echo "Deploying site_public/ to ${PUBLIC_HTML_DIR}/"
-          sshpass -e rsync $RSYNC_ARGS -e "$SSH_CMD" site_public/ "$SSH_USER@$SSH_HOST:${PUBLIC_HTML_DIR}/"
 
       - name: Deploy unredacted site
         if: ${{ inputs.deploy_unredacted }}
         run: |
           set -euo pipefail
           export SSHPASS="$SSH_PASSWORD"
-          REMOTE_DIR="${PUBLIC_HTML_DIR}/${{ inputs.remote_unredacted_subdir }}"
-          SSH_CMD="sshpass -e ssh -p $SSH_PORT -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no"
-          $SSH_CMD "$SSH_USER@$SSH_HOST" "mkdir -p '$REMOTE_DIR'"
-          RSYNC_ARGS="-avz --exclude '.git' --exclude '__pycache__'"
+          REMOTE_DIR="${PUBLIC_HTML%/}/${{ inputs.remote_unredacted_subdir }}"
+          SSH_OPTS="-p $SSH_PORT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PreferredAuthentications=password -o PubkeyAuthentication=no -o NumberOfPasswordPrompts=1"
+          sshpass -e ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "mkdir -p '$REMOTE_DIR'"
           if [ "${{ inputs.dry_run }}" = "true" ]; then
-            RSYNC_ARGS="$RSYNC_ARGS --dry-run"
-          fi
-          echo "Deploying contents of site_unredacted/ to ${REMOTE_DIR}/"
-          sshpass -e rsync $RSYNC_ARGS -e "$SSH_CMD" site_unredacted/ "$SSH_USER@$SSH_HOST:${REMOTE_DIR}/"
-          if [ "${{ inputs.dry_run }}" != "true" ]; then
-            $SSH_CMD "$SSH_USER@$SSH_HOST" "find '$REMOTE_DIR' -maxdepth 2 -type f | sed 's#^#REMOTE_FILE #' | head -80"
+            echo "DRY RUN: unredacted site_unredacted/ -> $REMOTE_DIR/"
+            sshpass -e rsync -avzn --checksum -e "ssh $SSH_OPTS" site_unredacted/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
+          else
+            sshpass -e rsync -avz --checksum -e "ssh $SSH_OPTS" site_unredacted/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
           fi
 
-      - name: Deployment summary
+      - name: Remote listing after deploy
+        if: ${{ inputs.deploy_unredacted && !inputs.dry_run }}
         run: |
-          echo "Public site: https://www.sccwebdesigntest.co.uk/"
-          echo "Unredacted site: https://sccwebdesigntest.co.uk/${{ inputs.remote_unredacted_subdir }}/"
-          echo "Dry run: ${{ inputs.dry_run }}"
+          set -euo pipefail
+          export SSHPASS="$SSH_PASSWORD"
+          REMOTE_DIR="${PUBLIC_HTML%/}/${{ inputs.remote_unredacted_subdir }}"
+          SSH_OPTS="-p $SSH_PORT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PreferredAuthentications=password -o PubkeyAuthentication=no -o NumberOfPasswordPrompts=1"
+          sshpass -e ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "find '$REMOTE_DIR' -maxdepth 2 -type f | sort | sed -n '1,80p'"
