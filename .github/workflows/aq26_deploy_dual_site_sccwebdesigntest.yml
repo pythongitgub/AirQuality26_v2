@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       deploy_public:
-        description: "Deploy site_public to HOSTINGER_PUBLIC_HTML_DIR"
+        description: "Deploy public site_public to HOSTINGER_PUBLIC_HTML_DIR"
         required: true
         default: true
         type: boolean
@@ -33,8 +33,8 @@ on:
         required: true
         default: true
         type: boolean
-      force_public_polish:
-        description: "Create/repair public pages before deploying"
+      rebuild_public:
+        description: "Rebuild public pages with consistent readable template before deploy"
         required: true
         default: true
         type: boolean
@@ -65,33 +65,42 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y sshpass rsync apache2-utils
 
-      - name: Ensure public site exists and is not blank
+      - name: Rebuild public site with consistent readable template
+        if: ${{ inputs.rebuild_public }}
         run: |
           set -euo pipefail
-          mkdir -p site_public
-          if [ -f scripts/aq26_public_site_guard_build.py ]; then
-            python scripts/aq26_public_site_guard_build.py --site-root site_public --asset-source website/assets --force --summary site_public/data/public_dashboard/public_site_guard_summary.json || true
-          fi
-          if [ -f scripts/aq26_public_site_polish.py ]; then
-            POLISH_ARGS=""
-            if [ "${{ inputs.force_public_polish }}" = "true" ]; then POLISH_ARGS="--force-comparisons --force-downloads --force-archive"; fi
-            python scripts/aq26_public_site_polish.py --site-root site_public --asset-source website/assets $POLISH_ARGS --fail-on-blank || true
-          fi
-          python scripts/aq26_apply_white_header_branding.py --site-root site_public --asset-source website/assets --public --force --summary site_public/data/branding/white_header_summary.json
+          python scripts/aq26_rebuild_public_site_consistent.py \
+            --site-root site_public \
+            --asset-source website/assets \
+            --force
+
+      - name: Validate public site exists
+        run: |
+          set -euo pipefail
+          test -f site_public/index.html
+          test -f site_public/readiness.html
+          test -f site_public/comparisons.html
+          test -f site_public/assets/aq26_consistent.css
+          python scripts/aq26_rebuild_public_site_consistent.py --site-root site_public --validate-only
 
       - name: Build full unredacted site
+        if: ${{ inputs.deploy_unredacted }}
         run: |
           set -euo pipefail
           if [ -f scripts/aq26_build_unredacted_site.py ]; then
-            python scripts/aq26_build_unredacted_site.py --repo-root . --public-site site_public --output-site site_unredacted --max-index-files "${{ inputs.max_index_files }}"
+            python scripts/aq26_build_unredacted_site.py \
+              --repo-root . \
+              --public-site site_public \
+              --output-site site_unredacted \
+              --max-index-files "${{ inputs.max_index_files }}"
           else
-            mkdir -p site_unredacted/data/unredacted site_unredacted/assets
-            printf '%s\n' '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AQ26 Unredacted Review Area</title></head><body><main><h1>AQ26 Unredacted Review Area</h1><p>Fallback internal review page created because the builder script was not found.</p></main></body></html>' > site_unredacted/index.html
-            printf '%s\n' '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AQ26 Evidence Index</title></head><body><main><h1>Evidence Index</h1><p>Fallback evidence index page.</p></main></body></html>' > site_unredacted/evidence.html
+            mkdir -p site_unredacted/assets site_unredacted/data/unredacted
+            cp -r site_public/assets/* site_unredacted/assets/ 2>/dev/null || true
+            printf '%s\n' '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AQ26 Unredacted Review Area</title><link rel="stylesheet" href="assets/aq26_consistent.css"></head><body><main><section class="hero"><p class="eyebrow">Password-protected area</p><h1>AQ26 Unredacted Evidence Review</h1><p>Internal QA, provenance review and unredacted workflow outputs.</p></section></main></body></html>' > site_unredacted/index.html
           fi
-          python scripts/aq26_apply_white_header_branding.py --site-root site_unredacted --asset-source website/assets --unredacted --force --summary site_unredacted/data/branding/white_header_summary.json
 
       - name: Add Basic Auth and noindex files
+        if: ${{ inputs.deploy_unredacted }}
         run: |
           set -euo pipefail
           if [ -z "${SCC_UNREDACTED_PASSWORD:-}" ]; then
@@ -100,24 +109,22 @@ jobs:
           fi
           mkdir -p site_unredacted
           htpasswd -bc site_unredacted/.htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
-          REMOTE_AUTH_FILE="${PUBLIC_HTML%/}/${{ inputs.remote_unredacted_subdir }}/.htpasswd"
+          REMOTE_DIR="${PUBLIC_HTML%/}/${{ inputs.remote_unredacted_subdir }}"
           {
-            printf '%s\n' 'DirectoryIndex index.html'
-            printf '%s\n' 'Options -Indexes'
-            printf '%s\n' 'AuthType Basic'
-            printf '%s\n' 'AuthName "AQ26 Unredacted Review"'
-            printf '%s\n' "AuthUserFile ${REMOTE_AUTH_FILE}"
-            printf '%s\n' 'Require valid-user'
-            printf '%s\n' '<IfModule mod_headers.c>'
-            printf '%s\n' '  Header set X-Robots-Tag "noindex, nofollow, noarchive"'
-            printf '%s\n' '</IfModule>'
+            echo "DirectoryIndex index.html"
+            echo "Options -Indexes"
+            echo "AuthType Basic"
+            echo "AuthName \"AQ26 Unredacted Review\""
+            echo "AuthUserFile ${REMOTE_DIR}/.htpasswd"
+            echo "Require valid-user"
+            echo "<IfModule mod_headers.c>"
+            echo "  Header set X-Robots-Tag \"noindex, nofollow, noarchive\""
+            echo "</IfModule>"
           } > site_unredacted/.htaccess
-          printf '%s\n' 'User-agent: *' 'Disallow: /' > site_unredacted/robots.txt
+          printf 'User-agent: *\nDisallow: /\n' > site_unredacted/robots.txt
           test -f site_unredacted/index.html
-          test -f site_unredacted/evidence.html
           test -f site_unredacted/.htaccess
           test -f site_unredacted/.htpasswd
-          find site_unredacted -maxdepth 2 -type f | sort | sed -n '1,140p'
 
       - name: Validate required deploy secrets safely
         run: |
@@ -133,16 +140,21 @@ jobs:
             fi
           done
           if [ "$missing" -ne 0 ]; then exit 1; fi
-          echo "Remote public html path length=${#PUBLIC_HTML}"
-          echo "Unredacted remote subdir=${{ inputs.remote_unredacted_subdir }}"
 
       - name: Safe SSH diagnostic
         if: ${{ inputs.auth_debug }}
         run: |
           set -euo pipefail
           export SSHPASS="$SSH_PASSWORD"
-          timeout 15 bash -lc "cat < /dev/null > /dev/tcp/$SSH_HOST/$SSH_PORT" && echo "TCP reachable" || (echo "::error::Cannot reach SSH host/port"; exit 1)
-          sshpass -e ssh -p "$SSH_PORT" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PreferredAuthentications=password -o PubkeyAuthentication=no -o NumberOfPasswordPrompts=1 "$SSH_USER@$SSH_HOST" "printf 'SSH_LOGIN_OK\n'; pwd; test -d '${PUBLIC_HTML%/}' && printf 'PUBLIC_HTML_OK\n' || printf 'PUBLIC_HTML_MISSING\n'"
+          timeout 15 bash -lc "cat < /dev/null > /dev/tcp/$SSH_HOST/$SSH_PORT" && echo "TCP reachable"
+          sshpass -e ssh -p "$SSH_PORT" \
+            -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=/dev/null \
+            -o PreferredAuthentications=password \
+            -o PubkeyAuthentication=no \
+            -o NumberOfPasswordPrompts=1 \
+            "$SSH_USER@$SSH_HOST" \
+            "printf 'SSH_LOGIN_OK\n'; test -d '${PUBLIC_HTML%/}' && printf 'PUBLIC_HTML_OK\n' || printf 'PUBLIC_HTML_MISSING\n'"
 
       - name: Deploy public site
         if: ${{ inputs.deploy_public }}
@@ -154,9 +166,9 @@ jobs:
           sshpass -e ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "mkdir -p '$REMOTE_DIR'"
           if [ "${{ inputs.dry_run }}" = "true" ]; then
             echo "DRY RUN: public site_public/ -> $REMOTE_DIR/"
-            sshpass -e rsync -avzn --checksum --delete --exclude='${{ inputs.remote_unredacted_subdir }}/***' -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
+            sshpass -e rsync -avzn --checksum --delete --exclude '${{ inputs.remote_unredacted_subdir }}/***' -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
           else
-            sshpass -e rsync -avz --checksum --delete --exclude='${{ inputs.remote_unredacted_subdir }}/***' -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
+            sshpass -e rsync -avz --checksum --delete --exclude '${{ inputs.remote_unredacted_subdir }}/***' -e "ssh $SSH_OPTS" site_public/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
           fi
 
       - name: Deploy unredacted site
@@ -173,12 +185,3 @@ jobs:
           else
             sshpass -e rsync -avz --checksum --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SSH_USER@$SSH_HOST:$REMOTE_DIR/"
           fi
-
-      - name: Remote listing after deploy
-        if: ${{ inputs.deploy_unredacted && !inputs.dry_run }}
-        run: |
-          set -euo pipefail
-          export SSHPASS="$SSH_PASSWORD"
-          REMOTE_DIR="${PUBLIC_HTML%/}/${{ inputs.remote_unredacted_subdir }}"
-          SSH_OPTS="-p $SSH_PORT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PreferredAuthentications=password -o PubkeyAuthentication=no -o NumberOfPasswordPrompts=1"
-          sshpass -e ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "find '$REMOTE_DIR' -maxdepth 2 -type f | sort | sed -n '1,140p'"
