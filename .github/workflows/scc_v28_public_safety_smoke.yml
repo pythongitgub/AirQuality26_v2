@@ -1,0 +1,20 @@
+name: SCC Nexus v28 public safety smoke test
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "website/**"
+      - "scripts/apply_scc_current_site_mobile_safety.py"
+      - "scripts/scc_public_content_lint.py"
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply v28 shell and safety patch to website source
+        run: |
+          set -euo pipefail
+          python3 scripts/apply_scc_current_site_mobile_safety.py website
+          python3 scripts/scc_public_content_lint.py website
