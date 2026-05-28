@@ -1,0 +1,25 @@
+{
+  "generated_utc": "2026-05-28T13:11:34Z",
+  "headline": "Weekly incinerator evidence update",
+  "alert_level": "amber",
+  "total_facilities": 46,
+  "validated_overlays": 8,
+  "candidate_overlays": 35,
+  "unresolved_facilities": 3,
+  "high_confidence_candidates": 18,
+  "overlay_path_facilities": 43,
+  "overlay_path_coverage_pct": 93.5,
+  "unresolved_names": [
+    "Cornwall ERC",
+    "Isle of Man Incinerator",
+    "Thetford Incinerator"
+  ],
+  "backfill_status": {
+    "status": "completed_with_script_warnings",
+    "script": "scripts/aq26_weeklyv2_collect.py",
+    "note": "Script returned non-zero; alert workflow continued."
+  },
+  "source_overlay_generated_utc": "2026-05-28T04:49:12Z",
+  "public_notice": "AQ26 is an evidence and provenance observatory. Public pages are redacted and do not make regulatory determinations, legal conclusions, health advice or causal attribution. Candidate monitoring overlays remain review-only.",
+  "unredacted_notice": "Internal review area. Contains diagnostics, candidate scores, backfill status and workflow provenance for QA/review. Do not publish raw diagnostics externally."
+}
