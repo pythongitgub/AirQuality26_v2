@@ -1,0 +1,53 @@
+name: AQ26 Enforce Brand Favicon and Touch Icons
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit_outputs:
+        description: Commit changed site/icon assets
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  brand:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install optional SVG conversion dependency
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install cairosvg || true
+      - name: Enforce AQ26 favicon/touch icons
+        run: |
+          set -euo pipefail
+          python scripts/aq26_enforce_brand_assets.py \
+            --repo-root . \
+            --site-root site_public \
+            --site-root site_unredacted \
+            --favicon-source website/assets/logo_web.svg \
+            --version aq26-logo-20260528
+          test -f site_public/favicon.svg
+          test -f site_public/assets/favicon.svg
+          test -f site_public/assets/apple-touch-icon.png || echo "PNG touch icon not generated; SVG fallback remains"
+      - name: Commit brand assets
+        if: ${{ inputs.commit_outputs }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add website/assets site_public site_unredacted scripts/aq26_enforce_brand_assets.py || true
+          if git diff --cached --quiet; then
+            echo "No brand changes to commit."
+          else
+            git commit -m "Enforce AQ26 favicon and touch icons"
+            git pull --rebase
+            git push
+          fi

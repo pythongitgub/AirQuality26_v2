@@ -1,0 +1,247 @@
+name: AQ26 Incinerator Focused Backfill and Site Refresh
+
+on:
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: Facility scope
+        required: true
+        default: high_confidence
+        type: choice
+        options:
+          - newhaven
+          - validated
+          - high_confidence
+          - fallback
+          - all
+      weeks:
+        description: Weekly windows to include/probe
+        required: true
+        default: "8"
+        type: string
+      live_openaq:
+        description: Attempt live OpenAQ probes where candidate location IDs exist
+        required: true
+        default: false
+        type: boolean
+      limit_facilities:
+        description: Limit facilities, 0 = no limit
+        required: true
+        default: "0"
+        type: string
+      build_site:
+        description: Rebuild operational public/unredacted sites after backfill
+        required: true
+        default: true
+        type: boolean
+      apply_weekly_alerts:
+        description: Build/inject weekly alert pages after backfill
+        required: true
+        default: true
+        type: boolean
+      deploy_public:
+        description: Deploy public site
+        required: true
+        default: false
+        type: boolean
+      deploy_unredacted:
+        description: Deploy unredacted site
+        required: true
+        default: false
+        type: boolean
+      dry_run:
+        description: Dry-run deployment
+        required: true
+        default: true
+        type: boolean
+      remote_unredacted_subdir:
+        description: Remote protected folder under public_html
+        required: true
+        default: unredacted
+        type: string
+  schedule:
+    - cron: "0 6 * * 1"
+    - cron: "0 7 * * 1"
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  OPENAQ_API_KEY: ${{ secrets.OPENAQ_API_KEY }}
+  WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
+  METOFFICE_API_KEY: ${{ secrets.METOFFICE_API_KEY }}
+  MET_OFFICE_API_KEY: ${{ secrets.MET_OFFICE_API_KEY }}
+  OPENWEATHER_KEY: ${{ secrets.OPENWEATHER_KEY }}
+  GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+  GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
+  HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+  SCCNEXUS_SSH_HOST: ${{ secrets.SCCNEXUS_SSH_HOST }}
+  SCCNEXUS_SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
+  SCCNEXUS_SSH_USERNAME: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
+  SCCNEXUS_SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
+  SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+
+jobs:
+  focused-backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Gate Monday 7am UK schedule
+        id: gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          import os
+          if os.environ.get('GITHUB_EVENT_NAME') != 'schedule':
+              print('should_run=true')
+              print('reason=manual_dispatch')
+          else:
+              now = datetime.now(ZoneInfo('Europe/London'))
+              ok = now.weekday() == 0 and now.hour == 7
+              print('should_run=' + ('true' if ok else 'false'))
+              print('reason=uk_time_' + now.strftime('%Y-%m-%d_%H:%M_%Z'))
+          PY
+      - name: Stop duplicate scheduled trigger
+        if: ${{ steps.gate.outputs.should_run != 'true' }}
+        run: |
+          echo "Schedule gate skipped this duplicate UTC trigger"
+          echo "Reason: ${{ steps.gate.outputs.reason }}"
+      - name: Install optional dependencies
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install cairosvg requests pandas python-dateutil || true
+      - name: Run existing WeeklyV2 backfill/collector if present
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p site_public/data/weekly site_unredacted/data/weekly outputs/focused_backfill
+          echo '{"status":"not_run","note":"No recognised AQ26 weekly script found."}' > site_public/data/weekly/backfill_status.json
+          if [ -f scripts/aq26_weeklyv2_science_backfill_v331.py ]; then
+            python scripts/aq26_weeklyv2_science_backfill_v331.py --history-weeks "${{ github.event_name == 'workflow_dispatch' && inputs.weeks || '1' }}" || echo "weeklyv2_backfill_failed" > outputs/focused_backfill/backfill_failed.txt
+            echo '{"status":"attempted","script":"scripts/aq26_weeklyv2_science_backfill_v331.py"}' > site_public/data/weekly/backfill_status.json
+          elif [ -f scripts/aq26_weeklyv2_collect.py ]; then
+            python scripts/aq26_weeklyv2_collect.py || echo "weeklyv2_collect_failed" > outputs/focused_backfill/backfill_failed.txt
+            echo '{"status":"attempted","script":"scripts/aq26_weeklyv2_collect.py"}' > site_public/data/weekly/backfill_status.json
+          fi
+          cp site_public/data/weekly/backfill_status.json site_unredacted/data/weekly/backfill_status.json
+      - name: Build incinerator-focused backfill pack
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=""
+          if [ "${{ github.event_name == 'workflow_dispatch' && inputs.live_openaq || 'false' }}" = "true" ]; then
+            args="$args --live-openaq"
+          fi
+          python scripts/aq26_incinerator_focused_backfill.py \
+            --repo-root . \
+            --site-root site_public \
+            --unredacted-site site_unredacted \
+            --scope "${{ github.event_name == 'workflow_dispatch' && inputs.scope || 'high_confidence' }}" \
+            --weeks "${{ github.event_name == 'workflow_dispatch' && inputs.weeks || '1' }}" \
+            --limit-facilities "${{ github.event_name == 'workflow_dispatch' && inputs.limit_facilities || '0' }}" \
+            $args
+      - name: Rebuild operational site shell
+        if: ${{ steps.gate.outputs.should_run == 'true' && (github.event_name == 'schedule' || inputs.build_site) }}
+        run: |
+          set -euo pipefail
+          if [ -f scripts/aq26_build_operational_dual_site.py ]; then
+            python scripts/aq26_build_operational_dual_site.py --repo-root . --public-site site_public --unredacted-site site_unredacted
+          fi
+      - name: Reapply weekly alerts after site build
+        if: ${{ steps.gate.outputs.should_run == 'true' && (github.event_name == 'schedule' || inputs.apply_weekly_alerts) }}
+        run: |
+          set -euo pipefail
+          mkdir -p site_public/data/weekly site_unredacted/data/weekly
+          python scripts/aq26_build_weekly_alert_pages.py \
+            --repo-root . \
+            --public-site site_public \
+            --unredacted-site site_unredacted \
+            --backfill-status site_public/data/weekly/backfill_status.json
+      - name: Enforce favicon/touch icons and WEBM banners after final build
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/aq26_enforce_brand_assets.py --repo-root . --site-root site_public --site-root site_unredacted --favicon-source website/assets/logo_web.svg --version aq26-logo-20260528
+          if [ -f scripts/aq26_apply_webm_banners.py ]; then
+            python scripts/aq26_apply_webm_banners.py --site-root site_public --asset-source website/assets --force --summary site_public/data/weekly/webm_banner_status.json || true
+            python scripts/aq26_apply_webm_banners.py --site-root site_unredacted --asset-source website/assets --force --summary site_unredacted/data/weekly/webm_banner_status.json || true
+          fi
+      - name: Validate final site hooks
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        run: |
+          set -euo pipefail
+          test -f site_public/index.html
+          test -f site_public/favicon.svg
+          test -f site_public/assets/favicon.svg
+          test -f site_public/weekly-update.html
+          grep -q "aq26-weekly-alert" site_public/index.html
+          grep -q "aq26-video-banner" site_public/index.html
+          grep -q "favicon.svg" site_public/index.html
+      - name: Commit focused backfill and site refresh
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site_public site_unredacted website/assets scripts docs || true
+          if git diff --cached --quiet; then
+            echo "No focused backfill/site changes to commit."
+          else
+            git commit -m "Build AQ26 focused incinerator backfill and weekly alert site refresh"
+            git pull --rebase
+            git push
+          fi
+      - name: Install deployment tools
+        if: ${{ steps.gate.outputs.should_run == 'true' && (github.event_name == 'schedule' || inputs.deploy_public || inputs.deploy_unredacted) }}
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y sshpass rsync apache2-utils
+      - name: Deploy public site
+        if: ${{ steps.gate.outputs.should_run == 'true' && (github.event_name == 'schedule' || inputs.deploy_public) }}
+        run: |
+          set -euo pipefail
+          REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}"
+          SSH_OPTS="-p ${SCCNEXUS_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30"
+          export SSHPASS="$SCCNEXUS_SSH_PASSWORD"
+          sshpass -e ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "mkdir -p '$REMOTE_DIR'"
+          if [ "${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || 'false' }}" = "true" ]; then
+            sshpass -e rsync -avzn --delete --exclude '${{ github.event_name == 'workflow_dispatch' && inputs.remote_unredacted_subdir || 'unredacted' }}/***' -e "ssh $SSH_OPTS" site_public/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          else
+            sshpass -e rsync -avz --delete --exclude '${{ github.event_name == 'workflow_dispatch' && inputs.remote_unredacted_subdir || 'unredacted' }}/***' -e "ssh $SSH_OPTS" site_public/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          fi
+      - name: Deploy unredacted site
+        if: ${{ steps.gate.outputs.should_run == 'true' && (github.event_name == 'schedule' || inputs.deploy_unredacted) }}
+        run: |
+          set -euo pipefail
+          SUBDIR="${{ github.event_name == 'workflow_dispatch' && inputs.remote_unredacted_subdir || 'unredacted' }}"
+          REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}/${SUBDIR}"
+          SSH_OPTS="-p ${SCCNEXUS_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30"
+          export SSHPASS="$SCCNEXUS_SSH_PASSWORD"
+          sshpass -e ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "mkdir -p '$REMOTE_DIR'"
+          if [ "${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || 'false' }}" = "true" ]; then
+            sshpass -e rsync -avzn --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          else
+            sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        with:
+          name: aq26-focused-backfill-site-refresh
+          path: |
+            site_public/
+            site_unredacted/
+          if-no-files-found: error
