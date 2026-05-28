@@ -1,0 +1,331 @@
+name: AQ26 Weekly Monday Backfill Alerts and Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_backfill:
+        description: "Run existing AQ26 weekly/backfill scripts if present"
+        required: true
+        default: true
+        type: boolean
+      backfill_windows:
+        description: "Focused backfill window count passed to existing scripts where supported"
+        required: true
+        default: "1"
+        type: string
+      build_operational_site:
+        description: "Run operational dual-site builder before alerts"
+        required: true
+        default: true
+        type: boolean
+      apply_alerts:
+        description: "Build weekly update pages and front-page alerts"
+        required: true
+        default: true
+        type: boolean
+      deploy_public:
+        description: "Deploy public redacted site"
+        required: true
+        default: false
+        type: boolean
+      deploy_unredacted:
+        description: "Deploy protected unredacted site"
+        required: true
+        default: false
+        type: boolean
+      dry_run:
+        description: "Dry-run rsync deploy"
+        required: true
+        default: true
+        type: boolean
+      remote_unredacted_subdir:
+        description: "Remote protected folder under public_html"
+        required: true
+        default: "unredacted"
+        type: string
+      enforce_monday_7am:
+        description: "For scheduled runs, only proceed at Monday 07:00 Europe/London"
+        required: true
+        default: true
+        type: boolean
+
+  schedule:
+    - cron: "0 6 * * 1"
+    - cron: "0 7 * * 1"
+
+concurrency:
+  group: aq26-weekly-monday-alerts
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  OPENAQ_API_KEY: ${{ secrets.OPENAQ_API_KEY }}
+  WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
+  METOFFICE_API_KEY: ${{ secrets.METOFFICE_API_KEY }}
+  MET_OFFICE_API_KEY: ${{ secrets.MET_OFFICE_API_KEY }}
+  MET_OFFICE_LAND_OBSERVATIONS: ${{ secrets.MET_OFFICE_LAND_OBSERVATIONS }}
+  OPENWEATHER_KEY: ${{ secrets.OPENWEATHER_KEY }}
+  CAMS_API_KEY: ${{ secrets.CAMS_API_KEY }}
+  CDSE_ID: ${{ secrets.CDSE_ID }}
+  CDSE_USERNAME: ${{ secrets.CDSE_USERNAME }}
+  CDSE_PASSWORD: ${{ secrets.CDSE_PASSWORD }}
+  CDSE_SECRET: ${{ secrets.CDSE_SECRET }}
+  EARTHDATA_USERNAME: ${{ secrets.EARTHDATA_USERNAME }}
+  EARTHDATA_PASSWORD: ${{ secrets.EARTHDATA_PASSWORD }}
+  EARTHDATA_TOKEN: ${{ secrets.EARTHDATA_TOKEN }}
+  EARTH_DATA_API_KEY: ${{ secrets.EARTH_DATA_API_KEY }}
+  GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+  GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
+  SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
+  NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+  NEWS_DATA_IO_KEY: ${{ secrets.NEWS_DATA_IO_KEY }}
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+  HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+  SCCNEXUS_SSH_HOST: ${{ secrets.SCCNEXUS_SSH_HOST }}
+  SCCNEXUS_SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
+  SCCNEXUS_SSH_USERNAME: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
+  SCCNEXUS_SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
+  SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+
+jobs:
+  weekly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check Monday 07:00 Europe/London gate
+        id: gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY' > /tmp/aq26_gate.env
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          import os
+          event = os.environ.get("GITHUB_EVENT_NAME", "")
+          enforce = "${{ inputs.enforce_monday_7am || 'true' }}".lower() == "true"
+          now = datetime.now(ZoneInfo("Europe/London"))
+          ok = True
+          reason = "manual_or_gate_disabled"
+          if event == "schedule" and enforce:
+              ok = (now.weekday() == 0 and now.hour == 7)
+              reason = f"london_time={now.isoformat()}"
+          print(f"should_run={'true' if ok else 'false'}")
+          print(f"gate_reason={reason}")
+          PY
+          cat /tmp/aq26_gate.env >> "$GITHUB_OUTPUT"
+
+      - name: Stop if scheduled trigger is outside Monday 07:00 UK gate
+        if: ${{ steps.gate.outputs.should_run != 'true' }}
+        run: echo "Skipping duplicate schedule trigger: ${{ steps.gate.outputs.gate_reason }}"
+
+      - name: Set up Python
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install lightweight dependencies
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            python -m pip install -r requirements.txt || true
+          fi
+
+      - name: Run focused weekly/backfill scripts when available
+        if: ${{ steps.gate.outputs.should_run == 'true' && inputs.run_backfill }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .aq26_weekly_alerts outputs site_public/data/weekly
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          data={"status":"started","started_utc":datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),"scripts":[]}
+          open(".aq26_weekly_alerts/backfill_status.json","w",encoding="utf-8").write(json.dumps(data,indent=2))
+          PY
+
+          status=0
+
+          run_script () {
+            local label="$1"
+            shift
+            echo "---- AQ26 weekly script: $label ----"
+            if "$@"; then
+              python - "$label" ok <<'PY'
+          import json, sys
+          p=".aq26_weekly_alerts/backfill_status.json"
+          d=json.load(open(p,encoding="utf-8")); d.setdefault("scripts",[]).append({"label":sys.argv[1],"status":sys.argv[2]})
+          json.dump(d,open(p,"w",encoding="utf-8"),indent=2)
+          PY
+            else
+              status=1
+              python - "$label" failed <<'PY'
+          import json, sys
+          p=".aq26_weekly_alerts/backfill_status.json"
+          d=json.load(open(p,encoding="utf-8")); d.setdefault("scripts",[]).append({"label":sys.argv[1],"status":sys.argv[2]})
+          json.dump(d,open(p,"w",encoding="utf-8"),indent=2)
+          PY
+            fi
+          }
+
+          if [ -f scripts/aq26_weeklyv2_collect.py ]; then
+            run_script "aq26_weeklyv2_collect" python scripts/aq26_weeklyv2_collect.py --output-root outputs
+          fi
+
+          if [ -f scripts/aq26_weeklyv2_science_backfill.py ]; then
+            run_script "aq26_weeklyv2_science_backfill" python scripts/aq26_weeklyv2_science_backfill.py --output-root outputs --history-weeks "${{ inputs.backfill_windows }}"
+          fi
+
+          if [ -f scripts/aq26_weeklyv2_build_sccnexus_site.py ]; then
+            run_script "aq26_weeklyv2_build_sccnexus_site" python scripts/aq26_weeklyv2_build_sccnexus_site.py --output-root outputs --site-root site_public --history-weeks "${{ inputs.backfill_windows }}"
+          fi
+
+          if [ -f scripts/aq26_build_incinerator_register_spine.py ]; then
+            run_script "aq26_build_incinerator_register_spine" python scripts/aq26_build_incinerator_register_spine.py --repo-root . --write-public-pages || true
+          fi
+
+          python - "$status" <<'PY'
+          import json, sys
+          from datetime import datetime, timezone
+          p=".aq26_weekly_alerts/backfill_status.json"
+          d=json.load(open(p,encoding="utf-8"))
+          d["finished_utc"]=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+          d["status"]="success" if sys.argv[1]=="0" else "completed_with_script_warnings"
+          json.dump(d,open(p,"w",encoding="utf-8"),indent=2)
+          PY
+
+          cp .aq26_weekly_alerts/backfill_status.json site_public/data/weekly/backfill_status.json
+
+      - name: Build operational site shell
+        if: ${{ steps.gate.outputs.should_run == 'true' && inputs.build_operational_site }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f scripts/aq26_build_operational_dual_site.py ]; then
+            python scripts/aq26_build_operational_dual_site.py --repo-root . --public-site site_public --unredacted-site site_unredacted
+          else
+            echo "scripts/aq26_build_operational_dual_site.py not found; weekly alert builder will repair minimal pages."
+          fi
+
+      - name: Create unredacted password files
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p site_unredacted
+          sudo apt-get update
+          sudo apt-get install -y apache2-utils
+          if [ -n "${SCC_UNREDACTED_PASSWORD:-}" ]; then
+            htpasswd -bc site_unredacted/.htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
+          else
+            echo "aq26:disabled" > site_unredacted/.htpasswd
+          fi
+          cat > site_unredacted/.htaccess <<'EOF'
+          AuthType Basic
+          AuthName "AQ26 Unredacted Review"
+          AuthUserFile /home/u288464186/domains/sccwebdesigntest.co.uk/public_html/unredacted/.htpasswd
+          Require valid-user
+          Options -Indexes
+          <IfModule mod_headers.c>
+          Header set X-Robots-Tag "noindex, nofollow"
+          </IfModule>
+          EOF
+
+      - name: Apply weekly alert pages and front-page alerts
+        if: ${{ steps.gate.outputs.should_run == 'true' && inputs.apply_alerts }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/aq26_build_weekly_alert_pages.py --repo-root . --public-site site_public --unredacted-site site_unredacted
+          test -f site_public/weekly-update.html
+          test -f site_unredacted/weekly-update.html
+          grep -q "AQ26_WEEKLY_ALERT_START" site_public/index.html
+          grep -q "aq26_weekly_alerts.css" site_public/index.html
+
+      - name: Validate moving banners and icons
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f site_public/assets/air_quality_web.svg
+          test -f site_public/assets/favicon.svg
+          test -f site_public/assets/aq26_weekly_alerts.css
+          if [ -d site_public/assets/banners ]; then
+            find site_public/assets/banners -maxdepth 1 -name '*.webm' -print | sort
+          else
+            echo "WARNING: no WEBM banner directory found; alert pages will use gradient fallback."
+          fi
+
+      - name: Commit weekly site outputs
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site_public site_unredacted .aq26_weekly_alerts || true
+          if git diff --cached --quiet; then
+            echo "No weekly alert changes to commit."
+          else
+            git commit -m "Add AQ26 Monday weekly alert update pages"
+            git pull --rebase
+            git push
+          fi
+
+      - name: Install deploy tools
+        if: ${{ steps.gate.outputs.should_run == 'true' && (inputs.deploy_public || inputs.deploy_unredacted) }}
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y sshpass rsync apache2-utils
+
+      - name: Deploy public site
+        if: ${{ steps.gate.outputs.should_run == 'true' && inputs.deploy_public }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}"
+          SSH_OPTS="-p ${SCCNEXUS_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30"
+          export SSHPASS="$SCCNEXUS_SSH_PASSWORD"
+          sshpass -e ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "mkdir -p '$REMOTE_DIR'"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            sshpass -e rsync -avzn --delete --exclude '${{ inputs.remote_unredacted_subdir }}/***' -e "ssh $SSH_OPTS" site_public/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          else
+            sshpass -e rsync -avz --delete --exclude '${{ inputs.remote_unredacted_subdir }}/***' -e "ssh $SSH_OPTS" site_public/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          fi
+
+      - name: Deploy unredacted site
+        if: ${{ steps.gate.outputs.should_run == 'true' && inputs.deploy_unredacted }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}/${{ inputs.remote_unredacted_subdir }}"
+          SSH_OPTS="-p ${SCCNEXUS_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30"
+          export SSHPASS="$SCCNEXUS_SSH_PASSWORD"
+          sshpass -e ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "mkdir -p '$REMOTE_DIR'"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            sshpass -e rsync -avzn --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          else
+            sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          fi
+
+      - name: Upload weekly site artifact
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-weekly-monday-alert-site
+          path: |
+            site_public/
+            site_unredacted/
+            .aq26_weekly_alerts/
+          if-no-files-found: error
