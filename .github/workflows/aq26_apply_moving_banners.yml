@@ -1,0 +1,61 @@
+name: AQ26 Apply Moving Banners
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply_public:
+        description: "Apply moving banners to public/redacted site"
+        required: true
+        default: true
+        type: boolean
+      apply_unredacted:
+        description: "Apply moving banners to protected unredacted site"
+        required: true
+        default: true
+        type: boolean
+      commit_outputs:
+        description: "Commit changed site files"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  apply-motion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Apply moving banners
+        run: |
+          set -euo pipefail
+          if [ "${{ inputs.apply_public }}" = "true" ]; then
+            python scripts/aq26_apply_moving_banners.py \
+              --site-root site_public \
+              --asset-source website/assets \
+              --summary site_public/data/moving_banners_status.json
+          fi
+          if [ "${{ inputs.apply_unredacted }}" = "true" ]; then
+            python scripts/aq26_apply_moving_banners.py \
+              --site-root site_unredacted \
+              --asset-source website/assets \
+              --summary site_unredacted/data/moving_banners_status.json
+          fi
+
+      - name: Commit outputs
+        if: ${{ inputs.commit_outputs }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add website/assets/aq26_moving_banners.css website/assets/aq26_moving_banners.js scripts/aq26_apply_moving_banners.py site_public site_unredacted || true
+          if git diff --cached --quiet; then
+            echo "No moving-banner changes to commit."
+          else
+            git commit -m "Apply AQ26 moving banners across dual site"
+            git pull --rebase
+            git push
+          fi
