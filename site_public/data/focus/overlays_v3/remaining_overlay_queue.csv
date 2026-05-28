@@ -1,39 +1,39 @@
-facility_name,control_name
-Allerton Waste Recovery Park,Knaresborough
-Allington Quarry Waste Management Facility,Aylesford
-Ardley ERF,Bicester
-Beddington ERF,Ewell
-Bolton WtE,Horwich
-Chineham EfW,Oakley
-Cornwall ERC,St Columb Road
-Crossness Sludge Plant,Crayford
-CSWDC Coventry,Meriden
-Devonport Dockyard,Saltash
-Dudley EfW,Kingswinford
-Eastcroft EfW,Beeston
-Exeter ERF,Ide
-Fawley Incinerator,Beaulieu
-Ferrybridge MF2,Darrington
-Glanford PS,Broughton
-Gloucestershire Javelin Park,Whitminster
-Great Blakenham EfW,Bramford
-Greatmoor EfW,Quainton
-Hartlebury EfW,Ombersley
-Isle of Man Incinerator,Peel
-Isle of Wight Gasification,Calbourne
-Kirklees EfW,Meltham
-Lakeside EfW,Horton
-Lincoln ERF,North Hykeham
-Marchwood ERF,Hythe
-Milton Keynes WRP,Woburn Sands
-Newlincs EfW,Waltham
-North Hykeham Incinerator,Eagle
-Peterborough ERF,Yaxley
-Portsmouth ERF,Portchester
-Red Moss Landfill,Westhoughton
-Shrewsbury Incinerator,Pontesbury
-Stoke EfW,Barlaston
-Teesside EfW,Stockton
-Thetford Incinerator,Brandon
-Westfield Incinerator,Shepton Mallet
-Wolverhampton EfW,Wombourne
+facility_name,facility_key,operator,control_name,facility_lat,facility_lon,control_lat,control_lon,queue_status
+Allerton Waste Recovery Park,allerton_waste_recovery_park,,Knaresborough,53.97,-1.5,53.91714985298881,-1.544899424,skipped_existing_candidate
+Allington Quarry Waste Management Facility,allington_quarry_waste_management,,Aylesford,51.23,0.5,51.17164159983072,0.4584710510889741,skipped_existing_candidate
+Ardley ERF,ardley,,Bicester,51.9,-1.28,51.84701494968608,-1.327628875,skipped_existing_candidate
+Beddington ERF,beddington,,Ewell,51.36,-0.17,51.31350876,-0.224624622,skipped_existing_candidate
+Bolton WtE,bolton,,Horwich,53.58,-2.43,53.5303755682824,-2.474737575,skipped_existing_candidate
+Chineham EfW,chineham,,Oakley,51.28,-1.08,51.23854307327007,-1.129830699,skipped_existing_candidate
+Cornwall ERC,cornwall_erc,,St Columb Road,50.34,-4.78,50.29979236509264,-4.836818679,skipped_existing_candidate
+Crossness Sludge Plant,crossness_sludge,,Crayford,51.49,0.17,51.447741800347096,0.1116948458229027,skipped_existing_candidate
+CSWDC Coventry,cswdc_coventry,,Meriden,52.41,-1.5,52.36454639169282,-1.549754958,skipped_existing_candidate
+Devonport Dockyard,devonport_dockyard,,Saltash,50.37,-4.14,50.31517407885175,-4.194278016,skipped_existing_candidate
+Dudley EfW,dudley,,Kingswinford,52.51,-2.09,52.45917999794322,-2.131878467,skipped_existing_candidate
+Eastcroft EfW,eastcroft,,Beeston,52.97,-1.15,52.91238906872195,-1.194184865,skipped_existing_candidate
+Exeter ERF,exeter,,Ide,50.73,-3.52,50.671132528891306,-3.570141056,skipped_existing_candidate
+Fawley Incinerator,fawley,,Beaulieu,50.82,-1.35,50.76562319187193,-1.390515676,skipped_existing_candidate
+Ferrybridge MF2,ferrybridge_mf2,,Darrington,53.73,-1.38,53.67551868420624,-1.426969384,skipped_existing_candidate
+Glanford PS,glanford_ps,,Broughton,53.6,-0.4,53.553422506888246,-0.455166807,skipped_existing_candidate
+Gloucestershire Javelin Park,gloucestershire_javelin_park,,Whitminster,51.85,-2.28,51.79139932493464,-2.333569123,skipped_existing_candidate
+Great Blakenham EfW,great_blakenham,,Bramford,52.12,1.13,52.076580980687936,1.0879925130189858,skipped_existing_candidate
+Greatmoor EfW,greatmoor,,Quainton,51.92,-0.87,51.87050624533559,-0.929049115,skipped_existing_candidate
+Hartlebury EfW,hartlebury,,Ombersley,52.36,-2.27,52.30630369696547,-2.323040252,skipped_existing_candidate
+Isle of Man Incinerator,isle_of_man,,Peel,54.24,-4.47,54.18300750114178,-4.514289539,skipped_existing_candidate
+Isle of Wight Gasification,isle_of_wight_gasification,,Calbourne,50.7,-1.28,50.64825093318034,-1.337914741,skipped_existing_candidate
+Kirklees EfW,kirklees,,Meltham,53.64,-1.8,53.59280444,-1.840956726,skipped_existing_candidate
+Lakeside EfW,lakeside,,Horton,51.51,-0.54,51.45706067755228,-0.593239815,skipped_existing_candidate
+Lincoln ERF,lincoln,,North Hykeham,53.23,-0.54,53.189145280586594,-0.587061432,skipped_existing_candidate
+Marchwood ERF,marchwood,,Hythe,50.88,-1.42,50.82468261920184,-1.476364095,skipped_existing_candidate
+Milton Keynes WRP,milton_keynes_wrp,,Woburn Sands,52.04,-0.75,51.99400431876248,-0.802347029,skipped_existing_candidate
+Newlincs EfW,newlincs,,Waltham,53.55,-0.07,53.509896570815,-0.110490383,skipped_existing_candidate
+North Hykeham Incinerator,north_hykeham,,Eagle,53.18,-0.67,53.13758581631578,-0.710038017,skipped_existing_candidate
+Peterborough ERF,peterborough,,Yaxley,52.59,-0.24,52.53404152523351,-0.295573435,skipped_existing_candidate
+Portsmouth ERF,portsmouth,,Portchester,50.8,-1.06,50.75995290109277,-1.115574836,skipped_existing_candidate
+Red Moss Landfill,red_moss_landfill,,Westhoughton,53.5,-2.12,53.4454823762909,-2.175727388,skipped_existing_candidate
+Shrewsbury Incinerator,shrewsbury,,Pontesbury,52.71,-2.75,52.66264719947775,-2.800606348,skipped_existing_candidate
+Stoke EfW,stoke,,Barlaston,53.0,-2.18,52.94116578444151,-2.237964046,skipped_existing_candidate
+Teesside EfW,teesside,,Stockton,54.6,-1.26,54.5428758,-1.303836096,skipped_existing_candidate
+Thetford Incinerator,thetford,,Brandon,52.42,0.75,52.36508933633796,0.7074512638157442,skipped_existing_candidate
+Westfield Incinerator,westfield,,Shepton Mallet,51.14,-2.76,51.08874752042375,-2.808241669,skipped_existing_candidate
+Wolverhampton EfW,wolverhampton,,Wombourne,52.59,-2.12,52.53488115081242,-2.164738856,skipped_existing_candidate
