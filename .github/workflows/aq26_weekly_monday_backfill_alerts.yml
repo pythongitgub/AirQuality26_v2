@@ -124,7 +124,11 @@ jobs:
 
       - name: Stop if scheduled trigger is outside Monday 07:00 UK gate
         if: ${{ steps.gate.outputs.should_run != 'true' }}
-        run: echo "Skipping duplicate schedule trigger: ${{ steps.gate.outputs.gate_reason }}"
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "Skipping duplicate schedule trigger"
+          echo "Gate reason: ${{ steps.gate.outputs.gate_reason }}"
 
       - name: Set up Python
         if: ${{ steps.gate.outputs.should_run == 'true' }}
