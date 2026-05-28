@@ -1,47 +1,47 @@
-facility_name,facility_key,operator,control_name,overlay_status,best_candidate,best_score,notes
-Allerton Waste Recovery Park,allerton_waste_recovery_park,,Knaresborough,candidate_overlay_needs_review,Leeds Headingley Kerbside - UKA00527,42,manual_review_low_confidence
-Allington Quarry Waste Management Facility,allington_quarry_waste_management,,Aylesford,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Ardley ERF,ardley,,Bicester,candidate_overlay_needs_review,Oxford Centre Roadside,42,manual_review_low_confidence
-Beddington ERF,beddington,,Ewell,candidate_overlay_needs_review,Sutton - Beddington Village,62,plausible_candidate_needs_review
-Bolton WtE,bolton,,Horwich,candidate_overlay_needs_review,Glazebury - UKA00170,50,manual_review_low_confidence
-Chineham EfW,chineham,,Oakley,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Cornwall ERC,cornwall_erc,,St Columb Road,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Crossness Sludge Plant,crossness_sludge,,Crayford,candidate_overlay_needs_review,Bexley - Belvedere,67,plausible_candidate_needs_review
-CSWDC Coventry,cswdc_coventry,,Meriden,candidate_overlay_needs_review,Coventry Binley Road - UKA00634,67,plausible_candidate_needs_review
-Devonport Dockyard,devonport_dockyard,,Saltash,candidate_overlay_needs_review,Plymouth Centre - UKA00360,67,plausible_candidate_needs_review
-Dudley EfW,dudley,,Kingswinford,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Eastcroft EfW,eastcroft,,Beeston,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Exeter ERF,exeter,,Ide,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Fawley Incinerator,fawley,,Beaulieu,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Ferrybridge MF2,ferrybridge_mf2,,Darrington,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Glanford PS,glanford_ps,,Broughton,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Gloucestershire Javelin Park,gloucestershire_javelin_park,,Whitminster,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Great Blakenham EfW,great_blakenham,,Bramford,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Greatmoor EfW,greatmoor,,Quainton,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Hartlebury EfW,hartlebury,,Ombersley,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Isle of Man Incinerator,isle_of_man,,Peel,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Isle of Wight Gasification,isle_of_wight_gasification,,Calbourne,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Kirklees EfW,kirklees,,Meltham,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Lakeside EfW,lakeside,,Horton,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Leeds RERF,leeds_rerf,,Rothwell,validated_existing_overlay,validated overlay file,,Already in validated DEFRA/AURN overlay register.
-Lincoln ERF,lincoln,,North Hykeham,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-London EcoPark,london_ecopark,,Winchmore Hill,validated_existing_overlay,validated overlay file,,Already in validated DEFRA/AURN overlay register.
-Marchwood ERF,marchwood,,Hythe,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Milton Keynes WRP,milton_keynes_wrp,,Woburn Sands,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Newhaven ERF,newhaven,,Lewes,validated_existing_overlay,validated overlay file,,Already in validated DEFRA/AURN overlay register.
-Newlincs EfW,newlincs,,Waltham,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-North Hykeham Incinerator,north_hykeham,,Eagle,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Peterborough ERF,peterborough,,Yaxley,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Portsmouth ERF,portsmouth,,Portchester,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Red Moss Landfill,red_moss_landfill,,Westhoughton,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Riverside RR ERF,riverside_resource_recovery,,Sidcup,validated_existing_overlay,validated overlay file,,Already in validated DEFRA/AURN overlay register.
-Runcorn EfW,runcorn,,Frodsham,validated_existing_overlay,validated overlay file,,Already in validated DEFRA/AURN overlay register.
-SELCHP,selchp,,Peckham,validated_existing_overlay,validated overlay file,,Already in validated DEFRA/AURN overlay register.
-Sheffield ERF,sheffield,,Dore,validated_existing_overlay,validated overlay file,,Already in validated DEFRA/AURN overlay register.
-Shrewsbury Incinerator,shrewsbury,,Pontesbury,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Stoke EfW,stoke,,Barlaston,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Teesside EfW,teesside,,Stockton,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Thetford Incinerator,thetford,,Brandon,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Tyseley EfW,tyseley,,Solihull,validated_existing_overlay,validated overlay file,,Already in validated DEFRA/AURN overlay register.
-Westfield Incinerator,westfield,,Shepton Mallet,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
-Wolverhampton EfW,wolverhampton,,Wombourne,no_candidate_selected_yet,,,"Needs further discovery, lower threshold, local source/DEFRA lookup, or manual review."
+facility,facility_key,overlay_status,best_candidate_site,best_candidate_score,best_candidate_class,suggested_action
+Allerton Waste Recovery Park,allerton,candidate_overlay_needs_review,Leeds Centre - UKA00222,80,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Allington Quarry Waste Management Facility,allington,candidate_overlay_needs_review,Chatham Roadside - UKA00553,61,local_or_official_candidate_needs_review,review_as_local_or_official_overlay_candidate
+Ardley ERF,ardley,no_candidate_selected_yet,,,,query_or_manual_review
+Beddington ERF,beddington,no_candidate_selected_yet,,,,query_or_manual_review
+Bolton WtE,bolton,no_candidate_selected_yet,,,,query_or_manual_review
+Chineham EfW,chineham,candidate_overlay_needs_review,Chilbolton Observatory - UKA00614,69,local_or_official_candidate_needs_review,review_as_local_or_official_overlay_candidate
+Cornwall ERC,cornwall,no_candidate_selected_yet,,,,query_or_manual_review
+Crossness Sludge Plant,crossness,candidate_overlay_needs_review,Bexley - Slade Green,95,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+CSWDC Coventry,coventry,candidate_overlay_needs_review,Coventry Allesley - UKA00592,93,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Devonport Dockyard,devonport,candidate_overlay_needs_review,Plymouth Centre - UKA00360,98,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Dudley EfW,dudley,candidate_overlay_needs_review,Oldbury Birmingham Road - UKA00595,79,local_or_official_candidate_needs_review,review_as_local_or_official_overlay_candidate
+Eastcroft EfW,eastcroft,candidate_overlay_needs_review,Nottingham Centre,100,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Exeter ERF,exeter,candidate_overlay_needs_review,Exeter Roadside - UKA00263,81,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Fawley Incinerator,fawley,no_candidate_selected_yet,,,,query_or_manual_review
+Ferrybridge MF2,ferrybridgemf2,no_candidate_selected_yet,,,,query_or_manual_review
+Glanford PS,glanfordps,no_candidate_selected_yet,,,,query_or_manual_review
+Gloucestershire Javelin Park,gloucestershirejavelin,no_candidate_selected_yet,,,,query_or_manual_review
+Great Blakenham EfW,greatblakenham,no_candidate_selected_yet,,,,query_or_manual_review
+Greatmoor EfW,greatmoor,no_candidate_selected_yet,,,,query_or_manual_review
+Hartlebury EfW,hartlebury,no_candidate_selected_yet,,,,query_or_manual_review
+Isle of Man Incinerator,isleofman,no_candidate_selected_yet,,,,query_or_manual_review
+Isle of Wight Gasification,isleofwight,no_candidate_selected_yet,,,,query_or_manual_review
+Kirklees EfW,kirklees,no_candidate_selected_yet,,,,query_or_manual_review
+Lakeside EfW,lakeside,no_candidate_selected_yet,,,,query_or_manual_review
+Leeds RERF,leeds,validated_existing_overlay,,,,use_validated_overlay
+Lincoln ERF,lincoln,no_candidate_selected_yet,,,,query_or_manual_review
+London EcoPark,londonecopark,validated_existing_overlay,,,,use_validated_overlay
+Marchwood ERF,marchwood,no_candidate_selected_yet,,,,query_or_manual_review
+Milton Keynes WRP,miltonkeyneswrp,no_candidate_selected_yet,,,,query_or_manual_review
+Newhaven ERF,newhaven,validated_existing_overlay,,,,use_validated_overlay
+Newlincs EfW,newlincs,no_candidate_selected_yet,,,,query_or_manual_review
+North Hykeham Incinerator,northhykeham,no_candidate_selected_yet,,,,query_or_manual_review
+Peterborough ERF,peterborough,no_candidate_selected_yet,,,,query_or_manual_review
+Portsmouth ERF,portsmouth,no_candidate_selected_yet,,,,query_or_manual_review
+Red Moss Landfill,redmosslandfill,no_candidate_selected_yet,,,,query_or_manual_review
+Riverside RR ERF,riverside,validated_existing_overlay,,,,use_validated_overlay
+Runcorn EfW,runcorn,validated_existing_overlay,,,,use_validated_overlay
+SELCHP,selchp,validated_existing_overlay,,,,use_validated_overlay
+Sheffield ERF,sheffield,validated_existing_overlay,,,,use_validated_overlay
+Shrewsbury Incinerator,shrewsbury,no_candidate_selected_yet,,,,query_or_manual_review
+Stoke EfW,stoke,no_candidate_selected_yet,,,,query_or_manual_review
+Teesside EfW,teesside,no_candidate_selected_yet,,,,query_or_manual_review
+Thetford Incinerator,thetford,no_candidate_selected_yet,,,,query_or_manual_review
+Tyseley EfW,tyseley,validated_existing_overlay,,,,use_validated_overlay
+Westfield Incinerator,westfield,no_candidate_selected_yet,,,,query_or_manual_review
+Wolverhampton EfW,wolverhampton,no_candidate_selected_yet,,,,query_or_manual_review
