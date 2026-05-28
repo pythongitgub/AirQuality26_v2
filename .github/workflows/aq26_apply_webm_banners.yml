@@ -1,0 +1,82 @@
+name: AQ26 Apply Uploaded WEBM Moving Banners
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply_public:
+        description: "Apply uploaded WEBM banners to site_public"
+        required: true
+        default: true
+        type: boolean
+      apply_unredacted:
+        description: "Apply uploaded WEBM banners to site_unredacted"
+        required: true
+        default: true
+        type: boolean
+      force:
+        description: "Force banner insertion even if a page already has banner CSS/JS"
+        required: true
+        default: true
+        type: boolean
+      commit_outputs:
+        description: "Commit updated site/assets back to the repository"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  apply-webm-banners:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify uploaded banner assets
+        run: |
+          set -euo pipefail
+          test -f website/assets/banners/desktop_banner_1.webm
+          test -f website/assets/banners/desktop_banner_2.webm
+          test -f website/assets/banners/desktop_banner_3.webm
+          test -f website/assets/banners/desktop_banner_4.webm
+          test -f website/assets/banners/desktop_banner_5.webm
+          test -f website/assets/banners/desktop_banner_6.webm
+          ls -lh website/assets/banners/*.webm
+
+      - name: Apply WEBM moving banners to public site
+        if: ${{ inputs.apply_public }}
+        run: |
+          set -euo pipefail
+          if [ ! -d site_public ]; then
+            echo "site_public missing; creating minimal folder so deploy builders can later populate it."
+            mkdir -p site_public
+          fi
+          python scripts/aq26_apply_webm_banners.py --site-root site_public --asset-source website/assets --force
+
+      - name: Apply WEBM moving banners to unredacted site
+        if: ${{ inputs.apply_unredacted }}
+        run: |
+          set -euo pipefail
+          if [ -d site_unredacted ]; then
+            python scripts/aq26_apply_webm_banners.py --site-root site_unredacted --asset-source website/assets --force
+          else
+            echo "site_unredacted not present in repo checkout; skipping. The deploy workflow can run this after building unredacted."
+          fi
+
+      - name: Commit WEBM banner assets and page updates
+        if: ${{ inputs.commit_outputs }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add website/assets/banners website/assets/aq26_webm_banners.css website/assets/aq26_webm_banners.js scripts/aq26_apply_webm_banners.py site_public site_unredacted docs/AQ26_WEBM_MOVING_BANNERS.md || true
+          if git diff --cached --quiet; then
+            echo "No WEBM banner changes to commit."
+          else
+            git commit -m "Add AQ26 uploaded WEBM moving banners"
+            git pull --rebase
+            git push
+          fi
