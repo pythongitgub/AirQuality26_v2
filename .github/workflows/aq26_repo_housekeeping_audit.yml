@@ -1,0 +1,62 @@
+name: AQ26 Repository Housekeeping Audit
+
+on:
+  workflow_dispatch:
+    inputs:
+      fail_on_critical:
+        description: "Fail the workflow if critical issues are found"
+        required: true
+        default: true
+        type: boolean
+      commit_report:
+        description: "Commit the housekeeping report outputs"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install audit dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install pyyaml
+      - name: Run AQ26 housekeeping audit
+        run: |
+          set -euo pipefail
+          python scripts/aq26_repo_housekeeping_audit.py             --repo-root .             --output-dir outputs/housekeeping             ${{ inputs.fail_on_critical && '--fail-on-critical' || '' }}
+      - name: Upload housekeeping artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-repo-housekeeping-audit
+          path: outputs/housekeeping/
+          if-no-files-found: warn
+      - name: Commit housekeeping report
+        if: always() && inputs.commit_report
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add outputs/housekeeping .gitignore || true
+          if git diff --cached --quiet; then
+            echo "No housekeeping report changes to commit."
+          else
+            git commit -m "Add AQ26 repository housekeeping audit report"
+            git pull --rebase
+            git push
+          fi

@@ -3,36 +3,12 @@ name: AQ26 Operational Dual Site Build and Deploy
 on:
   workflow_dispatch:
     inputs:
-      build_public:
-        description: Build redacted public site
-        required: true
-        default: true
-        type: boolean
-      build_unredacted:
-        description: Build password-protected unredacted site
-        required: true
-        default: true
-        type: boolean
-      deploy_public:
-        description: Deploy public site to Hostinger root
-        required: true
-        default: false
-        type: boolean
-      deploy_unredacted:
-        description: Deploy unredacted site to /unredacted/
-        required: true
-        default: false
-        type: boolean
-      dry_run:
-        description: Dry-run rsync only
-        required: true
-        default: true
-        type: boolean
-      remote_unredacted_subdir:
-        description: Remote protected folder under public_html
-        required: true
-        default: unredacted
-        type: string
+      build_public: {description: Build redacted public site, required: true, default: true, type: boolean}
+      build_unredacted: {description: Build password-protected unredacted site, required: true, default: true, type: boolean}
+      deploy_public: {description: Deploy public site to Hostinger root, required: true, default: false, type: boolean}
+      deploy_unredacted: {description: Deploy unredacted site to /unredacted/, required: true, default: false, type: boolean}
+      dry_run: {description: Dry-run rsync only, required: true, default: true, type: boolean}
+      remote_unredacted_subdir: {description: Remote protected folder under public_html, required: true, default: unredacted, type: string}
 
 permissions:
   contents: write
@@ -53,12 +29,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
+        with: {python-version: '3.11'}
       - name: Build operational public and unredacted sites
         run: |
           set -euo pipefail
@@ -68,7 +41,6 @@ jobs:
           test -f site_public/overlays.html
           test -f site_unredacted/index.html
           test -f site_unredacted/evidence.html
-
       - name: Apply WEBM banners and favicon/header assets after build
         run: |
           set -euo pipefail
@@ -76,8 +48,6 @@ jobs:
           if [ -f scripts/aq26_apply_webm_banners.py ]; then
             python scripts/aq26_apply_webm_banners.py --site-root site_public --asset-source website/assets --force --summary site_public/data/focus/webm_banner_status.json || true
             python scripts/aq26_apply_webm_banners.py --site-root site_unredacted --asset-source website/assets --force --summary site_unredacted/data/focus/webm_banner_status.json || true
-          else
-            echo "WEBM banner applicator missing; operational build will continue without separate banner injection."
           fi
           for site in site_public site_unredacted; do
             mkdir -p "$site/assets"
@@ -85,8 +55,36 @@ jobs:
             [ -f website/assets/favicon.svg ] && cp website/assets/favicon.svg "$site/assets/favicon.svg" && cp website/assets/favicon.svg "$site/favicon.svg" || true
             [ -f website/assets/logo_web.svg ] && cp website/assets/logo_web.svg "$site/assets/logo_web.svg" || true
           done
-
-      - name: Create unredacted password files
+      - name: Remove auth files before commit
+        run: |
+          set -euo pipefail
+          rm -f site_unredacted/.htpasswd site_public/.htpasswd
+          git rm -f --cached site_unredacted/.htpasswd site_public/.htpasswd 2>/dev/null || true
+      - name: Validate operational site files before commit
+        run: |
+          set -euo pipefail
+          test -f site_public/index.html
+          test -f site_public/assets/favicon.svg
+          test -f site_public/assets/air_quality_web.svg
+          test -f site_unredacted/index.html
+          test -f site_unredacted/assets/favicon.svg
+          test -f site_unredacted/assets/air_quality_web.svg
+          ! find site_public site_unredacted -name .htpasswd -print -quit | grep -q .
+      - name: Commit generated operational site files
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site_public site_unredacted configs/aq26_incinerator_register/UK_Incinerator_Overlay_Candidate_Review.csv .gitignore || true
+          git reset -- site_unredacted/.htpasswd site_public/.htpasswd 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No generated site changes to commit."
+          else
+            git commit -m "Build AQ26 operational incinerator dual site"
+            git pull --rebase
+            git push
+          fi
+      - name: Create unredacted password files for deployment only
         run: |
           set -euo pipefail
           sudo apt-get update
@@ -104,42 +102,11 @@ jobs:
           EOF
           echo 'User-agent: *' > site_unredacted/robots.txt
           echo 'Disallow: /' >> site_unredacted/robots.txt
-
-      - name: Validate operational site files
-        run: |
-          set -euo pipefail
-          test -f site_public/index.html
-          test -f site_public/assets/favicon.svg
-          test -f site_public/assets/air_quality_web.svg
-          test -f site_unredacted/index.html
-          test -f site_unredacted/assets/favicon.svg
-          test -f site_unredacted/assets/air_quality_web.svg
-          if [ -d site_public/assets/banners ]; then
-            echo "WEBM banners present:"
-            find site_public/assets/banners -maxdepth 1 -type f -name '*.webm' -print | sort
-          fi
-
-      - name: Commit generated operational site files
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add site_public site_unredacted configs/aq26_incinerator_register/UK_Incinerator_Overlay_Candidate_Review.csv || true
-          if git diff --cached --quiet; then
-            echo "No generated site changes to commit."
-          else
-            git commit -m "Build AQ26 operational incinerator dual site"
-            git pull --rebase
-            git push
-          fi
-
       - name: Install deployment tools
         if: ${{ inputs.deploy_public || inputs.deploy_unredacted }}
         run: |
           set -euo pipefail
-          sudo apt-get update
           sudo apt-get install -y sshpass rsync
-
       - name: Deploy public site
         if: ${{ inputs.deploy_public }}
         run: |
@@ -153,7 +120,6 @@ jobs:
           else
             sshpass -e rsync -avz --delete --exclude '${{ inputs.remote_unredacted_subdir }}/***' -e "ssh $SSH_OPTS" site_public/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
           fi
-
       - name: Deploy unredacted site
         if: ${{ inputs.deploy_unredacted }}
         run: |
@@ -167,7 +133,6 @@ jobs:
           else
             sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
           fi
-
       - name: Upload site artifact
         uses: actions/upload-artifact@v4
         with:
