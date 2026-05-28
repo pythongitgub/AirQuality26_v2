@@ -44,4 +44,4 @@ Teesside EfW,teesside,candidate_overlay_needs_review,Middlesbrough - UKA00220,95
 Thetford Incinerator,thetford,no_candidate_selected_yet,,,,query_or_manual_review
 Tyseley EfW,tyseley,validated_existing_overlay,,,,use_validated_overlay
 Westfield Incinerator,westfield,candidate_overlay_needs_review,Charlton Mackrell - UKA00537,85,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
-Wolverhampton EfW,wolverhampton,no_candidate_selected_yet,,,,query_or_manual_review
+Wolverhampton EfW,wolverhampton,candidate_overlay_needs_review,Oldbury Birmingham Road - UKA00595,72,local_or_official_candidate_needs_review,review_as_local_or_official_overlay_candidate
