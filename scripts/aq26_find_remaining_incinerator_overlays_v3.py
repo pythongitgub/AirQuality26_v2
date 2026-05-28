@@ -1,33 +1,28 @@
 #!/usr/bin/env python3
 """
-AQ26 Remaining Incinerator Overlay Finder V3
+AQ26 Remaining Incinerator Overlay Finder V3.1
 
-Purpose
--------
-Production-grade candidate monitoring overlay discovery for the AQ26 England/Wales
-incinerator register.
+Facility-led monitoring overlay discovery for England/Wales incinerator register.
 
-V3 improvements over V2:
-  * facility-key aliasing so already validated rows are not re-queued simply due to
-    name variants such as Riverside RR ERF vs Riverside Resource Recovery;
-  * OpenAQ-safe requests: coordinates are latitude,longitude, radius is capped at
-    25 km, iso=GB is used, bbox fallback is lon,lat order;
-  * no unsupported OpenAQ sort=distance/order_by=distance parameters;
-  * 429 retry handling, Retry-After support, exponential backoff and configurable
-    sleep between requests;
-  * optional reuse of previously generated V2 candidates to reduce repeated API calls;
-  * candidate classification into high-confidence official, local-network,
-    supporting/community, weak-distance, and manual-review categories;
-  * facility-level overlay status summary for public/incinerator pages.
+Key behaviours:
+- Uses the broad incinerator/control register as the spine.
+- Uses the validated DEFRA/AURN overlay file to skip already validated facilities.
+- Optionally skips facilities that already have selected candidate overlays from a previous V3 run.
+- Queries OpenAQ with current v3-compatible geospatial patterns:
+  * coordinates=latitude,longitude
+  * radius capped at 25,000 metres
+  * iso=GB
+  * bbox=minLon,minLat,maxLon,maxLat
+- Handles 429 Retry-After and exponential backoff.
+- Writes reviewable candidate overlays, diagnostics, status and a public-safe summary page.
 
-All new matches remain candidates until reviewed. The script never auto-validates
-new overlays.
+No candidate is automatically promoted to validated. Promotion should happen in a separate review step.
 """
 from __future__ import annotations
 
 import argparse
 import csv
-import html
+import datetime as dt
 import json
 import math
 import os
@@ -37,107 +32,75 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
-OPENAQ_BASE = "https://api.openaq.org/v3/locations"
+OPENAQ_LOCATIONS = "https://api.openaq.org/v3/locations"
 MAX_OPENAQ_RADIUS_M = 25000
-DEFAULT_TIMEOUT = 35
-
-CORE_POLLUTANTS = {"no2", "pm25", "pm2.5", "pm10", "so2", "co", "o3", "nox", "no"}
-POLLUTANT_WEIGHTS = {
-    "pm25": 12, "pm2.5": 12, "pm10": 12,
-    "no2": 12, "so2": 10, "nox": 8, "co": 7, "o3": 6, "no": 5,
-    "benzene": 5, "voc": 5,
-}
+DEFAULT_POLLUTANTS = {"no", "no2", "nox", "pm10", "pm2.5", "pm25", "o3", "so2", "co"}
 OFFICIAL_HINTS = (
-    "aurn", "defra", "uk-air", "uk air", "air quality england", "aqe",
-    "environment agency", "eea", "governmental", "local authority",
+    "defra", "aurn", "uka", "uk-air", "london air quality network", "laqn",
+    "environment agency", "air quality england", "scottish air quality", "welsh air quality"
 )
-LOCAL_NETWORK_HINTS = (
-    "london air quality network", "laqn", "king's college", "imperial",
-    "air quality england", "local authority",
-)
-COMMUNITY_HINTS = (
-    "airgradient", "purpleair", "sensor.community", "low cost", "opensensemap",
-)
-FACILITY_ALIAS_OVERRIDES = {
-    "riverside_rr": "riverside_resource_recovery",
-    "riverside_rr_erf": "riverside_resource_recovery",
-    "riverside_resource_recovery": "riverside_resource_recovery",
-    "runcorn": "runcorn",
-    "runcorn_efw": "runcorn",
-    "runcorn_tps": "runcorn",
-    "tyseley": "tyseley",
-    "tyseley_efw": "tyseley",
-    "tyseley_erf": "tyseley",
+COMMUNITY_HINTS = ("airgradient", "purpleair", "sensor.community", "low-cost", "low cost")
+
+
+def now_utc() -> str:
+    return dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def norm_key(value: Any) -> str:
+    s = str(value or "").lower()
+    s = s.replace("&", " and ")
+    s = re.sub(r"[^a-z0-9]+", " ", s)
+    drop = {
+        "the", "energy", "recovery", "facility", "resource", "resources", "centre", "center",
+        "erf", "efw", "wte", "waste", "management", "plant", "incinerator", "incineration",
+        "power", "station", "rr", "tps", "ltd", "limited"
+    }
+    parts = [p for p in s.split() if p and p not in drop]
+    return " ".join(parts).strip()
+
+
+ALIAS_MAP = {
+    "tyseley": {"tyseley", "birmingham tyseley", "tyseley erf", "tyseley efw"},
+    "riverside": {"riverside", "riverside rr", "riverside resource recovery", "riverside erf"},
+    "runcorn": {"runcorn", "runcorn tps", "runcorn efw", "runcorn energy from waste"},
+    "newhaven": {"newhaven", "newhaven erf", "newhaven energy recovery", "veolia newhaven", "bv8067il"},
+    "selchp": {"selchp", "south east london combined heat and power", "london selchp"},
+    "london ecopark": {"london ecopark", "ecopark", "edmonton ecopark", "london eco park"},
+    "leeds": {"leeds rerf", "leeds recycling and energy recovery facility", "leeds"},
+    "sheffield": {"sheffield erf", "sheffield energy recovery facility", "sheffield"},
 }
-FACILITY_STOPWORDS = {
-    "the", "and", "of", "at", "waste", "energy", "from", "resource", "recovery",
-    "facility", "plant", "park", "site", "centre", "center", "incinerator", "incineration",
-    "efw", "erf", "rerf", "tps", "rr", "wt", "wte", "wrp", "erc", "mf2", "ps",
-    "quarry", "management", "gasification", "sludge", "dockyard", "landfill",
-}
 
 
-def utc_now() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+def alias_keys(value: Any) -> set[str]:
+    raw = str(value or "")
+    keys = {norm_key(raw)}
+    raw_l = raw.lower()
+    for canonical, aliases in ALIAS_MAP.items():
+        if any(a in raw_l for a in aliases):
+            keys.add(norm_key(canonical))
+            keys.update(norm_key(a) for a in aliases)
+    return {k for k in keys if k}
 
 
-def safe_float(v: Any) -> Optional[float]:
-    if v is None:
-        return None
-    s = str(v).strip()
-    if not s or s.lower() in {"nan", "none", "null"}:
-        return None
-    try:
-        return float(s)
-    except Exception:
-        return None
-
-
-def slugify(s: str) -> str:
-    s = re.sub(r"[^a-zA-Z0-9]+", "_", (s or "").strip().lower()).strip("_")
-    return s or "unknown"
-
-
-def canonical_facility_key(name: str) -> str:
-    raw = slugify(name)
-    if raw in FACILITY_ALIAS_OVERRIDES:
-        return FACILITY_ALIAS_OVERRIDES[raw]
-    # Common suffix variants: make Tyseley EfW / Tyseley ERF collapse to tyseley.
-    raw2 = re.sub(r"_(efw|erf|rerf|tps|rr|wte|wt)$", "", raw)
-    if raw2 in FACILITY_ALIAS_OVERRIDES:
-        return FACILITY_ALIAS_OVERRIDES[raw2]
-    tokens = [t for t in raw.split("_") if t and t not in FACILITY_STOPWORDS]
-    # Keep first two distinctive tokens when available, but avoid over-collapsing common names.
-    if tokens:
-        key = "_".join(tokens[:3])
-        return FACILITY_ALIAS_OVERRIDES.get(key, key)
-    return raw2 or raw
-
-
-def facility_key(row: Dict[str, Any]) -> str:
-    return canonical_facility_key(str(row.get("Facility") or row.get("facility") or row.get("Facility_Name") or ""))
-
-
-def read_csv_dicts(path: Path) -> List[Dict[str, str]]:
+def read_csv(path: Path) -> List[Dict[str, str]]:
     if not path.exists():
-        raise FileNotFoundError(f"Missing CSV: {path}")
+        raise FileNotFoundError(path)
     with path.open("r", encoding="utf-8-sig", newline="") as f:
-        return list(csv.DictReader(f))
+        return [dict(r) for r in csv.DictReader(f)]
 
 
 def write_csv(path: Path, rows: List[Dict[str, Any]], fieldnames: Optional[List[str]] = None) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     if fieldnames is None:
-        keys: List[str] = []
+        fields: List[str] = []
         for r in rows:
             for k in r.keys():
-                if k not in keys:
-                    keys.append(k)
-        fieldnames = keys or ["empty"]
+                if k not in fields:
+                    fields.append(k)
+        fieldnames = fields or ["empty"]
     with path.open("w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
         w.writeheader()
@@ -145,9 +108,70 @@ def write_csv(path: Path, rows: List[Dict[str, Any]], fieldnames: Optional[List[
             w.writerow({k: r.get(k, "") for k in fieldnames})
 
 
-def write_json(path: Path, obj: Any) -> None:
+def write_json(path: Path, data: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(obj, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
+    path.write_text(json.dumps(data, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
+
+
+def first_present(row: Dict[str, Any], names: Iterable[str]) -> str:
+    lower = {str(k).lower().strip(): k for k in row.keys()}
+    for name in names:
+        key = lower.get(name.lower())
+        if key is not None and str(row.get(key, "")).strip():
+            return str(row.get(key, "")).strip()
+    # fuzzy contains
+    for name in names:
+        nl = name.lower().replace("_", " ")
+        for lk, ok in lower.items():
+            if nl in lk.replace("_", " ") and str(row.get(ok, "")).strip():
+                return str(row.get(ok, "")).strip()
+    return ""
+
+
+def parse_float(v: Any) -> Optional[float]:
+    if v is None:
+        return None
+    s = str(v).strip().replace(",", "")
+    if not s or s.lower() in {"nan", "none", "null", "-"}:
+        return None
+    try:
+        return float(s)
+    except Exception:
+        return None
+
+
+def lat_lon_from_row(row: Dict[str, Any], prefix: str = "facility") -> Tuple[Optional[float], Optional[float], str]:
+    # Facility columns may vary widely. Try named lat/lon first.
+    if prefix == "control":
+        lat_names = ["Control_Lat", "Control Lat", "control_lat", "control latitude", "control_latitude", "ControlLatitude"]
+        lon_names = ["Control_Lon", "Control Long", "Control Longitude", "control_lon", "control longitude", "control_longitude", "ControlLongitude"]
+        e_names = ["Control_Easting", "Control Easting", "control_easting", "ControlEasting"]
+        n_names = ["Control_Northing", "Control Northing", "control_northing", "ControlNorthing"]
+    else:
+        lat_names = ["Latitude", "Lat", "Facility_Lat", "Facility Lat", "facility_lat", "facility latitude", "Site Latitude", "site_latitude"]
+        lon_names = ["Longitude", "Lon", "Long", "Facility_Lon", "Facility Long", "facility_lon", "facility longitude", "Site Longitude", "site_longitude"]
+        e_names = ["Easting", "Facility_Easting", "Facility Easting", "Site Easting", "easting"]
+        n_names = ["Northing", "Facility_Northing", "Facility Northing", "Site Northing", "northing"]
+    lat = parse_float(first_present(row, lat_names))
+    lon = parse_float(first_present(row, lon_names))
+    if lat is not None and lon is not None and -90 <= lat <= 90 and -180 <= lon <= 180:
+        return lat, lon, "lat_lon_columns"
+    # If values are reversed in the file, rescue them.
+    if lat is not None and lon is not None and -90 <= lon <= 90 and -180 <= lat <= 180:
+        return lon, lat, "reversed_lon_lat_columns_rescued"
+    # Optional easting/northing conversion if pyproj is available.
+    east = parse_float(first_present(row, e_names))
+    north = parse_float(first_present(row, n_names))
+    if east is not None and north is not None:
+        try:
+            from pyproj import Transformer  # type: ignore
+            transformer = Transformer.from_crs("EPSG:27700", "EPSG:4326", always_xy=True)
+            lon2, lat2 = transformer.transform(east, north)
+            if -90 <= lat2 <= 90 and -180 <= lon2 <= 180:
+                return float(lat2), float(lon2), "easting_northing_epsg27700"
+        except Exception:
+            return None, None, "easting_northing_present_pyproj_unavailable_or_failed"
+    return None, None, "no_valid_coordinates"
 
 
 def haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
@@ -159,507 +183,394 @@ def haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
     return 2 * r * math.asin(math.sqrt(a))
 
 
-def get_facility_latlon(row: Dict[str, str]) -> Tuple[Optional[float], Optional[float]]:
-    return safe_float(row.get("Lat") or row.get("Facility_Lat")), safe_float(row.get("Lon") or row.get("Facility_Lon"))
+def bbox_around(lat: float, lon: float, km: float) -> Tuple[float, float, float, float]:
+    dlat = km / 111.32
+    dlon = km / (111.32 * max(0.2, math.cos(math.radians(lat))))
+    return lon - dlon, lat - dlat, lon + dlon, lat + dlat
 
 
-def get_control_latlon(row: Dict[str, str]) -> Tuple[Optional[float], Optional[float]]:
-    return safe_float(row.get("Control_Lat")), safe_float(row.get("Control_Lon"))
-
-
-def validated_keys(valid_rows: List[Dict[str, str]]) -> set:
-    keys = set()
-    for r in valid_rows:
-        k = facility_key(r)
-        if k:
-            keys.add(k)
-    return keys
-
-
-def parse_openaq_location(item: Dict[str, Any]) -> Dict[str, Any]:
-    coords = item.get("coordinates") or {}
-    lat = safe_float(coords.get("latitude"))
-    lon = safe_float(coords.get("longitude"))
-    name = item.get("name") or item.get("location") or item.get("displayName") or ""
-    provider_names: List[str] = []
-    for key in ("provider", "owner", "manufacturer", "country", "locality", "timezone"):
-        val = item.get(key)
-        if isinstance(val, dict):
-            provider_names.append(str(val.get("name") or val.get("id") or ""))
-        elif val:
-            provider_names.append(str(val))
-    sensors = item.get("sensors") or []
-    parameters = item.get("parameters") or []
-    parameter_names: List[str] = []
-    for seq in (sensors, parameters):
-        if isinstance(seq, list):
-            for p in seq:
-                if isinstance(p, dict):
-                    for pk in ("parameter", "name", "displayName"):
-                        v = p.get(pk)
-                        if isinstance(v, dict):
-                            v = v.get("name") or v.get("displayName")
-                        if v:
-                            parameter_names.append(str(v))
-                            break
-                elif p:
-                    parameter_names.append(str(p))
-    return {
-        "openaq_location_id": item.get("id", ""),
-        "monitoring_site_name": name,
-        "monitoring_site_lat": lat,
-        "monitoring_site_lon": lon,
-        "monitoring_site_locality": item.get("locality") or "",
-        "monitoring_site_country": (item.get("country") or {}).get("name") if isinstance(item.get("country"), dict) else item.get("country", ""),
-        "monitoring_provider_text": " | ".join([x for x in provider_names if x]),
-        "pollutants": sorted(set([p.lower().replace(" ", "") for p in parameter_names if p])),
-        "raw": item,
-    }
-
-
-def provider_classification(text: str) -> str:
-    t = (text or "").lower()
-    if any(h in t for h in COMMUNITY_HINTS):
-        return "community_sensor_supporting_context"
-    if any(h in t for h in OFFICIAL_HINTS):
-        return "official_or_governmental_candidate"
-    if any(h in t for h in LOCAL_NETWORK_HINTS):
-        return "local_network_candidate"
-    return "unknown_provider_candidate"
-
-
-def classify_candidate(distance_km: Optional[float], pollutants: List[str], provider_text: str, score: int) -> str:
-    pset = set(pollutants or [])
-    pcore = len(pset & CORE_POLLUTANTS)
-    provider_class = provider_classification(provider_text + " ")
-    if provider_class == "community_sensor_supporting_context":
-        return "supporting_context_community_sensor"
-    if distance_km is not None and distance_km > 25:
-        return "weak_distance_candidate"
-    if provider_class == "official_or_governmental_candidate" and distance_km is not None and distance_km <= 15 and pcore >= 3 and score >= 65:
-        return "high_confidence_official_candidate"
-    if provider_class in {"official_or_governmental_candidate", "local_network_candidate"} and distance_km is not None and distance_km <= 20 and pcore >= 2 and score >= 55:
-        return "local_or_official_candidate_needs_review"
-    if pcore >= 2 and score >= 45:
-        return "plausible_candidate_needs_review"
-    return "manual_review_low_confidence"
-
-
-def score_candidate(fac: Dict[str, str], point_role: str, point_lat: float, point_lon: float, cand: Dict[str, Any], source_label: str) -> Dict[str, Any]:
-    clat, clon = cand.get("monitoring_site_lat"), cand.get("monitoring_site_lon")
-    if clat is None or clon is None:
-        dist = None
-        distance_score = 0
-    else:
-        dist = haversine_km(point_lat, point_lon, clat, clon)
-        distance_score = max(0, min(45, int(45 * (1 - min(dist, 25) / 25))))
-
-    pollutants = cand.get("pollutants") or []
-    pollutant_score = min(35, sum(POLLUTANT_WEIGHTS.get(p, 0) for p in pollutants))
-    text = " ".join([
-        str(cand.get("monitoring_site_name") or ""),
-        str(cand.get("monitoring_provider_text") or ""),
-        str(cand.get("monitoring_site_locality") or ""),
-    ]).lower()
-    official_score = 15 if any(h in text for h in OFFICIAL_HINTS) else 0
-    source_score = 8 if source_label.startswith("cached") else 5
-    total = distance_score + pollutant_score + official_score + source_score
-    review_class = classify_candidate(dist, pollutants, cand.get("monitoring_provider_text", ""), total)
-    return {
-        "facility": fac.get("Facility", ""),
-        "facility_key": facility_key(fac),
-        "location": fac.get("Location", ""),
-        "facility_lat": fac.get("Lat") or fac.get("Facility_Lat") or "",
-        "facility_lon": fac.get("Lon") or fac.get("Facility_Lon") or "",
-        "control_site": fac.get("Control_Site", ""),
-        "control_lat": fac.get("Control_Lat", ""),
-        "control_lon": fac.get("Control_Lon", ""),
-        "query_point_role": point_role,
-        "query_point_lat": point_lat,
-        "query_point_lon": point_lon,
-        "candidate_source": source_label,
-        "candidate_status": "candidate_needs_review",
-        "candidate_review_class": review_class,
-        "monitoring_site_name": cand.get("monitoring_site_name", ""),
-        "openaq_location_id": cand.get("openaq_location_id", ""),
-        "monitoring_site_lat": clat,
-        "monitoring_site_lon": clon,
-        "distance_query_to_monitor_km": round(dist, 3) if dist is not None else "",
-        "pollutants": ";".join(pollutants),
-        "monitoring_provider_text": cand.get("monitoring_provider_text", ""),
-        "provider_class": provider_classification(str(cand.get("monitoring_provider_text", ""))),
-        "distance_score": distance_score,
-        "pollutant_score": pollutant_score,
-        "official_hint_score": official_score,
-        "source_score": source_score,
-        "relevance_score": total,
-        "suggested_action": suggested_action(review_class),
-        "review_note": "Candidate only; compare against DEFRA/AURN, local geography, control-site role and source provenance before validation.",
-    }
-
-
-def suggested_action(review_class: str) -> str:
-    if review_class == "high_confidence_official_candidate":
-        return "review_for_promotion_to_validated_overlay"
-    if review_class == "local_or_official_candidate_needs_review":
-        return "review_as_local_or_official_overlay_candidate"
-    if review_class == "supporting_context_community_sensor":
-        return "supporting_context_only_do_not_validate_as_regulatory_overlay"
-    if review_class == "weak_distance_candidate":
-        return "manual_review_distance_too_high"
-    return "manual_review_required"
-
-
-def openaq_request(params: Dict[str, Any], api_key: Optional[str], timeout: int, max_retries: int, base_sleep: float) -> Tuple[Optional[List[Dict[str, Any]]], Dict[str, Any]]:
-    clean_params = {k: str(v) for k, v in params.items() if v is not None and str(v) != ""}
-    url = OPENAQ_BASE + "?" + urllib.parse.urlencode(clean_params)
-    headers = {"User-Agent": "AQ26-incinerator-overlay-v3/1.0"}
+def opener(api_key: str) -> urllib.request.OpenerDirector:
+    op = urllib.request.build_opener()
     if api_key:
-        headers["X-API-Key"] = api_key
-    diag: Dict[str, Any] = {"url": url, "ok": False, "http_status": "", "error_type": "", "error_body": "", "attempts": 0, "retry_after": ""}
-    for attempt in range(max(1, max_retries + 1)):
-        diag["attempts"] = attempt + 1
-        req = urllib.request.Request(url, headers=headers)
+        op.addheaders = [("X-API-Key", api_key), ("User-Agent", "AQ26-Incinerator-Overlay-Finder/3.1")]
+    else:
+        op.addheaders = [("User-Agent", "AQ26-Incinerator-Overlay-Finder/3.1")]
+    return op
+
+
+def fetch_json(url: str, op: urllib.request.OpenerDirector, max_retries: int, sleep_seconds: float) -> Tuple[Optional[dict], Dict[str, Any]]:
+    diag: Dict[str, Any] = {"url": url, "http_status": "", "ok": False, "error": "", "response_excerpt": ""}
+    for attempt in range(max_retries + 1):
+        diag["attempt"] = attempt + 1
         try:
-            with urllib.request.urlopen(req, timeout=timeout) as resp:
+            with op.open(url, timeout=45) as resp:
+                status = getattr(resp, "status", 200)
                 body = resp.read().decode("utf-8", errors="replace")
-                data = json.loads(body) if body else {}
-                results = data.get("results") or []
-                diag.update({"ok": True, "http_status": getattr(resp, "status", 200), "result_count": len(results)})
-                return results, diag
+                diag.update({"http_status": status, "ok": 200 <= status < 300, "response_excerpt": body[:500]})
+                if 200 <= status < 300:
+                    return json.loads(body), diag
         except urllib.error.HTTPError as e:
-            body = e.read().decode("utf-8", errors="replace")[:4000]
-            diag.update({"http_status": e.code, "error_type": "HTTPError", "error_body": body})
+            body = e.read().decode("utf-8", errors="replace") if hasattr(e, "read") else ""
+            diag.update({"http_status": e.code, "ok": False, "error": f"HTTPError: {e}", "response_excerpt": body[:500]})
             if e.code == 429 and attempt < max_retries:
-                ra = e.headers.get("Retry-After") if e.headers else None
-                diag["retry_after"] = ra or ""
-                delay = safe_float(ra) or (base_sleep * (2 ** attempt) + 2.0)
-                time.sleep(min(90.0, max(1.0, delay)))
+                retry_after = e.headers.get("Retry-After") if e.headers else None
+                try:
+                    wait = float(retry_after) if retry_after else sleep_seconds * (2 ** attempt)
+                except Exception:
+                    wait = sleep_seconds * (2 ** attempt)
+                time.sleep(max(wait, sleep_seconds))
                 continue
             return None, diag
         except Exception as e:
-            diag.update({"error_type": type(e).__name__, "error_body": str(e)[:4000]})
+            diag.update({"http_status": "", "ok": False, "error": repr(e), "response_excerpt": ""})
             if attempt < max_retries:
-                time.sleep(min(30.0, base_sleep * (2 ** attempt) + 1.0))
+                time.sleep(sleep_seconds * (attempt + 1))
                 continue
             return None, diag
     return None, diag
 
 
-def bbox_around(lat: float, lon: float, km: float) -> str:
-    dlat = km / 111.32
-    dlon = km / (111.32 * max(0.1, math.cos(math.radians(lat))))
-    return f"{lon-dlon:.5f},{lat-dlat:.5f},{lon+dlon:.5f},{lat+dlat:.5f}"
+def extract_location_rows(payload: dict) -> List[dict]:
+    results = payload.get("results") or payload.get("data") or []
+    if isinstance(results, dict):
+        results = results.get("results", [])
+    return results if isinstance(results, list) else []
 
 
-def query_openaq_candidates(lat: float, lon: float, radius_km: float, limit: int, api_key: Optional[str], sleep_s: float, max_retries: int, exhaustive: bool, timeout: int) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], bool]:
-    radius_m = int(min(MAX_OPENAQ_RADIUS_M, max(1000, radius_km * 1000)))
-    attempts = [
-        {"method": "coordinates_lat_lon_radius_capped", "params": {"coordinates": f"{lat:.5f},{lon:.5f}", "radius": radius_m, "limit": limit, "iso": "GB"}},
-        {"method": "coordinates_lat_lon_radius_10000", "params": {"coordinates": f"{lat:.5f},{lon:.5f}", "radius": min(10000, radius_m), "limit": limit, "iso": "GB"}},
-        {"method": "bbox_25km_lonlat", "params": {"bbox": bbox_around(lat, lon, min(25, radius_km)), "limit": limit, "iso": "GB"}},
-    ]
-    if exhaustive:
-        attempts.extend([
-            {"method": "bbox_10km_lonlat", "params": {"bbox": bbox_around(lat, lon, 10), "limit": limit, "iso": "GB"}},
-            {"method": "diagnostic_coordinates_lon_lat", "params": {"coordinates": f"{lon:.5f},{lat:.5f}", "radius": min(10000, radius_m), "limit": min(limit, 25), "iso": "GB"}},
-        ])
-    diagnostics: List[Dict[str, Any]] = []
-    unique: Dict[str, Dict[str, Any]] = {}
-    hit_rate_limit = False
-    for a in attempts:
-        results, diag = openaq_request(a["params"], api_key, timeout=timeout, max_retries=max_retries, base_sleep=max(1.0, sleep_s))
-        diag["method"] = a["method"]
-        diagnostics.append(diag)
-        if str(diag.get("http_status")) == "429":
-            hit_rate_limit = True
-        if results:
-            for item in results:
-                cand = parse_openaq_location(item)
-                key = str(cand.get("openaq_location_id") or cand.get("monitoring_site_name") or json.dumps(item, sort_keys=True)[:120])
-                unique[key] = cand
-        if sleep_s:
-            time.sleep(sleep_s)
-    return list(unique.values()), diagnostics, hit_rate_limit
+def params_from_location(loc: Dict[str, Any]) -> List[str]:
+    out: List[str] = []
+    for key in ("parameters", "parameter", "sensors"):
+        val = loc.get(key)
+        if isinstance(val, list):
+            for item in val:
+                if isinstance(item, dict):
+                    name = item.get("name") or item.get("displayName") or item.get("parameter") or item.get("id")
+                else:
+                    name = item
+                if name:
+                    out.append(str(name))
+    return sorted({p for p in out if p})
 
 
-def load_cached_candidates(path: Path, wanted_keys: set) -> List[Dict[str, Any]]:
-    if not path.exists():
-        return []
-    rows = read_csv_dicts(path)
-    out: List[Dict[str, Any]] = []
+def provider_text(loc: Dict[str, Any]) -> str:
+    parts: List[str] = []
+    for key in ("provider", "owner", "manufacturer", "source", "entity"):
+        v = loc.get(key)
+        if isinstance(v, dict):
+            parts.extend(str(x) for x in v.values() if x)
+        elif v:
+            parts.append(str(v))
+    return " ".join(parts)
+
+
+def coords_from_location(loc: Dict[str, Any]) -> Tuple[Optional[float], Optional[float]]:
+    c = loc.get("coordinates") or {}
+    if isinstance(c, dict):
+        lat = parse_float(c.get("latitude"))
+        lon = parse_float(c.get("longitude"))
+        if lat is not None and lon is not None:
+            return lat, lon
+    return None, None
+
+
+def score_candidate(fac_lat: float, fac_lon: float, query_lat: float, query_lon: float, query_role: str, loc: Dict[str, Any]) -> Tuple[int, str, List[str], str, float, float]:
+    lat, lon = coords_from_location(loc)
+    if lat is None or lon is None:
+        return 0, "manual_review_low_confidence", [], "", 9999.0, 9999.0
+    dist_fac = haversine_km(fac_lat, fac_lon, lat, lon)
+    dist_query = haversine_km(query_lat, query_lon, lat, lon)
+    params = params_from_location(loc)
+    params_l = {p.lower().replace(" ", "") for p in params}
+    relevant = [p for p in params if p.lower().replace(" ", "") in DEFAULT_POLLUTANTS]
+    prov = provider_text(loc).lower() + " " + str(loc.get("name", "")).lower()
+    official = any(h in prov for h in OFFICIAL_HINTS) or bool(re.search(r"\buka\d+\b", prov))
+    community = any(h in prov for h in COMMUNITY_HINTS)
+    score = 0
+    d = dist_query
+    if d <= 1: score += 45
+    elif d <= 3: score += 40
+    elif d <= 5: score += 34
+    elif d <= 10: score += 25
+    elif d <= 15: score += 17
+    elif d <= 25: score += 8
+    else: score -= 10
+    score += min(30, len(relevant) * 7)
+    if "no2" in params_l: score += 8
+    if "pm2.5" in {p.lower() for p in params} or "pm25" in params_l: score += 6
+    if "pm10" in params_l: score += 6
+    if "so2" in params_l: score += 5
+    if official: score += 22
+    if community: score -= 12
+    if query_role == "control": score += 3
+    if score >= 85 and official:
+        cls = "high_confidence_official_candidate"
+    elif score >= 70 and official:
+        cls = "local_or_official_candidate_needs_review"
+    elif score >= 55:
+        cls = "plausible_candidate_needs_review"
+    elif community and score >= 35:
+        cls = "supporting_context_community_sensor"
+    else:
+        cls = "manual_review_low_confidence"
+    return int(score), cls, relevant, provider_text(loc), dist_fac, dist_query
+
+
+def facility_name(row: Dict[str, Any]) -> str:
+    return first_present(row, ["Facility", "facility", "Facility_Name", "facility_name", "Incinerator", "Site", "site_name", "Name"])
+
+
+def control_name(row: Dict[str, Any]) -> str:
+    return first_present(row, ["Control", "Control_Site", "Control Site", "control_site", "Control_Location", "Control LSOA"])
+
+
+def validated_keys(rows: List[Dict[str, str]]) -> set[str]:
+    keys: set[str] = set()
     for r in rows:
-        if str(r.get("facility_key") or "") in wanted_keys or canonical_facility_key(str(r.get("facility") or "")) in wanted_keys:
-            out.append(r)
-    return out
+        for field in ["Facility", "facility", "Facility_Name", "facility_name", "Incinerator", "Site", "site_name", "Name"]:
+            if r.get(field):
+                keys.update(alias_keys(r.get(field)))
+        # capture permit aliases too
+        for field in ["Permit", "permit", "Permit_Number", "permit_number", "EPR", "EP Permit"]:
+            if r.get(field):
+                keys.update(alias_keys(r.get(field)))
+    return keys
 
 
-def cached_row_to_candidate(r: Dict[str, Any]) -> Dict[str, Any]:
-    pollutants = [x for x in str(r.get("pollutants") or "").split(";") if x]
-    return {
-        "openaq_location_id": r.get("openaq_location_id", ""),
-        "monitoring_site_name": r.get("monitoring_site_name", ""),
-        "monitoring_site_lat": safe_float(r.get("monitoring_site_lat")),
-        "monitoring_site_lon": safe_float(r.get("monitoring_site_lon")),
-        "monitoring_provider_text": r.get("monitoring_provider_text", ""),
-        "monitoring_site_locality": "",
-        "pollutants": pollutants,
-    }
+def selected_candidate_keys(path: Path) -> set[str]:
+    keys: set[str] = set()
+    if not path.exists():
+        return keys
+    try:
+        for r in read_csv(path):
+            st = str(r.get("review_status") or r.get("candidate_class") or "").lower()
+            if "candidate" in st or "review" in st or "high_confidence" in st or "plausible" in st:
+                name = r.get("facility_name") or r.get("facility") or r.get("Facility")
+                keys.update(alias_keys(name))
+    except Exception:
+        pass
+    return keys
 
 
-def html_escape(x: Any) -> str:
-    return html.escape(str(x if x is not None else ""))
+def load_cache(path: Path) -> List[Dict[str, str]]:
+    if path.exists():
+        try:
+            return read_csv(path)
+        except Exception:
+            return []
+    return []
 
 
-def build_page(path: Path, summary: Dict[str, Any], selected: List[Dict[str, Any]], status_rows: List[Dict[str, Any]]) -> None:
+def query_variants(lat: float, lon: float, radius_km: float, limit: int) -> List[Tuple[str, str]]:
+    radius_m = int(min(MAX_OPENAQ_RADIUS_M, max(1000, radius_km * 1000)))
+    r10 = min(radius_m, 10000)
+    variants: List[Tuple[str, str]] = []
+    q1 = {"coordinates": f"{lat:.6f},{lon:.6f}", "radius": str(radius_m), "limit": str(limit), "iso": "GB"}
+    q2 = {"coordinates": f"{lat:.6f},{lon:.6f}", "radius": str(r10), "limit": str(limit), "iso": "GB"}
+    variants.append(("coordinates_lat_lon_radius_capped", OPENAQ_LOCATIONS + "?" + urllib.parse.urlencode(q1)))
+    variants.append(("coordinates_lat_lon_radius_10000", OPENAQ_LOCATIONS + "?" + urllib.parse.urlencode(q2)))
+    for label, km in [("bbox_25km_lonlat", min(radius_km, 25.0)), ("bbox_10km_lonlat", min(radius_km, 10.0))]:
+        minlon, minlat, maxlon, maxlat = bbox_around(lat, lon, km)
+        q = {"bbox": f"{minlon:.6f},{minlat:.6f},{maxlon:.6f},{maxlat:.6f}", "limit": str(limit), "iso": "GB"}
+        variants.append((label, OPENAQ_LOCATIONS + "?" + urllib.parse.urlencode(q)))
+    return variants
+
+
+def build_page(path: Path, summary: Dict[str, Any], selected_rows: List[Dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    cards = "".join([
-        f"<div class='card'><div class='num'>{html_escape(summary.get(k,''))}</div><p>{html_escape(label)}</p></div>"
-        for k, label in [
-            ("broad_facilities", "Facilities in register"),
-            ("validated_overlays", "Validated overlays"),
-            ("remaining_facilities_total", "Remaining after alias fix"),
-            ("facilities_with_selected_candidates", "Facilities with candidates"),
-            ("selected_candidates", "Candidate rows for review"),
-            ("rate_limited_calls", "Rate-limited calls"),
-        ]
-    ])
-    rows = []
-    for r in selected[:250]:
-        rows.append(
-            "<tr>"
-            f"<td>{html_escape(r.get('facility'))}</td>"
-            f"<td>{html_escape(r.get('candidate_review_class'))}</td>"
-            f"<td>{html_escape(r.get('monitoring_site_name'))}</td>"
-            f"<td>{html_escape(r.get('query_point_role'))}</td>"
-            f"<td>{html_escape(r.get('distance_query_to_monitor_km'))}</td>"
-            f"<td>{html_escape(r.get('pollutants'))}</td>"
-            f"<td>{html_escape(r.get('relevance_score'))}</td>"
-            "</tr>"
-        )
-    if not rows:
-        rows.append("<tr><td colspan='7'>No selected candidates in this run. Review diagnostics.</td></tr>")
-    status_html = []
-    for r in status_rows[:80]:
-        status_html.append(
-            "<tr>"
-            f"<td>{html_escape(r.get('facility'))}</td>"
-            f"<td>{html_escape(r.get('overlay_status'))}</td>"
-            f"<td>{html_escape(r.get('best_candidate_site'))}</td>"
-            f"<td>{html_escape(r.get('best_candidate_score'))}</td>"
-            f"<td>{html_escape(r.get('best_candidate_class'))}</td>"
-            "</tr>"
-        )
-    html_doc = f"""<!doctype html><html lang='en'><head>
-<meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>
-<title>AQ26 Incinerator Overlay Discovery V3</title>
-<style>
-body{{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:#f4f7fb;color:#102033}}
-header{{background:#fff;border-bottom:1px solid #d9e2ef;padding:16px 28px;position:sticky;top:0;z-index:2}}
-main{{max-width:1220px;margin:0 auto;padding:28px}}
-.hero{{background:linear-gradient(135deg,#09213f,#0e6a7b);color:#fff;border-radius:26px;padding:30px;box-shadow:0 18px 50px rgba(14,42,71,.18)}}
-.grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:18px 0}}
-.card{{background:#fff;border:1px solid #d9e2ef;border-radius:18px;padding:18px;box-shadow:0 10px 24px rgba(14,42,71,.08)}}
-.num{{font-size:2rem;font-weight:850;color:#0e6a7b}}
-table{{border-collapse:collapse;width:100%;background:#fff;border-radius:16px;overflow:hidden;margin-top:10px}}
-th,td{{border-bottom:1px solid #e6edf5;text-align:left;padding:10px;vertical-align:top;font-size:.9rem}}
-th{{background:#0b2742;color:#fff}}
-.badge{{display:inline-block;background:#eaf6f7;color:#0e6a7b;border-radius:999px;padding:6px 10px;font-weight:700}}
-</style></head><body>
-<header><strong>SCC Nexus · AQ26</strong> · Incinerator monitoring overlay discovery V3</header>
-<main>
-<section class='hero'><span class='badge'>Candidate discovery · not validation</span><h1>Incinerator monitoring overlay discovery V3</h1><p>Facility aliases are normalised, already validated overlays are preserved, OpenAQ is queried with rate-limit handling, and candidates are classified for review before promotion.</p></section>
-<section class='grid'>{cards}</section>
-<section class='card'><h2>Facility overlay status</h2><table><thead><tr><th>Facility</th><th>Status</th><th>Best candidate</th><th>Score</th><th>Class</th></tr></thead><tbody>{''.join(status_html)}</tbody></table></section>
-<section class='card'><h2>Selected candidates needing review</h2><table><thead><tr><th>Facility</th><th>Class</th><th>Candidate</th><th>Point</th><th>km</th><th>Pollutants</th><th>Score</th></tr></thead><tbody>{''.join(rows)}</tbody></table></section>
-</main></body></html>"""
-    path.write_text(html_doc, encoding="utf-8")
+    rows = "".join(
+        f"<tr><td>{html(r.get('facility_name'))}</td><td>{html(r.get('candidate_location_name'))}</td><td>{html(r.get('candidate_class'))}</td><td>{html(r.get('score'))}</td><td>{html(r.get('distance_to_query_km'))}</td><td>{html(r.get('pollutants'))}</td></tr>"
+        for r in selected_rows[:200]
+    )
+    text = f"""<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>AQ26 Incinerator Monitoring Overlays</title><link rel='icon' href='assets/favicon.svg'><style>body{{font-family:Arial,sans-serif;margin:0;background:#f6f8fb;color:#102033}}header{{background:#fff;border-bottom:1px solid #dbe3ef;padding:18px 24px}}main{{max-width:1180px;margin:0 auto;padding:24px}}.hero{{background:linear-gradient(135deg,#07233f,#0a6b82);color:white;border-radius:24px;padding:28px;margin:20px 0}}.cards{{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}}.card{{background:white;border:1px solid #dbe3ef;border-radius:18px;padding:16px;box-shadow:0 8px 24px rgba(12,33,61,.08)}}.metric{{font-size:2rem;font-weight:800}}table{{width:100%;border-collapse:collapse;background:white;border-radius:16px;overflow:hidden}}th,td{{padding:10px;border-bottom:1px solid #e8eef6;text-align:left;font-size:.92rem}}th{{background:#eaf3f8}}code{{background:#eef3f8;padding:2px 5px;border-radius:5px}}</style></head><body><header><strong>SCC Nexus · AQ26</strong> Incinerator monitoring overlay discovery</header><main><section class='hero'><h1>England & Wales incinerator monitoring overlays</h1><p>Facility-led discovery of validated and candidate air-quality monitoring overlays. Candidate rows require review before promotion.</p></section><section class='cards'><div class='card'><div class='metric'>{summary.get('broad_facilities', 0)}</div><p>Facilities in register</p></div><div class='card'><div class='metric'>{summary.get('validated_overlays', 0)}</div><p>Validated overlays</p></div><div class='card'><div class='metric'>{summary.get('facilities_queried_this_run', 0)}</div><p>Queried this run</p></div><div class='card'><div class='metric'>{summary.get('selected_candidates', 0)}</div><p>Candidates needing review</p></div><div class='card'><div class='metric'>{summary.get('rate_limited_calls', 0)}</div><p>Rate-limited calls</p></div></section><h2>Selected candidates for review</h2><table><thead><tr><th>Facility</th><th>Candidate station</th><th>Class</th><th>Score</th><th>Distance km</th><th>Pollutants</th></tr></thead><tbody>{rows}</tbody></table><p>Generated {html(summary.get('generated_at_utc'))}. Full diagnostics are kept in the unredacted review area.</p></main></body></html>"""
+    path.write_text(text, encoding="utf-8")
+
+
+def html(v: Any) -> str:
+    return (str(v or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;"))
 
 
 def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--broad-register", default="configs/aq26_incinerator_register/UK_Incinerators_with_Controls_Full_v3.csv")
-    ap.add_argument("--validated-overlays", default="configs/aq26_incinerator_register/UK_Incinerators_with_DEFRA_Sites_v3_validated_Full.csv")
+    ap.add_argument("--broad-register", required=True)
+    ap.add_argument("--validated-overlays", required=True)
     ap.add_argument("--output-root", default="site_public/data/focus/overlays_v3")
     ap.add_argument("--site-root", default="site_public")
     ap.add_argument("--radius-km", type=float, default=25.0)
     ap.add_argument("--limit-per-query", type=int, default=100)
-    ap.add_argument("--max-facilities", type=int, default=10, help="0 means all remaining facilities")
-    ap.add_argument("--live-openaq", action="store_true")
-    ap.add_argument("--write-page", action="store_true")
+    ap.add_argument("--max-facilities", type=int, default=10)
     ap.add_argument("--min-score", type=int, default=35)
-    ap.add_argument("--sleep", type=float, default=2.5)
+    ap.add_argument("--sleep-seconds", type=float, default=3.0)
     ap.add_argument("--max-retries", type=int, default=3)
-    ap.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT)
-    ap.add_argument("--exhaustive", action="store_true", help="Also run extra bbox/diagnostic lon-lat variants. Use sparingly to avoid rate limiting.")
+    ap.add_argument("--live-openaq", action="store_true")
     ap.add_argument("--use-v2-cache", action="store_true")
-    ap.add_argument("--v2-cache", default="site_public/data/focus/overlays_v2/candidate_monitoring_overlays.csv")
+    ap.add_argument("--skip-existing-candidates", action="store_true")
+    ap.add_argument("--force-requery", action="store_true")
+    ap.add_argument("--exhaustive", action="store_true")
+    ap.add_argument("--write-page", action="store_true")
     args = ap.parse_args(argv)
 
-    broad_rows = read_csv_dicts(Path(args.broad_register))
-    valid_rows = read_csv_dicts(Path(args.validated_overlays))
-    done = validated_keys(valid_rows)
-    remaining_all = [r for r in broad_rows if facility_key(r) not in done]
-    remaining = remaining_all if args.max_facilities == 0 else remaining_all[: max(0, args.max_facilities)]
-
+    broad_path = Path(args.broad_register)
+    validated_path = Path(args.validated_overlays)
     out = Path(args.output_root)
     site = Path(args.site_root)
     out.mkdir(parents=True, exist_ok=True)
-    site.mkdir(parents=True, exist_ok=True)
 
-    api_key = os.environ.get("OPENAQ_API_KEY", "").strip() or None
-    candidate_rows: List[Dict[str, Any]] = []
+    broad = read_csv(broad_path)
+    validated = read_csv(validated_path)
+    vkeys = validated_keys(validated)
+
+    prev_selected_path = out / "selected_candidate_overlays_needing_review.csv"
+    prev_candidate_keys = selected_candidate_keys(prev_selected_path) if (args.skip_existing_candidates and not args.force_requery) else set()
+
+    rows_status: List[Dict[str, Any]] = []
+    remaining: List[Dict[str, Any]] = []
+    for idx, r in enumerate(broad):
+        name = facility_name(r) or f"facility_{idx+1}"
+        keys = alias_keys(name)
+        is_validated = bool(keys & vkeys)
+        has_prev_candidate = bool(keys & prev_candidate_keys)
+        status = "validated_existing_overlay" if is_validated else ("candidate_overlay_needs_review_existing" if has_prev_candidate else "no_candidate_selected_yet")
+        rows_status.append({"facility_name": name, "overlay_status": status, "facility_key": "|".join(sorted(keys))})
+        if not is_validated and not has_prev_candidate:
+            remaining.append(r)
+
+    selected_to_query = remaining if args.max_facilities == 0 else remaining[: max(0, args.max_facilities)]
+
     diagnostics: List[Dict[str, Any]] = []
+    candidates: List[Dict[str, Any]] = []
+    selected: List[Dict[str, Any]] = []
     errors: List[Dict[str, Any]] = []
-    rate_limit_seen = False
 
-    wanted = {facility_key(r) for r in remaining}
+    api_key = os.environ.get("OPENAQ_API_KEY", "")
+    op = opener(api_key)
+
+    # cache candidates from V2 can be used as supporting input, but we still score/output freshly discovered rows separately.
     if args.use_v2_cache:
-        cached = load_cached_candidates(Path(args.v2_cache), wanted)
-        # Re-score cached rows using original query point if possible; this preserves useful prior results without API calls.
-        fac_by_key = {facility_key(r): r for r in broad_rows}
-        for cr in cached:
-            fk = str(cr.get("facility_key") or canonical_facility_key(str(cr.get("facility") or "")))
-            fac = fac_by_key.get(fk)
-            if not fac:
-                continue
-            lat = safe_float(cr.get("query_point_lat"))
-            lon = safe_float(cr.get("query_point_lon"))
-            role = str(cr.get("query_point_role") or "cached")
-            if lat is None or lon is None:
-                flat, flon = get_facility_latlon(fac)
-                lat, lon, role = flat, flon, "facility"
-            if lat is not None and lon is not None:
-                candidate_rows.append(score_candidate(fac, role, lat, lon, cached_row_to_candidate(cr), "cached_v2_openaq_candidate"))
-        diagnostics.append({"ok": True, "method": "v2_cache_import", "result_count": len(cached), "http_status": "cache"})
+        cache = load_cache(Path("site_public/data/focus/overlays_v2/candidate_monitoring_overlays.csv"))
+        for cr in cache:
+            fname = cr.get("facility_name") or cr.get("facility") or ""
+            if fname and any(bool(alias_keys(fname) & alias_keys(facility_name(r))) for r in selected_to_query):
+                row = dict(cr)
+                row.setdefault("source_layer", "v2_cache")
+                candidates.append(row)
 
     if args.live_openaq:
-        for idx, fac in enumerate(remaining, start=1):
-            points: List[Tuple[str, float, float]] = []
-            flat, flon = get_facility_latlon(fac)
-            clat, clon = get_control_latlon(fac)
-            if flat is not None and flon is not None:
-                points.append(("facility", flat, flon))
-            if clat is not None and clon is not None:
-                points.append(("control", clat, clon))
-            if not points:
-                errors.append({"facility": fac.get("Facility", ""), "facility_key": facility_key(fac), "error": "no usable lat/lon coordinates in register"})
+        for r in selected_to_query:
+            fname = facility_name(r)
+            flat, flon, fsrc = lat_lon_from_row(r, "facility")
+            clat, clon, csrc = lat_lon_from_row(r, "control")
+            query_points: List[Tuple[str, Optional[float], Optional[float], str]] = [("facility", flat, flon, fsrc), ("control", clat, clon, csrc)]
+            if flat is None or flon is None:
+                errors.append({"facility_name": fname, "stage": "coordinate", "error": "facility coordinate missing", "source": fsrc})
                 continue
-            for role, lat, lon in points:
-                cands, diags, hit429 = query_openaq_candidates(lat, lon, args.radius_km, args.limit_per_query, api_key, args.sleep, args.max_retries, args.exhaustive, args.timeout)
-                if hit429:
-                    rate_limit_seen = True
-                for d in diags:
-                    d.update({"facility": fac.get("Facility", ""), "facility_key": facility_key(fac), "query_point_role": role, "query_lat": lat, "query_lon": lon})
-                    diagnostics.append(d)
-                for cand in cands:
-                    candidate_rows.append(score_candidate(fac, role, lat, lon, cand, "OpenAQ v3 locations"))
-    else:
-        diagnostics.append({"ok": True, "method": "live_openaq_disabled", "message": "Run with --live-openaq to query OpenAQ."})
+            for role, qlat, qlon, qsrc in query_points:
+                if qlat is None or qlon is None:
+                    diagnostics.append({"facility_name": fname, "query_role": role, "method": "coordinate_missing", "ok": False, "error": qsrc})
+                    continue
+                variants = query_variants(qlat, qlon, args.radius_km, args.limit_per_query)
+                if not args.exhaustive:
+                    variants = variants[:3]
+                for method, url in variants:
+                    data, diag = fetch_json(url, op, args.max_retries, args.sleep_seconds)
+                    diag.update({"facility_name": fname, "query_role": role, "method": method})
+                    diagnostics.append(diag)
+                    if data:
+                        locs = extract_location_rows(data)
+                        for loc in locs:
+                            score, cls, relevant, prov, dist_fac, dist_query = score_candidate(flat, flon, qlat, qlon, role, loc)
+                            lat, lon = coords_from_location(loc)
+                            cname = loc.get("name") or loc.get("locality") or loc.get("id") or ""
+                            cid = loc.get("id") or loc.get("location_id") or ""
+                            cand = {
+                                "facility_name": fname,
+                                "control_name": control_name(r),
+                                "query_role": role,
+                                "query_method": method,
+                                "coordinate_source": qsrc,
+                                "candidate_location_id": cid,
+                                "candidate_location_name": cname,
+                                "candidate_latitude": lat,
+                                "candidate_longitude": lon,
+                                "provider": prov,
+                                "pollutants": ";".join(relevant),
+                                "all_parameters": ";".join(params_from_location(loc)),
+                                "distance_to_facility_km": f"{dist_fac:.3f}",
+                                "distance_to_query_km": f"{dist_query:.3f}",
+                                "score": score,
+                                "candidate_class": cls,
+                                "review_status": "candidate_needs_review" if score >= args.min_score else "below_threshold",
+                                "source_layer": "openaq_live_v3_1",
+                            }
+                            candidates.append(cand)
+                    time.sleep(max(0.0, args.sleep_seconds))
 
-    # De-duplicate; keep highest score for each facility + candidate + query role.
-    dedup: Dict[Tuple[str, str, str], Dict[str, Any]] = {}
-    for r in candidate_rows:
-        key = (str(r.get("facility_key", "")), str(r.get("openaq_location_id") or r.get("monitoring_site_name")), str(r.get("query_point_role", "")))
-        if key not in dedup or int(r.get("relevance_score") or 0) > int(dedup[key].get("relevance_score") or 0):
-            dedup[key] = r
-    candidate_rows = sorted(dedup.values(), key=lambda x: (str(x.get("facility", "")), -int(x.get("relevance_score") or 0)))
+    # Deduplicate candidates by facility + location id/name + role; keep max score.
+    best: Dict[str, Dict[str, Any]] = {}
+    for c in candidates:
+        fname = c.get("facility_name") or c.get("facility") or ""
+        locid = c.get("candidate_location_id") or c.get("candidate_location_name") or c.get("location_name") or ""
+        role = c.get("query_role") or ""
+        key = f"{norm_key(fname)}|{locid}|{role}"
+        try:
+            sc = int(float(c.get("score", 0)))
+        except Exception:
+            sc = 0
+        if key not in best or sc > int(float(best[key].get("score", 0) or 0)):
+            best[key] = c
+    candidates = list(best.values())
+    for c in candidates:
+        try:
+            if int(float(c.get("score", 0))) >= args.min_score:
+                c["review_status"] = "candidate_needs_review"
+                selected.append(c)
+        except Exception:
+            pass
 
-    selected: List[Dict[str, Any]] = []
-    seen_counts: Dict[Tuple[str, str], int] = {}
-    for r in candidate_rows:
-        if int(r.get("relevance_score") or 0) < args.min_score:
-            continue
-        key = (str(r.get("facility_key", "")), str(r.get("query_point_role", "")))
-        if seen_counts.get(key, 0) >= 3:
-            continue
-        selected.append(r)
-        seen_counts[key] = seen_counts.get(key, 0) + 1
+    facilities_with_selected = {norm_key(c.get("facility_name")) for c in selected}
+    for st in rows_status:
+        if st["overlay_status"] == "no_candidate_selected_yet" and norm_key(st["facility_name"]) in facilities_with_selected:
+            st["overlay_status"] = "candidate_overlay_needs_review"
 
-    selected_by_fac: Dict[str, List[Dict[str, Any]]] = {}
-    for r in selected:
-        selected_by_fac.setdefault(str(r.get("facility_key")), []).append(r)
-
-    valid_by_key = {facility_key(r): r for r in valid_rows}
-    status_rows: List[Dict[str, Any]] = []
-    for fac in broad_rows:
-        fk = facility_key(fac)
-        if fk in valid_by_key:
-            vr = valid_by_key[fk]
-            status_rows.append({
-                "facility": fac.get("Facility", ""),
-                "facility_key": fk,
-                "overlay_status": "validated_existing_overlay",
-                "best_candidate_site": vr.get("DEFRA_Site_Name", ""),
-                "best_candidate_score": "validated",
-                "best_candidate_class": vr.get("DEFRA_Mapping_Confidence", ""),
-                "suggested_action": "keep_validated_overlay",
-            })
-        elif selected_by_fac.get(fk):
-            best = sorted(selected_by_fac[fk], key=lambda x: -int(x.get("relevance_score") or 0))[0]
-            status_rows.append({
-                "facility": fac.get("Facility", ""),
-                "facility_key": fk,
-                "overlay_status": "candidate_overlay_needs_review",
-                "best_candidate_site": best.get("monitoring_site_name", ""),
-                "best_candidate_score": best.get("relevance_score", ""),
-                "best_candidate_class": best.get("candidate_review_class", ""),
-                "suggested_action": best.get("suggested_action", ""),
-            })
-        else:
-            status_rows.append({
-                "facility": fac.get("Facility", ""),
-                "facility_key": fk,
-                "overlay_status": "no_candidate_selected_yet",
-                "best_candidate_site": "",
-                "best_candidate_score": "",
-                "best_candidate_class": "",
-                "suggested_action": "needs_defra_local_waqi_manual_discovery_or_retry",
-            })
-
-    http_429 = sum(1 for d in diagnostics if str(d.get("http_status")) == "429")
-    http_200 = sum(1 for d in diagnostics if str(d.get("http_status")) == "200")
-    facilities_with_selected = len({r.get("facility_key") for r in selected})
-    summary = {
-        "generated_utc": utc_now(),
-        "broad_facilities": len(broad_rows),
-        "validated_overlays": len(valid_rows),
-        "validated_facility_keys_after_aliasing": len(done),
-        "remaining_facilities_total": len(remaining_all),
-        "remaining_facilities_queried_this_run": len(remaining),
-        "live_openaq": bool(args.live_openaq),
-        "use_v2_cache": bool(args.use_v2_cache),
-        "requested_radius_km": args.radius_km,
-        "openaq_point_radius_cap_m": MAX_OPENAQ_RADIUS_M,
-        "limit_per_query": args.limit_per_query,
-        "sleep_seconds": args.sleep,
-        "max_retries": args.max_retries,
-        "exhaustive": bool(args.exhaustive),
-        "candidate_rows": len(candidate_rows),
-        "selected_candidates": len(selected),
-        "facilities_with_selected_candidates": facilities_with_selected,
-        "diagnostic_rows": len(diagnostics),
-        "http_200_calls": http_200,
-        "rate_limited_calls": http_429,
-        "error_rows": len(errors),
-        "rate_limit_seen": bool(rate_limit_seen or http_429),
-        "status": "candidate_discovery_complete_with_rate_limit" if http_429 else "candidate_discovery_complete",
-        "note": "New candidates are not validated. Promote only after manual/source review. Public pages should show summary counts, not raw diagnostics.",
-    }
-
-    write_csv(out / "validated_defra_overlays.csv", valid_rows)
-    write_csv(out / "remaining_overlay_queue.csv", remaining_all)
-    write_csv(out / "remaining_overlay_batch_queried.csv", remaining)
-    write_csv(out / "candidate_monitoring_overlays.csv", candidate_rows)
+    write_csv(out / "facility_overlay_status.csv", rows_status)
+    write_csv(out / "remaining_overlay_queue.csv", [{"facility_name": facility_name(r), "control_name": control_name(r)} for r in remaining])
+    write_csv(out / "queried_facilities_this_run.csv", [{"facility_name": facility_name(r), "control_name": control_name(r)} for r in selected_to_query])
+    write_csv(out / "candidate_monitoring_overlays.csv", candidates)
     write_csv(out / "selected_candidate_overlays_needing_review.csv", selected)
-    write_csv(out / "facility_overlay_status.csv", status_rows)
     write_csv(out / "openaq_query_diagnostics.csv", diagnostics)
     write_json(out / "overlay_discovery_errors.json", errors)
+
+    status_counts: Dict[str, int] = {}
+    for r in rows_status:
+        status_counts[r["overlay_status"]] = status_counts.get(r["overlay_status"], 0) + 1
+    http_counts: Dict[str, int] = {}
+    for d in diagnostics:
+        hs = str(d.get("http_status", ""))
+        if hs:
+            http_counts[hs] = http_counts.get(hs, 0) + 1
+    summary = {
+        "generated_at_utc": now_utc(),
+        "workflow_version": "v3.1_skip_existing_candidates",
+        "broad_facilities": len(broad),
+        "validated_overlays": len(validated),
+        "remaining_facilities_total": len(remaining),
+        "previous_candidate_facilities_skipped": len(prev_candidate_keys),
+        "facilities_queried_this_run": len(selected_to_query),
+        "candidate_rows": len(candidates),
+        "selected_candidates": len(selected),
+        "facilities_with_selected_candidates_this_run": len(facilities_with_selected),
+        "status_counts": status_counts,
+        "diagnostic_rows": len(diagnostics),
+        "http_status_counts": http_counts,
+        "rate_limited_calls": http_counts.get("429", 0),
+        "error_rows": len(errors),
+        "openaq_radius_cap_m": MAX_OPENAQ_RADIUS_M,
+        "live_openaq": bool(args.live_openaq),
+        "skip_existing_candidates": bool(args.skip_existing_candidates),
+        "force_requery": bool(args.force_requery),
+    }
     write_json(out / "incinerator_overlay_summary.json", summary)
-
     if args.write_page:
-        build_page(site / "incinerator-overlays.html", summary, selected, status_rows)
-
+        build_page(site / "incinerator-overlays.html", summary, selected)
     print(json.dumps(summary, indent=2))
     return 0
 
