@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "generated_utc": "2026-05-28T18:35:26Z",
+  "source_logo": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/website/assets/logo_web.svg",
+  "copied": [],
+  "generated_pngs": [
+    "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/assets/favicon-16x16.png",
+    "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/assets/favicon-32x32.png",
+    "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/assets/apple-touch-icon.png",
+    "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/assets/android-chrome-192x192.png",
+    "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/assets/android-chrome-512x512.png",
+    "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_unredacted/assets/favicon-16x16.png",
+    "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_unredacted/assets/favicon-32x32.png",
+    "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_unredacted/assets/apple-touch-icon.png",
+    "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_unredacted/assets/android-chrome-192x192.png",
+    "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_unredacted/assets/android-chrome-512x512.png"
+  ],
+  "generated_ico": [
+    "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/assets/favicon.ico",
+    "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_unredacted/assets/favicon.ico"
+  ],
+  "html_updated": [
+    "site_public/contact.html",
+    "site_public/latest-report.html",
+    "site_public/source-records.html",
+    "site_public/weekly-archive.html",
+    "site_public/cookies.html",
+    "site_public/readiness.html",
+    "site_public/archive.html",
+    "site_public/about.html",
+    "site_public/incinerators.html",
+    "site_public/evidence-downloads.html",
+    "site_public/comparisons.html",
+    "site_public/incinerator-overlays.html",
+    "site_public/weekly-update.html",
+    "site_public/privacy.html",
+    "site_public/historical-comparisons.html",
+    "site_public/terms.html",
+    "site_public/accessibility.html",
+    "site_public/overlays.html",
+    "site_public/legal.html",
+    "site_public/downloads.html",
+    "site_public/methodology.html",
+    "site_public/newhaven.html",
+    "site_public/index.html",
+    "site_unredacted/weekly-update.html",
+    "site_unredacted/evidence.html",
+    "site_unredacted/index.html",
+    "site_unredacted/diagnostics.html",
+    "site_unredacted/candidates.html"
+  ],
+  "warnings": []
+}

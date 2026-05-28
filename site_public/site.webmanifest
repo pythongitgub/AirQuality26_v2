@@ -3,16 +3,6 @@
   "short_name": "AQ26",
   "icons": [
     {
-      "src": "assets/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
-    },
-    {
-      "src": "assets/apple-touch-icon.png",
-      "sizes": "180x180",
-      "type": "image/png"
-    },
-    {
       "src": "assets/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
@@ -21,9 +11,14 @@
       "src": "assets/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
     }
   ],
   "theme_color": "#071a30",
-  "background_color": "#f5f8fc",
+  "background_color": "#f4f8fb",
   "display": "standalone"
 }
