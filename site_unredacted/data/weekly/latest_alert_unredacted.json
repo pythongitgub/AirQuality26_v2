@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-05-28T13:11:34Z",
+  "generated_utc": "2026-05-28T18:03:28Z",
   "headline": "Weekly incinerator evidence update",
   "alert_level": "amber",
   "total_facilities": 46,
@@ -15,9 +15,51 @@
     "Thetford Incinerator"
   ],
   "backfill_status": {
-    "status": "completed_with_script_warnings",
-    "script": "scripts/aq26_weeklyv2_collect.py",
-    "note": "Script returned non-zero; alert workflow continued."
+    "status": "completed",
+    "generated_utc": "2026-05-28T18:03:28Z",
+    "scope": "high_confidence",
+    "weeks": [
+      {
+        "week_start": "2026-03-30",
+        "week_end": "2026-04-06"
+      },
+      {
+        "week_start": "2026-04-06",
+        "week_end": "2026-04-13"
+      },
+      {
+        "week_start": "2026-04-13",
+        "week_end": "2026-04-20"
+      },
+      {
+        "week_start": "2026-04-20",
+        "week_end": "2026-04-27"
+      },
+      {
+        "week_start": "2026-04-27",
+        "week_end": "2026-05-04"
+      },
+      {
+        "week_start": "2026-05-04",
+        "week_end": "2026-05-11"
+      },
+      {
+        "week_start": "2026-05-11",
+        "week_end": "2026-05-18"
+      },
+      {
+        "week_start": "2026-05-18",
+        "week_end": "2026-05-25"
+      }
+    ],
+    "facilities_in_register": 46,
+    "facilities_selected": 26,
+    "validated_overlays": 8,
+    "candidate_overlays": 35,
+    "unresolved_facilities": 3,
+    "live_openaq": false,
+    "diagnostic_rows": 0,
+    "notice": "Exploratory AQ26 evidence backfill. Public outputs are redacted and do not make causal, health, legal or regulatory conclusions."
   },
   "source_overlay_generated_utc": "2026-05-28T04:49:12Z",
   "public_notice": "AQ26 is an evidence and provenance observatory. Public pages are redacted and do not make regulatory determinations, legal conclusions, health advice or causal attribution. Candidate monitoring overlays remain review-only.",

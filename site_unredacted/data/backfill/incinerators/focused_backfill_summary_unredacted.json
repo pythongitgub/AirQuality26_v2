@@ -1,5 +1,4 @@
 {
-  "status": "completed",
   "generated_utc": "2026-05-28T18:03:28Z",
   "scope": "high_confidence",
   "weeks": [
@@ -43,5 +42,6 @@
   "unresolved_facilities": 3,
   "live_openaq": false,
   "diagnostic_rows": 0,
-  "notice": "Exploratory AQ26 evidence backfill. Public outputs are redacted and do not make causal, health, legal or regulatory conclusions."
+  "notice": "Exploratory AQ26 evidence backfill. Public outputs are redacted and do not make causal, health, legal or regulatory conclusions.",
+  "diagnostics_preview": []
 }
