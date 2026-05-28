@@ -1,118 +1,109 @@
 #!/usr/bin/env python3
 """AQ26 favicon/touch-icon enforcement from canonical logo_web.svg.
 
-Uses the attached/committed website/assets/logo_web.svg as the single source of truth
-for browser favicons and mobile touch icons. The SVG currently contains an embedded PNG,
-so this script extracts it and builds proper PNG/ICO favicons that browsers prefer over
-older cached SVG icons.
+Safe to run repeatedly. It avoids SameFileError, writes root + asset favicon
+files for both public and unredacted sites, and updates HTML <head> references.
 """
 from __future__ import annotations
 
 import argparse
-import base64
+import html
 import json
-import re
 import shutil
+import subprocess
+import sys
 from datetime import datetime, timezone
-from io import BytesIO
 from pathlib import Path
-from typing import Iterable
-
-from PIL import Image, ImageOps
+from typing import Dict, List
 
 
-def now_tag() -> str:
-    return datetime.now(timezone.utc).strftime("aq26-favicon-%Y%m%d%H%M%S")
+def now_utc() -> str:
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def read_text(path: Path) -> str:
-    return path.read_text(encoding="utf-8", errors="replace")
+def same_file(src: Path, dst: Path) -> bool:
+    try:
+        return src.resolve() == dst.resolve()
+    except Exception:
+        return False
 
 
-def write_text(path: Path, text: str) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(text, encoding="utf-8")
+def safe_copy(src: Path, dst: Path) -> bool:
+    if not src.exists():
+        return False
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    if same_file(src, dst):
+        return False
+    try:
+        if dst.exists() and src.read_bytes() == dst.read_bytes():
+            return False
+    except Exception:
+        pass
+    shutil.copyfile(src, dst)
+    return True
 
 
-def extract_png_from_svg(svg_path: Path) -> Image.Image:
-    txt = read_text(svg_path)
-    m = re.search(r"data:image/(?:png|PNG);base64,([A-Za-z0-9+/=\n\r]+)", txt)
-    if not m:
-        raise RuntimeError(f"No embedded PNG found inside {svg_path}")
-    raw = base64.b64decode(re.sub(r"\s+", "", m.group(1)))
-    img = Image.open(BytesIO(raw)).convert("RGBA")
-    return img
+def ensure_icon_tools() -> None:
+    # Workflow normally installs cairosvg+pillow. The script still runs if they are missing.
+    return None
 
 
-def square_icon(img: Image.Image, size: int, padding_ratio: float = 0.08) -> Image.Image:
-    """Crop transparent margins, place on white square and resize."""
-    rgba = img.convert("RGBA")
-    alpha = rgba.getchannel("A")
-    bbox = alpha.getbbox()
-    if bbox:
-        rgba = rgba.crop(bbox)
-    w, h = rgba.size
-    side = max(w, h)
-    pad = max(8, int(side * padding_ratio))
-    canvas_side = side + pad * 2
-    canvas = Image.new("RGBA", (canvas_side, canvas_side), (255, 255, 255, 0))
-    canvas.alpha_composite(rgba, ((canvas_side - w) // 2, (canvas_side - h) // 2))
-    # Favicon backgrounds are inconsistent across browsers; add a very light backing so the icon reads on dark tabs.
-    backing = Image.new("RGBA", canvas.size, (255, 255, 255, 255))
-    backing.alpha_composite(canvas)
-    return backing.resize((size, size), Image.Resampling.LANCZOS)
-
-
-def remove_old_icon_refs(html: str) -> str:
-    # Remove old icon/apple/manifest references; leave styles/scripts alone.
-    html = re.sub(r"\n?\s*<link[^>]+rel=['\"](?:icon|shortcut icon|apple-touch-icon|manifest)['\"][^>]*>", "", html, flags=re.I)
-    html = re.sub(r"\n?\s*<link[^>]+href=['\"][^'\"]*(?:favicon|apple-touch-icon|site\.webmanifest)[^'\"]*['\"][^>]*>", "", html, flags=re.I)
-    return html
-
-
-def inject_icon_refs(html: str, version: str) -> str:
-    refs = f"""
-<link rel="icon" href="favicon.ico?v={version}" sizes="any">
-<link rel="icon" href="favicon.svg?v={version}" type="image/svg+xml">
-<link rel="icon" href="assets/favicon.svg?v={version}" type="image/svg+xml">
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v={version}">
-<link rel="manifest" href="site.webmanifest?v={version}">
-<meta name="theme-color" content="#0b1f3a">
-""".strip()
-    html = remove_old_icon_refs(html)
-    if "</head>" in html.lower():
-        return re.sub(r"</head>", refs + "\n</head>", html, count=1, flags=re.I)
-    return refs + "\n" + html
-
-
-def enforce_for_site(site: Path, svg_source: Path, version: str) -> dict:
-    site.mkdir(parents=True, exist_ok=True)
-    assets = site / "assets"
-    assets.mkdir(parents=True, exist_ok=True)
-
-    # Copy canonical SVG icon to root and assets.
-    shutil.copyfile(svg_source, assets / "logo_web.svg")
-    shutil.copyfile(svg_source, assets / "favicon.svg")
-    shutil.copyfile(svg_source, site / "favicon.svg")
-
-    img = extract_png_from_svg(svg_source)
-    icons = {
+def render_pngs(svg: Path, outdir: Path, summary: Dict) -> None:
+    outdir.mkdir(parents=True, exist_ok=True)
+    sizes = {
+        "favicon-16x16.png": 16,
+        "favicon-32x32.png": 32,
         "apple-touch-icon.png": 180,
         "android-chrome-192x192.png": 192,
         "android-chrome-512x512.png": 512,
-        "favicon-32x32.png": 32,
-        "favicon-16x16.png": 16,
     }
-    generated = []
-    for name, size in icons.items():
-        out = assets / name
-        square_icon(img, size).save(out)
-        generated.append(str(out))
+    try:
+        import cairosvg  # type: ignore
+        from PIL import Image  # type: ignore
+        png_paths: List[Path] = []
+        for name, size in sizes.items():
+            dst = outdir / name
+            cairosvg.svg2png(url=str(svg), write_to=str(dst), output_width=size, output_height=size)
+            png_paths.append(dst)
+            summary["generated_pngs"].append(str(dst))
+        # Multi-size .ico for browser tabs.
+        ico_dst = outdir / "favicon.ico"
+        imgs = [Image.open(p).convert("RGBA") for p in png_paths if p.name in {"favicon-16x16.png", "favicon-32x32.png", "android-chrome-192x192.png"}]
+        if imgs:
+            imgs[0].save(ico_dst, sizes=[(16,16),(32,32),(48,48),(64,64)])
+            summary["generated_ico"].append(str(ico_dst))
+    except Exception as e:
+        summary["warnings"].append(f"PNG/ICO render skipped: {type(e).__name__}: {e}")
 
-    ico_images = [square_icon(img, s) for s in (16, 32, 48)]
-    ico_images[0].save(site / "favicon.ico", sizes=[(16, 16), (32, 32), (48, 48)])
-    shutil.copyfile(site / "favicon.ico", assets / "favicon.ico")
 
+def inject_head_refs(path: Path, version: str) -> bool:
+    if not path.exists() or path.suffix.lower() != ".html":
+        return False
+    txt = path.read_text(encoding="utf-8", errors="replace")
+    original = txt
+    refs = [
+        f'<link rel="icon" href="/favicon.ico?v={version}" sizes="any">',
+        f'<link rel="icon" href="/favicon.svg?v={version}" type="image/svg+xml">',
+        f'<link rel="icon" href="assets/favicon.svg?v={version}" type="image/svg+xml">',
+        f'<link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v={version}">',
+        f'<link rel="manifest" href="site.webmanifest?v={version}">',
+    ]
+    # Remove earlier AQ26 favicon refs to avoid browser picking stale duplicate entries.
+    txt = txt.replace("<link rel='icon' href='assets/favicon.svg?v=operational'>", "")
+    txt = txt.replace('<link rel="icon" href="assets/favicon.svg?v=aq26-weekly">', "")
+    txt = txt.replace('<link rel="icon" href="assets/favicon.svg?v=aq26-weekly" type="image/svg+xml">', "")
+    txt = txt.replace('<link rel="icon" href="/favicon.svg?v=aq26-weekly" type="image/svg+xml">', "")
+    for ref in refs:
+        key = ref.split('href="', 1)[1].split('"', 1)[0].split('?', 1)[0]
+        if key not in txt:
+            txt = txt.replace("</head>", ref + "\n</head>", 1)
+    if txt != original:
+        path.write_text(txt, encoding="utf-8")
+        return True
+    return False
+
+
+def write_manifest(site: Path, version: str) -> None:
     manifest = {
         "name": "AQ26 Incinerator Evidence Observatory",
         "short_name": "AQ26",
@@ -121,58 +112,54 @@ def enforce_for_site(site: Path, svg_source: Path, version: str) -> dict:
             {"src": "assets/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png"},
             {"src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml"},
         ],
-        "theme_color": "#0b1f3a",
+        "theme_color": "#071a30",
         "background_color": "#f4f8fb",
         "display": "standalone",
     }
-    write_text(site / "site.webmanifest", json.dumps(manifest, indent=2))
-
-    html_count = 0
-    for html_path in site.glob("*.html"):
-        txt = read_text(html_path)
-        new = inject_icon_refs(txt, version)
-        if new != txt:
-            write_text(html_path, new)
-            html_count += 1
-
-    return {
-        "site": str(site),
-        "version": version,
-        "html_files_updated": html_count,
-        "favicon_svg": str(site / "favicon.svg"),
-        "favicon_ico": str(site / "favicon.ico"),
-        "assets_favicon_svg": str(assets / "favicon.svg"),
-        "png_icons": generated,
-    }
+    (site / "site.webmanifest").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--repo-root", default=".")
-    ap.add_argument("--icon-source", default="website/assets/logo_web.svg")
     ap.add_argument("--public-site", default="site_public")
     ap.add_argument("--unredacted-site", default="site_unredacted")
-    ap.add_argument("--summary", default="outputs/favicon/aq26_favicon_enforcement_summary.json")
+    ap.add_argument("--source-logo", default="website/assets/logo_web.svg")
+    ap.add_argument("--version", default="aq26-favicon-20260528")
+    ap.add_argument("--summary", default="site_public/data/weekly/favicon_enforcement_status.json")
     args = ap.parse_args()
 
     repo = Path(args.repo_root).resolve()
-    icon_source = repo / args.icon_source
-    if not icon_source.exists():
-        raise SystemExit(f"Icon source not found: {icon_source}")
+    src = (repo / args.source_logo).resolve()
+    summary: Dict = {"ok": False, "generated_utc": now_utc(), "source_logo": str(src), "copied": [], "generated_pngs": [], "generated_ico": [], "html_updated": [], "warnings": []}
+    if not src.exists():
+        raise SystemExit(f"source logo missing: {src}")
 
-    # Keep canonical website assets in sync.
-    (repo / "website/assets").mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(icon_source, repo / "website/assets/logo_web.svg")
-    shutil.copyfile(icon_source, repo / "website/assets/favicon.svg")
+    # Canonical repo assets.
+    safe_copy(src, repo / "website/assets/logo_web.svg")
+    if safe_copy(src, repo / "website/assets/favicon.svg"):
+        summary["copied"].append("website/assets/favicon.svg")
 
-    version = now_tag()
-    results = [
-        enforce_for_site(repo / args.public_site, icon_source, version),
-        enforce_for_site(repo / args.unredacted_site, icon_source, version),
-    ]
-    summary = {"ok": True, "version": version, "icon_source": str(icon_source), "sites": results}
+    for site_rel in [args.public_site, args.unredacted_site]:
+        site = repo / site_rel
+        assets = site / "assets"
+        site.mkdir(parents=True, exist_ok=True)
+        assets.mkdir(parents=True, exist_ok=True)
+        for dst in [site / "favicon.svg", assets / "favicon.svg", assets / "logo_web.svg"]:
+            if safe_copy(src, dst):
+                summary["copied"].append(str(dst.relative_to(repo)))
+        render_pngs(src, assets, summary)
+        # root favicon.ico mirrors generated asset icon when available.
+        safe_copy(assets / "favicon.ico", site / "favicon.ico")
+        write_manifest(site, args.version)
+        for html_file in site.glob("*.html"):
+            if inject_head_refs(html_file, args.version):
+                summary["html_updated"].append(str(html_file.relative_to(repo)))
+
     out = repo / args.summary
-    write_text(out, json.dumps(summary, indent=2))
+    out.parent.mkdir(parents=True, exist_ok=True)
+    summary["ok"] = True
+    out.write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print(json.dumps(summary, indent=2))
     return 0
 
