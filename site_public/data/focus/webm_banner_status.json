@@ -1,0 +1,43 @@
+{
+  "generated_utc": "2026-05-28T05:40:15.450963+00:00",
+  "site_root": "site_public",
+  "changed_pages": [
+    "about.html",
+    "accessibility.html",
+    "archive.html",
+    "comparisons.html",
+    "contact.html",
+    "cookies.html",
+    "downloads.html",
+    "evidence-downloads.html",
+    "historical-comparisons.html",
+    "incinerator-overlays.html",
+    "incinerators.html",
+    "index.html",
+    "latest-report.html",
+    "legal.html",
+    "methodology.html",
+    "newhaven.html",
+    "overlays.html",
+    "privacy.html",
+    "readiness.html",
+    "source-records.html",
+    "terms.html",
+    "weekly-archive.html"
+  ],
+  "changed_count": 22,
+  "banner_files": [
+    "desktop_banner_1.webm",
+    "desktop_banner_2.webm",
+    "desktop_banner_3.webm",
+    "desktop_banner_4.webm",
+    "desktop_banner_5.webm",
+    "desktop_banner_6.webm"
+  ],
+  "counts_used": {
+    "facilities": "46",
+    "validated": "8",
+    "candidates": "35",
+    "unresolved": "3"
+  }
+}
