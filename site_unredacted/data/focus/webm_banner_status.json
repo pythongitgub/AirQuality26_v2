@@ -1,13 +1,8 @@
 {
-  "generated_utc": "2026-05-28T05:40:15.505229+00:00",
+  "generated_utc": "2026-05-28T05:43:31.819822+00:00",
   "site_root": "site_unredacted",
-  "changed_pages": [
-    "candidates.html",
-    "diagnostics.html",
-    "evidence.html",
-    "index.html"
-  ],
-  "changed_count": 4,
+  "changed_pages": [],
+  "changed_count": 0,
   "banner_files": [
     "desktop_banner_1.webm",
     "desktop_banner_2.webm",
