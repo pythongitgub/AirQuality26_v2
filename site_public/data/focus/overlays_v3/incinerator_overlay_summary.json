@@ -1,26 +1,27 @@
 {
-  "generated_utc": "2026-05-28T02:17:17Z",
+  "generated_at_utc": "2026-05-28T02:30:15Z",
+  "workflow_version": "v3.1_skip_existing_candidates",
   "broad_facilities": 46,
   "validated_overlays": 8,
-  "validated_facility_keys_after_aliasing": 8,
   "remaining_facilities_total": 38,
-  "remaining_facilities_queried_this_run": 10,
-  "live_openaq": true,
-  "use_v2_cache": true,
-  "requested_radius_km": 25.0,
-  "openaq_point_radius_cap_m": 25000,
-  "limit_per_query": 100,
-  "sleep_seconds": 3.0,
-  "max_retries": 3,
-  "exhaustive": false,
-  "candidate_rows": 673,
-  "selected_candidates": 53,
-  "facilities_with_selected_candidates": 9,
-  "diagnostic_rows": 61,
-  "http_200_calls": 60,
+  "previous_candidate_facilities_skipped": 0,
+  "facilities_queried_this_run": 10,
+  "candidate_rows": 679,
+  "selected_candidates": 101,
+  "facilities_with_selected_candidates_this_run": 7,
+  "status_counts": {
+    "candidate_overlay_needs_review": 7,
+    "no_candidate_selected_yet": 31,
+    "validated_existing_overlay": 8
+  },
+  "diagnostic_rows": 60,
+  "http_status_counts": {
+    "200": 60
+  },
   "rate_limited_calls": 0,
   "error_rows": 0,
-  "rate_limit_seen": false,
-  "status": "candidate_discovery_complete",
-  "note": "New candidates are not validated. Promote only after manual/source review. Public pages should show summary counts, not raw diagnostics."
+  "openaq_radius_cap_m": 25000,
+  "live_openaq": true,
+  "skip_existing_candidates": true,
+  "force_requery": false
 }
