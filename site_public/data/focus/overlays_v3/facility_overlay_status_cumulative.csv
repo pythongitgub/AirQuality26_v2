@@ -18,19 +18,19 @@ Glanford PS,glanfordps,no_candidate_selected_yet,,,,query_or_manual_review
 Gloucestershire Javelin Park,gloucestershirejavelin,no_candidate_selected_yet,,,,query_or_manual_review
 Great Blakenham EfW,greatblakenham,no_candidate_selected_yet,,,,query_or_manual_review
 Greatmoor EfW,greatmoor,no_candidate_selected_yet,,,,query_or_manual_review
-Hartlebury EfW,hartlebury,no_candidate_selected_yet,,,,query_or_manual_review
+Hartlebury EfW,hartlebury,candidate_overlay_needs_review,Oldbury Birmingham Road - UKA00595,61,local_or_official_candidate_needs_review,review_as_local_or_official_overlay_candidate
 Isle of Man Incinerator,isleofman,no_candidate_selected_yet,,,,query_or_manual_review
-Isle of Wight Gasification,isleofwight,no_candidate_selected_yet,,,,query_or_manual_review
-Kirklees EfW,kirklees,no_candidate_selected_yet,,,,query_or_manual_review
-Lakeside EfW,lakeside,no_candidate_selected_yet,,,,query_or_manual_review
+Isle of Wight Gasification,isleofwight,candidate_overlay_needs_review,Southampton Centre - UKA00235,69,local_or_official_candidate_needs_review,review_as_local_or_official_overlay_candidate
+Kirklees EfW,kirklees,candidate_overlay_needs_review,Barnsley Gawber - UKA00353,69,local_or_official_candidate_needs_review,review_as_local_or_official_overlay_candidate
+Lakeside EfW,lakeside,candidate_overlay_needs_review,London Hillingdon - UKA00266,85,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
 Leeds RERF,leeds,validated_existing_overlay,,,,use_validated_overlay
-Lincoln ERF,lincoln,no_candidate_selected_yet,,,,query_or_manual_review
+Lincoln ERF,lincoln,candidate_overlay_needs_review,Lincoln Canwick Road - UKA00561,75,local_or_official_candidate_needs_review,review_as_local_or_official_overlay_candidate
 London EcoPark,londonecopark,validated_existing_overlay,,,,use_validated_overlay
-Marchwood ERF,marchwood,no_candidate_selected_yet,,,,query_or_manual_review
-Milton Keynes WRP,miltonkeyneswrp,no_candidate_selected_yet,,,,query_or_manual_review
+Marchwood ERF,marchwood,candidate_overlay_needs_review,Southampton Centre - UKA00235,95,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Milton Keynes WRP,miltonkeyneswrp,candidate_overlay_needs_review,Milton Keynes,49,plausible_candidate_needs_review,review_geography_and_source_before_use
 Newhaven ERF,newhaven,validated_existing_overlay,,,,use_validated_overlay
-Newlincs EfW,newlincs,no_candidate_selected_yet,,,,query_or_manual_review
-North Hykeham Incinerator,northhykeham,no_candidate_selected_yet,,,,query_or_manual_review
+Newlincs EfW,newlincs,candidate_overlay_needs_review,Hull Freetown - UKA00450,59,plausible_candidate_needs_review,review_geography_and_source_before_use
+North Hykeham Incinerator,northhykeham,candidate_overlay_needs_review,Lincoln Canwick Road - UKA00561,55,plausible_candidate_needs_review,review_geography_and_source_before_use
 Peterborough ERF,peterborough,no_candidate_selected_yet,,,,query_or_manual_review
 Portsmouth ERF,portsmouth,no_candidate_selected_yet,,,,query_or_manual_review
 Red Moss Landfill,redmosslandfill,no_candidate_selected_yet,,,,query_or_manual_review
