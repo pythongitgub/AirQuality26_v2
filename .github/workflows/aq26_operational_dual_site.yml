@@ -1,0 +1,134 @@
+name: AQ26 Operational Dual Site Build and Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_public:
+        description: Build redacted public site
+        required: true
+        default: true
+        type: boolean
+      build_unredacted:
+        description: Build password-protected unredacted site
+        required: true
+        default: true
+        type: boolean
+      deploy_public:
+        description: Deploy public site to Hostinger root
+        required: true
+        default: false
+        type: boolean
+      deploy_unredacted:
+        description: Deploy unredacted site to /unredacted/
+        required: true
+        default: false
+        type: boolean
+      dry_run:
+        description: Dry-run rsync only
+        required: true
+        default: true
+        type: boolean
+      remote_unredacted_subdir:
+        description: Remote protected folder under public_html
+        required: true
+        default: unredacted
+        type: string
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+  SCCNEXUS_SSH_HOST: ${{ secrets.SCCNEXUS_SSH_HOST }}
+  SCCNEXUS_SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
+  SCCNEXUS_SSH_USERNAME: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
+  SCCNEXUS_SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
+  SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Build operational public and unredacted sites
+        run: |
+          set -euo pipefail
+          python scripts/aq26_build_operational_dual_site.py --repo-root . --public-site site_public --unredacted-site site_unredacted
+          if [ -n "${SCC_UNREDACTED_PASSWORD:-}" ]; then
+            python -c "import crypt, os; print('aq26:' + crypt.crypt(os.environ['SCC_UNREDACTED_PASSWORD'], crypt.mksalt(crypt.METHOD_SHA512)))" > site_unredacted/.htpasswd
+          else
+            echo 'SCC_UNREDACTED_PASSWORD missing; writing disabled placeholder .htpasswd'
+            echo 'aq26:disabled' > site_unredacted/.htpasswd
+          fi
+          test -f site_public/index.html
+          test -f site_public/incinerators.html
+          test -f site_public/overlays.html
+          test -f site_unredacted/index.html
+          test -f site_unredacted/evidence.html
+
+      - name: Commit generated operational site files
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site_public site_unredacted configs/aq26_incinerator_register/UK_Incinerator_Overlay_Candidate_Review.csv || true
+          if git diff --cached --quiet; then
+            echo "No generated site changes to commit."
+          else
+            git commit -m "Build AQ26 operational incinerator dual site"
+            git pull --rebase
+            git push
+          fi
+
+      - name: Install deployment tools
+        if: ${{ inputs.deploy_public || inputs.deploy_unredacted }}
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y sshpass rsync apache2-utils
+
+      - name: Deploy public site
+        if: ${{ inputs.deploy_public }}
+        run: |
+          set -euo pipefail
+          REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}"
+          SSH_OPTS="-p ${SCCNEXUS_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30"
+          export SSHPASS="$SCCNEXUS_SSH_PASSWORD"
+          sshpass -e ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "mkdir -p '$REMOTE_DIR'"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            sshpass -e rsync -avzn --delete --exclude '${{ inputs.remote_unredacted_subdir }}/***' -e "ssh $SSH_OPTS" site_public/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          else
+            sshpass -e rsync -avz --delete --exclude '${{ inputs.remote_unredacted_subdir }}/***' -e "ssh $SSH_OPTS" site_public/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          fi
+
+      - name: Deploy unredacted site
+        if: ${{ inputs.deploy_unredacted }}
+        run: |
+          set -euo pipefail
+          REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}/${{ inputs.remote_unredacted_subdir }}"
+          SSH_OPTS="-p ${SCCNEXUS_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30"
+          export SSHPASS="$SCCNEXUS_SSH_PASSWORD"
+          sshpass -e ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "mkdir -p '$REMOTE_DIR'"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            sshpass -e rsync -avzn --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          else
+            sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          fi
+
+      - name: Upload site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-operational-dual-site
+          path: |
+            site_public/
+            site_unredacted/
+          if-no-files-found: error
