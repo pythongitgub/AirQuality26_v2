@@ -1,0 +1,62 @@
+ok,method,result_count,http_status,url,error_type,error_body,attempts,retry_after,facility,facility_key,query_point_role,query_lat,query_lon
+True,v2_cache_import,405,cache,,,,,,,,,,
+True,coordinates_lat_lon_radius_capped,4,200,https://api.openaq.org/v3/locations?coordinates=53.97000%2C-1.50000&radius=25000&limit=100&iso=GB,,,1,,Allerton Waste Recovery Park,allerton,facility,53.97,-1.5
+True,coordinates_lat_lon_radius_10000,1,200,https://api.openaq.org/v3/locations?coordinates=53.97000%2C-1.50000&radius=10000&limit=100&iso=GB,,,1,,Allerton Waste Recovery Park,allerton,facility,53.97,-1.5
+True,bbox_25km_lonlat,5,200,https://api.openaq.org/v3/locations?bbox=-1.88180%2C53.74542%2C-1.11820%2C54.19458&limit=100&iso=GB,,,1,,Allerton Waste Recovery Park,allerton,facility,53.97,-1.5
+True,coordinates_lat_lon_radius_capped,5,200,https://api.openaq.org/v3/locations?coordinates=53.91715%2C-1.54490&radius=25000&limit=100&iso=GB,,,1,,Allerton Waste Recovery Park,allerton,control,53.91714985298881,-1.544899424
+True,coordinates_lat_lon_radius_10000,1,200,https://api.openaq.org/v3/locations?coordinates=53.91715%2C-1.54490&radius=10000&limit=100&iso=GB,,,1,,Allerton Waste Recovery Park,allerton,control,53.91714985298881,-1.544899424
+True,bbox_25km_lonlat,6,200,https://api.openaq.org/v3/locations?bbox=-1.92622%2C53.69257%2C-1.16358%2C54.14173&limit=100&iso=GB,,,1,,Allerton Waste Recovery Park,allerton,control,53.91714985298881,-1.544899424
+True,coordinates_lat_lon_radius_capped,5,200,https://api.openaq.org/v3/locations?coordinates=51.23000%2C0.50000&radius=25000&limit=100&iso=GB,,,1,,Allington Quarry Waste Management Facility,allington,facility,51.23,0.5
+True,coordinates_lat_lon_radius_10000,1,200,https://api.openaq.org/v3/locations?coordinates=51.23000%2C0.50000&radius=10000&limit=100&iso=GB,,,1,,Allington Quarry Waste Management Facility,allington,facility,51.23,0.5
+True,bbox_25km_lonlat,9,200,https://api.openaq.org/v3/locations?bbox=0.14136%2C51.00542%2C0.85864%2C51.45458&limit=100&iso=GB,,,1,,Allington Quarry Waste Management Facility,allington,facility,51.23,0.5
+True,coordinates_lat_lon_radius_capped,5,200,https://api.openaq.org/v3/locations?coordinates=51.17164%2C0.45847&radius=25000&limit=100&iso=GB,,,1,,Allington Quarry Waste Management Facility,allington,control,51.17164159983072,0.4584710510889741
+True,coordinates_lat_lon_radius_10000,1,200,https://api.openaq.org/v3/locations?coordinates=51.17164%2C0.45847&radius=10000&limit=100&iso=GB,,,1,,Allington Quarry Waste Management Facility,allington,control,51.17164159983072,0.4584710510889741
+True,bbox_25km_lonlat,7,200,https://api.openaq.org/v3/locations?bbox=0.10029%2C50.94706%2C0.81666%2C51.39622&limit=100&iso=GB,,,1,,Allington Quarry Waste Management Facility,allington,control,51.17164159983072,0.4584710510889741
+True,coordinates_lat_lon_radius_capped,5,200,https://api.openaq.org/v3/locations?coordinates=51.90000%2C-1.28000&radius=25000&limit=100&iso=GB,,,1,,Ardley ERF,ardley,facility,51.9,-1.28
+True,coordinates_lat_lon_radius_10000,0,200,https://api.openaq.org/v3/locations?coordinates=51.90000%2C-1.28000&radius=10000&limit=100&iso=GB,,,1,,Ardley ERF,ardley,facility,51.9,-1.28
+True,bbox_25km_lonlat,6,200,https://api.openaq.org/v3/locations?bbox=-1.64396%2C51.67542%2C-0.91604%2C52.12458&limit=100&iso=GB,,,1,,Ardley ERF,ardley,facility,51.9,-1.28
+True,coordinates_lat_lon_radius_capped,5,200,https://api.openaq.org/v3/locations?coordinates=51.84701%2C-1.32763&radius=25000&limit=100&iso=GB,,,1,,Ardley ERF,ardley,control,51.84701494968608,-1.327628875
+True,coordinates_lat_lon_radius_10000,0,200,https://api.openaq.org/v3/locations?coordinates=51.84701%2C-1.32763&radius=10000&limit=100&iso=GB,,,1,,Ardley ERF,ardley,control,51.84701494968608,-1.327628875
+True,bbox_25km_lonlat,5,200,https://api.openaq.org/v3/locations?bbox=-1.69116%2C51.62244%2C-0.96410%2C52.07159&limit=100&iso=GB,,,1,,Ardley ERF,ardley,control,51.84701494968608,-1.327628875
+True,coordinates_lat_lon_radius_capped,100,200,https://api.openaq.org/v3/locations?coordinates=51.36000%2C-0.17000&radius=25000&limit=100&iso=GB,,,1,,Beddington ERF,beddington,facility,51.36,-0.17
+True,coordinates_lat_lon_radius_10000,29,200,https://api.openaq.org/v3/locations?coordinates=51.36000%2C-0.17000&radius=10000&limit=100&iso=GB,,,1,,Beddington ERF,beddington,facility,51.36,-0.17
+True,bbox_25km_lonlat,100,200,https://api.openaq.org/v3/locations?bbox=-0.52966%2C51.13542%2C0.18966%2C51.58458&limit=100&iso=GB,,,1,,Beddington ERF,beddington,facility,51.36,-0.17
+True,coordinates_lat_lon_radius_capped,100,200,https://api.openaq.org/v3/locations?coordinates=51.31351%2C-0.22462&radius=25000&limit=100&iso=GB,,,1,,Beddington ERF,beddington,control,51.31350876,-0.224624622
+True,coordinates_lat_lon_radius_10000,10,200,https://api.openaq.org/v3/locations?coordinates=51.31351%2C-0.22462&radius=10000&limit=100&iso=GB,,,1,,Beddington ERF,beddington,control,51.31350876,-0.224624622
+True,bbox_25km_lonlat,100,200,https://api.openaq.org/v3/locations?bbox=-0.58392%2C51.08893%2C0.13467%2C51.53809&limit=100&iso=GB,,,1,,Beddington ERF,beddington,control,51.31350876,-0.224624622
+True,coordinates_lat_lon_radius_capped,22,200,https://api.openaq.org/v3/locations?coordinates=53.58000%2C-2.43000&radius=25000&limit=100&iso=GB,,,1,,Bolton WtE,bolton,facility,53.58,-2.43
+True,coordinates_lat_lon_radius_10000,1,200,https://api.openaq.org/v3/locations?coordinates=53.58000%2C-2.43000&radius=10000&limit=100&iso=GB,,,1,,Bolton WtE,bolton,facility,53.58,-2.43
+True,bbox_25km_lonlat,27,200,https://api.openaq.org/v3/locations?bbox=-2.80827%2C53.35542%2C-2.05173%2C53.80458&limit=100&iso=GB,,,1,,Bolton WtE,bolton,facility,53.58,-2.43
+True,coordinates_lat_lon_radius_capped,23,200,https://api.openaq.org/v3/locations?coordinates=53.53038%2C-2.47474&radius=25000&limit=100&iso=GB,,,1,,Bolton WtE,bolton,control,53.5303755682824,-2.474737575
+True,coordinates_lat_lon_radius_10000,1,200,https://api.openaq.org/v3/locations?coordinates=53.53038%2C-2.47474&radius=10000&limit=100&iso=GB,,,1,,Bolton WtE,bolton,control,53.5303755682824,-2.474737575
+True,bbox_25km_lonlat,25,200,https://api.openaq.org/v3/locations?bbox=-2.85256%2C53.30580%2C-2.09691%2C53.75495&limit=100&iso=GB,,,1,,Bolton WtE,bolton,control,53.5303755682824,-2.474737575
+True,coordinates_lat_lon_radius_capped,21,200,https://api.openaq.org/v3/locations?coordinates=51.28000%2C-1.08000&radius=25000&limit=100&iso=GB,,,1,,Chineham EfW,chineham,facility,51.28,-1.08
+True,coordinates_lat_lon_radius_10000,1,200,https://api.openaq.org/v3/locations?coordinates=51.28000%2C-1.08000&radius=10000&limit=100&iso=GB,,,1,,Chineham EfW,chineham,facility,51.28,-1.08
+True,bbox_25km_lonlat,25,200,https://api.openaq.org/v3/locations?bbox=-1.43903%2C51.05542%2C-0.72097%2C51.50458&limit=100&iso=GB,,,1,,Chineham EfW,chineham,facility,51.28,-1.08
+True,coordinates_lat_lon_radius_capped,12,200,https://api.openaq.org/v3/locations?coordinates=51.23854%2C-1.12983&radius=25000&limit=100&iso=GB,,,1,,Chineham EfW,chineham,control,51.23854307327007,-1.129830699
+True,coordinates_lat_lon_radius_10000,1,200,https://api.openaq.org/v3/locations?coordinates=51.23854%2C-1.12983&radius=10000&limit=100&iso=GB,,,1,,Chineham EfW,chineham,control,51.23854307327007,-1.129830699
+True,bbox_25km_lonlat,22,200,https://api.openaq.org/v3/locations?bbox=-1.48854%2C51.01397%2C-0.77113%2C51.46312&limit=100&iso=GB,,,1,,Chineham EfW,chineham,control,51.23854307327007,-1.129830699
+True,coordinates_lat_lon_radius_capped,0,200,https://api.openaq.org/v3/locations?coordinates=50.34000%2C-4.78000&radius=25000&limit=100&iso=GB,,,1,,Cornwall ERC,cornwall,facility,50.34,-4.78
+True,coordinates_lat_lon_radius_10000,0,200,https://api.openaq.org/v3/locations?coordinates=50.34000%2C-4.78000&radius=10000&limit=100&iso=GB,,,1,,Cornwall ERC,cornwall,facility,50.34,-4.78
+True,bbox_25km_lonlat,0,200,https://api.openaq.org/v3/locations?bbox=-5.13188%2C50.11542%2C-4.42812%2C50.56458&limit=100&iso=GB,,,1,,Cornwall ERC,cornwall,facility,50.34,-4.78
+True,coordinates_lat_lon_radius_capped,0,200,https://api.openaq.org/v3/locations?coordinates=50.29979%2C-4.83682&radius=25000&limit=100&iso=GB,,,1,,Cornwall ERC,cornwall,control,50.29979236509264,-4.836818679
+True,coordinates_lat_lon_radius_10000,0,200,https://api.openaq.org/v3/locations?coordinates=50.29979%2C-4.83682&radius=10000&limit=100&iso=GB,,,1,,Cornwall ERC,cornwall,control,50.29979236509264,-4.836818679
+True,bbox_25km_lonlat,0,200,https://api.openaq.org/v3/locations?bbox=-5.18840%2C50.07521%2C-4.48524%2C50.52437&limit=100&iso=GB,,,1,,Cornwall ERC,cornwall,control,50.29979236509264,-4.836818679
+True,coordinates_lat_lon_radius_capped,100,200,https://api.openaq.org/v3/locations?coordinates=51.49000%2C0.17000&radius=25000&limit=100&iso=GB,,,1,,Crossness Sludge Plant,crossness,facility,51.49,0.17
+True,coordinates_lat_lon_radius_10000,27,200,https://api.openaq.org/v3/locations?coordinates=51.49000%2C0.17000&radius=10000&limit=100&iso=GB,,,1,,Crossness Sludge Plant,crossness,facility,51.49,0.17
+True,bbox_25km_lonlat,100,200,https://api.openaq.org/v3/locations?bbox=-0.19068%2C51.26542%2C0.53068%2C51.71458&limit=100&iso=GB,,,1,,Crossness Sludge Plant,crossness,facility,51.49,0.17
+True,coordinates_lat_lon_radius_capped,100,200,https://api.openaq.org/v3/locations?coordinates=51.44774%2C0.11169&radius=25000&limit=100&iso=GB,,,1,,Crossness Sludge Plant,crossness,control,51.447741800347096,0.1116948458229027
+True,coordinates_lat_lon_radius_10000,36,200,https://api.openaq.org/v3/locations?coordinates=51.44774%2C0.11169&radius=10000&limit=100&iso=GB,,,1,,Crossness Sludge Plant,crossness,control,51.447741800347096,0.1116948458229027
+True,bbox_25km_lonlat,100,200,https://api.openaq.org/v3/locations?bbox=-0.24865%2C51.22316%2C0.47204%2C51.67232&limit=100&iso=GB,,,1,,Crossness Sludge Plant,crossness,control,51.447741800347096,0.1116948458229027
+True,coordinates_lat_lon_radius_capped,6,200,https://api.openaq.org/v3/locations?coordinates=52.41000%2C-1.50000&radius=25000&limit=100&iso=GB,,,1,,CSWDC Coventry,cswdc_coventry,facility,52.41,-1.5
+True,coordinates_lat_lon_radius_10000,2,200,https://api.openaq.org/v3/locations?coordinates=52.41000%2C-1.50000&radius=10000&limit=100&iso=GB,,,1,,CSWDC Coventry,cswdc_coventry,facility,52.41,-1.5
+True,bbox_25km_lonlat,9,200,https://api.openaq.org/v3/locations?bbox=-1.86816%2C52.18542%2C-1.13184%2C52.63458&limit=100&iso=GB,,,1,,CSWDC Coventry,cswdc_coventry,facility,52.41,-1.5
+True,coordinates_lat_lon_radius_capped,6,200,https://api.openaq.org/v3/locations?coordinates=52.36455%2C-1.54975&radius=25000&limit=100&iso=GB,,,1,,CSWDC Coventry,cswdc_coventry,control,52.36454639169282,-1.549754958
+True,coordinates_lat_lon_radius_10000,4,200,https://api.openaq.org/v3/locations?coordinates=52.36455%2C-1.54975&radius=10000&limit=100&iso=GB,,,1,,CSWDC Coventry,cswdc_coventry,control,52.36454639169282,-1.549754958
+True,bbox_25km_lonlat,11,200,https://api.openaq.org/v3/locations?bbox=-1.91753%2C52.13997%2C-1.18198%2C52.58912&limit=100&iso=GB,,,1,,CSWDC Coventry,cswdc_coventry,control,52.36454639169282,-1.549754958
+True,coordinates_lat_lon_radius_capped,3,200,https://api.openaq.org/v3/locations?coordinates=50.37000%2C-4.14000&radius=25000&limit=100&iso=GB,,,1,,Devonport Dockyard,devonport,facility,50.37,-4.14
+True,coordinates_lat_lon_radius_10000,3,200,https://api.openaq.org/v3/locations?coordinates=50.37000%2C-4.14000&radius=10000&limit=100&iso=GB,,,1,,Devonport Dockyard,devonport,facility,50.37,-4.14
+True,bbox_25km_lonlat,3,200,https://api.openaq.org/v3/locations?bbox=-4.49210%2C50.14542%2C-3.78790%2C50.59458&limit=100&iso=GB,,,1,,Devonport Dockyard,devonport,facility,50.37,-4.14
+True,coordinates_lat_lon_radius_capped,3,200,https://api.openaq.org/v3/locations?coordinates=50.31517%2C-4.19428&radius=25000&limit=100&iso=GB,,,1,,Devonport Dockyard,devonport,control,50.31517407885175,-4.194278016
+True,coordinates_lat_lon_radius_10000,1,200,https://api.openaq.org/v3/locations?coordinates=50.31517%2C-4.19428&radius=10000&limit=100&iso=GB,,,1,,Devonport Dockyard,devonport,control,50.31517407885175,-4.194278016
+True,bbox_25km_lonlat,3,200,https://api.openaq.org/v3/locations?bbox=-4.54597%2C50.09060%2C-3.84259%2C50.53975&limit=100&iso=GB,,,1,,Devonport Dockyard,devonport,control,50.31517407885175,-4.194278016
