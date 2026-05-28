@@ -9,57 +9,57 @@ on:
         default: true
         type: boolean
       use_v2_cache:
-        description: "Read previous V2 candidates as supporting cache"
+        description: "Use existing V2/V3 raw candidate cache for queried facilities only"
         required: true
         default: true
         type: boolean
       skip_existing_candidates:
-        description: "Skip facilities already having candidate overlays in cumulative outputs"
+        description: "Skip facilities with existing selected/review candidates"
         required: true
         default: true
         type: boolean
       force_requery:
-        description: "Force re-query even if validated/candidate-covered"
+        description: "Ignore existing selected candidates and requery from queue"
         required: true
         default: false
         type: boolean
       batch_offset:
-        description: "Manual offset into unresolved queue after skips. Leave 0 normally."
+        description: "Manual offset into query pool after skip logic"
         required: true
         default: "0"
         type: string
       max_facilities:
-        description: "Maximum unresolved facilities to query in this batch. 0 = all remaining after skips."
+        description: "Maximum facilities to query this run. 0 = all remaining after skip/offset"
         required: true
         default: "10"
         type: string
       radius_km:
-        description: "Requested radius in km. OpenAQ point-radius calls are capped at 25 km."
+        description: "Requested radius in km; OpenAQ point-radius calls are capped at 25 km"
         required: true
         default: "25"
         type: string
       limit_per_query:
-        description: "OpenAQ result limit per query variant"
+        description: "OpenAQ limit per query variant"
         required: true
         default: "100"
         type: string
       min_score:
-        description: "Minimum score for selected review candidates"
+        description: "Minimum relevance score for selected review candidates"
         required: true
         default: "35"
         type: string
       sleep_seconds:
-        description: "Delay between live OpenAQ calls to avoid 429 rate limits"
+        description: "Delay between OpenAQ calls"
         required: true
         default: "3.0"
         type: string
       max_retries:
-        description: "Retries for OpenAQ 429/transient failures"
+        description: "Maximum retries for rate limits/transient failures"
         required: true
         default: "3"
         type: string
       exhaustive:
-        description: "Also try diagnostic lon,lat coordinate probe"
+        description: "Try extra query variants"
         required: true
         default: false
         type: boolean
@@ -88,54 +88,47 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Install optional coordinate conversion dependency
+      - name: Ensure register files exist
         run: |
           set -euo pipefail
-          python -m pip install --upgrade pip
-          python -m pip install pyproj
-
-      - name: Validate required register files
-        run: |
-          set -euo pipefail
-          mkdir -p site_public/data/focus/overlays_v3
+          mkdir -p configs/aq26_incinerator_register site_public/data/focus/overlays_v3
           test -f configs/aq26_incinerator_register/UK_Incinerators_with_Controls_Full_v3.csv
           test -f configs/aq26_incinerator_register/UK_Incinerators_with_DEFRA_Sites_v3_validated_Full.csv
-          test -f scripts/aq26_find_remaining_incinerator_overlays_v3.py
 
-      - name: Run remaining overlay finder V3.2 stateful batch
+      - name: Run remaining overlay finder V3.3
         run: |
           set -euo pipefail
-          ARGS=""
-          if [ "${{ inputs.live_openaq }}" = "true" ]; then ARGS="$ARGS --live-openaq"; fi
-          if [ "${{ inputs.use_v2_cache }}" = "true" ]; then ARGS="$ARGS --use-v2-cache"; fi
-          if [ "${{ inputs.skip_existing_candidates }}" = "true" ]; then ARGS="$ARGS --skip-existing-candidates"; fi
-          if [ "${{ inputs.force_requery }}" = "true" ]; then ARGS="$ARGS --force-requery"; fi
-          if [ "${{ inputs.exhaustive }}" = "true" ]; then ARGS="$ARGS --exhaustive"; fi
-          if [ "${{ inputs.write_page }}" = "true" ]; then ARGS="$ARGS --write-page"; fi
+          args=""
+          if [ "${{ inputs.live_openaq }}" = "true" ]; then args="$args --live-openaq"; fi
+          if [ "${{ inputs.use_v2_cache }}" = "true" ]; then args="$args --use-v2-cache"; fi
+          if [ "${{ inputs.skip_existing_candidates }}" = "true" ]; then args="$args --skip-existing-candidates"; fi
+          if [ "${{ inputs.force_requery }}" = "true" ]; then args="$args --force-requery"; fi
+          if [ "${{ inputs.exhaustive }}" = "true" ]; then args="$args --exhaustive"; fi
+          if [ "${{ inputs.write_page }}" = "true" ]; then args="$args --write-page"; fi
           python scripts/aq26_find_remaining_incinerator_overlays_v3.py \
             --broad-register configs/aq26_incinerator_register/UK_Incinerators_with_Controls_Full_v3.csv \
             --validated-overlays configs/aq26_incinerator_register/UK_Incinerators_with_DEFRA_Sites_v3_validated_Full.csv \
             --output-root site_public/data/focus/overlays_v3 \
             --site-root site_public \
             --batch-offset "${{ inputs.batch_offset }}" \
-            --max-facilities "${{ inputs.max_facilities }}" \
             --radius-km "${{ inputs.radius_km }}" \
             --limit-per-query "${{ inputs.limit_per_query }}" \
+            --max-facilities "${{ inputs.max_facilities }}" \
             --min-score "${{ inputs.min_score }}" \
             --sleep-seconds "${{ inputs.sleep_seconds }}" \
             --max-retries "${{ inputs.max_retries }}" \
-            $ARGS
+            $args
 
       - name: Summarise overlay outputs
         run: |
           set -euo pipefail
           echo "--- incinerator_overlay_summary.json ---"
           cat site_public/data/focus/overlays_v3/incinerator_overlay_summary.json
-          echo "--- row counts ---"
-          python -c "import csv, pathlib; paths=['remaining_overlay_queue.csv','candidate_monitoring_overlays_this_run.csv','selected_candidate_overlays_this_run.csv','selected_candidate_overlays_cumulative.csv','facility_overlay_status.csv','openaq_query_diagnostics.csv']; root=pathlib.Path('site_public/data/focus/overlays_v3'); [print(f'{p}: '+str(sum(1 for _ in csv.DictReader((root/p).open(encoding='utf-8'))) if (root/p).exists() else -1)) for p in map(pathlib.Path, paths)]"
+          echo "--- output files ---"
+          find site_public/data/focus/overlays_v3 -maxdepth 1 -type f -printf '%f %s bytes\n' | sort
+          echo "--- queried facilities this run ---"
+          head -30 site_public/data/focus/overlays_v3/queried_facilities_this_run.csv || true
 
       - name: Upload overlay artifact
         uses: actions/upload-artifact@v4
@@ -156,7 +149,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No overlay output changes to commit."
           else
-            git commit -m "Add AQ26 remaining incinerator overlay V3.2 outputs"
+            git commit -m "Add AQ26 remaining incinerator overlay V3.3 outputs"
             git pull --rebase
             git push
           fi
