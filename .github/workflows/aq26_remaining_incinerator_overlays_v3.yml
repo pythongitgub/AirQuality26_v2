@@ -4,17 +4,27 @@ on:
   workflow_dispatch:
     inputs:
       live_openaq:
-        description: "Query OpenAQ live. If false, create/reclassify queue only."
+        description: "Query OpenAQ live"
         required: true
         default: true
         type: boolean
       use_v2_cache:
-        description: "Reuse existing V2 candidate rows before making new API calls."
+        description: "Reuse V2 candidate cache when available"
         required: true
         default: true
         type: boolean
+      skip_existing_candidates:
+        description: "Skip facilities that already have selected V3 candidates"
+        required: true
+        default: true
+        type: boolean
+      force_requery:
+        description: "Force requery even if candidate already exists"
+        required: true
+        default: false
+        type: boolean
       max_facilities:
-        description: "Maximum remaining facilities to query this run. 0 = all. Use 5-10 to avoid rate limits."
+        description: "Maximum unresolved facilities to query this run. 0 = all unresolved. Use 10 for safe batches."
         required: true
         default: "10"
         type: string
@@ -24,27 +34,27 @@ on:
         default: "25"
         type: string
       limit_per_query:
-        description: "OpenAQ limit per query variant."
+        description: "OpenAQ limit per query variant"
         required: true
         default: "100"
         type: string
       min_score:
-        description: "Minimum relevance score for selected review candidates."
+        description: "Minimum relevance score for selected review candidates"
         required: true
         default: "35"
         type: string
       sleep_seconds:
-        description: "Delay between OpenAQ requests. Use 2.5 to 5 for full runs."
+        description: "Delay between OpenAQ requests to avoid 429 rate limits"
         required: true
         default: "3.0"
         type: string
       max_retries:
-        description: "Retries for 429/timeouts."
+        description: "Maximum retries for transient OpenAQ errors and 429s"
         required: true
         default: "3"
         type: string
       exhaustive:
-        description: "Run extra bbox/diagnostic variants. Slower; use for small batches only."
+        description: "Try all query variants. False uses safest first 3 variants."
         required: true
         default: false
         type: boolean
@@ -74,7 +84,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Ensure register inputs exist
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install optional geospatial dependency
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install pyproj || true
+
+      - name: Validate required register files
         run: |
           set -euo pipefail
           mkdir -p configs/aq26_incinerator_register site_public/data/focus/overlays_v3
@@ -86,18 +107,12 @@ jobs:
         run: |
           set -euo pipefail
           args=""
-          if [ "${{ inputs.live_openaq }}" = "true" ]; then
-            args="$args --live-openaq"
-          fi
-          if [ "${{ inputs.use_v2_cache }}" = "true" ]; then
-            args="$args --use-v2-cache"
-          fi
-          if [ "${{ inputs.write_page }}" = "true" ]; then
-            args="$args --write-page"
-          fi
-          if [ "${{ inputs.exhaustive }}" = "true" ]; then
-            args="$args --exhaustive"
-          fi
+          if [ "${{ inputs.live_openaq }}" = "true" ]; then args="$args --live-openaq"; fi
+          if [ "${{ inputs.use_v2_cache }}" = "true" ]; then args="$args --use-v2-cache"; fi
+          if [ "${{ inputs.skip_existing_candidates }}" = "true" ]; then args="$args --skip-existing-candidates"; fi
+          if [ "${{ inputs.force_requery }}" = "true" ]; then args="$args --force-requery"; fi
+          if [ "${{ inputs.exhaustive }}" = "true" ]; then args="$args --exhaustive"; fi
+          if [ "${{ inputs.write_page }}" = "true" ]; then args="$args --write-page"; fi
           python scripts/aq26_find_remaining_incinerator_overlays_v3.py \
             --broad-register configs/aq26_incinerator_register/UK_Incinerators_with_Controls_Full_v3.csv \
             --validated-overlays configs/aq26_incinerator_register/UK_Incinerators_with_DEFRA_Sites_v3_validated_Full.csv \
@@ -107,7 +122,7 @@ jobs:
             --limit-per-query "${{ inputs.limit_per_query }}" \
             --max-facilities "${{ inputs.max_facilities }}" \
             --min-score "${{ inputs.min_score }}" \
-            --sleep "${{ inputs.sleep_seconds }}" \
+            --sleep-seconds "${{ inputs.sleep_seconds }}" \
             --max-retries "${{ inputs.max_retries }}" \
             $args
 
@@ -116,8 +131,8 @@ jobs:
           set -euo pipefail
           echo "--- incinerator_overlay_summary.json ---"
           cat site_public/data/focus/overlays_v3/incinerator_overlay_summary.json
-          echo "--- output CSV counts ---"
-          python -c "import csv,pathlib; files=['remaining_overlay_queue.csv','remaining_overlay_batch_queried.csv','candidate_monitoring_overlays.csv','selected_candidate_overlays_needing_review.csv','facility_overlay_status.csv','openaq_query_diagnostics.csv']; base=pathlib.Path('site_public/data/focus/overlays_v3'); [print(f'{f}: '+str(sum(1 for _ in csv.DictReader((base/f).open(encoding='utf-8')))) if (base/f).exists() else f'{f}: missing') for f in files]"
+          echo "--- output files ---"
+          find site_public/data/focus/overlays_v3 -maxdepth 1 -type f -printf '%f %s bytes\n' | sort
 
       - name: Upload overlay artifact
         uses: actions/upload-artifact@v4
@@ -134,11 +149,12 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/aq26_find_remaining_incinerator_overlays_v3.py .github/workflows/aq26_remaining_incinerator_overlays_v3.yml || true
           git add site_public/data/focus/overlays_v3 site_public/incinerator-overlays.html || true
           if git diff --cached --quiet; then
             echo "No overlay output changes to commit."
           else
-            git commit -m "Add AQ26 remaining incinerator overlay V3 outputs"
+            git commit -m "Update AQ26 remaining incinerator overlay V3 outputs"
             git pull --rebase
             git push
           fi
