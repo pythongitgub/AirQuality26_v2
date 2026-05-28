@@ -1,0 +1,241 @@
+name: AQ26 Next Live Backfill and Website Update
+
+on:
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: Backfill scope
+        required: true
+        default: high_confidence
+        type: choice
+        options:
+          - newhaven
+          - validated
+          - high_confidence
+          - fallback
+          - all
+      weeks:
+        description: Number of weekly windows to prepare
+        required: true
+        default: '8'
+        type: string
+      live_openaq:
+        description: Perform conservative live OpenAQ probes
+        required: true
+        default: true
+        type: boolean
+      limit_facilities:
+        description: Limit facilities; 0 = all in selected scope
+        required: true
+        default: '5'
+        type: string
+      build_site:
+        description: Rebuild operational public and unredacted sites before refresh
+        required: true
+        default: true
+        type: boolean
+      apply_weekly_alerts:
+        description: Build weekly update pages and front-page alert panels
+        required: true
+        default: true
+        type: boolean
+      deploy_public:
+        description: Deploy public site to Hostinger root
+        required: true
+        default: false
+        type: boolean
+      deploy_unredacted:
+        description: Deploy unredacted site to /unredacted/
+        required: true
+        default: false
+        type: boolean
+      dry_run:
+        description: Dry-run rsync deployment only
+        required: true
+        default: true
+        type: boolean
+      remote_unredacted_subdir:
+        description: Remote protected folder under public_html
+        required: true
+        default: unredacted
+        type: string
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  OPENAQ_API_KEY: ${{ secrets.OPENAQ_API_KEY }}
+  WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
+  METOFFICE_API_KEY: ${{ secrets.METOFFICE_API_KEY }}
+  MET_OFFICE_API_KEY: ${{ secrets.MET_OFFICE_API_KEY }}
+  OPENWEATHER_KEY: ${{ secrets.OPENWEATHER_KEY }}
+  HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+  SCCNEXUS_SSH_HOST: ${{ secrets.SCCNEXUS_SSH_HOST }}
+  SCCNEXUS_SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
+  SCCNEXUS_SSH_USERNAME: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
+  SCCNEXUS_SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
+  SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+
+jobs:
+  live-backfill-refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install render/deploy prerequisites
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install cairosvg pillow
+
+      - name: Ensure no auth files are present before build
+        run: |
+          set -euo pipefail
+          find site_public site_unredacted -name .htpasswd -delete 2>/dev/null || true
+          mkdir -p .aq26_weekly_alerts site_public/data/weekly site_unredacted/data/weekly
+
+      - name: Run focused incinerator backfill pack
+        run: |
+          set -euo pipefail
+          ARGS=(--repo-root . --site-root site_public --unredacted-site site_unredacted --scope "${{ inputs.scope }}" --weeks "${{ inputs.weeks }}" --limit-facilities "${{ inputs.limit_facilities }}")
+          if [ "${{ inputs.live_openaq }}" = "true" ]; then
+            ARGS+=(--live-openaq)
+          fi
+          python scripts/aq26_incinerator_focused_backfill.py "${ARGS[@]}"
+          cp site_public/data/weekly/focused_backfill_status.json .aq26_weekly_alerts/backfill_status.json
+
+      - name: Build operational site shell
+        if: ${{ inputs.build_site }}
+        run: |
+          set -euo pipefail
+          python scripts/aq26_build_operational_dual_site.py --repo-root . --public-site site_public --unredacted-site site_unredacted
+          mkdir -p site_public/data/weekly site_unredacted/data/weekly .aq26_weekly_alerts
+          test -f .aq26_weekly_alerts/backfill_status.json || echo '{"status":"completed_without_backfill_status_file"}' > .aq26_weekly_alerts/backfill_status.json
+
+      - name: Build weekly update pages and front-page alerts
+        if: ${{ inputs.apply_weekly_alerts }}
+        run: |
+          set -euo pipefail
+          python scripts/aq26_build_weekly_alert_pages.py \
+            --repo-root . \
+            --public-site site_public \
+            --unredacted-site site_unredacted \
+            --backfill-status .aq26_weekly_alerts/backfill_status.json
+
+      - name: Apply WEBM banners after final page build
+        run: |
+          set -euo pipefail
+          if [ -f scripts/aq26_apply_webm_banners.py ]; then
+            python scripts/aq26_apply_webm_banners.py --site-root site_public --asset-source website/assets --force --summary site_public/data/weekly/webm_banner_status.json || true
+            python scripts/aq26_apply_webm_banners.py --site-root site_unredacted --asset-source website/assets --force --summary site_unredacted/data/weekly/webm_banner_status.json || true
+          fi
+
+      - name: Enforce favicon/touch icons after final page build
+        run: |
+          set -euo pipefail
+          python scripts/aq26_enforce_favicon_from_logo.py \
+            --repo-root . \
+            --public-site site_public \
+            --unredacted-site site_unredacted \
+            --source-logo website/assets/logo_web.svg \
+            --version aq26-live-backfill-${{ github.run_number }} \
+            --summary site_public/data/weekly/favicon_enforcement_status.json
+
+      - name: Validate refreshed site and backfill outputs
+        run: |
+          set -euo pipefail
+          test -f site_public/index.html
+          test -f site_public/weekly-update.html
+          test -f site_public/data/backfill/incinerators/focused_backfill_summary.json
+          test -f site_public/data/backfill/incinerators/facility_backfill_readiness.csv
+          test -f site_public/favicon.ico
+          test -f site_public/favicon.svg
+          test -f site_public/assets/favicon.svg
+          grep -Eq "AQ26_WEEKLY_ALERT_START|aq26-alert|aq26-weekly-alert" site_public/index.html
+          grep -q "aq26-video-banner" site_public/index.html
+          grep -q "favicon.ico" site_public/index.html
+          ! find site_public site_unredacted -name .htpasswd -print -quit | grep -q .
+
+      - name: Commit refreshed site/backfill outputs
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site_public site_unredacted website/assets/favicon.svg website/assets/logo_web.svg .aq26_weekly_alerts || true
+          git reset -- site_unredacted/.htpasswd site_public/.htpasswd 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No refreshed site changes to commit."
+          else
+            git commit -m "Run AQ26 focused live backfill website refresh"
+            git pull --rebase
+            git push
+          fi
+
+      - name: Install deployment tools
+        if: ${{ inputs.deploy_public || inputs.deploy_unredacted }}
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y sshpass rsync apache2-utils
+
+      - name: Deploy public site
+        if: ${{ inputs.deploy_public }}
+        run: |
+          set -euo pipefail
+          REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}"
+          SSH_OPTS="-p ${SCCNEXUS_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30"
+          export SSHPASS="$SCCNEXUS_SSH_PASSWORD"
+          sshpass -e ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "mkdir -p '$REMOTE_DIR'"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            sshpass -e rsync -avzn --delete --exclude '${{ inputs.remote_unredacted_subdir }}/***' -e "ssh $SSH_OPTS" site_public/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          else
+            sshpass -e rsync -avz --delete --exclude '${{ inputs.remote_unredacted_subdir }}/***' -e "ssh $SSH_OPTS" site_public/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          fi
+
+      - name: Create unredacted password files for deployment only
+        if: ${{ inputs.deploy_unredacted }}
+        run: |
+          set -euo pipefail
+          if [ -n "${SCC_UNREDACTED_PASSWORD:-}" ]; then
+            htpasswd -bc site_unredacted/.htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
+          else
+            echo 'aq26:disabled' > site_unredacted/.htpasswd
+          fi
+          cat > site_unredacted/.htaccess <<'EOF'
+          AuthType Basic
+          AuthName "AQ26 Unredacted Review"
+          AuthUserFile .htpasswd
+          Require valid-user
+          EOF
+
+      - name: Deploy unredacted site
+        if: ${{ inputs.deploy_unredacted }}
+        run: |
+          set -euo pipefail
+          REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}/${{ inputs.remote_unredacted_subdir }}"
+          SSH_OPTS="-p ${SCCNEXUS_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30"
+          export SSHPASS="$SCCNEXUS_SSH_PASSWORD"
+          sshpass -e ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "mkdir -p '$REMOTE_DIR'"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            sshpass -e rsync -avzn --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          else
+            sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          fi
+
+      - name: Upload focused live backfill site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-next-live-backfill-site-update
+          path: |
+            site_public/
+            site_unredacted/
+            .aq26_weekly_alerts/
+          if-no-files-found: error

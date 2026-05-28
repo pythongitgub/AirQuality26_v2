@@ -1,0 +1,145 @@
+name: AQ26 Enforce Favicon From Attached Logo
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_public:
+        description: Deploy public favicon/site icon files to Hostinger root
+        required: true
+        default: false
+        type: boolean
+      deploy_unredacted:
+        description: Deploy unredacted favicon/site icon files to /unredacted/
+        required: true
+        default: false
+        type: boolean
+      dry_run:
+        description: Dry-run rsync deployment only
+        required: true
+        default: true
+        type: boolean
+      remote_unredacted_subdir:
+        description: Remote protected folder under public_html
+        required: true
+        default: unredacted
+        type: string
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+  SCCNEXUS_SSH_HOST: ${{ secrets.SCCNEXUS_SSH_HOST }}
+  SCCNEXUS_SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
+  SCCNEXUS_SSH_USERNAME: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
+  SCCNEXUS_SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
+
+jobs:
+  favicon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install icon render dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install cairosvg pillow
+
+      - name: Enforce favicon/touch icons from logo_web.svg
+        run: |
+          set -euo pipefail
+          python scripts/aq26_enforce_favicon_from_logo.py \
+            --repo-root . \
+            --public-site site_public \
+            --unredacted-site site_unredacted \
+            --source-logo website/assets/logo_web.svg \
+            --version aq26-favicon-20260528 \
+            --summary site_public/data/weekly/favicon_enforcement_status.json
+
+      - name: Validate favicon files
+        run: |
+          set -euo pipefail
+          test -f site_public/favicon.ico
+          test -f site_public/favicon.svg
+          test -f site_public/assets/favicon.svg
+          test -f site_public/assets/apple-touch-icon.png
+          test -f site_public/assets/android-chrome-192x192.png
+          test -f site_public/assets/android-chrome-512x512.png
+          grep -q "favicon.ico" site_public/index.html
+          grep -q "apple-touch-icon" site_public/index.html
+          ! find site_public site_unredacted -name .htpasswd -print -quit | grep -q .
+
+      - name: Commit favicon files
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add website/assets/logo_web.svg website/assets/favicon.svg site_public site_unredacted || true
+          git reset -- site_unredacted/.htpasswd site_public/.htpasswd 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No favicon changes to commit."
+          else
+            git commit -m "Enforce AQ26 favicon and touch icons from logo"
+            git pull --rebase
+            git push
+          fi
+
+      - name: Install deployment tools
+        if: ${{ inputs.deploy_public || inputs.deploy_unredacted }}
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y sshpass rsync
+
+      - name: Deploy public favicon files
+        if: ${{ inputs.deploy_public }}
+        run: |
+          set -euo pipefail
+          REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}"
+          SSH_OPTS="-p ${SCCNEXUS_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30"
+          export SSHPASS="$SCCNEXUS_SSH_PASSWORD"
+          sshpass -e ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "mkdir -p '$REMOTE_DIR/assets'"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            sshpass -e rsync -avzn -e "ssh $SSH_OPTS" site_public/favicon.ico site_public/favicon.svg site_public/site.webmanifest "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+            sshpass -e rsync -avzn -e "ssh $SSH_OPTS" site_public/assets/favicon.svg site_public/assets/favicon.ico site_public/assets/apple-touch-icon.png site_public/assets/android-chrome-192x192.png site_public/assets/android-chrome-512x512.png site_public/assets/favicon-32x32.png site_public/assets/favicon-16x16.png "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/assets/"
+          else
+            sshpass -e rsync -avz -e "ssh $SSH_OPTS" site_public/favicon.ico site_public/favicon.svg site_public/site.webmanifest "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+            sshpass -e rsync -avz -e "ssh $SSH_OPTS" site_public/assets/favicon.svg site_public/assets/favicon.ico site_public/assets/apple-touch-icon.png site_public/assets/android-chrome-192x192.png site_public/assets/android-chrome-512x512.png site_public/assets/favicon-32x32.png site_public/assets/favicon-16x16.png "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/assets/"
+          fi
+
+      - name: Deploy unredacted favicon files
+        if: ${{ inputs.deploy_unredacted }}
+        run: |
+          set -euo pipefail
+          REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}/${{ inputs.remote_unredacted_subdir }}"
+          SSH_OPTS="-p ${SCCNEXUS_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30"
+          export SSHPASS="$SCCNEXUS_SSH_PASSWORD"
+          sshpass -e ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "mkdir -p '$REMOTE_DIR/assets'"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            sshpass -e rsync -avzn -e "ssh $SSH_OPTS" site_unredacted/favicon.ico site_unredacted/favicon.svg site_unredacted/site.webmanifest "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+            sshpass -e rsync -avzn -e "ssh $SSH_OPTS" site_unredacted/assets/favicon.svg site_unredacted/assets/favicon.ico site_unredacted/assets/apple-touch-icon.png site_unredacted/assets/android-chrome-192x192.png site_unredacted/assets/android-chrome-512x512.png site_unredacted/assets/favicon-32x32.png site_unredacted/assets/favicon-16x16.png "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/assets/"
+          else
+            sshpass -e rsync -avz -e "ssh $SSH_OPTS" site_unredacted/favicon.ico site_unredacted/favicon.svg site_unredacted/site.webmanifest "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+            sshpass -e rsync -avz -e "ssh $SSH_OPTS" site_unredacted/assets/favicon.svg site_unredacted/assets/favicon.ico site_unredacted/assets/apple-touch-icon.png site_unredacted/assets/android-chrome-192x192.png site_unredacted/assets/android-chrome-512x512.png site_unredacted/assets/favicon-32x32.png site_unredacted/assets/favicon-16x16.png "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/assets/"
+          fi
+
+      - name: Upload favicon artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-favicon-enforcement
+          path: |
+            site_public/favicon.*
+            site_public/assets/favicon.*
+            site_public/assets/*touch-icon*.png
+            site_public/assets/android-chrome-*.png
+            site_public/data/weekly/favicon_enforcement_status.json
+          if-no-files-found: error
