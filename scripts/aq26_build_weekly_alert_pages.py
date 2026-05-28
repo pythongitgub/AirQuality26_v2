@@ -2,17 +2,12 @@
 """
 AQ26 weekly Monday alert builder.
 
-Creates redacted and unredacted weekly update pages and injects a public-safe
-alert panel into both front pages. Designed to run after the operational site
-builder and after any focused/incinerator backfill scripts.
-
-Public output is deliberately legally cautious:
-- no causal attribution
-- no regulatory breach finding
-- no health advice
-- candidate overlays remain review-only
+Builds redacted and unredacted weekly-update pages and injects a front-page alert
+plus moving WEBM banner/ticker after the operational site builder has run.
+Public wording is deliberately legally cautious: no causal attribution, no
+regulatory breach finding, no health advice, and candidate overlays remain
+review-only until reviewed.
 """
-
 from __future__ import annotations
 
 import argparse
@@ -24,8 +19,7 @@ import shutil
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List
-
+from typing import Any, Dict, List, Optional
 
 PUBLIC_NOTICE = (
     "AQ26 is an evidence and provenance observatory. Public pages are redacted "
@@ -58,8 +52,8 @@ def read_json(path: Path, default: Any = None) -> Any:
         return default
     try:
         return json.loads(path.read_text(encoding="utf-8"))
-    except Exception:
-        return default
+    except Exception as exc:
+        return {"status": "json_read_error", "path": str(path), "error": str(exc)} if default == {} else default
 
 
 def write_json(path: Path, data: Any) -> None:
@@ -87,6 +81,7 @@ def load_overlay_status(repo: Path) -> List[Dict[str, str]]:
     for p in [
         repo / "site_public/data/focus/overlays_v3/facility_overlay_status.csv",
         repo / "site_public/data/focus/overlays_v2/facility_overlay_status.csv",
+        repo / "site_public/data/focus/facility_overlay_status.csv",
     ]:
         rows = read_csv(p)
         if rows:
@@ -98,6 +93,7 @@ def load_overlay_summary(repo: Path) -> Dict[str, Any]:
     for p in [
         repo / "site_public/data/focus/overlays_v3/incinerator_overlay_summary.json",
         repo / "site_public/data/focus/overlays_v2/incinerator_overlay_summary.json",
+        repo / "site_public/data/focus/incinerator_overlay_summary.json",
     ]:
         data = read_json(p, {})
         if isinstance(data, dict) and data:
@@ -105,16 +101,21 @@ def load_overlay_summary(repo: Path) -> Dict[str, Any]:
     return {}
 
 
-def load_backfill_status(repo: Path) -> Dict[str, Any]:
-    candidates = [
+def load_backfill_status(repo: Path, explicit: Optional[Path] = None) -> Dict[str, Any]:
+    candidates: List[Path] = []
+    if explicit is not None:
+        candidates.append(explicit if explicit.is_absolute() else repo / explicit)
+    candidates.extend([
         repo / ".aq26_weekly_alerts/backfill_status.json",
         repo / "site_public/data/weekly/backfill_status.json",
+        repo / "site_unredacted/data/weekly/backfill_status.json",
         repo / "site_public/data/latest_backfill_summary.json",
         repo / "site_public/data/focus/latest_backfill_summary.json",
-    ]
+    ])
     for p in candidates:
         data = read_json(p, {})
         if isinstance(data, dict) and data:
+            data.setdefault("source_path", str(p))
             return data
     return {"status": "not_run_in_this_workflow", "note": "No backfill status JSON found."}
 
@@ -127,16 +128,14 @@ def summarise(rows: List[Dict[str, str]], overlay_summary: Dict[str, Any], backf
     unresolved = counts.get("no_candidate_selected_yet", safe_int(overlay_summary.get("no_candidate_selected_yet"), 0))
     high_conf = sum(1 for r in rows if r.get("best_candidate_class") == "high_confidence_official_candidate")
     unresolved_names = [r.get("facility", "") for r in rows if r.get("overlay_status") == "no_candidate_selected_yet"]
-    backfill_ok = str(backfill_status.get("status", "")).lower() in {"success", "ok", "completed", "harvested", "not_run_in_this_workflow", "completed_with_script_warnings"}
+    backfill_text = str(backfill_status.get("status", "")).lower()
+    backfill_ok = backfill_text in {"success", "ok", "completed", "harvested", "attempted", "not_run_in_this_workflow", "completed_with_script_warnings"}
     if not backfill_ok:
-        level = "red"
-        headline = "Weekly update needs review"
+        level, headline = "red", "Weekly update needs review"
     elif unresolved > 0 or candidates > 0:
-        level = "amber"
-        headline = "Weekly incinerator evidence update"
+        level, headline = "amber", "Weekly incinerator evidence update"
     else:
-        level = "green"
-        headline = "Weekly update complete"
+        level, headline = "green", "Weekly update complete"
     coverage_pct = round(((validated + candidates) * 100 / total), 1) if total else 0.0
     return {
         "generated_utc": now_utc(),
@@ -178,24 +177,33 @@ def weekly_css() -> str:
 def weekly_js() -> str:
     return """
 (function(){
-  const videos = Array.from(document.querySelectorAll("[data-aq26-banner-video]"));
+  const videos = Array.from(document.querySelectorAll('[data-aq26-banner-video]'));
   videos.forEach((v) => {
-    v.addEventListener("error", () => { const box=v.closest(".aq26-video-banner"); if(box) box.classList.add("video-missing"); });
+    v.addEventListener('error', () => { const box=v.closest('.aq26-video-banner'); if(box) box.classList.add('video-missing'); });
     try { v.play && v.play().catch(()=>{}); } catch(e){}
   });
 })();
 """
 
 
-def video_banner(summary: Dict[str, Any]) -> str:
+def available_banner(site: Path) -> str:
+    banner_dir = site / "assets/banners"
+    if banner_dir.exists():
+        for p in sorted(banner_dir.glob("desktop_banner_*.webm")):
+            return f"assets/banners/{p.name}"
+    return "assets/banners/desktop_banner_1.webm"
+
+
+def video_banner(summary: Dict[str, Any], site: Optional[Path] = None) -> str:
     msg = (
         f"{summary['total_facilities']} facilities · {summary['validated_overlays']} validated overlays · "
         f"{summary['candidate_overlays']} candidates under review · {summary['unresolved_facilities']} fallback cases"
     )
+    src = available_banner(site) if site is not None else "assets/banners/desktop_banner_1.webm"
     return f"""
 <section class="aq26-video-banner" aria-label="AQ26 moving evidence banner">
   <video data-aq26-banner-video autoplay muted loop playsinline preload="metadata">
-    <source src="assets/banners/desktop_banner_1.webm" type="video/webm">
+    <source src="{esc(src)}" type="video/webm">
   </video>
   <div class="aq26-video-banner__overlay">
     <div class="eyebrow">AQ26 weekly evidence pulse</div>
@@ -263,11 +271,11 @@ def basic_page(title: str, body: str, unredacted: bool = False) -> str:
     )
     if unredacted:
         nav = "<a href='index.html'>Dashboard</a> <a href='weekly-update.html'>Weekly update</a> <a href='candidates.html'>Candidates</a> <a href='diagnostics.html'>Diagnostics</a> <a href='../index.html'>Public site</a>"
-    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">{noindex}<title>{esc(title)} · AQ26</title><link rel="icon" href="assets/favicon.svg?v=aq26-weekly"><link rel="stylesheet" href="assets/aq26_operational.css?v=operational"><link rel="stylesheet" href="assets/aq26_weekly_alerts.css?v=aq26-weekly"></head><body><header class="header"><div class="wrap"><a class="brand" href="index.html"><img src="assets/air_quality_web.svg" alt="SCC Nexus Air Quality Report"></a><nav class="nav open">{nav}</nav></div></header><main class="main">{body}</main><footer class="footer"><div class="wrap"><p>{esc(PUBLIC_NOTICE)}</p></div></footer><script src="assets/aq26_weekly_alerts.js?v=aq26-weekly"></script></body></html>"""
+    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">{noindex}<title>{esc(title)} · AQ26</title><link rel="icon" href="/favicon.svg?v=aq26-weekly" type="image/svg+xml"><link rel="icon" href="assets/favicon.svg?v=aq26-weekly" type="image/svg+xml"><link rel="stylesheet" href="assets/aq26_operational.css?v=operational"><link rel="stylesheet" href="assets/aq26_weekly_alerts.css?v=aq26-weekly"></head><body><header class="header"><div class="wrap"><a class="brand" href="index.html"><img src="assets/air_quality_web.svg" alt="SCC Nexus Air Quality Report"></a><nav class="nav open">{nav}</nav></div></header><main class="main">{body}</main><footer class="footer"><div class="wrap"><p>{esc(PUBLIC_NOTICE)}</p></div></footer><script src="assets/aq26_weekly_alerts.js?v=aq26-weekly"></script></body></html>"""
 
 
-def build_weekly_page(summary: Dict[str, Any], rows: List[Dict[str, str]], unredacted: bool = False) -> str:
-    body = video_banner(summary)
+def build_weekly_page(summary: Dict[str, Any], rows: List[Dict[str, str]], site: Path, unredacted: bool = False) -> str:
+    body = video_banner(summary, site)
     body += ticker(summary)
     body += alert_html(summary, unredacted=unredacted)
     unresolved = ", ".join(summary.get("unresolved_names") or []) or "None"
@@ -302,7 +310,7 @@ def ensure_assets(site: Path, repo: Path) -> None:
     (assets / "aq26_weekly_alerts.css").write_text(weekly_css(), encoding="utf-8")
     (assets / "aq26_weekly_alerts.js").write_text(weekly_js(), encoding="utf-8")
 
-    for name in ["air_quality_web.svg", "favicon.svg", "logo_web.svg"]:
+    for name in ["air_quality_web.svg", "favicon.svg", "logo_web.svg", "apple-touch-icon.png", "android-chrome-192x192.png", "android-chrome-512x512.png"]:
         for src in [repo / "website/assets" / name, repo / "site_public/assets" / name]:
             if src.exists():
                 shutil.copyfile(src, assets / name)
@@ -327,9 +335,9 @@ def inject_head_refs(html_text: str) -> str:
     for ref in refs:
         key = ref.split("href=\"", 1)[1].split("\"", 1)[0].split("?", 1)[0]
         if key not in html_text:
-            html_text = html_text.replace("</head>", ref + "\n</head>")
+            html_text = html_text.replace("</head>", ref + "\n</head>") if "</head>" in html_text else ref + "\n" + html_text
     if "assets/aq26_weekly_alerts.js" not in html_text:
-        html_text = html_text.replace("</body>", "<script src=\"assets/aq26_weekly_alerts.js?v=aq26-weekly\"></script>\n</body>")
+        html_text = html_text.replace("</body>", "<script src=\"assets/aq26_weekly_alerts.js?v=aq26-weekly\"></script>\n</body>") if "</body>" in html_text else html_text + "\n<script src=\"assets/aq26_weekly_alerts.js?v=aq26-weekly\"></script>"
     return html_text
 
 
@@ -339,7 +347,10 @@ def inject_front_page(site: Path, summary: Dict[str, Any], unredacted: bool = Fa
         index.write_text(basic_page("AQ26", "", unredacted=unredacted), encoding="utf-8")
     txt = index.read_text(encoding="utf-8", errors="replace")
     txt = re.sub(r"<!--AQ26_WEEKLY_ALERT_START-->.*?<!--AQ26_WEEKLY_ALERT_END-->", "", txt, flags=re.S)
-    block = video_banner(summary) + ticker(summary) + alert_html(summary, unredacted=unredacted)
+    # Avoid repeated WEBM banner blocks by removing earlier weekly banner copies.
+    txt = re.sub(r"<section class=\"aq26-video-banner\".*?</section>", "", txt, flags=re.S)
+    txt = re.sub(r"<div class='aq26-weekly-ticker'>.*?</div></div>", "", txt, flags=re.S)
+    block = video_banner(summary, site) + ticker(summary) + alert_html(summary, unredacted=unredacted)
     if "<main" in txt:
         txt = re.sub(r"(<main[^>]*>)", r"\1\n" + block, txt, count=1, flags=re.I)
     elif "<body" in txt:
@@ -355,6 +366,7 @@ def main() -> int:
     ap.add_argument("--repo-root", default=".")
     ap.add_argument("--public-site", default="site_public")
     ap.add_argument("--unredacted-site", default="site_unredacted")
+    ap.add_argument("--backfill-status", default="site_public/data/weekly/backfill_status.json", help="Optional path to backfill status JSON. Accepted for workflow compatibility.")
     ap.add_argument("--summary-out", default="site_public/data/weekly/latest_alert.json")
     ap.add_argument("--unredacted-summary-out", default="site_unredacted/data/weekly/latest_alert_unredacted.json")
     args = ap.parse_args()
@@ -364,10 +376,12 @@ def main() -> int:
     unredacted = repo / args.unredacted_site
     public.mkdir(parents=True, exist_ok=True)
     unredacted.mkdir(parents=True, exist_ok=True)
+    (public / "data/weekly").mkdir(parents=True, exist_ok=True)
+    (unredacted / "data/weekly").mkdir(parents=True, exist_ok=True)
 
     rows = load_overlay_status(repo)
     overlay_summary = load_overlay_summary(repo)
-    backfill_status = load_backfill_status(repo)
+    backfill_status = load_backfill_status(repo, Path(args.backfill_status) if args.backfill_status else None)
     summary = summarise(rows, overlay_summary, backfill_status)
 
     for site in [public, unredacted]:
@@ -378,8 +392,8 @@ def main() -> int:
     write_json(repo / args.summary_out, public_summary)
     write_json(repo / args.unredacted_summary_out, summary)
 
-    public.joinpath("weekly-update.html").write_text(build_weekly_page(summary, rows, unredacted=False), encoding="utf-8")
-    unredacted.joinpath("weekly-update.html").write_text(build_weekly_page(summary, rows, unredacted=True), encoding="utf-8")
+    public.joinpath("weekly-update.html").write_text(build_weekly_page(summary, rows, public, unredacted=False), encoding="utf-8")
+    unredacted.joinpath("weekly-update.html").write_text(build_weekly_page(summary, rows, unredacted, unredacted=True), encoding="utf-8")
 
     unredacted.joinpath("robots.txt").write_text("User-agent: *\nDisallow: /\n", encoding="utf-8")
 
@@ -398,6 +412,7 @@ def main() -> int:
             "candidate_overlays": summary["candidate_overlays"],
             "unresolved_facilities": summary["unresolved_facilities"],
         },
+        "backfill_status_source": backfill_status.get("source_path"),
     }
     write_json(public / "data/weekly/weekly_alert_build_status.json", deploy_status)
     write_json(unredacted / "data/weekly/weekly_alert_build_status.json", deploy_status)
