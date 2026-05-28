@@ -1,0 +1,87 @@
+facility,overlay_status,best_candidate_site,best_candidate_score,best_candidate_class,suggested_action
+Leeds RERF,validated_existing_overlay,,0,,use_validated_overlay
+London EcoPark,validated_existing_overlay,,0,,use_validated_overlay
+Newhaven ERF,validated_existing_overlay,,0,,use_validated_overlay
+Riverside RR ERF,validated_existing_overlay,,0,,use_validated_overlay
+Runcorn EfW,validated_existing_overlay,,0,,use_validated_overlay
+SELCHP,validated_existing_overlay,,0,,use_validated_overlay
+Sheffield ERF,validated_existing_overlay,,0,,use_validated_overlay
+Tyseley EfW,validated_existing_overlay,,0,,use_validated_overlay
+Eastcroft EfW,candidate_overlay_needs_review,Nottingham Centre,100,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Devonport Dockyard,candidate_overlay_needs_review,Plymouth Centre - UKA00360,98,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Crossness Sludge Plant,candidate_overlay_needs_review,Bexley - Slade Green,95,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Marchwood ERF,candidate_overlay_needs_review,Southampton Centre - UKA00235,95,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Teesside EfW,candidate_overlay_needs_review,Middlesbrough - UKA00220,95,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+CSWDC Coventry,candidate_overlay_needs_review,Coventry Allesley - UKA00592,93,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Portsmouth ERF,candidate_overlay_needs_review,Portsmouth Background AURN,93,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Stoke EfW,candidate_overlay_needs_review,Stoke-on-Trent Centre - UKA00337,93,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Beddington ERF,candidate_overlay_needs_review,Sutton - Beddington Lane north,87,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Red Moss Landfill,candidate_overlay_needs_review,Manchester Piccadilly - UKA00248,87,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Bolton WtE,candidate_overlay_needs_review,Glazebury - UKA00170,85,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Lakeside EfW,candidate_overlay_needs_review,London Hillingdon - UKA00266,85,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Westfield Incinerator,candidate_overlay_needs_review,Charlton Mackrell - UKA00537,85,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Exeter ERF,candidate_overlay_needs_review,Exeter Roadside - UKA00263,81,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Allerton Waste Recovery Park,candidate_overlay_needs_review,Leeds Centre - UKA00222,80,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Fawley Incinerator,candidate_overlay_needs_review,Southampton Centre - UKA00235,80,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Ferrybridge MF2,candidate_overlay_needs_review,Leeds Centre - UKA00222,80,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Glanford PS,candidate_overlay_needs_review,Scunthorpe Town - UKA00381,80,high_confidence_official_candidate,review_for_promotion_to_validated_overlay
+Dudley EfW,candidate_overlay_needs_review,Oldbury Birmingham Road - UKA00595,79,local_or_official_candidate_needs_review,review_as_local_or_official_overlay_candidate
+Ardley ERF,candidate_overlay_needs_review,Oxford St Ebbes,78,local_or_official_candidate_needs_review,review_as_local_or_official_overlay_candidate
+Lincoln ERF,candidate_overlay_needs_review,Lincoln Canwick Road - UKA00561,75,local_or_official_candidate_needs_review,review_as_local_or_official_overlay_candidate
+Wolverhampton EfW,candidate_overlay_needs_review,Oldbury Birmingham Road - UKA00595,72,local_or_official_candidate_needs_review,review_as_local_or_official_overlay_candidate
+Chineham EfW,candidate_overlay_needs_review,Chilbolton Observatory - UKA00614,69,local_or_official_candidate_needs_review,review_as_local_or_official_overlay_candidate
+Isle of Wight Gasification,candidate_overlay_needs_review,Southampton Centre - UKA00235,69,local_or_official_candidate_needs_review,review_as_local_or_official_overlay_candidate
+Kirklees EfW,candidate_overlay_needs_review,Barnsley Gawber - UKA00353,69,local_or_official_candidate_needs_review,review_as_local_or_official_overlay_candidate
+Allington Quarry Waste Management Facility,candidate_overlay_needs_review,Chatham Roadside - UKA00553,61,local_or_official_candidate_needs_review,review_as_local_or_official_overlay_candidate
+Hartlebury EfW,candidate_overlay_needs_review,Oldbury Birmingham Road - UKA00595,61,local_or_official_candidate_needs_review,review_as_local_or_official_overlay_candidate
+Newlincs EfW,candidate_overlay_needs_review,Hull Freetown - UKA00450,59,plausible_candidate_needs_review,review_geography_and_source_before_use
+Greatmoor EfW,candidate_overlay_needs_review,Oxford St Ebbes,57,plausible_candidate_needs_review,review_geography_and_source_before_use
+North Hykeham Incinerator,candidate_overlay_needs_review,Lincoln Canwick Road - UKA00561,55,plausible_candidate_needs_review,review_geography_and_source_before_use
+Shrewsbury Incinerator,candidate_overlay_needs_review,"Shrewsbury, UK",54,plausible_candidate_needs_review,review_geography_and_source_before_use
+Gloucestershire Javelin Park,candidate_overlay_needs_review,Chepstow A48,51,plausible_candidate_needs_review,review_geography_and_source_before_use
+Milton Keynes WRP,candidate_overlay_needs_review,Milton Keynes,49,plausible_candidate_needs_review,review_geography_and_source_before_use
+Great Blakenham EfW,candidate_overlay_needs_review,Sibton - UKA00012,47,plausible_candidate_needs_review,review_geography_and_source_before_use
+Peterborough ERF,candidate_overlay_needs_review,"Crowland, lincolnshire",42,supporting_context_community_sensor,use_as_supporting_context_only
+Allerton Waste Recovery Park,no_candidate_selected_yet,,0,,
+Allington Quarry Waste Management Facility,no_candidate_selected_yet,,0,,
+Ardley ERF,no_candidate_selected_yet,,0,,
+Beddington ERF,no_candidate_selected_yet,,0,,
+Bolton WtE,no_candidate_selected_yet,,0,,
+CSWDC Coventry,no_candidate_selected_yet,,0,,
+Chineham EfW,no_candidate_selected_yet,,0,,
+Cornwall ERC,no_candidate_selected_yet,,0,,
+Cornwall ERC,no_candidate_selected_yet,,0,,query_or_manual_review
+Crossness Sludge Plant,no_candidate_selected_yet,,0,,
+Devonport Dockyard,no_candidate_selected_yet,,0,,
+Dudley EfW,no_candidate_selected_yet,,0,,
+Eastcroft EfW,no_candidate_selected_yet,,0,,
+Exeter ERF,no_candidate_selected_yet,,0,,
+Fawley Incinerator,no_candidate_selected_yet,,0,,
+Gloucestershire Javelin Park,no_candidate_selected_yet,,0,,
+Great Blakenham EfW,no_candidate_selected_yet,,0,,
+Greatmoor EfW,no_candidate_selected_yet,,0,,
+Hartlebury EfW,no_candidate_selected_yet,,0,,
+Isle of Man Incinerator,no_candidate_selected_yet,,0,,
+Isle of Man Incinerator,no_candidate_selected_yet,,0,,query_or_manual_review
+Isle of Wight Gasification,no_candidate_selected_yet,,0,,
+Kirklees EfW,no_candidate_selected_yet,,0,,
+Lakeside EfW,no_candidate_selected_yet,,0,,
+Leeds RERF,no_candidate_selected_yet,,0,,
+Lincoln ERF,no_candidate_selected_yet,,0,,
+Marchwood ERF,no_candidate_selected_yet,,0,,
+Newhaven ERF,no_candidate_selected_yet,,0,,
+Newlincs EfW,no_candidate_selected_yet,,0,,
+North Hykeham Incinerator,no_candidate_selected_yet,,0,,
+Peterborough ERF,no_candidate_selected_yet,,0,,
+Portsmouth ERF,no_candidate_selected_yet,,0,,
+Riverside RR ERF,no_candidate_selected_yet,,0,,
+Runcorn EfW,no_candidate_selected_yet,,0,,
+Sheffield ERF,no_candidate_selected_yet,,0,,
+Shrewsbury Incinerator,no_candidate_selected_yet,,0,,
+Stoke EfW,no_candidate_selected_yet,,0,,
+Teesside EfW,no_candidate_selected_yet,,0,,
+Thetford Incinerator,no_candidate_selected_yet,,0,,
+Thetford Incinerator,no_candidate_selected_yet,,0,,query_or_manual_review
+Tyseley EfW,no_candidate_selected_yet,,0,,
+Westfield Incinerator,no_candidate_selected_yet,,0,,
+Wolverhampton EfW,no_candidate_selected_yet,,0,,

@@ -1,0 +1,20 @@
+{
+  "total": 86,
+  "counts": {
+    "validated": 8,
+    "candidate": 35,
+    "missing": 43
+  },
+  "scoreBands": {
+    "A": 13,
+    "B": 9,
+    "C": 8,
+    "D": 5
+  },
+  "classCounts": {
+    "high_confidence_official_candidate": 18,
+    "local_or_official_candidate_needs_review": 9,
+    "plausible_candidate_needs_review": 7,
+    "supporting_context_community_sensor": 1
+  }
+}
