@@ -1,0 +1,16 @@
+# AQ26 safety / generated local files
+__pycache__/
+*.pyc
+.env
+*.env
+AirQuality.env
+
+# Never commit live auth files
+site_unredacted/.htpasswd
+site_unredacted/**/.htpasswd
+site_public/.htpasswd
+site_public/**/.htpasswd
+
+# Temporary reports
+outputs/housekeeping/
+.aq26_tmp/
