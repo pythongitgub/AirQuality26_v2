@@ -1,0 +1,89 @@
+name: AQ26 Housekeeping Critical Cleanup
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit_cleanup:
+        description: Commit cleanup changes
+        required: true
+        default: true
+        type: boolean
+      run_audit_after:
+        description: Run housekeeping audit after cleanup if present
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Remove committed deployment-only auth files
+        run: |
+          set -euo pipefail
+          python scripts/aq26_housekeeping_clean_critical_files.py
+          git rm -f --ignore-unmatch site_unredacted/.htpasswd site_unredacted/.htpasswd.tmp || true
+          test -f .gitignore
+          ! git ls-files | grep -E '(^|/)\.htpasswd$'
+
+      - name: Validate workflow and script syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/aq26_housekeeping_clean_critical_files.py
+          python - <<'PY'
+          import sys
+          from pathlib import Path
+          try:
+              import yaml
+          except Exception:
+              print('pyyaml unavailable; skipping YAML parse')
+              raise SystemExit(0)
+          for p in Path('.github/workflows').glob('*.yml'):
+              yaml.safe_load(p.read_text(encoding='utf-8'))
+              print('yaml ok', p)
+          PY
+
+      - name: Optional audit after cleanup
+        if: ${{ inputs.run_audit_after }}
+        run: |
+          set -euo pipefail
+          if [ -f scripts/aq26_repo_housekeeping_audit.py ]; then
+            python scripts/aq26_repo_housekeeping_audit.py --fail-on-critical false --summary outputs/housekeeping/post_cleanup_summary.json || true
+          else
+            echo 'Housekeeping audit script not present; skipping post-cleanup audit.'
+          fi
+
+      - name: Commit cleanup
+        if: ${{ inputs.commit_cleanup }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .gitignore scripts/aq26_housekeeping_clean_critical_files.py .github/workflows/aq26_housekeeping_critical_cleanup.yml site_unredacted/.htaccess site_unredacted/robots.txt outputs/housekeeping || true
+          git add -u site_unredacted || true
+          if git diff --cached --quiet; then
+            echo 'No cleanup changes to commit.'
+          else
+            git commit -m "Clean AQ26 deployment-only auth files and housekeeping ignores"
+            git pull --rebase
+            git push
+          fi
+
+      - name: Upload cleanup artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-housekeeping-critical-cleanup
+          path: outputs/housekeeping/
+          if-no-files-found: warn
