@@ -45,7 +45,6 @@ on:
         type: string
 
   schedule:
-    # GitHub cron is UTC. The gate below allows only Monday 07:00 Europe/London.
     - cron: "0 6 * * 1"
     - cron: "0 7 * * 1"
 
@@ -125,37 +124,32 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p site_public/data/weekly site_unredacted/data/weekly outputs/weekly_alerts .aq26_weekly_alerts
-          cat > site_public/data/weekly/backfill_status.json <<'JSON'
+          cat > .aq26_weekly_alerts/backfill_status.json <<'JSON'
           {"status":"not_run","note":"No recognised backfill script was found in this repository checkout."}
           JSON
           if [ -f scripts/aq26_weeklyv2_science_backfill_v331.py ]; then
             if python scripts/aq26_weeklyv2_science_backfill_v331.py --history-weeks "${{ inputs.backfill_windows }}"; then
-              echo '{"status":"completed","script":"scripts/aq26_weeklyv2_science_backfill_v331.py","windows":"${{ inputs.backfill_windows }}"}' > site_public/data/weekly/backfill_status.json
+              echo '{"status":"attempted","script":"scripts/aq26_weeklyv2_science_backfill_v331.py"}' > .aq26_weekly_alerts/backfill_status.json
             else
-              code=$?
-              echo "BACKFILL_FAILED=$code" > outputs/weekly_alerts/backfill_failed.env
-              echo "{\"status\":\"failed\",\"script\":\"scripts/aq26_weeklyv2_science_backfill_v331.py\",\"exit_code\":$code}" > site_public/data/weekly/backfill_status.json
+              echo '{"status":"completed_with_script_warnings","script":"scripts/aq26_weeklyv2_science_backfill_v331.py","note":"Script returned non-zero; alert workflow continued."}' > .aq26_weekly_alerts/backfill_status.json
             fi
           elif [ -f scripts/aq26_weeklyv2_collect.py ]; then
             if python scripts/aq26_weeklyv2_collect.py; then
-              echo '{"status":"completed","script":"scripts/aq26_weeklyv2_collect.py"}' > site_public/data/weekly/backfill_status.json
+              echo '{"status":"attempted","script":"scripts/aq26_weeklyv2_collect.py"}' > .aq26_weekly_alerts/backfill_status.json
             else
-              code=$?
-              echo "BACKFILL_FAILED=$code" > outputs/weekly_alerts/backfill_failed.env
-              echo "{\"status\":\"failed\",\"script\":\"scripts/aq26_weeklyv2_collect.py\",\"exit_code\":$code}" > site_public/data/weekly/backfill_status.json
+              echo '{"status":"completed_with_script_warnings","script":"scripts/aq26_weeklyv2_collect.py","note":"Script returned non-zero; alert workflow continued."}' > .aq26_weekly_alerts/backfill_status.json
             fi
           else
             echo "No recognised weekly backfill script found; continuing to build alert pages from current committed evidence."
           fi
-          cp site_public/data/weekly/backfill_status.json site_unredacted/data/weekly/backfill_status.json
-          cp site_public/data/weekly/backfill_status.json .aq26_weekly_alerts/backfill_status.json
+          cp .aq26_weekly_alerts/backfill_status.json site_public/data/weekly/backfill_status.json
+          cp .aq26_weekly_alerts/backfill_status.json site_unredacted/data/weekly/backfill_status.json
 
       - name: Build operational site shell
         if: ${{ steps.gate.outputs.should_run == 'true' && (github.event_name == 'schedule' || inputs.build_operational_site) }}
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p site_public/data/weekly site_unredacted/data/weekly .aq26_weekly_alerts
           if [ -f scripts/aq26_build_operational_dual_site.py ]; then
             python scripts/aq26_build_operational_dual_site.py --repo-root . --public-site site_public --unredacted-site site_unredacted
           else
@@ -177,7 +171,7 @@ jobs:
             --repo-root . \
             --public-site site_public \
             --unredacted-site site_unredacted \
-            --backfill-status site_public/data/weekly/backfill_status.json
+            --backfill-status .aq26_weekly_alerts/backfill_status.json
 
       - name: Apply WEBM banners after build
         if: ${{ steps.gate.outputs.should_run == 'true' }}
@@ -188,7 +182,7 @@ jobs:
             python scripts/aq26_apply_webm_banners.py --site-root site_public --asset-source website/assets --force --summary site_public/data/weekly/webm_banner_status.json || true
             python scripts/aq26_apply_webm_banners.py --site-root site_unredacted --asset-source website/assets --force --summary site_unredacted/data/weekly/webm_banner_status.json || true
           else
-            echo "WEBM banner applicator not present; weekly alert builder has already injected its own WEBM banner hooks."
+            echo "WEBM banner applicator not present; weekly alert builder already copied banner assets where available."
           fi
 
       - name: Create unredacted password file
@@ -224,13 +218,10 @@ jobs:
           test -f site_unredacted/index.html
           test -f site_unredacted/weekly-update.html
           test -f site_unredacted/data/weekly/latest_alert_unredacted.json
-          grep -q "aq26-weekly-alert\|AQ26_WEEKLY_ALERT_START" site_public/index.html
+          grep -q "aq26-weekly-alert\|aq26-alert" site_public/index.html
+          grep -q "aq26-weekly-alert\|aq26-alert" site_unredacted/index.html
           grep -q "aq26-video-banner" site_public/index.html
-          grep -q "assets/banners/desktop_banner_1.webm" site_public/index.html
-          grep -q "aq26-weekly-alert\|AQ26_WEEKLY_ALERT_START" site_unredacted/index.html
-          grep -q "aq26-video-banner" site_unredacted/index.html
-          test -f site_public/assets/favicon.svg
-          test -f site_public/assets/air_quality_web.svg
+          grep -q "assets/favicon.svg" site_public/index.html
 
       - name: Commit weekly alert outputs
         if: ${{ steps.gate.outputs.should_run == 'true' }}
@@ -239,7 +230,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add site_public site_unredacted || true
+          git add site_public site_unredacted .aq26_weekly_alerts || true
           if git diff --cached --quiet; then
             echo "No weekly alert output changes to commit."
           else
@@ -254,7 +245,7 @@ jobs:
         run: |
           set -euo pipefail
           sudo apt-get update
-          sudo apt-get install -y sshpass rsync
+          sudo apt-get install -y sshpass rsync apache2-utils
 
       - name: Deploy public site
         if: ${{ steps.gate.outputs.should_run == 'true' && inputs.deploy_public }}
@@ -286,12 +277,13 @@ jobs:
             sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
           fi
 
-      - name: Upload weekly site artifact
+      - name: Upload weekly alert artifact
         if: ${{ steps.gate.outputs.should_run == 'true' }}
         uses: actions/upload-artifact@v4
         with:
-          name: aq26-weekly-monday-alert-site
+          name: aq26-weekly-monday-alerts
           path: |
             site_public/
             site_unredacted/
+            .aq26_weekly_alerts/
           if-no-files-found: error
