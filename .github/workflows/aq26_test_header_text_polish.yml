@@ -4,22 +4,22 @@ on:
   workflow_dispatch:
     inputs:
       build_operational_site:
-        description: "Rebuild operational public/unredacted site before staging"
+        description: "Rebuild operational public/unredacted sites before creating /test"
         required: true
         default: true
         type: boolean
       include_unredacted:
-        description: "Include unredacted copy under /test/unredacted/"
+        description: "Include unredacted copy under /test/unredacted"
         required: true
         default: true
         type: boolean
       deploy_test:
-        description: "Deploy test staging site to Hostinger /test/"
+        description: "Deploy /test staging site to Hostinger"
         required: true
         default: true
         type: boolean
       dry_run:
-        description: "Dry-run rsync deployment only"
+        description: "Dry-run rsync only"
         required: true
         default: true
         type: boolean
@@ -41,129 +41,101 @@ env:
   SCCNEXUS_SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
 
 jobs:
-  test-header-polish:
+  polish-test-header:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
-
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Rebase before generating
-        shell: bash
+      - name: Rebase before generating files
         run: |
           set -euo pipefail
-          git config pull.rebase true
-          git fetch origin main
-          git pull --rebase --autostash origin main || true
+          git pull --rebase --autostash || true
 
-      - name: Build operational site if requested
+      - name: Optional rebuild of operational sites
         if: ${{ inputs.build_operational_site }}
-        shell: bash
         run: |
           set -euo pipefail
           if [ -f scripts/aq26_build_operational_dual_site.py ]; then
             python scripts/aq26_build_operational_dual_site.py --repo-root . --public-site site_public --unredacted-site site_unredacted
-          else
-            echo "Operational builder not present; using existing site_public/site_unredacted."
           fi
-          rm -f site_unredacted/.htpasswd site_public/.htpasswd site_test/.htpasswd site_test/unredacted/.htpasswd || true
+          rm -f site_public/.htpasswd site_unredacted/.htpasswd || true
 
-      - name: Build /test staging site
-        shell: bash
+      - name: Build /test staging website
         run: |
           set -euo pipefail
           if [ -f scripts/aq26_build_test_staging_site.py ]; then
-            python scripts/aq26_build_test_staging_site.py \
-              --repo-root . \
-              --public-site site_public \
-              --unredacted-site site_unredacted \
-              --test-site site_test \
-              ${{ inputs.include_unredacted && '--include-unredacted' || '' }}
+            python scripts/aq26_build_test_staging_site.py --repo-root . --site-root site_test --include-unredacted "${{ inputs.include_unredacted }}"
           else
-            echo "Staging builder missing; copying manually."
             rm -rf site_test
             mkdir -p site_test
             cp -a site_public/. site_test/
             if [ "${{ inputs.include_unredacted }}" = "true" ]; then
               mkdir -p site_test/unredacted
-              cp -a site_unredacted/. site_test/unredacted/ || true
+              cp -a site_unredacted/. site_test/unredacted/
             fi
+            python - <<'PY'
+            from pathlib import Path
+            banner='<div style="background:#ffd34d;color:#071a30;padding:.6rem 1rem;font-weight:900;text-align:center">TEST / STAGING COPY</div>'
+            for p in Path('site_test').rglob('*.html'):
+                txt=p.read_text(encoding='utf-8',errors='replace')
+                if 'TEST / STAGING COPY' not in txt:
+                    txt=txt.replace('<body>', '<body>'+banner, 1) if '<body>' in txt else banner+txt
+                if 'noindex' not in txt.lower():
+                    txt=txt.replace('</head>', '<meta name="robots" content="noindex,nofollow">\n</head>', 1)
+                p.write_text(txt,encoding='utf-8')
+            PY
           fi
-          rm -f site_unredacted/.htpasswd site_public/.htpasswd site_test/.htpasswd site_test/unredacted/.htpasswd || true
+          rm -f site_public/.htpasswd site_unredacted/.htpasswd site_test/.htpasswd site_test/unredacted/.htpasswd || true
 
-      - name: Remove header side text from /test
-        shell: bash
+      - name: Remove text beside header logo
         run: |
           set -euo pipefail
-          if [ -f scripts/aq26_remove_header_side_text.py ]; then
-            python scripts/aq26_remove_header_side_text.py --site-root site_test
-            if [ -d site_test/unredacted ]; then
-              python scripts/aq26_remove_header_side_text.py --site-root site_test/unredacted
-            fi
-          else
-            echo "Header-side text script missing; using inline fallback."
-            python - <<'PY'
-          from pathlib import Path
-          import re
-          for root in [Path("site_test"), Path("site_test/unredacted")]:
-              if not root.exists():
-                  continue
-              for p in root.rglob("*.html"):
-                  txt = p.read_text(encoding="utf-8", errors="replace")
-                  old = txt
-                  txt = re.sub(r"<span[^>]*>\s*<small>\s*SCC\s+Nexus\s*[·|&middot;]\s*AQ26\s*</small>\s*</span>", "", txt, flags=re.I)
-                  txt = re.sub(r"<span[^>]*>\s*SCC\s+Nexus\s*[·|&middot;]\s*AQ26\s*</span>", "", txt, flags=re.I)
-                  txt = txt.replace("SCC NEXUS · AQ26", "").replace("SCC Nexus · AQ26", "")
-                  if txt != old:
-                      p.write_text(txt, encoding="utf-8")
-          PY
-          fi
+          python scripts/aq26_remove_header_side_text.py --roots site_test site_public site_unredacted --summary site_test/data/test_header_text_polish_summary.json --fail-if-remaining
 
-      - name: Validate /test staging site
-        shell: bash
+      - name: Validate test staging website
         run: |
           set -euo pipefail
           test -f site_test/index.html
+          test -f site_test/test-index.html
           test -f site_test/incinerators.html
           test -f site_test/newhaven.html
           test -f site_test/weekly-update.html
           grep -Eq "AQ26_WEEKLY_ALERT_START|aq26-alert" site_test/index.html
           grep -q "aq26-video-banner" site_test/index.html
-          ! grep -R "SCC NEXUS · AQ26\|SCC Nexus · AQ26" site_test/*.html site_test/unredacted/*.html 2>/dev/null
+          if grep -R "SCC NEXUS · AQ26\|SCC Nexus · AQ26" site_test/*.html site_test/unredacted/*.html 2>/dev/null; then
+            echo "Header side text still present in files above"
+            exit 1
+          fi
           ! find site_public site_unredacted site_test -name .htpasswd -print -quit | grep -q .
 
-      - name: Commit generated /test staging files safely
-        shell: bash
+      - name: Commit test staging polish
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          rm -f site_unredacted/.htpasswd site_public/.htpasswd site_test/.htpasswd site_test/unredacted/.htpasswd || true
-
-          git add site_test scripts/aq26_remove_header_side_text.py .github/workflows/aq26_test_header_text_polish.yml docs/AQ26_TEST_HEADER_TEXT_POLISH.md || true
-          git reset -- site_unredacted/.htpasswd site_public/.htpasswd site_test/.htpasswd site_test/unredacted/.htpasswd 2>/dev/null || true
-
+          rm -f site_public/.htpasswd site_unredacted/.htpasswd site_test/.htpasswd site_test/unredacted/.htpasswd || true
+          git add scripts/aq26_remove_header_side_text.py .github/workflows/aq26_test_header_text_polish.yml docs/AQ26_TEST_HEADER_TEXT_POLISH.md site_test site_public site_unredacted || true
+          git reset -- ':(glob)**/.htpasswd' 2>/dev/null || true
           if git diff --cached --quiet; then
-            echo "No staging changes to commit."
+            echo "No header polish changes to commit."
           else
-            git commit -m "Polish AQ26 test staging header text"
+            git commit -m "Polish AQ26 test header logo text"
+            git pull --rebase --autostash
+            git push
           fi
-
-          # Important: use autostash because generated pages can leave unstaged timestamp/cache changes.
-          git pull --rebase --autostash origin main
-          git push
 
       - name: Install deployment tools
         if: ${{ inputs.deploy_test }}
-        shell: bash
         run: |
           set -euo pipefail
           sudo apt-get update
@@ -171,7 +143,6 @@ jobs:
 
       - name: Deploy /test staging site
         if: ${{ inputs.deploy_test }}
-        shell: bash
         run: |
           set -euo pipefail
           REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}/${{ inputs.remote_test_subdir }}"
@@ -187,6 +158,7 @@ jobs:
       - name: Upload /test staging artifact
         uses: actions/upload-artifact@v4
         with:
-          name: aq26-test-header-text-polish
-          path: site_test/
+          name: aq26-test-header-polish
+          path: |
+            site_test/
           if-no-files-found: error
