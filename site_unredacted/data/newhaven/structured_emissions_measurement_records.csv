@@ -1,0 +1,21 @@
+source_file,evidence_type,facility,date,pollutant_or_metric,value,unit,public_status
+site_public/data/focus/overlays/validated_defra_overlays.csv,evidence,Newhaven ERF,unknown,defra_site_lat,50.7937,,review_summary_only
+site_public/data/focus/overlays/validated_defra_overlays.csv,evidence,Newhaven ERF,unknown,defra_site_lon,0.1812,,review_summary_only
+site_public/data/focus/overlays/validated_defra_overlays.csv,evidence,Newhaven ERF,unknown,distance_facility_to_defra_km,10.74,,review_summary_only
+site_public/data/focus/overlays/validated_defra_overlays.csv,evidence,Newhaven ERF,unknown,distance_control_to_defra_km,5.16,,review_summary_only
+site_public/data/focus/overlays_v3/validated_defra_overlays.csv,evidence,Newhaven ERF,unknown,Facility_Postcode,9.0,,review_summary_only
+site_public/data/focus/overlays_v3/validated_defra_overlays.csv,evidence,Newhaven ERF,unknown,Facility_Lat,50.78,,review_summary_only
+site_public/data/focus/overlays_v3/validated_defra_overlays.csv,evidence,Newhaven ERF,unknown,Facility_Lon,0.03,,review_summary_only
+site_public/data/focus/overlays_v3/validated_defra_overlays.csv,evidence,Newhaven ERF,unknown,Facility_Easting,543097.16,,review_summary_only
+site_public/data/focus/overlays_v2/validated_defra_overlays.csv,evidence,Newhaven ERF,unknown,Facility_Postcode,9.0,,review_summary_only
+site_public/data/focus/overlays_v2/validated_defra_overlays.csv,evidence,Newhaven ERF,unknown,Facility_Lat,50.78,,review_summary_only
+site_public/data/focus/overlays_v2/validated_defra_overlays.csv,evidence,Newhaven ERF,unknown,Facility_Lon,0.03,,review_summary_only
+site_public/data/focus/overlays_v2/validated_defra_overlays.csv,evidence,Newhaven ERF,unknown,Facility_Easting,543097.16,,review_summary_only
+configs/aq26_incinerator_register/UK_Incinerators_with_Controls_Full_v3.csv,evidence,Newhaven ERF,unknown,Lat,50.78,,review_summary_only
+configs/aq26_incinerator_register/UK_Incinerators_with_Controls_Full_v3.csv,evidence,Newhaven ERF,unknown,Lon,0.03,,review_summary_only
+configs/aq26_incinerator_register/UK_Incinerators_with_Controls_Full_v3.csv,evidence,Newhaven ERF,unknown,Easting,543211.4004732207,,review_summary_only
+configs/aq26_incinerator_register/UK_Incinerators_with_Controls_Full_v3.csv,evidence,Newhaven ERF,unknown,Northing,99788.79335516598,,review_summary_only
+configs/aq26_incinerator_register/UK_Incinerators_with_DEFRA_Sites_v3_validated_Full.csv,evidence,Newhaven ERF,unknown,Facility_Postcode,9.0,,review_summary_only
+configs/aq26_incinerator_register/UK_Incinerators_with_DEFRA_Sites_v3_validated_Full.csv,evidence,Newhaven ERF,unknown,Facility_Lat,50.78,,review_summary_only
+configs/aq26_incinerator_register/UK_Incinerators_with_DEFRA_Sites_v3_validated_Full.csv,evidence,Newhaven ERF,unknown,Facility_Lon,0.03,,review_summary_only
+configs/aq26_incinerator_register/UK_Incinerators_with_DEFRA_Sites_v3_validated_Full.csv,evidence,Newhaven ERF,unknown,Facility_Easting,543097.16,,review_summary_only

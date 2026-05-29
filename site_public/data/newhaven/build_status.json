@@ -1,0 +1,24 @@
+{
+  "ok": true,
+  "generated_utc": "2026-05-29T15:02:55Z",
+  "summary": {
+    "generated_utc": "2026-05-29T15:02:55Z",
+    "total_facilities": 46,
+    "validated_overlays": 8,
+    "candidate_overlays": 35,
+    "unresolved_facilities": 3,
+    "structured_records": 20,
+    "anomaly_count": 0,
+    "local_evidence_files": 500,
+    "drive_inventory_rows": 0,
+    "has_emissions_value_charts": true,
+    "public_notice": "AQ26 is an evidence and provenance observatory. Public outputs are redacted and do not make regulatory determinations, legal conclusions, health advice, breach findings or causal attribution. Statistical signals are review prompts only."
+  },
+  "outputs": [
+    "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/newhaven/newhaven_deep_dive_summary.json",
+    "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/newhaven/emissions_evidence_chart.json",
+    "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/newhaven/weekly_anomaly_review_public.json",
+    "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/newhaven-deep-dive.html",
+    "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_unredacted/data/newhaven/anomaly_review_candidates.csv"
+  ]
+}

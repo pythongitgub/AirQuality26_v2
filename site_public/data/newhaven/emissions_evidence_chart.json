@@ -1,0 +1,108 @@
+{
+  "generated_utc": "2026-05-29T15:02:55Z",
+  "public_notice": "AQ26 is an evidence and provenance observatory. Public outputs are redacted and do not make regulatory determinations, legal conclusions, health advice, breach findings or causal attribution. Statistical signals are review prompts only.",
+  "has_structured_emissions_values": true,
+  "timeseries": [
+    {
+      "date": "unknown",
+      "metric": "Easting",
+      "evidence_type": "evidence",
+      "value_mean": 543211.400473,
+      "n": 1
+    },
+    {
+      "date": "unknown",
+      "metric": "Facility_Easting",
+      "evidence_type": "evidence",
+      "value_mean": 543097.16,
+      "n": 3
+    },
+    {
+      "date": "unknown",
+      "metric": "Facility_Lat",
+      "evidence_type": "evidence",
+      "value_mean": 50.78,
+      "n": 3
+    },
+    {
+      "date": "unknown",
+      "metric": "Facility_Lon",
+      "evidence_type": "evidence",
+      "value_mean": 0.03,
+      "n": 3
+    },
+    {
+      "date": "unknown",
+      "metric": "Facility_Postcode",
+      "evidence_type": "evidence",
+      "value_mean": 9.0,
+      "n": 3
+    },
+    {
+      "date": "unknown",
+      "metric": "Lat",
+      "evidence_type": "evidence",
+      "value_mean": 50.78,
+      "n": 1
+    },
+    {
+      "date": "unknown",
+      "metric": "Lon",
+      "evidence_type": "evidence",
+      "value_mean": 0.03,
+      "n": 1
+    },
+    {
+      "date": "unknown",
+      "metric": "Northing",
+      "evidence_type": "evidence",
+      "value_mean": 99788.793355,
+      "n": 1
+    },
+    {
+      "date": "unknown",
+      "metric": "defra_site_lat",
+      "evidence_type": "evidence",
+      "value_mean": 50.7937,
+      "n": 1
+    },
+    {
+      "date": "unknown",
+      "metric": "defra_site_lon",
+      "evidence_type": "evidence",
+      "value_mean": 0.1812,
+      "n": 1
+    },
+    {
+      "date": "unknown",
+      "metric": "distance_control_to_defra_km",
+      "evidence_type": "evidence",
+      "value_mean": 5.16,
+      "n": 1
+    },
+    {
+      "date": "unknown",
+      "metric": "distance_facility_to_defra_km",
+      "evidence_type": "evidence",
+      "value_mean": 10.74,
+      "n": 1
+    }
+  ],
+  "records_by_evidence_type": {
+    "evidence": 20
+  },
+  "top_metrics": {
+    "Facility_Postcode": 3,
+    "Facility_Lat": 3,
+    "Facility_Lon": 3,
+    "Facility_Easting": 3,
+    "defra_site_lat": 1,
+    "defra_site_lon": 1,
+    "distance_facility_to_defra_km": 1,
+    "distance_control_to_defra_km": 1,
+    "Lat": 1,
+    "Lon": 1,
+    "Easting": 1,
+    "Northing": 1
+  }
+}
