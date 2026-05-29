@@ -1,15 +1,15 @@
 {
   "ok": true,
-  "generated_utc": "2026-05-29T15:02:55Z",
+  "generated_utc": "2026-05-29T15:25:14Z",
   "summary": {
-    "generated_utc": "2026-05-29T15:02:55Z",
+    "generated_utc": "2026-05-29T15:25:14Z",
     "total_facilities": 46,
     "validated_overlays": 8,
     "candidate_overlays": 35,
     "unresolved_facilities": 3,
-    "structured_records": 20,
+    "structured_records": 1537,
     "anomaly_count": 0,
-    "local_evidence_files": 500,
+    "local_evidence_files": 511,
     "drive_inventory_rows": 0,
     "has_emissions_value_charts": true,
     "public_notice": "AQ26 is an evidence and provenance observatory. Public outputs are redacted and do not make regulatory determinations, legal conclusions, health advice, breach findings or causal attribution. Statistical signals are review prompts only."

@@ -62,6 +62,11 @@ repo,site_public/data/charts/source_class_summary_latest.json,source_class_summa
 repo,site_public/data/charts/pollutant_timeseries.json,pollutant_timeseries.json,.json,296,evidence,yes
 repo,site_public/data/charts/satellite_products_by_week.json,satellite_products_by_week.json,.json,4620,evidence,yes
 repo,site_public/data/charts/facility_control_comparison.json,facility_control_comparison.json,.json,289,evidence,yes
+repo,site_public/data/newhaven/emissions_evidence_chart.json,emissions_evidence_chart.json,.json,2519,measurement,yes
+repo,site_public/data/newhaven/newhaven_deep_dive_summary.json,newhaven_deep_dive_summary.json,.json,563,evidence,yes
+repo,site_public/data/newhaven/public_evidence_inventory_summary.csv,public_evidence_inventory_summary.csv,.csv,3794,evidence,yes
+repo,site_public/data/newhaven/build_status.json,build_status.json,.json,1235,evidence,yes
+repo,site_public/data/newhaven/weekly_anomaly_review_public.json,weekly_anomaly_review_public.json,.json,340,evidence,yes
 repo,site_public/data/providers/earthdata/source_records.json,source_records.json,.json,1211,evidence,yes
 repo,site_public/data/providers/earthdata/summary.json,summary.json,.json,506,evidence,yes
 repo,site_public/data/providers/earthdata/auth_smoke_source_records.json,auth_smoke_source_records.json,.json,1020,evidence,yes
@@ -143,6 +148,12 @@ repo,site_unredacted/data/backfill/incinerators/facility_backfill_readiness_unre
 repo,site_unredacted/data/backfill/incinerators/openaq_live_probe_diagnostics.csv,openaq_live_probe_diagnostics.csv,.csv,5428,diagnostic,review_required
 repo,site_unredacted/data/backfill/incinerators/focused_backfill_summary_unredacted.json,focused_backfill_summary_unredacted.json,.json,6533,evidence,review_required
 repo,site_unredacted/data/review/UK_Incinerator_Overlay_Candidate_Review.csv,UK_Incinerator_Overlay_Candidate_Review.csv,.csv,8218,evidence,review_required
+repo,site_unredacted/data/newhaven/anomaly_review_candidates.csv,anomaly_review_candidates.csv,.csv,7,evidence,review_required
+repo,site_unredacted/data/newhaven/structured_emissions_measurement_records.csv,structured_emissions_measurement_records.csv,.csv,2987,measurement,review_required
+repo,site_unredacted/data/newhaven/drive_evidence_inventory.csv,drive_evidence_inventory.csv,.csv,7,evidence,review_required
+repo,site_unredacted/data/newhaven/newhaven_deep_dive_summary_unredacted.json,newhaven_deep_dive_summary_unredacted.json,.json,614,evidence,review_required
+repo,site_unredacted/data/newhaven/local_evidence_inventory.csv,local_evidence_inventory.csv,.csv,112139,evidence,review_required
+repo,site_unredacted/data/newhaven/file_extraction_summary.csv,file_extraction_summary.csv,.csv,7520,evidence,review_required
 repo,site_unredacted/data/focus/webm_banner_status.json,webm_banner_status.json,.json,564,evidence,review_required
 repo,outputs/10_historical_backfill/week_2024-07-22_2024-07-29/15_optional_sources/serpapi_raw/serpapi_Veolia_Newhaven_annual_monitoring_report_20260526T135749Z.json,serpapi_Veolia_Newhaven_annual_monitoring_report_20260526T135749Z.json,.json,46002,measurement,review_required
 repo,outputs/10_historical_backfill/week_2024-07-22_2024-07-29/15_optional_sources/serpapi_raw/serpapi_Newhaven_Energy_Recovery_Facility_emissions_20260526T135749Z.json,serpapi_Newhaven_Energy_Recovery_Facility_emissions_20260526T135749Z.json,.json,41947,measurement,review_required

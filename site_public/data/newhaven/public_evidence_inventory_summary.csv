@@ -1,5 +1,6 @@
 source,path,name,evidence_type,rows_read,newhaven_matched_rows,chart_records_extracted,public_safe
 repo,site_public/data/backfill/incinerators/facility_backfill_readiness.csv,facility_backfill_readiness.csv,evidence,10,0,0,yes
+repo,site_public/data/newhaven/public_evidence_inventory_summary.csv,public_evidence_inventory_summary.csv,evidence,27,0,101,yes
 repo,site_public/data/focus/overlays/remaining_overlay_queue.csv,remaining_overlay_queue.csv,evidence,38,0,0,yes
 repo,site_public/data/focus/overlays/validated_defra_overlays.csv,validated_defra_overlays.csv,evidence,8,1,4,yes
 repo,site_public/data/focus/overlays_v3/openaq_query_diagnostics.csv,openaq_query_diagnostics.csv,diagnostic,18,0,0,yes
@@ -23,6 +24,9 @@ repo,site_public/data/focus/operational/public_facility_overlay_status.csv,publi
 repo,site_unredacted/data/backfill/incinerators/facility_backfill_readiness_unredacted.csv,facility_backfill_readiness_unredacted.csv,evidence,10,0,0,review_required
 repo,site_unredacted/data/backfill/incinerators/openaq_live_probe_diagnostics.csv,openaq_live_probe_diagnostics.csv,diagnostic,60,0,0,review_required
 repo,site_unredacted/data/review/UK_Incinerator_Overlay_Candidate_Review.csv,UK_Incinerator_Overlay_Candidate_Review.csv,evidence,35,0,0,review_required
+repo,site_unredacted/data/newhaven/structured_emissions_measurement_records.csv,structured_emissions_measurement_records.csv,measurement,20,20,20,review_required
+repo,site_unredacted/data/newhaven/local_evidence_inventory.csv,local_evidence_inventory.csv,evidence,500,304,1295,review_required
+repo,site_unredacted/data/newhaven/file_extraction_summary.csv,file_extraction_summary.csv,evidence,27,0,101,review_required
 repo,configs/aq26_incinerator_register/UK_Incinerators_with_Controls_Full_v3.csv,UK_Incinerators_with_Controls_Full_v3.csv,evidence,46,1,4,review_required
 repo,configs/aq26_incinerator_register/UK_Incinerator_Overlay_Candidate_Review.csv,UK_Incinerator_Overlay_Candidate_Review.csv,evidence,35,0,0,review_required
 repo,configs/aq26_incinerator_register/UK_Incinerators_with_DEFRA_Sites_v3_validated_Full.csv,UK_Incinerators_with_DEFRA_Sites_v3_validated_Full.csv,evidence,8,1,4,review_required

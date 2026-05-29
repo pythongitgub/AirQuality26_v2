@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-05-29T15:02:55Z",
+  "generated_utc": "2026-05-29T15:25:14Z",
   "public_notice": "AQ26 is an evidence and provenance observatory. Public outputs are redacted and do not make regulatory determinations, legal conclusions, health advice, breach findings or causal attribution. Statistical signals are review prompts only.",
   "has_structured_emissions_values": true,
   "timeseries": [
@@ -12,8 +12,22 @@
     },
     {
       "date": "unknown",
+      "metric": "Easting",
+      "evidence_type": "measurement",
+      "value_mean": 543211.400473,
+      "n": 1
+    },
+    {
+      "date": "unknown",
       "metric": "Facility_Easting",
       "evidence_type": "evidence",
+      "value_mean": 543097.16,
+      "n": 3
+    },
+    {
+      "date": "unknown",
+      "metric": "Facility_Easting",
+      "evidence_type": "measurement",
       "value_mean": 543097.16,
       "n": 3
     },
@@ -26,8 +40,22 @@
     },
     {
       "date": "unknown",
+      "metric": "Facility_Lat",
+      "evidence_type": "measurement",
+      "value_mean": 50.78,
+      "n": 3
+    },
+    {
+      "date": "unknown",
       "metric": "Facility_Lon",
       "evidence_type": "evidence",
+      "value_mean": 0.03,
+      "n": 3
+    },
+    {
+      "date": "unknown",
+      "metric": "Facility_Lon",
+      "evidence_type": "measurement",
       "value_mean": 0.03,
       "n": 3
     },
@@ -40,8 +68,22 @@
     },
     {
       "date": "unknown",
+      "metric": "Facility_Postcode",
+      "evidence_type": "measurement",
+      "value_mean": 9.0,
+      "n": 3
+    },
+    {
+      "date": "unknown",
       "metric": "Lat",
       "evidence_type": "evidence",
+      "value_mean": 50.78,
+      "n": 1
+    },
+    {
+      "date": "unknown",
+      "metric": "Lat",
+      "evidence_type": "measurement",
       "value_mean": 50.78,
       "n": 1
     },
@@ -54,6 +96,13 @@
     },
     {
       "date": "unknown",
+      "metric": "Lon",
+      "evidence_type": "measurement",
+      "value_mean": 0.03,
+      "n": 1
+    },
+    {
+      "date": "unknown",
       "metric": "Northing",
       "evidence_type": "evidence",
       "value_mean": 99788.793355,
@@ -61,8 +110,29 @@
     },
     {
       "date": "unknown",
+      "metric": "Northing",
+      "evidence_type": "measurement",
+      "value_mean": 99788.793355,
+      "n": 1
+    },
+    {
+      "date": "unknown",
+      "metric": "chart_records_extracted",
+      "evidence_type": "evidence",
+      "value_mean": 0.740741,
+      "n": 27
+    },
+    {
+      "date": "unknown",
       "metric": "defra_site_lat",
       "evidence_type": "evidence",
+      "value_mean": 50.7937,
+      "n": 1
+    },
+    {
+      "date": "unknown",
+      "metric": "defra_site_lat",
+      "evidence_type": "measurement",
       "value_mean": 50.7937,
       "n": 1
     },
@@ -75,8 +145,22 @@
     },
     {
       "date": "unknown",
+      "metric": "defra_site_lon",
+      "evidence_type": "measurement",
+      "value_mean": 0.1812,
+      "n": 1
+    },
+    {
+      "date": "unknown",
       "metric": "distance_control_to_defra_km",
       "evidence_type": "evidence",
+      "value_mean": 5.16,
+      "n": 1
+    },
+    {
+      "date": "unknown",
+      "metric": "distance_control_to_defra_km",
+      "evidence_type": "measurement",
       "value_mean": 5.16,
       "n": 1
     },
@@ -86,23 +170,72 @@
       "evidence_type": "evidence",
       "value_mean": 10.74,
       "n": 1
+    },
+    {
+      "date": "unknown",
+      "metric": "distance_facility_to_defra_km",
+      "evidence_type": "measurement",
+      "value_mean": 10.74,
+      "n": 1
+    },
+    {
+      "date": "unknown",
+      "metric": "name",
+      "evidence_type": "evidence",
+      "value_mean": 16010115.443005,
+      "n": 386
+    },
+    {
+      "date": "unknown",
+      "metric": "newhaven_matched_rows",
+      "evidence_type": "evidence",
+      "value_mean": 0.296296,
+      "n": 54
+    },
+    {
+      "date": "unknown",
+      "metric": "path",
+      "evidence_type": "evidence",
+      "value_mean": 45258.601336,
+      "n": 449
+    },
+    {
+      "date": "unknown",
+      "metric": "rows_read",
+      "evidence_type": "evidence",
+      "value_mean": 80.666667,
+      "n": 54
+    },
+    {
+      "date": "unknown",
+      "metric": "size_bytes",
+      "evidence_type": "evidence",
+      "value_mean": 76963.973435,
+      "n": 527
     }
   ],
   "records_by_evidence_type": {
-    "evidence": 20
+    "evidence": 1517,
+    "measurement": 20
   },
   "top_metrics": {
-    "Facility_Postcode": 3,
-    "Facility_Lat": 3,
-    "Facility_Lon": 3,
-    "Facility_Easting": 3,
-    "defra_site_lat": 1,
-    "defra_site_lon": 1,
-    "distance_facility_to_defra_km": 1,
-    "distance_control_to_defra_km": 1,
-    "Lat": 1,
-    "Lon": 1,
-    "Easting": 1,
-    "Northing": 1
+    "size_bytes": 527,
+    "path": 449,
+    "name": 386,
+    "rows_read": 54,
+    "newhaven_matched_rows": 54,
+    "chart_records_extracted": 27,
+    "Facility_Postcode": 6,
+    "Facility_Lat": 6,
+    "Facility_Lon": 6,
+    "Facility_Easting": 6,
+    "defra_site_lat": 2,
+    "defra_site_lon": 2,
+    "distance_facility_to_defra_km": 2,
+    "distance_control_to_defra_km": 2,
+    "Lat": 2,
+    "Lon": 2,
+    "Easting": 2,
+    "Northing": 2
   }
 }
