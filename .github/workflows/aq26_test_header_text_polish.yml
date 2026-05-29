@@ -1,0 +1,161 @@
+name: AQ26 Test Header Logo Text Polish
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_operational_site:
+        description: "Rebuild operational site before preparing /test copy"
+        required: true
+        default: true
+        type: boolean
+      include_unredacted:
+        description: "Include unredacted copy under /test/unredacted/"
+        required: true
+        default: true
+        type: boolean
+      deploy_test:
+        description: "Deploy polished test site to Hostinger /test/"
+        required: true
+        default: true
+        type: boolean
+      dry_run:
+        description: "Dry-run rsync deployment only"
+        required: true
+        default: true
+        type: boolean
+      remote_test_subdir:
+        description: "Remote test folder under public_html"
+        required: true
+        default: "test"
+        type: string
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+  SCCNEXUS_SSH_HOST: ${{ secrets.SCCNEXUS_SSH_HOST }}
+  SCCNEXUS_SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
+  SCCNEXUS_SSH_USERNAME: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
+  SCCNEXUS_SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
+
+jobs:
+  polish-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Build operational site if requested
+        if: ${{ inputs.build_operational_site }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f scripts/aq26_build_operational_dual_site.py ]; then
+            python scripts/aq26_build_operational_dual_site.py --repo-root . --public-site site_public --unredacted-site site_unredacted
+          else
+            echo "Operational site builder not found; using current site_public/site_unredacted contents."
+          fi
+
+      - name: Build /test staging copy
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf site_test
+          # Prefer the existing test staging builder if compatible; otherwise use a controlled fallback copy.
+          if [ -f scripts/aq26_build_test_staging_site.py ]; then
+            set +e
+            python scripts/aq26_build_test_staging_site.py --repo-root . --public-site site_public --unredacted-site site_unredacted --test-site site_test --include-unredacted
+            rc=$?
+            set -e
+            if [ "$rc" -ne 0 ]; then
+              echo "Existing staging builder args were not compatible; falling back to direct copy."
+              rm -rf site_test
+              mkdir -p site_test
+              cp -a site_public/. site_test/
+              if [ "${{ inputs.include_unredacted }}" = "true" ]; then
+                mkdir -p site_test/unredacted
+                cp -a site_unredacted/. site_test/unredacted/
+              fi
+            fi
+          else
+            mkdir -p site_test
+            cp -a site_public/. site_test/
+            if [ "${{ inputs.include_unredacted }}" = "true" ]; then
+              mkdir -p site_test/unredacted
+              cp -a site_unredacted/. site_test/unredacted/
+            fi
+          fi
+
+      - name: Remove header-side text beside logo
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/aq26_remove_header_side_text.py --site-root site_test --summary site_test/data/header_text_polish_summary.json
+          if [ -d site_test/unredacted ]; then
+            python scripts/aq26_remove_header_side_text.py --site-root site_test/unredacted --summary site_test/unredacted/data/header_text_polish_summary.json
+          fi
+
+      - name: Validate polished test site
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f site_test/index.html
+          test -f site_test/incinerators.html
+          test -f site_test/assets/air_quality_web.svg
+          grep -q "assets/aq26_header_text_polish.css" site_test/index.html
+          ! grep -E "SCC Nexus · AQ26|SCC NEXUS · AQ26" site_test/index.html
+          ! find site_test -name .htpasswd -print -quit | grep -q .
+
+      - name: Commit polished test artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/aq26_remove_header_side_text.py site_test docs/AQ26_TEST_HEADER_TEXT_POLISH.md || true
+          git reset -- site_test/**/.htpasswd site_test/.htpasswd 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No polished test changes to commit."
+          else
+            git commit -m "Polish AQ26 test header logo text"
+            git pull --rebase
+            git push
+          fi
+
+      - name: Install deployment tools
+        if: ${{ inputs.deploy_test }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y sshpass rsync
+
+      - name: Deploy /test site
+        if: ${{ inputs.deploy_test }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}/${{ inputs.remote_test_subdir }}"
+          SSH_OPTS="-p ${SCCNEXUS_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30"
+          export SSHPASS="$SCCNEXUS_SSH_PASSWORD"
+          sshpass -e ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "mkdir -p '$REMOTE_DIR'"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            sshpass -e rsync -avzn --delete -e "ssh $SSH_OPTS" site_test/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          else
+            sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_test/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          fi
+
+      - name: Upload polished test artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-test-header-text-polish
+          path: site_test/
+          if-no-files-found: error
