@@ -4,17 +4,17 @@ on:
   workflow_dispatch:
     inputs:
       build_operational_site:
-        description: "Rebuild operational site before creating /test staging copy"
+        description: "Rebuild site_public and site_unredacted before copying to /test"
         required: true
         default: true
         type: boolean
       include_unredacted:
-        description: "Include unredacted site copy under /test/unredacted/"
+        description: "Include a /test/unredacted copy"
         required: true
         default: true
         type: boolean
       deploy_test:
-        description: "Deploy the /test staging site to Hostinger"
+        description: "Deploy staging site to /test/"
         required: true
         default: true
         type: boolean
@@ -24,7 +24,7 @@ on:
         default: true
         type: boolean
       remote_test_subdir:
-        description: "Remote staging folder under public_html"
+        description: "Remote staging subfolder under public_html"
         required: true
         default: "test"
         type: string
@@ -39,12 +39,14 @@ env:
   SCCNEXUS_SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
   SCCNEXUS_SSH_USERNAME: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
   SCCNEXUS_SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
-  SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
 
 jobs:
   polish-test-header:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    defaults:
+      run:
+        shell: bash --noprofile --norc -e -o pipefail {0}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -52,46 +54,38 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      - name: Rebase before generation
-        shell: bash
+      - name: Sync before generating
         run: |
           set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash || true
+          git fetch origin main
+          git rebase origin/main || true
 
-      - name: Build operational site if requested
+      - name: Build operational site
         if: ${{ inputs.build_operational_site }}
-        shell: bash
         run: |
           set -euo pipefail
-          if [ -f scripts/aq26_build_operational_dual_site.py ]; then
-            python scripts/aq26_build_operational_dual_site.py --repo-root . --public-site site_public --unredacted-site site_unredacted
-          else
-            echo "Operational builder missing; continuing from current site_public/site_unredacted."
-          fi
+          python scripts/aq26_build_operational_dual_site.py --repo-root . --public-site site_public --unredacted-site site_unredacted
+          find site_public site_unredacted -name .htpasswd -delete || true
 
-      - name: Build /test staging site
-        shell: bash
+      - name: Build /test staging copy
         run: |
           set -euo pipefail
-          test -f scripts/aq26_build_test_staging_site.py
           ARGS=(--repo-root . --public-site site_public --unredacted-site site_unredacted --test-site site_test)
           if [ "${{ inputs.include_unredacted }}" = "true" ]; then
             ARGS+=(--include-unredacted)
           fi
           python scripts/aq26_build_test_staging_site.py "${ARGS[@]}"
+          find site_public site_unredacted site_test -name .htpasswd -delete || true
 
       - name: Remove header side text
-        shell: bash
         run: |
           set -euo pipefail
-          python scripts/aq26_remove_header_side_text.py --site-root site_test --also site_test/unredacted site_public site_unredacted
+          python scripts/aq26_remove_header_side_text.py --roots site_test site_test/unredacted site_public site_unredacted --summary site_test/data/header_text_polish_summary.json --fail-if-found
+          find site_public site_unredacted site_test -name .htpasswd -delete || true
 
-      - name: Validate polished /test site
-        shell: bash
+      - name: Validate /test staging site
         run: |
           set -euo pipefail
           test -f site_test/index.html
@@ -100,8 +94,8 @@ jobs:
           test -f site_test/weekly-update.html
           grep -Eq "AQ26_WEEKLY_ALERT_START|aq26-alert" site_test/index.html
           grep -q "aq26-video-banner" site_test/index.html
-          if grep -R "SCC NEXUS · AQ26\|SCC Nexus · AQ26" site_test/*.html site_test/unredacted/*.html 2>/dev/null; then
-            echo "Header side text still present in one or more /test HTML files."
+          if grep -R -n -E "SCC NEXUS · AQ26|SCC Nexus · AQ26" site_test/*.html site_test/unredacted/*.html 2>/dev/null; then
+            echo "Header side text still present in /test HTML above."
             exit 1
           fi
           if find site_public site_unredacted site_test -name .htpasswd -print -quit | grep -q .; then
@@ -110,8 +104,7 @@ jobs:
             exit 1
           fi
 
-      - name: Commit polished test site
-        shell: bash
+      - name: Commit staging output
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
@@ -119,15 +112,15 @@ jobs:
           git add site_test site_public site_unredacted scripts/aq26_remove_header_side_text.py .github/workflows/aq26_test_header_text_polish.yml docs/AQ26_TEST_HEADER_TEXT_POLISH.md || true
           git reset -- 'site_test/**/.htpasswd' 'site_public/**/.htpasswd' 'site_unredacted/**/.htpasswd' 2>/dev/null || true
           if git diff --cached --quiet; then
-            echo "No polished test-site changes to commit."
+            echo "No test header polish changes to commit."
           else
-            git commit -m "Polish AQ26 test staging header text"
+            git commit -m "Polish AQ26 test header logo text"
+            git pull --rebase --autostash
             git push
           fi
 
       - name: Install deployment tools
         if: ${{ inputs.deploy_test }}
-        shell: bash
         run: |
           set -euo pipefail
           sudo apt-get update
@@ -135,7 +128,6 @@ jobs:
 
       - name: Deploy /test staging site
         if: ${{ inputs.deploy_test }}
-        shell: bash
         run: |
           set -euo pipefail
           REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}/${{ inputs.remote_test_subdir }}"
@@ -148,7 +140,7 @@ jobs:
             sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_test/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
           fi
 
-      - name: Upload /test staging artifact
+      - name: Upload staging artifact
         uses: actions/upload-artifact@v4
         with:
           name: aq26-test-header-polished-site
