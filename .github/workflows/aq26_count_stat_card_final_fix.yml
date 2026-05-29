@@ -1,0 +1,156 @@
+name: AQ26 Count Stat Card Final Fix
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_public:
+        description: "Deploy fixed public site to Hostinger root"
+        required: true
+        default: false
+        type: boolean
+      deploy_unredacted:
+        description: "Deploy fixed unredacted site to /unredacted/"
+        required: true
+        default: false
+        type: boolean
+      dry_run:
+        description: "Dry-run rsync only"
+        required: true
+        default: true
+        type: boolean
+      remote_unredacted_subdir:
+        description: "Remote protected folder under public_html"
+        required: true
+        default: "unredacted"
+        type: string
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+  SCCNEXUS_SSH_HOST: ${{ secrets.SCCNEXUS_SSH_HOST }}
+  SCCNEXUS_SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
+  SCCNEXUS_SSH_USERNAME: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
+  SCCNEXUS_SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
+  SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+
+jobs:
+  count-final-fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Apply final count and header correction
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/aq26_count_stat_card_final_fix.py \
+            --public-site site_public \
+            --unredacted-site site_unredacted \
+            --summary site_public/data/weekly/count_stat_card_final_fix_status.json
+
+      - name: Validate corrected public pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f site_public/index.html
+          test -f site_public/incinerators.html
+          test -f site_public/weekly-update.html
+          ! grep -R "SCC Nexus · AQ26\|SCC NEXUS · AQ26" site_public/*.html
+          ! grep -R "86 facilities in register\|only 86 facilities\|86 incinerator / EfW facilities" site_public/*.html
+          grep -q "<div class='value'>46</div>" site_public/index.html
+          grep -q "aq26-video-banner" site_public/index.html
+          grep -q "AQ26_WEEKLY_ALERT_START\|aq26-alert" site_public/index.html
+          test ! -f site_unredacted/.htpasswd
+
+      - name: Commit safe final count/header fix outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site_public site_unredacted scripts/aq26_count_stat_card_final_fix.py docs/AQ26_COUNT_STAT_CARD_FINAL_FIX.md || true
+          git reset -- site_unredacted/.htpasswd site_public/.htpasswd 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No final count/header changes to commit."
+          else
+            git commit -m "Fix AQ26 public stat-card counts and header branding"
+            git pull --rebase
+            git push
+          fi
+
+      - name: Install deployment tools
+        if: ${{ inputs.deploy_public || inputs.deploy_unredacted }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y sshpass rsync apache2-utils
+
+      - name: Deploy public site
+        if: ${{ inputs.deploy_public }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}"
+          SSH_OPTS="-p ${SCCNEXUS_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30"
+          export SSHPASS="$SCCNEXUS_SSH_PASSWORD"
+          sshpass -e ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "mkdir -p '$REMOTE_DIR'"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            sshpass -e rsync -avzn --delete --exclude '${{ inputs.remote_unredacted_subdir }}/***' -e "ssh $SSH_OPTS" site_public/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          else
+            sshpass -e rsync -avz --delete --exclude '${{ inputs.remote_unredacted_subdir }}/***' -e "ssh $SSH_OPTS" site_public/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          fi
+
+      - name: Create unredacted password for deploy only
+        if: ${{ inputs.deploy_unredacted }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -n "${SCC_UNREDACTED_PASSWORD:-}" ]; then
+            htpasswd -bc site_unredacted/.htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
+          else
+            echo 'aq26:disabled' > site_unredacted/.htpasswd
+          fi
+          cat > site_unredacted/.htaccess <<'EOF'
+          AuthType Basic
+          AuthName "AQ26 Unredacted Review"
+          AuthUserFile .htpasswd
+          Require valid-user
+          EOF
+          echo 'User-agent: *' > site_unredacted/robots.txt
+          echo 'Disallow: /' >> site_unredacted/robots.txt
+
+      - name: Deploy unredacted site
+        if: ${{ inputs.deploy_unredacted }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}/${{ inputs.remote_unredacted_subdir }}"
+          SSH_OPTS="-p ${SCCNEXUS_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30"
+          export SSHPASS="$SCCNEXUS_SSH_PASSWORD"
+          sshpass -e ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "mkdir -p '$REMOTE_DIR'"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            sshpass -e rsync -avzn --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          else
+            sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          fi
+
+      - name: Upload final fix artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-count-stat-card-final-fix
+          path: |
+            site_public/
+            site_unredacted/
+            site_public/data/weekly/count_stat_card_final_fix_status.json
+          if-no-files-found: error
