@@ -4,27 +4,27 @@ on:
   workflow_dispatch:
     inputs:
       build_operational_site:
-        description: "Rebuild site_public and site_unredacted before copying to /test"
+        description: "Rebuild operational public/unredacted site before creating /test/"
         required: true
         default: true
         type: boolean
       include_unredacted:
-        description: "Include a /test/unredacted copy"
+        description: "Include unredacted review copy under /test/unredacted/"
         required: true
         default: true
         type: boolean
       deploy_test:
-        description: "Deploy staging site to /test/"
+        description: "Deploy staging copy to Hostinger /test/"
         required: true
         default: true
         type: boolean
       dry_run:
-        description: "Dry-run rsync deployment only"
+        description: "Dry-run rsync only"
         required: true
         default: true
         type: boolean
       remote_test_subdir:
-        description: "Remote staging subfolder under public_html"
+        description: "Remote staging folder under public_html"
         required: true
         default: "test"
         type: string
@@ -47,6 +47,7 @@ jobs:
     defaults:
       run:
         shell: bash --noprofile --norc -e -o pipefail {0}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -59,14 +60,33 @@ jobs:
       - name: Sync before generating
         run: |
           set -euo pipefail
-          git fetch origin main
-          git rebase origin/main || true
+          git pull --rebase --autostash || true
 
       - name: Build operational site
         if: ${{ inputs.build_operational_site }}
         run: |
           set -euo pipefail
           python scripts/aq26_build_operational_dual_site.py --repo-root . --public-site site_public --unredacted-site site_unredacted
+          find site_public site_unredacted -name .htpasswd -delete || true
+
+      - name: Reapply weekly alert and moving banners before staging
+        run: |
+          set -euo pipefail
+          mkdir -p .aq26_weekly_alerts site_public/data/weekly site_unredacted/data/weekly
+          cat > .aq26_weekly_alerts/backfill_status.json <<'JSON'
+          {"status":"completed","note":"Staging polish rebuild reused the latest committed AQ26 focused evidence outputs."}
+          JSON
+          if [ -f scripts/aq26_build_weekly_alert_pages.py ]; then
+            python scripts/aq26_build_weekly_alert_pages.py \
+              --repo-root . \
+              --public-site site_public \
+              --unredacted-site site_unredacted \
+              --backfill-status .aq26_weekly_alerts/backfill_status.json
+          fi
+          if [ -f scripts/aq26_apply_webm_banners.py ]; then
+            python scripts/aq26_apply_webm_banners.py --site-root site_public --asset-source website/assets --force --summary site_public/data/weekly/webm_banner_status.json || true
+            python scripts/aq26_apply_webm_banners.py --site-root site_unredacted --asset-source website/assets --force --summary site_unredacted/data/weekly/webm_banner_status.json || true
+          fi
           find site_public site_unredacted -name .htpasswd -delete || true
 
       - name: Build /test staging copy
@@ -82,39 +102,31 @@ jobs:
       - name: Remove header side text
         run: |
           set -euo pipefail
-          python scripts/aq26_remove_header_side_text.py --roots site_test site_test/unredacted site_public site_unredacted --summary site_test/data/header_text_polish_summary.json --fail-if-found
-          find site_public site_unredacted site_test -name .htpasswd -delete || true
+          python scripts/aq26_remove_header_side_text.py \
+            --roots site_test site_test/unredacted site_public site_unredacted \
+            --summary site_test/data/test_header_text_polish_summary.json
 
       - name: Validate /test staging site
         run: |
           set -euo pipefail
-          test -f site_test/index.html
-          test -f site_test/incinerators.html
-          test -f site_test/newhaven.html
-          test -f site_test/weekly-update.html
-          grep -Eq "AQ26_WEEKLY_ALERT_START|aq26-alert" site_test/index.html
-          grep -q "aq26-video-banner" site_test/index.html
-          if grep -R -n -E "SCC NEXUS · AQ26|SCC Nexus · AQ26" site_test/*.html site_test/unredacted/*.html 2>/dev/null; then
-            echo "Header side text still present in /test HTML above."
-            exit 1
+          ARGS=(--test-site site_test --summary site_test/data/test_staging_validation_summary.json)
+          if [ "${{ inputs.include_unredacted }}" = "true" ]; then
+            ARGS+=(--include-unredacted)
           fi
-          if find site_public site_unredacted site_test -name .htpasswd -print -quit | grep -q .; then
-            echo ".htpasswd found before commit/deploy; refusing to continue."
-            find site_public site_unredacted site_test -name .htpasswd -print
-            exit 1
-          fi
+          python scripts/aq26_validate_test_staging.py "${ARGS[@]}"
 
-      - name: Commit staging output
+      - name: Commit /test staging polish
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add site_test site_public site_unredacted scripts/aq26_remove_header_side_text.py .github/workflows/aq26_test_header_text_polish.yml docs/AQ26_TEST_HEADER_TEXT_POLISH.md || true
-          git reset -- 'site_test/**/.htpasswd' 'site_public/**/.htpasswd' 'site_unredacted/**/.htpasswd' 2>/dev/null || true
+          find site_public site_unredacted site_test -name .htpasswd -delete || true
+          git add site_test site_public site_unredacted scripts/aq26_remove_header_side_text.py scripts/aq26_validate_test_staging.py .github/workflows/aq26_test_header_text_polish.yml docs/AQ26_TEST_HEADER_TEXT_POLISH.md || true
+          git reset -- "site_unredacted/.htpasswd" "site_public/.htpasswd" "site_test/.htpasswd" "site_test/unredacted/.htpasswd" 2>/dev/null || true
           if git diff --cached --quiet; then
-            echo "No test header polish changes to commit."
+            echo "No /test header polish changes to commit."
           else
-            git commit -m "Polish AQ26 test header logo text"
+            git commit -m "Polish AQ26 test staging header"
             git pull --rebase --autostash
             git push
           fi
@@ -140,9 +152,9 @@ jobs:
             sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_test/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
           fi
 
-      - name: Upload staging artifact
+      - name: Upload /test artifact
         uses: actions/upload-artifact@v4
         with:
-          name: aq26-test-header-polished-site
+          name: aq26-test-header-polish
           path: site_test/
           if-no-files-found: error
