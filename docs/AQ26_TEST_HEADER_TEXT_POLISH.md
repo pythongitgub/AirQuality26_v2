@@ -1,19 +1,5 @@
-# AQ26 test header text commit fix
+# AQ26 Test Header Text Polish
 
-This patch fixes the previous `/test/` header-polish workflow failure:
+Removes generated side text such as `SCC Nexus · AQ26` beside the header logo across the `/test/` staging copy while preserving the logo, hamburger/menu, weekly alert and WEBM moving banner.
 
-`cannot pull with rebase: You have unstaged changes`
-
-The replacement workflow uses a safer sequence:
-
-1. fetch/rebase before generating
-2. build operational site
-3. build `site_test/`
-4. remove the text beside the header logo
-5. validate test pages
-6. commit safe staging files
-7. `git pull --rebase --autostash`
-8. push
-9. deploy `/test/`
-
-It also removes `.htpasswd` before commit and validates that no password file is staged.
+Run `AQ26 Test Header Logo Text Polish` first with `dry_run=true`, then with `dry_run=false` to publish to `/test/`.
