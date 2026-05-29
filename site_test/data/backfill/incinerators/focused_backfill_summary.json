@@ -1,0 +1,46 @@
+{
+  "generated_utc": "2026-05-29T08:16:57Z",
+  "scope": "high_confidence",
+  "weeks": [
+    {
+      "week_start": "2026-03-30",
+      "week_end": "2026-04-06"
+    },
+    {
+      "week_start": "2026-04-06",
+      "week_end": "2026-04-13"
+    },
+    {
+      "week_start": "2026-04-13",
+      "week_end": "2026-04-20"
+    },
+    {
+      "week_start": "2026-04-20",
+      "week_end": "2026-04-27"
+    },
+    {
+      "week_start": "2026-04-27",
+      "week_end": "2026-05-04"
+    },
+    {
+      "week_start": "2026-05-04",
+      "week_end": "2026-05-11"
+    },
+    {
+      "week_start": "2026-05-11",
+      "week_end": "2026-05-18"
+    },
+    {
+      "week_start": "2026-05-18",
+      "week_end": "2026-05-25"
+    }
+  ],
+  "facilities_in_register": 46,
+  "facilities_selected": 10,
+  "validated_overlays": 8,
+  "candidate_overlays": 35,
+  "unresolved_facilities": 3,
+  "live_openaq": true,
+  "diagnostic_rows": 60,
+  "notice": "Exploratory AQ26 evidence backfill. Public outputs are redacted and do not make causal, health, legal or regulatory conclusions."
+}

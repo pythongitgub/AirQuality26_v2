@@ -1,0 +1,263 @@
+{
+  "ok": true,
+  "files_checked": 64,
+  "changed": [
+    {
+      "path": "site_test/about.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/accessibility.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/archive.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/comparisons.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_test/contact.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/cookies.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/downloads.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_test/evidence-downloads.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/historical-comparisons.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/incinerator-overlays.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/incinerators.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_test/index.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_test/latest-report.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/legal.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_test/methodology.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_test/newhaven-deep-dive.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/newhaven.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_test/overlays.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_test/privacy.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/readiness.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/source-records.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/terms.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/test-index.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/unredacted/candidates.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_test/unredacted/diagnostics.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_test/unredacted/evidence.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_test/unredacted/index.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_test/unredacted/weekly-update.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/weekly-archive.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/weekly-update.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/unredacted/candidates.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/unredacted/diagnostics.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/unredacted/evidence.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/unredacted/index.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_test/unredacted/weekly-update.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_public/about.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_public/accessibility.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_public/archive.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_public/comparisons.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_public/contact.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_public/cookies.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_public/downloads.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_public/evidence-downloads.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_public/historical-comparisons.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_public/incinerator-overlays.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_public/incinerators.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_public/index.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_public/latest-report.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_public/legal.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_public/methodology.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_public/newhaven-deep-dive.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_public/newhaven.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_public/overlays.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_public/privacy.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_public/readiness.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_public/source-records.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_public/terms.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_public/weekly-archive.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_public/weekly-update.html",
+      "replacements": 0
+    },
+    {
+      "path": "site_unredacted/candidates.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_unredacted/diagnostics.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_unredacted/evidence.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_unredacted/index.html",
+      "replacements": 1
+    },
+    {
+      "path": "site_unredacted/weekly-update.html",
+      "replacements": 0
+    }
+  ],
+  "remaining_files": []
+}

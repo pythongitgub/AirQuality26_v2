@@ -1,0 +1,39 @@
+{
+  "ok": true,
+  "site_root": "site_public",
+  "asset_source": "website/assets",
+  "copied_assets": [
+    "site_public/assets/air_quality_web.svg",
+    "site_public/assets/aq26_brand_header.css",
+    "site_public/assets/aq26_brand_header.js",
+    "site_public/assets/favicon.svg",
+    "site_public/assets/apple-touch-icon.png",
+    "site_public/assets/favicon-32x32.png",
+    "site_public/assets/favicon-16x16.png",
+    "site_public/assets/android-chrome-192x192.png",
+    "site_public/assets/android-chrome-512x512.png",
+    "site_public/assets/site.webmanifest",
+    "site_public/favicon.svg"
+  ],
+  "html_pages_changed": [
+    "site_public/about.html",
+    "site_public/accessibility.html",
+    "site_public/archive.html",
+    "site_public/comparisons.html",
+    "site_public/contact.html",
+    "site_public/cookies.html",
+    "site_public/downloads.html",
+    "site_public/evidence-downloads.html",
+    "site_public/historical-comparisons.html",
+    "site_public/index.html",
+    "site_public/latest-report.html",
+    "site_public/methodology.html",
+    "site_public/privacy.html",
+    "site_public/readiness.html",
+    "site_public/source-records.html",
+    "site_public/terms.html",
+    "site_public/weekly-archive.html"
+  ],
+  "html_pages_changed_count": 17,
+  "generated_at_utc": "2026-05-27T14:49:13.673555+00:00"
+}

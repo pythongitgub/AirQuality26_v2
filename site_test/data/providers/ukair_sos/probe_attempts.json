@@ -1,0 +1,10 @@
+[
+  {
+    "bytes": 12404625,
+    "content_type": "application/xml;charset=UTF-8",
+    "http_status": 200,
+    "looks_xml": true,
+    "sha256": "d44434df39a1f8aaab3ce7a940e08b80df0ed5b423d4c3113544b1b460303f65",
+    "url": "https://uk-air.defra.gov.uk/sos-ukair/sos?service=SOS&request=GetCapabilities&AcceptVersions=2.0.0"
+  }
+]

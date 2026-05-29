@@ -1,0 +1,105 @@
+{
+  "schema_version": "AQ26_WEEKLYV2_SCIENCE_V33_HISTORY_1",
+  "created_at_utc": "2026-05-26T14:03:17Z",
+  "run_ts": "20260526T140041Z",
+  "date_window": {
+    "start": "2024-07-29",
+    "end": "2024-08-05"
+  },
+  "status": "partial_harvest",
+  "backfill_status": "partial_harvest",
+  "collector_exit_code": 0,
+  "collector_date_window_exact_match": true,
+  "collector_raw_date_window": {
+    "start": "2024-07-29",
+    "end": "2024-08-05"
+  },
+  "source_record_count": 58,
+  "ok_count": 53,
+  "warning_count": 2,
+  "error_count": 1,
+  "skipped_count": 2,
+  "source_type_counts": {
+    "ai_summary": 1,
+    "atmospheric_model": 1,
+    "gdrive": 1,
+    "ground_aq": 15,
+    "low_cost_sensor_context": 1,
+    "news_api": 3,
+    "news_api_warning": 1,
+    "official_search": 12,
+    "official_watch_url": 4,
+    "satellite_auth": 1,
+    "satellite_metadata": 9,
+    "weather": 6,
+    "web_search_context": 3
+  },
+  "source_status_counts": {
+    "error": 1,
+    "ok": 53,
+    "skipped": 2,
+    "warning": 2
+  },
+  "satellite_product_count": 350,
+  "drive_file_count": 0,
+  "drive_inventory_truncated": null,
+  "drive_inventory_limit": null,
+  "high_priority_filings": 0,
+  "medium_priority_filings": 0,
+  "openaq_request_count": 15,
+  "news_warning_count": 1,
+  "readiness": {
+    "satellite_extraction_ready": false,
+    "cdse_sentinelhub_ready": null,
+    "backfill_ready": true,
+    "openaq_safety_ready": true,
+    "cdse_download_ready": null,
+    "openaq_ready": true,
+    "metoffice_ready": true,
+    "cams_endpoint_configured": false,
+    "cdse_auth_ready": false,
+    "drive_inventory_truncated": false,
+    "cams_data_ready": false,
+    "external_submission_ready": false,
+    "gemini_summary_ready": true,
+    "ground_aq_ready": true,
+    "satellite_catalogue_ready": true,
+    "drive_ready": false,
+    "cams_key_present": true,
+    "redaction_ready": null
+  },
+  "external_submission_ready": false,
+  "controlled_use_boundary": "WeeklyV2 is a controlled-review evidence harvester. It does not claim endorsement by WHO, UNEP, EEA, C40 Cities, or any named expert. It does not assert causal attribution unless explicit evidence gates pass.\n",
+  "provenance": {
+    "collector_output_root": "outputs/10_historical_backfill/week_2024-07-29_2024-08-05",
+    "collector_summary_relpath": "outputs/10_historical_backfill/week_2024-07-29_2024-08-05/00_weeklyv2/AQ26_WEEKLYV2_20260526T140041Z/AQ26_WEEKLYV2_MANIFEST_20260526T140041Z.json",
+    "collector_log_relpath": "outputs/98_logs/collector_2024-07-29_2024-08-05.log",
+    "source_records_present": true,
+    "source_records_required_fields": [
+      "source_name",
+      "source_type",
+      "status",
+      "retrieved_at_utc",
+      "retrieved_at_uk",
+      "date_uk",
+      "output_path",
+      "sha256"
+    ]
+  },
+  "review_positioning": {
+    "intended_review_audience": [
+      "WHO",
+      "UNEP",
+      "EEA",
+      "C40 Cities",
+      "independent academic expert review"
+    ],
+    "expert_critique_guardrail": "Outputs are framed for scrutiny by air-quality, exposure-science, atmospheric-modelling and environmental-policy experts; causal claims remain gated until source, confounder, uncertainty and validation requirements pass.",
+    "not_for_claims": [
+      "endorsement",
+      "regulatory breach determination",
+      "health outcome attribution",
+      "single-source causal attribution"
+    ]
+  }
+}

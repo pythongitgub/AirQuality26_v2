@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "counts": {
+    "total": 46,
+    "validated": 8,
+    "candidate": 35,
+    "unresolved": 3,
+    "overlay_path": 43
+  },
+  "changed_files": [
+    "site_public/incinerators.html",
+    "site_public/index.html",
+    "site_unredacted/index.html"
+  ],
+  "changed_count": 3
+}

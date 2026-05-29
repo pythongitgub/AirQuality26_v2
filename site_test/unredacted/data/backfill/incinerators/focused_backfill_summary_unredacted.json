@@ -1,0 +1,257 @@
+{
+  "generated_utc": "2026-05-29T08:16:57Z",
+  "scope": "high_confidence",
+  "weeks": [
+    {
+      "week_start": "2026-03-30",
+      "week_end": "2026-04-06"
+    },
+    {
+      "week_start": "2026-04-06",
+      "week_end": "2026-04-13"
+    },
+    {
+      "week_start": "2026-04-13",
+      "week_end": "2026-04-20"
+    },
+    {
+      "week_start": "2026-04-20",
+      "week_end": "2026-04-27"
+    },
+    {
+      "week_start": "2026-04-27",
+      "week_end": "2026-05-04"
+    },
+    {
+      "week_start": "2026-05-04",
+      "week_end": "2026-05-11"
+    },
+    {
+      "week_start": "2026-05-11",
+      "week_end": "2026-05-18"
+    },
+    {
+      "week_start": "2026-05-18",
+      "week_end": "2026-05-25"
+    }
+  ],
+  "facilities_in_register": 46,
+  "facilities_selected": 10,
+  "validated_overlays": 8,
+  "candidate_overlays": 35,
+  "unresolved_facilities": 3,
+  "live_openaq": true,
+  "diagnostic_rows": 60,
+  "notice": "Exploratory AQ26 evidence backfill. Public outputs are redacted and do not make causal, health, legal or regulatory conclusions.",
+  "diagnostics_preview": [
+    {
+      "location_id": "2523",
+      "url": "https://api.openaq.org/v3/locations/2523",
+      "ok": true,
+      "status": 200,
+      "error": "",
+      "top_keys": "meta,results",
+      "results_count": 1
+    },
+    {
+      "location_id": "2523",
+      "url": "https://api.openaq.org/v3/locations/2523/latest",
+      "ok": true,
+      "status": 200,
+      "error": "",
+      "top_keys": "meta,results",
+      "results_count": 6
+    },
+    {
+      "location_id": "2523",
+      "url": "https://api.openaq.org/v3/latest?locations_id=2523&limit=100",
+      "ok": false,
+      "status": "",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "location_id": "1396",
+      "url": "https://api.openaq.org/v3/locations/1396",
+      "ok": true,
+      "status": 200,
+      "error": "",
+      "top_keys": "meta,results",
+      "results_count": 1
+    },
+    {
+      "location_id": "1396",
+      "url": "https://api.openaq.org/v3/locations/1396/latest",
+      "ok": true,
+      "status": 200,
+      "error": "",
+      "top_keys": "meta,results",
+      "results_count": 3
+    },
+    {
+      "location_id": "1396",
+      "url": "https://api.openaq.org/v3/latest?locations_id=1396&limit=100",
+      "ok": false,
+      "status": "",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "location_id": "225832",
+      "url": "https://api.openaq.org/v3/locations/225832",
+      "ok": true,
+      "status": 200,
+      "error": "",
+      "top_keys": "meta,results",
+      "results_count": 1
+    },
+    {
+      "location_id": "225832",
+      "url": "https://api.openaq.org/v3/locations/225832/latest",
+      "ok": true,
+      "status": 200,
+      "error": "",
+      "top_keys": "meta,results",
+      "results_count": 3
+    },
+    {
+      "location_id": "225832",
+      "url": "https://api.openaq.org/v3/latest?locations_id=225832&limit=100",
+      "ok": false,
+      "status": "",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "location_id": "225845",
+      "url": "https://api.openaq.org/v3/locations/225845",
+      "ok": true,
+      "status": 200,
+      "error": "",
+      "top_keys": "meta,results",
+      "results_count": 1
+    },
+    {
+      "location_id": "225845",
+      "url": "https://api.openaq.org/v3/locations/225845/latest",
+      "ok": true,
+      "status": 200,
+      "error": "",
+      "top_keys": "meta,results",
+      "results_count": 2
+    },
+    {
+      "location_id": "225845",
+      "url": "https://api.openaq.org/v3/latest?locations_id=225845&limit=100",
+      "ok": false,
+      "status": "",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "location_id": "2431",
+      "url": "https://api.openaq.org/v3/locations/2431",
+      "ok": true,
+      "status": 200,
+      "error": "",
+      "top_keys": "meta,results",
+      "results_count": 1
+    },
+    {
+      "location_id": "2431",
+      "url": "https://api.openaq.org/v3/locations/2431/latest",
+      "ok": true,
+      "status": 200,
+      "error": "",
+      "top_keys": "meta,results",
+      "results_count": 4
+    },
+    {
+      "location_id": "2431",
+      "url": "https://api.openaq.org/v3/latest?locations_id=2431&limit=100",
+      "ok": false,
+      "status": "",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "location_id": "718",
+      "url": "https://api.openaq.org/v3/locations/718",
+      "ok": true,
+      "status": 200,
+      "error": "",
+      "top_keys": "meta,results",
+      "results_count": 1
+    },
+    {
+      "location_id": "718",
+      "url": "https://api.openaq.org/v3/locations/718/latest",
+      "ok": true,
+      "status": 200,
+      "error": "",
+      "top_keys": "meta,results",
+      "results_count": 4
+    },
+    {
+      "location_id": "718",
+      "url": "https://api.openaq.org/v3/latest?locations_id=718&limit=100",
+      "ok": false,
+      "status": "",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "location_id": "157",
+      "url": "https://api.openaq.org/v3/locations/157",
+      "ok": true,
+      "status": 200,
+      "error": "",
+      "top_keys": "meta,results",
+      "results_count": 1
+    },
+    {
+      "location_id": "157",
+      "url": "https://api.openaq.org/v3/locations/157/latest",
+      "ok": true,
+      "status": 200,
+      "error": "",
+      "top_keys": "meta,results",
+      "results_count": 5
+    },
+    {
+      "location_id": "157",
+      "url": "https://api.openaq.org/v3/latest?locations_id=157&limit=100",
+      "ok": false,
+      "status": "",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "location_id": "225796",
+      "url": "https://api.openaq.org/v3/locations/225796",
+      "ok": true,
+      "status": 200,
+      "error": "",
+      "top_keys": "meta,results",
+      "results_count": 1
+    },
+    {
+      "location_id": "225796",
+      "url": "https://api.openaq.org/v3/locations/225796/latest",
+      "ok": true,
+      "status": 200,
+      "error": "",
+      "top_keys": "meta,results",
+      "results_count": 5
+    },
+    {
+      "location_id": "225796",
+      "url": "https://api.openaq.org/v3/latest?locations_id=225796&limit=100",
+      "ok": false,
+      "status": "",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "location_id": "2494",
+      "url": "https://api.openaq.org/v3/locations/2494",
+      "ok": true,
+      "status": 200,
+      "error": "",
+      "top_keys": "meta,results",
+      "results_count": 1
+    }
+  ]
+}

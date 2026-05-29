@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "generated_utc": "2026-05-29T16:39:36Z",
+  "include_unredacted": true,
+  "html_files_patched": 29,
+  "recommended_urls": [
+    "/test/index.html",
+    "/test/test-index.html",
+    "/test/incinerators.html",
+    "/test/newhaven.html",
+    "/test/weekly-update.html",
+    "/test/unredacted/index.html"
+  ]
+}

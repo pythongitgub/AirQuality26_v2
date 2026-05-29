@@ -1,0 +1,74 @@
+{
+  "ok": true,
+  "generated_utc": "2026-05-29T07:39:49Z",
+  "version": "aq26-final-brand-20260529",
+  "public": {
+    "site": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public",
+    "assets": {
+      "logo_web_svg": true,
+      "favicon_svg_assets": true,
+      "favicon_svg_root": true,
+      "header_logo": true,
+      "favicon_ico": true,
+      "apple-touch-icon.png": true,
+      "android-chrome-192x192.png": true,
+      "android-chrome-512x512.png": true,
+      "favicon-16x16.png": true
+    },
+    "html_changed": [
+      "about.html",
+      "accessibility.html",
+      "archive.html",
+      "comparisons.html",
+      "contact.html",
+      "cookies.html",
+      "downloads.html",
+      "evidence-downloads.html",
+      "historical-comparisons.html",
+      "incinerator-overlays.html",
+      "incinerators.html",
+      "index.html",
+      "latest-report.html",
+      "legal.html",
+      "methodology.html",
+      "newhaven.html",
+      "overlays.html",
+      "privacy.html",
+      "readiness.html",
+      "source-records.html",
+      "terms.html",
+      "weekly-archive.html",
+      "weekly-update.html"
+    ],
+    "missing_alert_pages": [],
+    "missing_banner_pages": []
+  },
+  "unredacted": {
+    "site": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_unredacted",
+    "assets": {
+      "logo_web_svg": true,
+      "favicon_svg_assets": true,
+      "favicon_svg_root": true,
+      "header_logo": true,
+      "favicon_ico": true,
+      "apple-touch-icon.png": true,
+      "android-chrome-192x192.png": true,
+      "android-chrome-512x512.png": true,
+      "favicon-16x16.png": true
+    },
+    "html_changed": [
+      "candidates.html",
+      "diagnostics.html",
+      "evidence.html",
+      "index.html",
+      "weekly-update.html"
+    ],
+    "missing_alert_pages": [],
+    "missing_banner_pages": []
+  },
+  "notes": [
+    "Header text next to the full logo is removed.",
+    "Favicon references are cache-busted and prefer /favicon.ico and /favicon.svg.",
+    "Weekly alert and moving banner markers are checked for index/weekly pages."
+  ]
+}

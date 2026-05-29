@@ -1,0 +1,7 @@
+{
+  "schema_version": "AQ26_OFFICIAL_FILINGS.JSON_V33_1",
+  "created_at_utc": "2026-05-27T18:49:12Z",
+  "status": "awaiting_source_specific_backfill",
+  "note": "Awaiting official-document table with publication date, source date, relevance date, checksum and review status.",
+  "records": []
+}

@@ -1,0 +1,597 @@
+[
+  {
+    "concept_id": "C1693440801-GES_DISC",
+    "data_center": "GES_DISC",
+    "id": "C1693440801-GES_DISC",
+    "links": [
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/SNDRAQIL3CMCCP_2.png",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+      },
+      {
+        "href": "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3CMCCP_2.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      },
+      {
+        "href": "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3CMCCP.2/",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://airs.jpl.nasa.gov/index.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://search.earthdata.nasa.gov/search/granules?p=C1693440801-GES_DISC",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      }
+    ],
+    "matched_keyword": "air quality",
+    "short_name": "SNDRAQIL3CMCCP",
+    "summary": "WARNING: To users of the derived product “co_mmr_midtrop” (carbon monoxide mass mixing ratio to dry air [kg/kg] at ~500 hPa). This variable has a significant bias due to a conversion error: the molecular weight of carbon dioxide (CO2, 44.01 g/mol) was used instead of carbon monoxide (CO, 28.01 g/mol). To correct, simply multiply “co_mmr_midtrop” by 28.01/44.01. Alternatively, derive a profile of mass mixing ratio from scratch using the retrieved column density values (“mol_lay/co_mol_lay”) in th",
+    "time_end": null,
+    "time_start": "2002-08-31T00:00:00.000Z",
+    "title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Comprehensive Quality Control Gridded Monthly V2 (SNDRAQIL3CMCCP) at GES DISC",
+    "version_id": "2"
+  },
+  {
+    "concept_id": "C1693440802-GES_DISC",
+    "data_center": "GES_DISC",
+    "id": "C1693440802-GES_DISC",
+    "links": [
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/SNDRAQIL3SDCCP_2.png",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+      },
+      {
+        "href": "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3SDCCP_2.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      },
+      {
+        "href": "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SDCCP.2/",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://airs.jpl.nasa.gov/index.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://search.earthdata.nasa.gov/search/granules?p=C1693440802-GES_DISC",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      }
+    ],
+    "matched_keyword": "air quality",
+    "short_name": "SNDRAQIL3SDCCP",
+    "summary": "WARNING: Users of the derived product “co_mmr_midtrop” (carbon monoxide mass mixing ratio to dry air [kg/kg] at ~500 hPa). This variable has a significant bias due to a conversion error: the molecular weight of carbon dioxide (CO2, 44.01 g/mol) was used instead of carbon monoxide (CO, 28.01 g/mol). To correct, simply multiply “co_mmr_midtrop” by 28.01/44.01. Alternatively, derive a profile of mass mixing ratio from scratch using the retrieved column density values (“mol_lay/co_mol_lay”) in the L",
+    "time_end": null,
+    "time_start": "2002-08-31T00:00:00.000Z",
+    "title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Specific Quality Control Gridded Daily V2 (SNDRAQIL3SDCCP) at GES DISC",
+    "version_id": "2"
+  },
+  {
+    "concept_id": "C1693440803-GES_DISC",
+    "data_center": "GES_DISC",
+    "id": "C1693440803-GES_DISC",
+    "links": [
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/SNDRAQIL3SMCCP_2.png",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+      },
+      {
+        "href": "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3SMCCP_2.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      },
+      {
+        "href": "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3SMCCP.2/",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://airs.jpl.nasa.gov/index.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://search.earthdata.nasa.gov/search/granules?p=C1693440803-GES_DISC",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      }
+    ],
+    "matched_keyword": "air quality",
+    "short_name": "SNDRAQIL3SMCCP",
+    "summary": "WARNING: Users of the derived product “co_mmr_midtrop” (carbon monoxide mass mixing ratio to dry air [kg/kg] at ~500 hPa). This variable has a significant bias due to a conversion error: the molecular weight of carbon dioxide (CO2, 44.01 g/mol) was used instead of carbon monoxide (CO, 28.01 g/mol). To correct, simply multiply “co_mmr_midtrop” by 28.01/44.01. Alternatively, derive a profile of mass mixing ratio from scratch using the retrieved column density values (“mol_lay/co_mol_lay”) in the L",
+    "time_end": null,
+    "time_start": "2002-08-31T00:00:00.000Z",
+    "title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS: Specific Quality Control Gridded Monthly V2 (SNDRAQIL3SMCCP) at GES DISC",
+    "version_id": "2"
+  },
+  {
+    "concept_id": "C2503251631-GES_DISC",
+    "data_center": "GES_DISC",
+    "id": "C2503251631-GES_DISC",
+    "links": [
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/MEaSUREs/Krotkov/MSAQSO2L4.PNG",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+      },
+      {
+        "href": "https://disc.gsfc.nasa.gov/datacollection/MSAQSO2L4_2.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://measures.gesdisc.eosdis.nasa.gov/data/SO2/MSAQSO2L4.2",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      },
+      {
+        "href": "https://measures.gesdisc.eosdis.nasa.gov/opendap/SO2/MSAQSO2L4.2",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+      },
+      {
+        "href": "https://www.earthdata.nasa.gov/about/competitive-programs/measures/multi-decadal-sulfur-dioxide-climatology-satellite-instruments",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/MEaSUREs/Krotkov/README.MSAQSO2L4.V2.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://so2.gsfc.nasa.gov/measures.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://search.earthdata.nasa.gov/search/granules?p=C2503251631-GES_DISC",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      }
+    ],
+    "matched_keyword": "air quality",
+    "short_name": "MSAQSO2L4",
+    "summary": "These data are a part of Multi-Decadal Sulfur Dioxide (SO2) Climatology from Satellite Instruments (MEaSUREs-12-0022 project). Version 2 of the global catalogue of emissions from large SO2 point sources combines data from the Ozone Monitoring Instrument (OMI) on NASA's EOS Aura spacecraft, the Ozone Mapping and Profiler Suite (OMPS) on the NASA-NOAA Suomi National Polar-orbiting Partnership (SNPP), and the TROPOspheric Monitoring Instrument (TROPOMI) on the ESA/Copernicus Sentinel-5 Precursor (S",
+    "time_end": null,
+    "time_start": "2005-01-01T00:00:00.000Z",
+    "title": "Multi-Satellite Air Quality Sulfur Dioxide (SO2) Database Long-Term L4 Global V2 (MSAQSO2L4) at GES DISC",
+    "version_id": "2"
+  },
+  {
+    "concept_id": "C1693440800-GES_DISC",
+    "data_center": "GES_DISC",
+    "id": "C1693440800-GES_DISC",
+    "links": [
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/SNDRAQIL3CDCCP_2.png",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+      },
+      {
+        "href": "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIL3CDCCP_2.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      },
+      {
+        "href": "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIL3CDCCP.2/",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://airs.jpl.nasa.gov/index.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://search.earthdata.nasa.gov/search/granules?p=C1693440800-GES_DISC",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      }
+    ],
+    "matched_keyword": "air quality",
+    "short_name": "SNDRAQIL3CDCCP",
+    "summary": "WARNING: To users of the derived product “co_mmr_midtrop” (carbon monoxide mass mixing ratio to dry air [kg/kg] at ~500 hPa). This variable has a significant bias due to a conversion error: the molecular weight of carbon dioxide (CO2, 44.01 g/mol) was used instead of carbon monoxide (CO, 28.01 g/mol). To correct, simply multiply “co_mmr_midtrop” by 28.01/44.01. Alternatively, derive a profile of mass mixing ratio from scratch using the retrieved column density values (“mol_lay/co_mol_lay”) in th",
+    "time_end": null,
+    "time_start": "2002-08-31T00:00:00.000Z",
+    "title": "Sounder SIPS: AQUA AIRS IR-only Level 3 CLIMCAPS : Comprehensive Quality Control Gridded Daily V2 (SNDRAQIL3CDCCP) at GES DISC",
+    "version_id": "2"
+  },
+  {
+    "concept_id": "C1693440804-GES_DISC",
+    "data_center": "GES_DISC",
+    "id": "C1693440804-GES_DISC",
+    "links": [
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/SNDRAQIML3CDCCP_2.png",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+      },
+      {
+        "href": "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIML3CDCCP_2.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIML3CDCCP.2/",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      },
+      {
+        "href": "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIML3CDCCP.2/",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://airs.jpl.nasa.gov/index.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://search.earthdata.nasa.gov/search/granules?p=C1693440804-GES_DISC",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      }
+    ],
+    "matched_keyword": "air quality",
+    "short_name": "SNDRAQIML3CDCCP",
+    "summary": "WARNING: To users of the derived product “co_mmr_midtrop” (carbon monoxide mass mixing ratio to dry air [kg/kg] at ~500 hPa). This variable has a significant bias due to a conversion error: the molecular weight of carbon dioxide (CO2, 44.01 g/mol) was used instead of carbon monoxide (CO, 28.01 g/mol). To correct, simply multiply “co_mmr_midtrop” by 28.01/44.01. Alternatively, derive a profile of mass mixing ratio from scratch using the retrieved column density values (“mol_lay/co_mol_lay”) in th",
+    "time_end": null,
+    "time_start": "2002-08-31T00:00:00.000Z",
+    "title": "Sounder SIPS: AQUA AIRS IR + MW Level 3 CLIMCAPS : Comprehensive Quality Control Gridded Daily V2 (SNDRAQIML3CDCCP) at GES DISC",
+    "version_id": "2"
+  },
+  {
+    "concept_id": "C1693440821-GES_DISC",
+    "data_center": "GES_DISC",
+    "id": "C1693440821-GES_DISC",
+    "links": [
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/SNDRAQIML3SDCCP_2.png",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+      },
+      {
+        "href": "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIML3SDCCP_2.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIML3SDCCP.2/",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      },
+      {
+        "href": "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIML3SDCCP.2/",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://airs.jpl.nasa.gov/index.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://search.earthdata.nasa.gov/search/granules?p=C1693440821-GES_DISC",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      }
+    ],
+    "matched_keyword": "air quality",
+    "short_name": "SNDRAQIML3SDCCP",
+    "summary": "WARNING: Users of the derived product “co_mmr_midtrop” (carbon monoxide mass mixing ratio to dry air [kg/kg] at ~500 hPa). This variable has a significant bias due to a conversion error: the molecular weight of carbon dioxide (CO2, 44.01 g/mol) was used instead of carbon monoxide (CO, 28.01 g/mol). To correct, simply multiply “co_mmr_midtrop” by 28.01/44.01. Alternatively, derive a profile of mass mixing ratio from scratch using the retrieved column density values (“mol_lay/co_mol_lay”) in the L",
+    "time_end": null,
+    "time_start": "2002-08-31T00:00:00.000Z",
+    "title": "Sounder SIPS: AQUA AIRS IR MW Level 3 CLIMCAPS : Specific Quality Control Gridded Daily V2 (SNDRAQIML3SDCCP) at GES DISC",
+    "version_id": "2"
+  },
+  {
+    "concept_id": "C1693440838-GES_DISC",
+    "data_center": "GES_DISC",
+    "id": "C1693440838-GES_DISC",
+    "links": [
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/SNDRAQIML3SMCCP_2.png",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+      },
+      {
+        "href": "https://disc.gsfc.nasa.gov/datacollection/SNDRAQIML3SMCCP_2.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://sounder.gesdisc.eosdis.nasa.gov/data/Aqua_Sounder_Level3/SNDRAQIML3SMCCP.2/",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      },
+      {
+        "href": "https://sounder.gesdisc.eosdis.nasa.gov/opendap/Aqua_Sounder_Level3/SNDRAQIML3SMCCP.2/",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.L3.V2.README.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Sounder/CLIMCAPS.V2.ATBD.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://airs.jpl.nasa.gov/index.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://search.earthdata.nasa.gov/search/granules?p=C1693440838-GES_DISC",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      }
+    ],
+    "matched_keyword": "air quality",
+    "short_name": "SNDRAQIML3SMCCP",
+    "summary": "WARNING: To users of the derived product “co_mmr_midtrop” (carbon monoxide mass mixing ratio to dry air [kg/kg] at ~500 hPa). This variable has a significant bias due to a conversion error: the molecular weight of carbon dioxide (CO2, 44.01 g/mol) was used instead of carbon monoxide (CO, 28.01 g/mol). To correct, simply multiply “co_mmr_midtrop” by 28.01/44.01. Alternatively, derive a profile of mass mixing ratio from scratch using the retrieved column density values (“mol_lay/co_mol_lay”) in th",
+    "time_end": null,
+    "time_start": "2002-08-31T00:00:00.000Z",
+    "title": "Sounder SIPS: AQUA AIRS IR + MW Level 3 CLIMCAPS: Specific Quality Control Gridded Monthly V2 (SNDRAQIML3SMCCP) at GES DISC",
+    "version_id": "2"
+  },
+  {
+    "concept_id": "C3645629331-LARC_CLOUD",
+    "data_center": "LARC_CLOUD",
+    "id": "C3645629331-LARC_CLOUD",
+    "links": [
+      {
+        "href": "https://beacon.berkeley.edu/about/#",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://doi.org/10.5194/amt-17-1051-2024",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://doi.org/10.5194/amt-14-5487-2021",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://asdc.larc.nasa.gov/citing-data",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://search.earthdata.nasa.gov/search/granules?p=C3645629331-LARC_CLOUD",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      },
+      {
+        "href": "https://doi.org/10.5067/Low-Cost-Sensors-AQ/BEACO2N",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://experience.arcgis.com/experience/d8aee5b3925d421884572b9da08de8e6",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://github.com/KristenOkorn/nasa-low-cost-sensors-aq",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      }
+    ],
+    "matched_keyword": "air quality",
+    "short_name": "Low-Cost-Sensors-AQ_BEACO2N",
+    "summary": "Low-Cost-Sensors-AQ_BEACO2N is the ground site data collected by the Berkeley Environmental Air-quality & CO2 Network (BEACO2N) as part of the Low-Cost Air Quality Sensor Harmonization Database. Data collection for this product is ongoing.\n\nThe Low-Cost Sensor AQ Harmonization aims to harmonize sensor networks by amalgamating measurements from a multitude of networks into one open access framework. Currently, data from 10 unique US-based sensor networks have been collected for redistribution in ",
+    "time_end": null,
+    "time_start": "2012-04-06T00:00:00.000Z",
+    "title": "Low Cost Sensors AQ BEACO2N Data",
+    "version_id": "1"
+  },
+  {
+    "concept_id": "C1276812830-GES_DISC",
+    "data_center": "GES_DISC",
+    "id": "C1276812830-GES_DISC",
+    "links": [
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/M2T1NXAER_5.12.4.png",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+      },
+      {
+        "href": "https://disc.gsfc.nasa.gov/information/howto?tags=MERRA",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://disc.gsfc.nasa.gov/datacollection/M2T1NXAER_5.12.4.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      },
+      {
+        "href": "https://giovanni.gsfc.nasa.gov/giovanni/#dataKeyword=M2T1NXAER",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#"
+      },
+      {
+        "href": "https://search.earthdata.nasa.gov/search/granules?p=C1276812830-GES_DISC",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/data#"
+      },
+      {
+        "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/opendap/MERRA2/M2T1NXAER.5.12.4/contents.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/service#"
+      },
+      {
+        "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/thredds/catalog/MERRA2_aggregation/M2T1NXAER.5.12.4/catalog.html",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://gmao.gsfc.nasa.gov/gmao-products/merra-2/documentation_merra-2/",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#"
+      },
+      {
+        "href": "https://gmao.gsfc.nasa.gov/media/publications/zbly36ziNFDFbmYmvhQeVqPhUo/Bosilovich785.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2/M2T1NXAER.5.12.4/doc/MERRA2.README.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://disc.gsfc.nasa.gov/information/mission-project?title=MERRA-2",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/MERRA/Records_MERRA-2_Data_Reprocessing_and_Service_Changes.pdf",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      },
+      {
+        "href": "https://disc.gsfc.nasa.gov/information/faqs?keywords=MERRA-2&page=1",
+        "hreflang": "en-US",
+        "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#"
+      }
+    ],
+    "matched_keyword": "air quality",
+    "short_name": "M2T1NXAER",
+    "summary": "M2T1NXAER (or  tavg1_2d_aer_Nx) is an hourly time-averaged 2-dimensional data collection in Modern-Era Retrospective analysis for Research and Applications version 2 (MERRA-2).  This collection consists of assimilated aerosol diagnostics, such as column mass density of aerosol components (black carbon, dust, sea salt, sulfate, and organic carbon), surface mass concentration of aerosol components, and total extinction (and scattering ) aerosol optical thickness (AOT) at 550 nm.  The total PM1.0, ",
+    "time_end": null,
+    "time_start": "1980-01-01T00:00:00.000Z",
+    "title": "MERRA-2 tavg1_2d_aer_Nx: 2d,1-Hourly,Time-averaged,Single-Level,Assimilation,Aerosol Diagnostics 0.625 x 0.5 degree V5.12.4 (M2T1NXAER) at GES DISC",
+    "version_id": "5.12.4"
+  }
+]

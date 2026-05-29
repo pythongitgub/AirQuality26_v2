@@ -1,0 +1,13 @@
+index.html
+archive.html
+comparisons.html
+source-records.html
+readiness.html
+methodology.html
+downloads.html
+about.html
+privacy.html
+cookies.html
+accessibility.html
+terms.html
+contact.html

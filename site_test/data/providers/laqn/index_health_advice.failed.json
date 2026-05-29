@@ -1,0 +1,13 @@
+{
+  "content_preview": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n  <head>\r\n    <title>Request Error</title>\r\n    <style>BODY { color: #000000; background-color: white; font-family: Verdana; margin-left: 0px; margin-top: 0px; } #content { margin-left: 30px; font-size: .70em; padding-bottom: 2em; } A:link { color: #336699; font-weight: bold; text-decorat",
+  "meta": {
+    "attempt": 3,
+    "bytes": 2891,
+    "content_type": "text/html",
+    "error": "http_status_400",
+    "http_status": 400,
+    "sha256": "7a2127c481ab9bc219645e1f2c27d21913379b6f83d8cbe84a4afa1181a25823",
+    "url": "https://api.erg.ic.ac.uk/AirQuality/Information/IndexHealthAdvice/Json"
+  },
+  "url": "https://api.erg.ic.ac.uk/AirQuality/Information/IndexHealthAdvice/Json"
+}

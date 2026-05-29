@@ -1,0 +1,15 @@
+{
+  "ok": true,
+  "site_root": "site_unredacted",
+  "copied_assets": [
+    "site_unredacted/assets/aq26_moving_banners.css",
+    "site_unredacted/assets/aq26_moving_banners.js"
+  ],
+  "html_changed": [
+    "site_unredacted/candidates.html",
+    "site_unredacted/diagnostics.html",
+    "site_unredacted/evidence.html",
+    "site_unredacted/index.html"
+  ],
+  "html_changed_count": 4
+}

@@ -1,0 +1,21 @@
+{
+  "generated_at_utc": "2026-05-27T12:28:51Z",
+  "site_root": "site_public",
+  "no_blank_validation_ok": true,
+  "problems": [],
+  "core_pages": [
+    "index.html",
+    "archive.html",
+    "comparisons.html",
+    "source-records.html",
+    "readiness.html",
+    "methodology.html",
+    "downloads.html"
+  ],
+  "aliases": {
+    "historical-comparisons.html": "comparisons.html",
+    "weekly-archive.html": "archive.html",
+    "evidence-downloads.html": "downloads.html",
+    "latest-report.html": "downloads.html"
+  }
+}

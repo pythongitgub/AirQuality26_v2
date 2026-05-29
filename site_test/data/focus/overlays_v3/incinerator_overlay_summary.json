@@ -1,0 +1,35 @@
+{
+  "generated_utc": "2026-05-28T04:49:12Z",
+  "workflow_version": "v3.3_stateful_batching_fixed_skip",
+  "broad_facilities": 46,
+  "validated_overlays": 8,
+  "remaining_facilities_total": 38,
+  "previous_selected_facilities_loaded": 35,
+  "previous_candidate_facilities_skipped": 35,
+  "query_pool_after_skip": 3,
+  "batch_offset": 0,
+  "facilities_queried_this_run": 3,
+  "queried_facilities": [
+    "Cornwall ERC",
+    "Isle of Man Incinerator",
+    "Thetford Incinerator"
+  ],
+  "live_openaq": true,
+  "use_v2_cache": true,
+  "candidate_rows_this_run": 1,
+  "selected_candidates_this_run": 0,
+  "selected_candidates_cumulative": 223,
+  "candidate_facilities_cumulative": 35,
+  "no_candidate_selected_yet": 3,
+  "status_counts": {
+    "candidate_overlay_needs_review": 35,
+    "no_candidate_selected_yet": 3,
+    "validated_existing_overlay": 8
+  },
+  "diagnostic_rows": 18,
+  "http_200_calls": 18,
+  "rate_limited_calls": 0,
+  "error_rows": 0,
+  "status": "candidate_discovery_complete",
+  "note": "Skip logic uses selected/review candidate files only; raw candidate rows do not count as coverage."
+}

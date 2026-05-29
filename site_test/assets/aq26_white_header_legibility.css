@@ -1,0 +1,173 @@
+/* AQ26 white header + legibility repair v2
+   Purpose: use full SCC Nexus Air Quality Report SVG in visible headers, keep compact icon for favicon only,
+   and restore readable contrast across public, unredacted and report HTML pages. */
+:root{
+  --aq26-navy:#07172a;
+  --aq26-navy-2:#0d2440;
+  --aq26-blue:#1f8fc7;
+  --aq26-teal:#4fd7cf;
+  --aq26-ink:#07172a;
+  --aq26-muted:#4d617a;
+  --aq26-line:#d8e5f3;
+  --aq26-soft:#f4f9fd;
+  --aq26-card:#ffffff;
+}
+html, body { background:#f6fbff !important; color:var(--aq26-ink) !important; }
+body { -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+/* Top dark strip remains small, main navigation becomes white */
+.aq26-top-strip, .top-strip, .site-top-strip, header .topbar, .topbar{
+  background:var(--aq26-navy) !important;
+  color:#fff !important;
+  min-height:28px;
+  font-size:13px;
+}
+/* Main masthead */
+.aq26-white-header, .aq26-main-header, .site-header, header.site-header, .aq26-header, header:not(.hero):not(.page-hero){
+  background:#fff !important;
+  color:var(--aq26-ink) !important;
+  border-bottom:1px solid var(--aq26-line) !important;
+  box-shadow:0 8px 24px rgba(7,23,42,.06) !important;
+}
+.aq26-white-header a, .aq26-main-header a, .site-header a, header.site-header a, .aq26-header a{
+  color:var(--aq26-ink) !important;
+}
+.aq26-brand, .brand, .site-brand, .aq26-logo-wrap{
+  display:flex !important;
+  align-items:center !important;
+  gap:14px !important;
+  min-width:240px;
+}
+.aq26-brand-logo, .aq26-header-logo, .site-logo, .brand-logo, header img[src*="air_quality_web"], header img[src*="logo_web"], header img[src*="favicon"]{
+  display:block !important;
+  width:auto !important;
+  max-width:300px !important;
+  height:82px !important;
+  max-height:88px !important;
+  object-fit:contain !important;
+  opacity:1 !important;
+  filter:none !important;
+}
+/* If the header still has separate title text beside the SVG, keep it tidy */
+.aq26-brand-title, .brand-title, .site-title{
+  color:var(--aq26-ink) !important;
+  font-weight:800 !important;
+  line-height:1.15 !important;
+}
+/* Desktop nav pills on white header */
+.aq26-nav, .nav, nav, .site-nav{ color:var(--aq26-ink) !important; }
+.aq26-nav a, .site-nav a, nav a, .nav a, .nav-pill, .aq26-nav-pill{
+  background:#eef5fb !important;
+  border:1px solid #cfe0ef !important;
+  color:var(--aq26-ink) !important;
+  box-shadow:0 2px 10px rgba(7,23,42,.05) !important;
+  text-decoration:none !important;
+}
+.aq26-nav a:hover, .site-nav a:hover, nav a:hover, .nav a:hover{
+  background:#dff1fb !important;
+  border-color:#a9d7ec !important;
+  color:#06182c !important;
+}
+/* Hero panels: keep dark/gradient, but force readable white text */
+.hero, .page-hero, .aq26-hero, .hero-card, .masthead, .intro-hero, section[class*="hero"]{
+  color:#fff !important;
+  background:linear-gradient(135deg,#133c66 0%, #1f8fc7 100%) !important;
+  border:1px solid rgba(255,255,255,.2) !important;
+}
+.hero *, .page-hero *, .aq26-hero *, .hero-card *, .masthead *, .intro-hero *, section[class*="hero"] *{
+  color:inherit;
+}
+.hero h1, .page-hero h1, .aq26-hero h1, .hero-card h1, .masthead h1, .intro-hero h1,
+.hero h2, .page-hero h2, .aq26-hero h2, .hero-card h2, .masthead h2, .intro-hero h2{
+  color:#fff !important;
+  text-shadow:0 2px 10px rgba(0,0,0,.22) !important;
+}
+.hero p, .page-hero p, .aq26-hero p, .hero-card p, .masthead p, .intro-hero p{
+  color:#eef8ff !important;
+}
+.hero .eyebrow, .page-hero .eyebrow, .aq26-hero .eyebrow, .kicker, .eyebrow{
+  color:#62fff1 !important;
+  letter-spacing:.18em;
+  font-weight:800;
+}
+/* Buttons */
+.button, .btn, a.button, a.btn, .cta, .hero a, .page-hero a, .aq26-hero a{
+  border-radius:14px !important;
+  font-weight:800 !important;
+}
+.button.primary, .btn.primary, .cta.primary, .hero a:first-of-type, .page-hero a:first-of-type, .aq26-hero a:first-of-type{
+  background:var(--aq26-teal) !important;
+  color:#001c2d !important;
+  border:1px solid rgba(255,255,255,.35) !important;
+}
+.button.secondary, .btn.secondary, .cta.secondary, .hero a + a, .page-hero a + a, .aq26-hero a + a{
+  background:rgba(255,255,255,.18) !important;
+  color:#fff !important;
+  border:1px solid rgba(255,255,255,.38) !important;
+}
+/* Main content cards: use light cards unless explicitly inside hero */
+main .card, main .panel, main .metric-card, main .summary-card, main .evidence-card, main .status-card, main .tile,
+section:not([class*="hero"]) .card, section:not([class*="hero"]) .panel, section:not([class*="hero"]) .tile{
+  background:#fff !important;
+  color:var(--aq26-ink) !important;
+  border:1px solid var(--aq26-line) !important;
+  box-shadow:0 10px 28px rgba(7,23,42,.06) !important;
+}
+main .card h1, main .card h2, main .card h3, main .panel h1, main .panel h2, main .panel h3,
+main .metric-card h1, main .metric-card h2, main .metric-card h3, main .summary-card h1, main .summary-card h2, main .summary-card h3,
+main .evidence-card h1, main .evidence-card h2, main .evidence-card h3, main .status-card h1, main .status-card h2, main .status-card h3{
+  color:var(--aq26-ink) !important;
+  text-shadow:none !important;
+}
+main .card p, main .panel p, main .metric-card p, main .summary-card p, main .evidence-card p, main .status-card p,
+main li, main td, main th{
+  color:#263b53 !important;
+}
+main .label, main .eyebrow, main .card .eyebrow, main .panel .eyebrow{
+  color:#008d89 !important;
+}
+/* Warning / fallback panels */
+.notice, .fallback, .no-blank, .aq26-fallback, .callout{
+  background:#fff8dc !important;
+  color:var(--aq26-ink) !important;
+  border-left:4px solid #f4b400 !important;
+}
+.notice *, .fallback *, .no-blank *, .aq26-fallback *, .callout *{ color:inherit !important; }
+/* Tables on unredacted evidence index */
+table{ background:#fff !important; color:var(--aq26-ink) !important; border-collapse:collapse; }
+thead, table thead tr, th{ background:var(--aq26-navy) !important; color:#fff !important; }
+td{ color:#172b42 !important; border-bottom:1px solid #e6eef7 !important; }
+tr:nth-child(even) td{ background:#f7fbff !important; }
+.badge, .tag, .pill, .category-pill{ color:#004044 !important; background:#e4fbf7 !important; }
+/* Footer */
+footer, .site-footer{ background:var(--aq26-navy) !important; color:#dceeff !important; }
+footer a, .site-footer a{ color:#fff !important; }
+/* Mobile header */
+.aq26-mobile-toggle{ display:none; }
+@media (max-width: 860px){
+  .aq26-white-header, .aq26-main-header, .site-header, header.site-header, .aq26-header{
+    position:sticky; top:0; z-index:1000;
+    padding:10px 14px !important;
+  }
+  .aq26-brand-logo, .aq26-header-logo, .site-logo, .brand-logo, header img[src*="air_quality_web"], header img[src*="logo_web"], header img[src*="favicon"]{
+    height:56px !important;
+    max-width:220px !important;
+  }
+  .aq26-mobile-toggle{
+    display:inline-flex !important;
+    align-items:center; justify-content:center;
+    border:1px solid #cfe0ef; border-radius:12px;
+    background:#eef5fb; color:var(--aq26-ink);
+    padding:10px 12px; font-weight:800;
+  }
+  .aq26-nav, .site-nav, header nav{
+    display:none !important;
+    width:100%; flex-direction:column !important; align-items:stretch !important;
+    margin-top:10px;
+  }
+  body.aq26-menu-open .aq26-nav, body.aq26-menu-open .site-nav, body.aq26-menu-open header nav{
+    display:flex !important;
+  }
+  .aq26-nav a, .site-nav a, header nav a{ width:100%; box-sizing:border-box; margin:3px 0; }
+  .hero, .page-hero, .aq26-hero, .hero-card, .masthead, .intro-hero{ margin:16px 10px !important; padding:28px 20px !important; }
+  .hero h1, .page-hero h1, .aq26-hero h1, .hero-card h1{ font-size:clamp(2rem, 10vw, 3.2rem) !important; }
+}

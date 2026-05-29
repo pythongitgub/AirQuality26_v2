@@ -1,0 +1,488 @@
+[
+  {
+    "site_code": "MY1",
+    "sitecode": "MY1",
+    "species_code": "NO2",
+    "speciescode": "NO2"
+  },
+  {
+    "measurementdategmt": "2024-07-22 00:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-22 01:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-22 02:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-22 03:00:00",
+    "value": "11.6"
+  },
+  {
+    "measurementdategmt": "2024-07-22 04:00:00",
+    "value": "14"
+  },
+  {
+    "measurementdategmt": "2024-07-22 05:00:00",
+    "value": "22.3"
+  },
+  {
+    "measurementdategmt": "2024-07-22 06:00:00",
+    "value": "31.5"
+  },
+  {
+    "measurementdategmt": "2024-07-22 07:00:00",
+    "value": "36.2"
+  },
+  {
+    "measurementdategmt": "2024-07-22 08:00:00",
+    "value": "29.1"
+  },
+  {
+    "measurementdategmt": "2024-07-22 09:00:00",
+    "value": "31.4"
+  },
+  {
+    "measurementdategmt": "2024-07-22 10:00:00",
+    "value": "37.8"
+  },
+  {
+    "measurementdategmt": "2024-07-22 11:00:00",
+    "value": "25.9"
+  },
+  {
+    "measurementdategmt": "2024-07-22 12:00:00",
+    "value": "34"
+  },
+  {
+    "measurementdategmt": "2024-07-22 13:00:00",
+    "value": "37"
+  },
+  {
+    "measurementdategmt": "2024-07-22 14:00:00",
+    "value": "35.9"
+  },
+  {
+    "measurementdategmt": "2024-07-22 15:00:00",
+    "value": "45.1"
+  },
+  {
+    "measurementdategmt": "2024-07-22 16:00:00",
+    "value": "29.5"
+  },
+  {
+    "measurementdategmt": "2024-07-22 17:00:00",
+    "value": "21"
+  },
+  {
+    "measurementdategmt": "2024-07-22 18:00:00",
+    "value": "22.9"
+  },
+  {
+    "measurementdategmt": "2024-07-22 19:00:00",
+    "value": "24.3"
+  },
+  {
+    "measurementdategmt": "2024-07-22 20:00:00",
+    "value": "16.9"
+  },
+  {
+    "measurementdategmt": "2024-07-22 21:00:00",
+    "value": "21.5"
+  },
+  {
+    "measurementdategmt": "2024-07-22 22:00:00",
+    "value": "20"
+  },
+  {
+    "measurementdategmt": "2024-07-22 23:00:00",
+    "value": "15.1"
+  },
+  {
+    "measurementdategmt": "2024-07-23 00:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-23 01:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-23 02:00:00",
+    "value": "6.4"
+  },
+  {
+    "measurementdategmt": "2024-07-23 03:00:00",
+    "value": "11.4"
+  },
+  {
+    "measurementdategmt": "2024-07-23 04:00:00",
+    "value": "16"
+  },
+  {
+    "measurementdategmt": "2024-07-23 05:00:00",
+    "value": "20.3"
+  },
+  {
+    "measurementdategmt": "2024-07-23 06:00:00",
+    "value": "43.1"
+  },
+  {
+    "measurementdategmt": "2024-07-23 07:00:00",
+    "value": "32.7"
+  },
+  {
+    "measurementdategmt": "2024-07-23 08:00:00",
+    "value": "34.3"
+  },
+  {
+    "measurementdategmt": "2024-07-23 09:00:00",
+    "value": "28.6"
+  },
+  {
+    "measurementdategmt": "2024-07-23 10:00:00",
+    "value": "20.4"
+  },
+  {
+    "measurementdategmt": "2024-07-23 11:00:00",
+    "value": "15.7"
+  },
+  {
+    "measurementdategmt": "2024-07-23 12:00:00",
+    "value": "8.6"
+  },
+  {
+    "measurementdategmt": "2024-07-23 13:00:00",
+    "value": "9.5"
+  },
+  {
+    "measurementdategmt": "2024-07-23 14:00:00",
+    "value": "12.1"
+  },
+  {
+    "measurementdategmt": "2024-07-23 15:00:00",
+    "value": "14.9"
+  },
+  {
+    "measurementdategmt": "2024-07-23 16:00:00",
+    "value": "18.1"
+  },
+  {
+    "measurementdategmt": "2024-07-23 17:00:00",
+    "value": "13.8"
+  },
+  {
+    "measurementdategmt": "2024-07-23 18:00:00",
+    "value": "16.1"
+  },
+  {
+    "measurementdategmt": "2024-07-23 19:00:00",
+    "value": "16.2"
+  },
+  {
+    "measurementdategmt": "2024-07-23 20:00:00",
+    "value": "12.8"
+  },
+  {
+    "measurementdategmt": "2024-07-23 21:00:00",
+    "value": "21"
+  },
+  {
+    "measurementdategmt": "2024-07-23 22:00:00",
+    "value": "25"
+  },
+  {
+    "measurementdategmt": "2024-07-23 23:00:00",
+    "value": "36.2"
+  },
+  {
+    "measurementdategmt": "2024-07-24 00:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-24 01:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-24 02:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-24 03:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-24 04:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-24 05:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-24 06:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-24 07:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-24 08:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-24 09:00:00",
+    "value": "53.5"
+  },
+  {
+    "measurementdategmt": "2024-07-24 10:00:00",
+    "value": "57.2"
+  },
+  {
+    "measurementdategmt": "2024-07-24 11:00:00",
+    "value": "52.3"
+  },
+  {
+    "measurementdategmt": "2024-07-24 12:00:00",
+    "value": "51"
+  },
+  {
+    "measurementdategmt": "2024-07-24 13:00:00",
+    "value": "38.4"
+  },
+  {
+    "measurementdategmt": "2024-07-24 14:00:00",
+    "value": "45.7"
+  },
+  {
+    "measurementdategmt": "2024-07-24 15:00:00",
+    "value": "37.1"
+  },
+  {
+    "measurementdategmt": "2024-07-24 16:00:00",
+    "value": "41.1"
+  },
+  {
+    "measurementdategmt": "2024-07-24 17:00:00",
+    "value": "30.8"
+  },
+  {
+    "measurementdategmt": "2024-07-24 18:00:00",
+    "value": "37.1"
+  },
+  {
+    "measurementdategmt": "2024-07-24 19:00:00",
+    "value": "29.6"
+  },
+  {
+    "measurementdategmt": "2024-07-24 20:00:00",
+    "value": "24.6"
+  },
+  {
+    "measurementdategmt": "2024-07-24 21:00:00",
+    "value": "21"
+  },
+  {
+    "measurementdategmt": "2024-07-24 22:00:00",
+    "value": "24.2"
+  },
+  {
+    "measurementdategmt": "2024-07-24 23:00:00",
+    "value": "19.3"
+  },
+  {
+    "measurementdategmt": "2024-07-25 00:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-25 01:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-25 02:00:00",
+    "value": "7.9"
+  },
+  {
+    "measurementdategmt": "2024-07-25 03:00:00",
+    "value": "11.6"
+  },
+  {
+    "measurementdategmt": "2024-07-25 04:00:00",
+    "value": "12.8"
+  },
+  {
+    "measurementdategmt": "2024-07-25 05:00:00",
+    "value": "19.2"
+  },
+  {
+    "measurementdategmt": "2024-07-25 06:00:00",
+    "value": "30.9"
+  },
+  {
+    "measurementdategmt": "2024-07-25 07:00:00",
+    "value": "35.2"
+  },
+  {
+    "measurementdategmt": "2024-07-25 08:00:00",
+    "value": "45.5"
+  },
+  {
+    "measurementdategmt": "2024-07-25 09:00:00",
+    "value": "36"
+  },
+  {
+    "measurementdategmt": "2024-07-25 10:00:00",
+    "value": "42.8"
+  },
+  {
+    "measurementdategmt": "2024-07-25 11:00:00",
+    "value": "43.2"
+  },
+  {
+    "measurementdategmt": "2024-07-25 12:00:00",
+    "value": "38.7"
+  },
+  {
+    "measurementdategmt": "2024-07-25 13:00:00",
+    "value": "37.6"
+  },
+  {
+    "measurementdategmt": "2024-07-25 14:00:00",
+    "value": "33.5"
+  },
+  {
+    "measurementdategmt": "2024-07-25 15:00:00",
+    "value": "38.5"
+  },
+  {
+    "measurementdategmt": "2024-07-25 16:00:00",
+    "value": "33.2"
+  },
+  {
+    "measurementdategmt": "2024-07-25 17:00:00",
+    "value": "30.8"
+  },
+  {
+    "measurementdategmt": "2024-07-25 18:00:00",
+    "value": "43"
+  },
+  {
+    "measurementdategmt": "2024-07-25 19:00:00",
+    "value": "27.1"
+  },
+  {
+    "measurementdategmt": "2024-07-25 20:00:00",
+    "value": "28.5"
+  },
+  {
+    "measurementdategmt": "2024-07-25 21:00:00",
+    "value": "25.4"
+  },
+  {
+    "measurementdategmt": "2024-07-25 22:00:00",
+    "value": "29.6"
+  },
+  {
+    "measurementdategmt": "2024-07-25 23:00:00",
+    "value": "23.9"
+  },
+  {
+    "measurementdategmt": "2024-07-26 00:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-26 01:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-26 02:00:00",
+    "value": "22"
+  },
+  {
+    "measurementdategmt": "2024-07-26 03:00:00",
+    "value": "16.2"
+  },
+  {
+    "measurementdategmt": "2024-07-26 04:00:00",
+    "value": "22.5"
+  },
+  {
+    "measurementdategmt": "2024-07-26 05:00:00",
+    "value": "21.5"
+  },
+  {
+    "measurementdategmt": "2024-07-26 06:00:00",
+    "value": "59.3"
+  },
+  {
+    "measurementdategmt": "2024-07-26 07:00:00",
+    "value": "31.9"
+  },
+  {
+    "measurementdategmt": "2024-07-26 08:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-26 09:00:00",
+    "value": ""
+  },
+  {
+    "measurementdategmt": "2024-07-26 10:00:00",
+    "value": "43.2"
+  },
+  {
+    "measurementdategmt": "2024-07-26 11:00:00",
+    "value": "50.6"
+  },
+  {
+    "measurementdategmt": "2024-07-26 12:00:00",
+    "value": "37.9"
+  },
+  {
+    "measurementdategmt": "2024-07-26 13:00:00",
+    "value": "52.2"
+  },
+  {
+    "measurementdategmt": "2024-07-26 14:00:00",
+    "value": "53"
+  },
+  {
+    "measurementdategmt": "2024-07-26 15:00:00",
+    "value": "41.9"
+  },
+  {
+    "measurementdategmt": "2024-07-26 16:00:00",
+    "value": "49.6"
+  },
+  {
+    "measurementdategmt": "2024-07-26 17:00:00",
+    "value": "40.8"
+  },
+  {
+    "measurementdategmt": "2024-07-26 18:00:00",
+    "value": "28"
+  },
+  {
+    "measurementdategmt": "2024-07-26 19:00:00",
+    "value": "33.6"
+  },
+  {
+    "measurementdategmt": "2024-07-26 20:00:00",
+    "value": "29.4"
+  },
+  {
+    "measurementdategmt": "2024-07-26 21:00:00",
+    "value": "29.7"
+  },
+  {
+    "measurementdategmt": "2024-07-26 22:00:00",
+    "value": "33.3"
+  },
+  {
+    "measurementdategmt": "2024-07-26 23:00:00",
+    "value": "35.8"
+  }
+]

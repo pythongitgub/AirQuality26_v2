@@ -1,0 +1,33 @@
+{
+  "ok": true,
+  "site_root": "site_public",
+  "copied_assets": [
+    "site_public/assets/aq26_moving_banners.css",
+    "site_public/assets/aq26_moving_banners.js"
+  ],
+  "html_changed": [
+    "site_public/about.html",
+    "site_public/accessibility.html",
+    "site_public/archive.html",
+    "site_public/comparisons.html",
+    "site_public/contact.html",
+    "site_public/cookies.html",
+    "site_public/downloads.html",
+    "site_public/evidence-downloads.html",
+    "site_public/historical-comparisons.html",
+    "site_public/incinerator-overlays.html",
+    "site_public/incinerators.html",
+    "site_public/index.html",
+    "site_public/latest-report.html",
+    "site_public/legal.html",
+    "site_public/methodology.html",
+    "site_public/newhaven.html",
+    "site_public/overlays.html",
+    "site_public/privacy.html",
+    "site_public/readiness.html",
+    "site_public/source-records.html",
+    "site_public/terms.html",
+    "site_public/weekly-archive.html"
+  ],
+  "html_changed_count": 22
+}

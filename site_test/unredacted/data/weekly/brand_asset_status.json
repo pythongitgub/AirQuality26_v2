@@ -1,0 +1,12 @@
+{
+  "ok": true,
+  "site": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_unredacted",
+  "favicon_source": "website/assets/logo_web.svg",
+  "updated_html_files": 5,
+  "assets": [
+    "favicon-16x16.png",
+    "favicon-32x32.png",
+    "favicon.svg",
+    "apple-touch-icon.png"
+  ]
+}

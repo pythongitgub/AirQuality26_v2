@@ -1,0 +1,130 @@
+{
+  "ok": true,
+  "generated_utc": "2026-05-29T11:52:58Z",
+  "counts_used": {
+    "total": 46,
+    "validated": 8,
+    "candidate": 35,
+    "unresolved": 3,
+    "source": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/data/weekly/latest_alert.json",
+    "generated_utc": "2026-05-29T11:52:58Z"
+  },
+  "public": {
+    "site": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public",
+    "changed_count": 8,
+    "changed": [
+      {
+        "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/comparisons.html",
+        "changes": [
+          "fixed_js_missing",
+          "fixed_js_total",
+          "removed_extra_brand_text"
+        ]
+      },
+      {
+        "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/downloads.html",
+        "changes": [
+          "fixed_js_missing",
+          "fixed_js_total",
+          "removed_extra_brand_text"
+        ]
+      },
+      {
+        "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/incinerators.html",
+        "changes": [
+          "fixed_js_missing",
+          "fixed_js_total",
+          "fixed_ticker_fallback",
+          "fixed_ticker_total",
+          "removed_extra_brand_text"
+        ]
+      },
+      {
+        "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/index.html",
+        "changes": [
+          "fixed_js_missing",
+          "fixed_js_total",
+          "fixed_ticker_fallback",
+          "fixed_ticker_total",
+          "removed_extra_brand_text"
+        ]
+      },
+      {
+        "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/legal.html",
+        "changes": [
+          "fixed_js_missing",
+          "fixed_js_total",
+          "removed_extra_brand_text"
+        ]
+      },
+      {
+        "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/methodology.html",
+        "changes": [
+          "fixed_js_missing",
+          "fixed_js_total",
+          "removed_extra_brand_text"
+        ]
+      },
+      {
+        "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/newhaven.html",
+        "changes": [
+          "fixed_js_missing",
+          "fixed_js_total",
+          "fixed_ticker_fallback",
+          "fixed_ticker_total",
+          "removed_extra_brand_text"
+        ]
+      },
+      {
+        "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_public/overlays.html",
+        "changes": [
+          "fixed_js_missing",
+          "fixed_js_total",
+          "fixed_ticker_fallback",
+          "fixed_ticker_total",
+          "removed_extra_brand_text"
+        ]
+      }
+    ]
+  },
+  "unredacted": {
+    "site": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_unredacted",
+    "changed_count": 4,
+    "changed": [
+      {
+        "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_unredacted/candidates.html",
+        "changes": [
+          "fixed_js_missing",
+          "fixed_js_total",
+          "removed_extra_brand_text"
+        ]
+      },
+      {
+        "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_unredacted/diagnostics.html",
+        "changes": [
+          "fixed_js_missing",
+          "fixed_js_total",
+          "removed_extra_brand_text"
+        ]
+      },
+      {
+        "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_unredacted/evidence.html",
+        "changes": [
+          "fixed_js_missing",
+          "fixed_js_total",
+          "removed_extra_brand_text"
+        ]
+      },
+      {
+        "path": "/home/runner/work/AirQuality26_v2/AirQuality26_v2/site_unredacted/index.html",
+        "changes": [
+          "fixed_js_missing",
+          "fixed_js_total",
+          "fixed_ticker_fallback",
+          "fixed_ticker_total",
+          "removed_extra_brand_text"
+        ]
+      }
+    ]
+  }
+}

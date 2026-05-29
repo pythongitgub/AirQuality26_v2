@@ -1,0 +1,5 @@
+AuthType Basic
+AuthName "AQ26 Test Unredacted Review"
+AuthUserFile .htpasswd
+Require valid-user
+Options -Indexes

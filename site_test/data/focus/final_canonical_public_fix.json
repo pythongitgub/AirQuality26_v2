@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "total_facilities": 46,
+  "validated_overlays": 8,
+  "candidate_overlays": 35,
+  "unresolved_facilities": 3,
+  "overlay_path_facilities": 43,
+  "overlay_path_coverage_pct": 93.5,
+  "high_confidence_candidates": 18,
+  "unresolved_names": [
+    "Cornwall ERC",
+    "Isle of Man Incinerator",
+    "Thetford Incinerator"
+  ],
+  "counts": {
+    "validated": 8,
+    "candidate": 35,
+    "missing": 3
+  }
+}
