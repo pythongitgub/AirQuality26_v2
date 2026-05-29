@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-05-29T06:43:12Z",
+  "generated_utc": "2026-05-29T08:16:57Z",
   "scope": "high_confidence",
   "weeks": [
     {
@@ -36,12 +36,12 @@
     }
   ],
   "facilities_in_register": 46,
-  "facilities_selected": 5,
+  "facilities_selected": 10,
   "validated_overlays": 8,
   "candidate_overlays": 35,
   "unresolved_facilities": 3,
   "live_openaq": true,
-  "diagnostic_rows": 30,
+  "diagnostic_rows": 60,
   "notice": "Exploratory AQ26 evidence backfill. Public outputs are redacted and do not make causal, health, legal or regulatory conclusions.",
   "diagnostics_preview": [
     {
