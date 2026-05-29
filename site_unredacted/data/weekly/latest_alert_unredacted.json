@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-05-28T18:36:33Z",
+  "generated_utc": "2026-05-29T06:43:12Z",
   "headline": "Weekly incinerator evidence update",
   "alert_level": "amber",
   "total_facilities": 46,
@@ -16,7 +16,7 @@
   ],
   "backfill_status": {
     "status": "completed",
-    "generated_utc": "2026-05-28T18:36:32Z",
+    "generated_utc": "2026-05-29T06:43:12Z",
     "scope": "high_confidence",
     "weeks": [
       {
