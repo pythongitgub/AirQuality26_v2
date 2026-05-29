@@ -1,0 +1,135 @@
+name: AQ26 Build and Deploy Test Staging Site
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_operational_site:
+        description: "Rebuild site_public/site_unredacted before creating /test copy"
+        required: true
+        default: true
+        type: boolean
+      include_unredacted:
+        description: "Include site_unredacted inside /test/unredacted/"
+        required: true
+        default: true
+        type: boolean
+      deploy_test:
+        description: "Deploy test site to Hostinger /test/"
+        required: true
+        default: false
+        type: boolean
+      dry_run:
+        description: "Dry-run rsync deployment only"
+        required: true
+        default: true
+        type: boolean
+      remote_test_subdir:
+        description: "Remote test folder under public_html"
+        required: true
+        default: "test"
+        type: string
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+  SCCNEXUS_SSH_HOST: ${{ secrets.SCCNEXUS_SSH_HOST }}
+  SCCNEXUS_SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
+  SCCNEXUS_SSH_USERNAME: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
+  SCCNEXUS_SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
+  SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+
+jobs:
+  build-test-site:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Optional rebuild of operational sites
+        if: ${{ inputs.build_operational_site }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f scripts/aq26_build_operational_dual_site.py ]; then
+            python scripts/aq26_build_operational_dual_site.py --repo-root . --public-site site_public --unredacted-site site_unredacted
+          fi
+          if [ -f scripts/aq26_build_weekly_alert_pages.py ]; then
+            mkdir -p .aq26_weekly_alerts
+            echo '{"status":"test_site_rebuild","note":"Built for /test staging copy"}' > .aq26_weekly_alerts/backfill_status.json
+            python scripts/aq26_build_weekly_alert_pages.py --repo-root . --public-site site_public --unredacted-site site_unredacted --backfill-status .aq26_weekly_alerts/backfill_status.json || true
+          fi
+          if [ -f scripts/aq26_apply_webm_banners.py ]; then
+            python scripts/aq26_apply_webm_banners.py --site-root site_public --asset-source website/assets --force --summary site_public/data/test/webm_banner_status.json || true
+            python scripts/aq26_apply_webm_banners.py --site-root site_unredacted --asset-source website/assets --force --summary site_unredacted/data/test/webm_banner_status.json || true
+          fi
+          rm -f site_public/.htpasswd site_unredacted/.htpasswd
+      - name: Build /test staging website
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(--repo-root . --public-site site_public --unredacted-site site_unredacted --test-site site_test)
+          if [ "${{ inputs.include_unredacted }}" = "true" ]; then args+=(--include-unredacted); fi
+          python scripts/aq26_build_test_staging_site.py "${args[@]}"
+      - name: Validate test staging website
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f site_test/index.html
+          test -f site_test/test-index.html
+          test -f site_test/incinerators.html
+          test -f site_test/newhaven.html
+          test -f site_test/weekly-update.html
+          test -f site_test/assets/aq26_test_staging.css
+          grep -q "TEST / STAGING COPY" site_test/index.html
+          ! find site_test -name .htpasswd -print -quit | grep -q .
+          if [ "${{ inputs.include_unredacted }}" = "true" ]; then test -f site_test/unredacted/index.html; test -f site_test/unredacted/.htaccess; fi
+      - name: Commit staging workflow files only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/aq26_build_test_staging_site.py .github/workflows/aq26_build_deploy_test_staging_site.yml docs/AQ26_TEST_STAGING_SITE.md || true
+          git reset -- site_test site_public site_unredacted 2>/dev/null || true
+          if git diff --cached --quiet; then echo "No workflow/script changes to commit."; else git commit -m "Add AQ26 /test staging website workflow"; git pull --rebase; git push; fi
+      - name: Install deployment tools
+        if: ${{ inputs.deploy_test }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y sshpass rsync apache2-utils
+      - name: Create test unredacted password only for deployment
+        if: ${{ inputs.deploy_test && inputs.include_unredacted }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p site_test/unredacted
+          if [ -n "${SCC_UNREDACTED_PASSWORD:-}" ]; then htpasswd -bc site_test/unredacted/.htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"; else echo 'aq26:disabled' > site_test/unredacted/.htpasswd; fi
+      - name: Deploy /test staging site
+        if: ${{ inputs.deploy_test }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          REMOTE_DIR="${HOSTINGER_PUBLIC_HTML_DIR%/}/${{ inputs.remote_test_subdir }}"
+          SSH_OPTS="-p ${SCCNEXUS_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30"
+          export SSHPASS="$SCCNEXUS_SSH_PASSWORD"
+          sshpass -e ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "mkdir -p '$REMOTE_DIR'"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            sshpass -e rsync -avzn --delete -e "ssh $SSH_OPTS" site_test/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          else
+            sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_test/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_DIR/"
+          fi
+      - name: Upload /test staging artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-test-staging-site
+          path: site_test/
+          if-no-files-found: error
