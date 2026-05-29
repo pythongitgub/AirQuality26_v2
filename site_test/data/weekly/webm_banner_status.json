@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-05-29T16:39:36.661012+00:00",
+  "generated_utc": "2026-05-29T16:44:15.066866+00:00",
   "site_root": "site_public",
   "changed_pages": [
     "about.html",
@@ -15,7 +15,6 @@
     "index.html",
     "legal.html",
     "methodology.html",
-    "newhaven-deep-dive.html",
     "newhaven.html",
     "overlays.html",
     "privacy.html",
@@ -24,7 +23,7 @@
     "terms.html",
     "weekly-update.html"
   ],
-  "changed_count": 21,
+  "changed_count": 20,
   "banner_files": [
     "desktop_banner_1.webm",
     "desktop_banner_2.webm",
