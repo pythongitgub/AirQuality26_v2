@@ -1,5 +1,19 @@
-# AQ26 Test Header Logo Text Polish
+# AQ26 test header text commit fix
 
-Removes generated text labels beside the AQ26 header logo in `/test/`, while preserving the logo, menu, weekly alert and WEBM moving banners.
+This patch fixes the previous `/test/` header-polish workflow failure:
 
-Run `AQ26 Test Header Logo Text Polish` first with `dry_run=true`, then rerun with `dry_run=false` if the file list is sensible.
+`cannot pull with rebase: You have unstaged changes`
+
+The replacement workflow uses a safer sequence:
+
+1. fetch/rebase before generating
+2. build operational site
+3. build `site_test/`
+4. remove the text beside the header logo
+5. validate test pages
+6. commit safe staging files
+7. `git pull --rebase --autostash`
+8. push
+9. deploy `/test/`
+
+It also removes `.htpasswd` before commit and validates that no password file is staged.
