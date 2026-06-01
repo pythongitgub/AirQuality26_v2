@@ -34,6 +34,18 @@ jobs:
             echo "dir=." >> $GITHUB_OUTPUT
           fi
 
+      - name: Validate Website Content
+        env:
+          WEBSITE_DIR: ${{ steps.detect.outputs.dir }}
+        run: |
+          echo "Using website directory: ${WEBSITE_DIR}"
+          ls -lah ${WEBSITE_DIR}
+
+          if [ ! -f "${WEBSITE_DIR}/index.html" ]; then
+            echo "ERROR: index.html missing"
+            exit 1
+          fi
+
       - name: Deploy Website To Hostinger
         env:
           HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
@@ -43,14 +55,34 @@ jobs:
           TARGET: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
           WEBSITE_DIR: ${{ steps.detect.outputs.dir }}
         run: |
-          echo "Deploying ${WEBSITE_DIR} to ${HOST}"
+          echo "Deploying ${WEBSITE_DIR} to ${HOST}:${TARGET}"
 
           sshpass -p "$PASSWORD" rsync \
             -avz \
-            --delete \
+            --exclude 'unredacted/' \
+            --exclude 'test/' \
+            --exclude '.htaccess' \
+            --omit-dir-times \
+            --no-perms \
+            --no-owner \
+            --no-group \
             -e "ssh -o StrictHostKeyChecking=no -p $PORT" \
             ${WEBSITE_DIR}/ \
             ${USER}@${HOST}:${TARGET}/
+
+      - name: Fix Permissions
+        env:
+          HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
+          USER: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
+          PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
+          PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
+          TARGET: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
+        run: |
+          sshpass -p "$PASSWORD" ssh \
+            -o StrictHostKeyChecking=no \
+            -p $PORT \
+            ${USER}@${HOST} \
+            "find ${TARGET} -type d -exec chmod 755 {} \\\; && find ${TARGET} -type f -exec chmod 644 {} \\\;"
 
       - name: Verify Deployment
         run: |
