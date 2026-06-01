@@ -1,9 +1,9 @@
 {
-  "run_ts": "20260525T071702Z",
-  "created_at_utc": "2026-05-25T07:24:43.868824+00:00",
+  "run_ts": "20260601T121718Z",
+  "created_at_utc": "2026-06-01T12:24:33.511448+00:00",
   "date_window": {
-    "start": "2026-05-11",
-    "end": "2026-05-25"
+    "start": "2026-05-18",
+    "end": "2026-06-01"
   },
   "source_record_count": 72,
   "ok_count": 67,
@@ -27,14 +27,14 @@
   "cdse_sentinelhub_ready": true,
   "provider_sanitized_files": 0,
   "news_warning_count": 4,
-  "final_zip_name": "AQ26_WEEKLYV2_EVIDENCE_20260525T072443Z.zip",
-  "final_zip_relpath": "downloads/AQ26_WEEKLYV2_EVIDENCE_20260525T072443Z.zip",
+  "final_zip_name": "AQ26_WEEKLYV2_EVIDENCE_20260601T122432Z.zip",
+  "final_zip_relpath": "downloads/AQ26_WEEKLYV2_EVIDENCE_20260601T122432Z.zip",
   "final_zip_status": {
-    "zip_entry_count": 94,
-    "ledger_rows": 93,
+    "zip_entry_count": 97,
+    "ledger_rows": 96,
     "ledger_present": true
   },
   "github_repository": "pythongitgub/AirQuality26_v2",
-  "github_run_id": "26388443781",
-  "github_sha": "24936dc9fd10f6f4c89282ea84a7f72e83fdbcc2"
+  "github_run_id": "26754354573",
+  "github_sha": "d1017c1b85f2bc56ff76adfd76ef3dfc5d8837ec"
 }
