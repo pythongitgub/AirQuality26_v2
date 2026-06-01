@@ -1,0 +1,57 @@
+name: Deploy SCC Air Quality Website
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+
+  schedule:
+    - cron: '0 3 * * 1'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install rsync and sshpass
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y rsync sshpass
+
+      - name: Detect Website Directory
+        id: detect
+        run: |
+          if [ -d "website" ]; then
+            echo "dir=website" >> $GITHUB_OUTPUT
+          elif [ -d "docs" ]; then
+            echo "dir=docs" >> $GITHUB_OUTPUT
+          else
+            echo "dir=." >> $GITHUB_OUTPUT
+          fi
+
+      - name: Deploy Website To Hostinger
+        env:
+          HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
+          USER: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
+          PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
+          PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
+          TARGET: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
+          WEBSITE_DIR: ${{ steps.detect.outputs.dir }}
+        run: |
+          echo "Deploying ${WEBSITE_DIR} to ${HOST}"
+
+          sshpass -p "$PASSWORD" rsync \
+            -avz \
+            --delete \
+            -e "ssh -o StrictHostKeyChecking=no -p $PORT" \
+            ${WEBSITE_DIR}/ \
+            ${USER}@${HOST}:${TARGET}/
+
+      - name: Verify Deployment
+        run: |
+          echo "Deployment completed successfully"
