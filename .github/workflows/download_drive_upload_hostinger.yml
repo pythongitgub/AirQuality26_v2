@@ -1,0 +1,134 @@
+name: Download Drive Website and Upload to Hostinger
+
+on:
+  workflow_dispatch:
+    inputs:
+      drive_zip_name:
+        description: "Optional exact Google Drive ZIP filename. Leave blank for newest AirQuality26 website ZIP."
+        required: false
+        type: string
+
+  schedule:
+    # Monday 07:25 UTC. Adjust if needed for exact UK/BST timing.
+    - cron: "25 7 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: airquality26-hostinger-upload
+  cancel-in-progress: false
+
+jobs:
+  download-and-upload:
+    name: Download website ZIP from Drive and upload to Hostinger
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install system tools
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y rsync sshpass apache2-utils unzip
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install google-api-python-client google-auth
+
+      - name: Download latest AirQuality26 website ZIP from Google Drive
+        env:
+          GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+          GDRIVE_SERVICE_ACCOUNT_JSON: ${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}
+          DRIVE_ZIP_NAME: ${{ inputs.drive_zip_name }}
+        run: |
+          set -euo pipefail
+          python scripts/download_from_drive.py \
+            --output downloaded/AirQuality26_latest_website.zip
+
+      - name: Prepare Hostinger upload folder
+        env:
+          AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
+          SCC_UNREDACTED_USERNAME: ${{ secrets.SCC_UNREDACTED_USERNAME }}
+          SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+        run: |
+          set -euo pipefail
+          python scripts/prepare_hostinger_upload.py \
+            --zip downloaded/AirQuality26_latest_website.zip \
+            --output build_hostinger/public_html
+
+      - name: Safety check before upload
+        run: |
+          set -euo pipefail
+
+          test -f build_hostinger/public_html/index.html
+
+          echo "Prepared files:"
+          find build_hostinger/public_html -maxdepth 3 -type f | sort | head -100
+
+          if [ -d build_hostinger/public_html/unredacted ]; then
+            test -f build_hostinger/public_html/unredacted/.htaccess
+            test -f build_hostinger/public_html/unredacted/.htpasswd
+          fi
+
+      - name: Upload website to Hostinger
+        env:
+          SSHPASS: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
+          SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
+          SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
+          SSH_USER: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
+          REMOTE_PUBLIC_HTML: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
+        run: |
+          set -euo pipefail
+
+          : "${SSH_HOST:?Missing SCCAIRQUALITY_SSH_HOST}"
+          : "${SSH_PORT:?Missing SCCAIRQUALITY_SSH_PORT}"
+          : "${SSH_USER:?Missing SCCAIRQUALITY_SSH_USERNAME}"
+          : "${SSHPASS:?Missing SCCAIRQUALITY_SSH_PASSWORD}"
+          : "${REMOTE_PUBLIC_HTML:?Missing AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR}"
+
+          ssh_opts="-p ${SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+
+          echo "Creating remote folders..."
+          sshpass -e ssh ${ssh_opts} "${SSH_USER}@${SSH_HOST}" \
+            "mkdir -p '${REMOTE_PUBLIC_HTML}' '${REMOTE_PUBLIC_HTML}/unredacted' '${REMOTE_PUBLIC_HTML}/test'"
+
+          echo "Uploading site with rsync..."
+          sshpass -e rsync -az --delete \
+            -e "ssh ${ssh_opts}" \
+            build_hostinger/public_html/ \
+            "${SSH_USER}@${SSH_HOST}:${REMOTE_PUBLIC_HTML}/"
+
+      - name: Smoke test public URLs
+        run: |
+          set -euo pipefail
+
+          check_url() {
+            url="$1"
+            expected="$2"
+            echo "Checking $url"
+            code=$(curl -k -L -s -o /tmp/aq26_check.html -w "%{http_code}" "$url" || true)
+            echo "HTTP $code"
+
+            if [ "$expected" = "public" ]; then
+              test "$code" = "200"
+            fi
+
+            if [ "$expected" = "protected" ]; then
+              test "$code" = "401" -o "$code" = "200"
+            fi
+          }
+
+          check_url "https://sccairquality.com/" "public"
+          check_url "https://sccairquality.com/test/" "public"
+          check_url "https://sccairquality.com/unredacted/" "protected"
