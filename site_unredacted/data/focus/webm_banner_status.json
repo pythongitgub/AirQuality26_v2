@@ -1,14 +1,13 @@
 {
-  "generated_utc": "2026-05-29T16:44:15.107653+00:00",
+  "generated_utc": "2026-06-02T13:20:38.039715+00:00",
   "site_root": "site_unredacted",
   "changed_pages": [
     "candidates.html",
     "diagnostics.html",
     "evidence.html",
-    "index.html",
-    "weekly-update.html"
+    "index.html"
   ],
-  "changed_count": 5,
+  "changed_count": 4,
   "banner_files": [
     "desktop_banner_1.webm",
     "desktop_banner_2.webm",

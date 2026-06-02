@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-05-29T16:44:15.066866+00:00",
+  "generated_utc": "2026-06-02T13:20:37.996227+00:00",
   "site_root": "site_public",
   "changed_pages": [
     "about.html",
@@ -20,10 +20,9 @@
     "privacy.html",
     "readiness.html",
     "source-records.html",
-    "terms.html",
-    "weekly-update.html"
+    "terms.html"
   ],
-  "changed_count": 20,
+  "changed_count": 19,
   "banner_files": [
     "desktop_banner_1.webm",
     "desktop_banner_2.webm",
