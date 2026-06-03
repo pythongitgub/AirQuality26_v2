@@ -729,18 +729,114 @@ def build_final_bundle(ctx: Context) -> Path:
 
 
 def validate_outputs(ctx: Context) -> None:
+    """Validate generated outputs without opaque tracebacks.
+
+    Older ad-hoc AQ26 site workflows sometimes committed empty/partial JSON files
+    into site_public or site_unredacted. The production workflow regenerates the
+    current JSON feeds, so stale invalid site JSON is quarantined before final
+    packaging. Newly generated output_root JSON remains a hard gate.
+    """
     required = ctx.cfg.get("required_bundle_files", [])
     missing = [name for name in required if not (ctx.output_root / name).exists()]
     if missing:
         raise RuntimeError("Missing required bundle files: " + ", ".join(missing))
-    for path in [ctx.public_site / "index.html", ctx.public_site / "weekly-update.html", ctx.public_site / "historical-comparisons.html", ctx.public_site / "downloads.html", ctx.unredacted_site / "index.html"]:
+
+    required_pages = [
+        ctx.public_site / "index.html",
+        ctx.public_site / "weekly-update.html",
+        ctx.public_site / "historical-comparisons.html",
+        ctx.public_site / "downloads.html",
+        ctx.unredacted_site / "index.html",
+    ]
+    blank_pages = []
+    for path in required_pages:
         if not path.exists() or path.stat().st_size < 200:
-            raise RuntimeError(f"Blank or missing page: {path}")
-    for p in list(ctx.output_root.rglob("*.json")) + list(ctx.public_site.rglob("*.json")) + list(ctx.unredacted_site.rglob("*.json")):
-        json.loads(p.read_text(encoding="utf-8"))
-    for p in list(ctx.output_root.rglob("*.csv")):
-        with p.open("r", encoding="utf-8", newline="") as f:
-            list(csv.DictReader(f))
+            blank_pages.append(str(path.relative_to(ctx.repo) if path.is_relative_to(ctx.repo) else path))
+    if blank_pages:
+        summary = {
+            "generated_at_utc": utc_now().isoformat(),
+            "stage": "validate_outputs",
+            "error": "blank_or_missing_pages",
+            "paths": blank_pages,
+        }
+        write_json(ctx.output_root / "AQ26_VALIDATION_FAILURE_SUMMARY.json", summary)
+        raise RuntimeError("Blank or missing page(s): " + ", ".join(blank_pages))
+
+    invalid_json = []
+    quarantined_site_json = []
+    quarantine_root = ctx.output_root / "validation_quarantine" / "invalid_site_json"
+
+    def _rel(p: Path) -> str:
+        try:
+            return str(p.relative_to(ctx.repo))
+        except Exception:
+            return str(p)
+
+    def _validate_json_file(p: Path, strict: bool) -> None:
+        try:
+            text = p.read_text(encoding="utf-8")
+            json.loads(text)
+        except Exception as exc:
+            item = {
+                "path": _rel(p),
+                "bytes": p.stat().st_size if p.exists() else None,
+                "error": f"{type(exc).__name__}: {exc}",
+            }
+            if strict:
+                invalid_json.append(item)
+                return
+            # Site JSON outside output_root can be stale from older workflow runs.
+            # Quarantine it so it cannot be published or break packaging, while
+            # preserving a copy for audit.
+            try:
+                dest = quarantine_root / _rel(p)
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                shutil.move(str(p), str(dest))
+                item["quarantined_to"] = _rel(dest)
+                quarantined_site_json.append(item)
+            except Exception as move_exc:
+                item["quarantine_error"] = f"{type(move_exc).__name__}: {move_exc}"
+                invalid_json.append(item)
+
+    for p in sorted(ctx.output_root.rglob("*.json")):
+        # The quarantine copies themselves may include invalid JSON by design;
+        # they are recorded in a manifest rather than re-parsed.
+        if "validation_quarantine" in p.parts:
+            continue
+        _validate_json_file(p, strict=True)
+
+    for root in [ctx.public_site, ctx.unredacted_site]:
+        for p in sorted(root.rglob("*.json")):
+            _validate_json_file(p, strict=False)
+
+    csv_errors = []
+    for p in sorted(ctx.output_root.rglob("*.csv")):
+        try:
+            with p.open("r", encoding="utf-8", newline="") as f:
+                list(csv.DictReader(f))
+        except Exception as exc:
+            csv_errors.append({"path": _rel(p), "error": f"{type(exc).__name__}: {exc}"})
+
+    validation_summary = {
+        "generated_at_utc": utc_now().isoformat(),
+        "stage": "validate_outputs",
+        "invalid_json": invalid_json,
+        "quarantined_site_json": quarantined_site_json,
+        "csv_errors": csv_errors,
+        "note": "Invalid JSON in output_root is a hard failure. Invalid legacy site JSON is quarantined and omitted from deployment.",
+    }
+    if quarantined_site_json:
+        write_json(ctx.output_root / "AQ26_VALIDATION_QUARANTINE_SUMMARY.json", validation_summary)
+
+    if invalid_json or csv_errors:
+        write_json(ctx.output_root / "AQ26_VALIDATION_FAILURE_SUMMARY.json", validation_summary)
+        msg_bits = []
+        if invalid_json:
+            msg_bits.append("invalid JSON: " + ", ".join(x["path"] for x in invalid_json[:10]))
+        if csv_errors:
+            msg_bits.append("CSV read errors: " + ", ".join(x["path"] for x in csv_errors[:10]))
+        raise RuntimeError("AQ26 output validation failed; " + " | ".join(msg_bits) + ". See AQ26_VALIDATION_FAILURE_SUMMARY.json.")
+
     if list(ctx.public_site.rglob(".htpasswd")) or list(ctx.unredacted_site.rglob(".htpasswd")):
         raise RuntimeError(".htpasswd found before deployment; refusing to continue")
 
