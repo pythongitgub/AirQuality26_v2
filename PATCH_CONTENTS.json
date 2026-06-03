@@ -1,56 +1,21 @@
 {
-  "patch": "aq26_sccairquality_production_replacements_030626",
-  "generated_utc": "2026-06-03T17:45:00Z",
+  "generated_utc": "2026-06-03T18:30:00Z",
+  "name": "aq26_artifact_size_and_github_limit_patch_030626",
+  "purpose": "Prevent large generated evidence ZIP files being committed to GitHub and reduce workflow artifact size.",
   "files": [
-    {
-      "path": ".github/workflows/aq26_weekly_production.yml",
-      "bytes": 10931,
-      "sha256": "6faabbf7bb1b4c55cee2e6df8d1125703a3bea94f64d8c7ac9c5cef7e31c5937"
-    },
-    {
-      "path": "PATCH_CONTENTS.json",
-      "bytes": 2394,
-      "sha256": "39b3c6aed8cf296e4b388ba566e0b7cacc1f2bb74d30541321c7ca711f42a8b0"
-    },
-    {
-      "path": "configs/aq26_production.yml",
-      "bytes": 2518,
-      "sha256": "24ec4670f5e5aab4f785a111a1da0226b2c94178c2419d8ce57ca3dd08bff647"
-    },
-    {
-      "path": "docs/AQ26_SCCAIRQUALITY_PRODUCTION_REPLACEMENTS.md",
-      "bytes": 1199,
-      "sha256": "10760e3edd57764d9ce24e8b285955e1375de64057721f74a9d6bf55d07a9228"
-    },
-    {
-      "path": "docs/AQ26_SCHEMA_VALIDATION_PATCH.md",
-      "bytes": 1180,
-      "sha256": "4e3276347da520dbd7dfdc131b917ca6d6318e8b05a2ae59d1cf57c45809bf3c"
-    },
-    {
-      "path": "docs/AQ26_WEEKLY_PRODUCTION_README.md",
-      "bytes": 3402,
-      "sha256": "18377a877880c38e85cfdf2b5bf04e8715f89beda15c6e4fa35dd75f0f12ff2e"
-    },
-    {
-      "path": "requirements.txt",
-      "bytes": 221,
-      "sha256": "e4cac71b011c74cadc0f12ae1f748e3317bfc3360224279d3663144a36b7db0f"
-    },
-    {
-      "path": "scripts/aq26_production_pipeline.py",
-      "bytes": 52725,
-      "sha256": "e867e7605240649ada5f1af2678a7bddcc177ddb7f33f25beb3832d17a5f1c0b"
-    },
-    {
-      "path": "scripts/aq26_send_production_email.py",
-      "bytes": 2518,
-      "sha256": "b2ff6da58bc26981b303e05b72f037c0cbc94b62df84bcc3563081789524de62"
-    },
-    {
-      "path": "scripts/aq26_upload_to_gdrive.py",
-      "bytes": 1814,
-      "sha256": "d8dc3c5ee43a26b57b5151a809a464730d8f0be3851b7c3b0a2024fd46daee43"
-    }
+    ".github/workflows/aq26_weekly_production.yml",
+    "scripts/aq26_production_pipeline.py",
+    "configs/aq26_production.yml",
+    "requirements.txt",
+    "docs/AQ26_WEEKLY_PRODUCTION_README.md",
+    "docs/AQ26_SCHEMA_VALIDATION_PATCH.md",
+    "docs/AQ26_SCCAIRQUALITY_PRODUCTION_REPLACEMENTS.md",
+    "docs/AQ26_ARTIFACT_SIZE_AND_GITHUB_LIMIT_PATCH.md",
+    "PATCH_CONTENTS.json"
+  ],
+  "notes": [
+    "Uses SCCAIRQUALITY_* Hostinger secrets only.",
+    "No SCCNEXUS_* or HOSTINGER_PUBLIC_HTML_DIR fallback.",
+    "Full evidence ZIP remains an Actions artifact; it is not committed to site_public/downloads."
   ]
 }
