@@ -711,6 +711,32 @@ def validate_outputs(ctx: Context) -> None:
         raise RuntimeError(".htpasswd found before deployment; refusing to continue")
 
 
+def fail_redaction_gate(ctx: Context, audit: Dict[str, Any], stage: str) -> None:
+    """Write and print a safe redaction-failure summary without exposing values."""
+    safe = {
+        "generated_at_utc": utc_now().isoformat(),
+        "stage": stage,
+        "leak_count": audit.get("leak_count", 0),
+        "leaks": [
+            {
+                "path": leak.get("path", ""),
+                "type": leak.get("type", ""),
+                "secret_sha256": leak.get("secret_sha256", ""),
+            }
+            for leak in audit.get("leaks", [])[:100]
+        ],
+        "action_required": "Remove or regenerate the listed files so no runtime secret value is present. Do not deploy until leak_count is 0.",
+    }
+    fixed_summary = ctx.repo / "outputs" / "aq26_production" / "REDACTION_FAILURE_SUMMARY.json"
+    write_json(fixed_summary, safe)
+    write_json(ctx.output_root / "REDACTION_FAILURE_SUMMARY.json", safe)
+    print("AQ26 REDACTION GATE FAILED", file=sys.stderr)
+    print(f"stage={stage} leak_count={safe['leak_count']}", file=sys.stderr)
+    for leak in safe["leaks"][:25]:
+        print(f"redaction_leak path={leak['path']} type={leak['type']} secret_sha256={leak['secret_sha256']}", file=sys.stderr)
+    raise RuntimeError(f"Redaction leak_count > 0 ({safe['leak_count']}) at {stage}; refusing to package/deploy. See REDACTION_FAILURE_SUMMARY.json for safe paths.")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default="configs/aq26_production.yml")
@@ -746,13 +772,13 @@ def main() -> int:
     latest["redaction_leaks"] = audit["leak_count"]
     write_json(output_root / "LATEST_WEEKLYV2.json", latest)
     if audit["leak_count"] > 0:
-        raise RuntimeError(f"Redaction leak_count > 0 ({audit['leak_count']}); refusing to package/deploy.")
+        fail_redaction_gate(ctx, audit, "pre_bundle")
 
     final_zip = build_final_bundle(ctx)
     # Redaction audit after bundle creation.
     audit2 = redaction_audit(list(output_root.rglob("*")) + list(public_site.rglob("*")) + list(unred_site.rglob("*")), output_root / "redaction_audit.json")
     if audit2["leak_count"] > 0:
-        raise RuntimeError(f"Post-bundle redaction leak_count > 0 ({audit2['leak_count']}); refusing to deploy.")
+        fail_redaction_gate(ctx, audit2, "post_bundle")
     validate_outputs(ctx)
 
     latest_root.mkdir(parents=True, exist_ok=True)
