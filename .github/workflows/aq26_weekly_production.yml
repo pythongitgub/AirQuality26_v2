@@ -19,9 +19,9 @@ on:
         default: true
         type: boolean
       upload_to_drive:
-        description: "Upload final bundle to Google Drive"
+        description: "Upload final bundle to Google Drive. Keep false unless GDRIVE_FOLDER_ID is a Shared Drive folder accessible by the service account."
         required: true
-        default: true
+        default: false
         type: boolean
       historical_backfill_weeks:
         description: "Historical weeks to update/plan this run"
@@ -79,12 +79,13 @@ env:
   SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
   SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
 
-  # Hostinger deployment secrets.
-  HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
-  SCCNEXUS_SSH_HOST: ${{ secrets.SCCNEXUS_SSH_HOST }}
-  SCCNEXUS_SSH_PORT: ${{ secrets.SCCNEXUS_SSH_PORT }}
-  SCCNEXUS_SSH_USERNAME: ${{ secrets.SCCNEXUS_SSH_USERNAME }}
-  SCCNEXUS_SSH_PASSWORD: ${{ secrets.SCCNEXUS_SSH_PASSWORD }}
+  # Hostinger production deployment secrets for sccairquality.com.
+  # Do not use the older SCCNEXUS_* / HOSTINGER_PUBLIC_HTML_DIR test-domain secrets here.
+  AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
+  SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
+  SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
+  SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
+  SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
   SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
 
 jobs:
@@ -173,21 +174,22 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          : "${HOSTINGER_PUBLIC_HTML_DIR:?HOSTINGER_PUBLIC_HTML_DIR missing}"
-          : "${SCCNEXUS_SSH_HOST:?SCCNEXUS_SSH_HOST missing}"
-          : "${SCCNEXUS_SSH_PORT:?SCCNEXUS_SSH_PORT missing}"
-          : "${SCCNEXUS_SSH_USERNAME:?SCCNEXUS_SSH_USERNAME missing}"
-          : "${SCCNEXUS_SSH_PASSWORD:?SCCNEXUS_SSH_PASSWORD missing}"
-          REMOTE_ROOT="${HOSTINGER_PUBLIC_HTML_DIR%/}"
-          SSH_OPTS="-p ${SCCNEXUS_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30"
-          export SSHPASS="$SCCNEXUS_SSH_PASSWORD"
-          sshpass -e ssh $SSH_OPTS "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST" "mkdir -p '$REMOTE_ROOT' '$REMOTE_ROOT/unredacted'"
+          : "${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR:?AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR missing}"
+          : "${SCCAIRQUALITY_SSH_HOST:?SCCAIRQUALITY_SSH_HOST missing}"
+          : "${SCCAIRQUALITY_SSH_PORT:?SCCAIRQUALITY_SSH_PORT missing}"
+          : "${SCCAIRQUALITY_SSH_USERNAME:?SCCAIRQUALITY_SSH_USERNAME missing}"
+          : "${SCCAIRQUALITY_SSH_PASSWORD:?SCCAIRQUALITY_SSH_PASSWORD missing}"
+          REMOTE_ROOT="${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR%/}"
+          SSH_OPTS="-p ${SCCAIRQUALITY_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30 -o ServerAliveInterval=20"
+          export SSHPASS="$SCCAIRQUALITY_SSH_PASSWORD"
+          sshpass -e ssh $SSH_OPTS "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "mkdir -p '$REMOTE_ROOT' '$REMOTE_ROOT/unredacted'"
           if [ "${{ github.event.inputs.dry_run || 'false' }}" = "true" ]; then
-            sshpass -e rsync -avzn --delete --exclude 'unredacted/***' -e "ssh $SSH_OPTS" site_public/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_ROOT/"
-            sshpass -e rsync -avzn --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_ROOT/unredacted/"
+            echo "DRY RUN: public -> $REMOTE_ROOT and unredacted -> $REMOTE_ROOT/unredacted"
+            sshpass -e rsync -avzn --delete --exclude 'unredacted/***' -e "ssh $SSH_OPTS" site_public/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/"
+            sshpass -e rsync -avzn --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/unredacted/"
           else
-            sshpass -e rsync -avz --delete --exclude 'unredacted/***' -e "ssh $SSH_OPTS" site_public/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_ROOT/"
-            sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCNEXUS_SSH_USERNAME@$SCCNEXUS_SSH_HOST:$REMOTE_ROOT/unredacted/"
+            sshpass -e rsync -avz --delete --exclude 'unredacted/***' -e "ssh $SSH_OPTS" site_public/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/"
+            sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/unredacted/"
           fi
 
       - name: Remove deployment-only auth files before commit/artifact
@@ -243,7 +245,7 @@ jobs:
           fi
 
       - name: Upload final ZIP to Google Drive
-        if: ${{ steps.gate.outputs.should_run == 'true' && (github.event_name == 'schedule' || inputs.upload_to_drive) }}
+        if: ${{ steps.gate.outputs.should_run == 'true' && inputs.upload_to_drive }}
         run: python scripts/aq26_upload_to_gdrive.py --latest-path outputs/aq26_production/latest_bundle_path.txt
 
       - name: Email report and bundle
