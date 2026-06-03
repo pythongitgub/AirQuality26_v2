@@ -1,0 +1,65 @@
+{
+  "generated_at_utc": "2026-06-03T12:07:06+00:00",
+  "planned_weeks": [
+    {
+      "week_start_uk": "2026-05-27",
+      "week_end_uk": "2026-06-03",
+      "status": "planned_source_specific_backfill",
+      "priority": "high",
+      "source_classes": [
+        "openaq",
+        "ukair_sos",
+        "laqn",
+        "official_filings",
+        "satellite_catalogue",
+        "weather"
+      ],
+      "integrity_rule": "Only mark harvested after source records, SHA256 ledger, redaction audit and weekly summary exist."
+    },
+    {
+      "week_start_uk": "2026-05-20",
+      "week_end_uk": "2026-05-27",
+      "status": "planned_source_specific_backfill",
+      "priority": "medium",
+      "source_classes": [
+        "openaq",
+        "ukair_sos",
+        "laqn",
+        "official_filings",
+        "satellite_catalogue",
+        "weather"
+      ],
+      "integrity_rule": "Only mark harvested after source records, SHA256 ledger, redaction audit and weekly summary exist."
+    },
+    {
+      "week_start_uk": "2026-05-13",
+      "week_end_uk": "2026-05-20",
+      "status": "planned_source_specific_backfill",
+      "priority": "medium",
+      "source_classes": [
+        "openaq",
+        "ukair_sos",
+        "laqn",
+        "official_filings",
+        "satellite_catalogue",
+        "weather"
+      ],
+      "integrity_rule": "Only mark harvested after source records, SHA256 ledger, redaction audit and weekly summary exist."
+    },
+    {
+      "week_start_uk": "2026-05-06",
+      "week_end_uk": "2026-05-13",
+      "status": "planned_source_specific_backfill",
+      "priority": "medium",
+      "source_classes": [
+        "openaq",
+        "ukair_sos",
+        "laqn",
+        "official_filings",
+        "satellite_catalogue",
+        "weather"
+      ],
+      "integrity_rule": "Only mark harvested after source records, SHA256 ledger, redaction audit and weekly summary exist."
+    }
+  ]
+}

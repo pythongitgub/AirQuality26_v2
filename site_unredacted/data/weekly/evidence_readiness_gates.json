@@ -1,0 +1,14 @@
+{
+  "generated_at_utc": "2026-06-03T12:07:06+00:00",
+  "automation_ready": true,
+  "provenance_ready": true,
+  "redaction_ready": false,
+  "metoffice_ready": false,
+  "ground_aq_ready": false,
+  "satellite_catalogue_ready": true,
+  "satellite_extraction_ready": false,
+  "official_filings_ready": true,
+  "backfill_ready": false,
+  "external_submission_ready": false,
+  "notes": "External submission remains false until scientific gates, historical backfill, satellite extraction, and ground QA pass."
+}

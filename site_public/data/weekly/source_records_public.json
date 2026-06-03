@@ -1,0 +1,52 @@
+[
+  {
+    "source_name": "Repository evidence inventory",
+    "source_type": "local_repo",
+    "status": "ok",
+    "http_status": "",
+    "retrieved_at_uk": "2026-06-03T13:07:06+01:00",
+    "date_uk": "03/06/2026",
+    "record_count": 1431,
+    "notes": "Indexes committed AQ26 evidence files available to the GitHub workflow."
+  },
+  {
+    "source_name": "Google Drive recursive inventory",
+    "source_type": "google_drive",
+    "status": "ok",
+    "http_status": "",
+    "retrieved_at_uk": "2026-06-03T13:07:06+01:00",
+    "date_uk": "03/06/2026",
+    "record_count": 18023,
+    "notes": "File IDs are SHA256-hashed; links are redacted."
+  },
+  {
+    "source_name": "OpenAQ latest UK location probe",
+    "source_type": "ground_air_openaq",
+    "status": "warning",
+    "http_status": 422,
+    "retrieved_at_uk": "2026-06-03T13:07:06+01:00",
+    "date_uk": "03/06/2026",
+    "record_count": "",
+    "notes": ""
+  },
+  {
+    "source_name": "Copernicus CDSE catalogue sample",
+    "source_type": "satellite_catalogue",
+    "status": "ok",
+    "http_status": 200,
+    "retrieved_at_uk": "2026-06-03T13:07:06+01:00",
+    "date_uk": "03/06/2026",
+    "record_count": "",
+    "notes": ""
+  },
+  {
+    "source_name": "data.gov.uk official filing search",
+    "source_type": "official_filing",
+    "status": "ok",
+    "http_status": 200,
+    "retrieved_at_uk": "2026-06-03T13:07:06+01:00",
+    "date_uk": "03/06/2026",
+    "record_count": "",
+    "notes": ""
+  }
+]

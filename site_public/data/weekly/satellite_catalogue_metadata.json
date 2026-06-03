@@ -1,0 +1,19 @@
+{
+  "generated_at_utc": "2026-06-03T12:07:06+00:00",
+  "pollutant_extraction_manifest": {
+    "pollutants": [
+      "NO2",
+      "PM2.5",
+      "PM10",
+      "SO2",
+      "O3",
+      "CO",
+      "NOx",
+      "HCHO",
+      "CH4",
+      "AER_AI"
+    ],
+    "satellite_extraction_ready": false,
+    "reason": "Catalogue probe only; no product download/extraction QA in this weekly wrapper."
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "generated_at_utc": "2026-06-03T12:07:06+00:00",
+  "high_priority": [
+    {
+      "item": "Newhaven ERF BV8067IL official filings and emissions records",
+      "score": 100,
+      "reason": "Reference facility and permit."
+    },
+    {
+      "item": "Official UK-AIR/LAQN/OpenAQ historical ground measurements",
+      "score": 95,
+      "reason": "Needed for target/control comparison."
+    },
+    {
+      "item": "Satellite catalogue-to-extraction chain",
+      "score": 85,
+      "reason": "Catalogue exists; extraction and QA still locked."
+    }
+  ]
+}

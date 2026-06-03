@@ -1,0 +1,19 @@
+{
+  "run_ts": "20260603T120706Z",
+  "generated_at_utc": "2026-06-03T12:07:06+00:00",
+  "generated_at_uk": "2026-06-03T13:07:06+01:00",
+  "project": "AirQuality26",
+  "status": "controlled_review_weekly_update",
+  "public_site": "https://sccairquality.com",
+  "unredacted_site": "/unredacted/",
+  "source_records": 5,
+  "source_records_ok": 4,
+  "source_records_warnings": 1,
+  "source_records_errors": 0,
+  "drive_files_indexed": 18023,
+  "repo_files_indexed": 1431,
+  "redaction_leaks": null,
+  "external_submission_ready": false,
+  "public_release_ready": false,
+  "caveat": "Controlled-review evidence update only; not a causal, legal, health, or endorsement finding."
+}
