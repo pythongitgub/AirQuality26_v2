@@ -82,5 +82,3 @@ required_bundle_files:
   - anomaly_alerts.json
   - AQ26_WEEKLY_REPORT.md
   - AQ26_WEEKLY_REPORT.pdf
-  - AQ26_WEEKLY_PUBLIC_SITE.zip
-  - AQ26_WEEKLY_UNREDACTED_SITE.zip
