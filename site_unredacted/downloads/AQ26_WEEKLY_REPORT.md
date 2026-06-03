@@ -1,7 +1,7 @@
 # AQ26 Weekly Controlled-Review Evidence Report
 
-Generated UTC: 2026-06-03T12:07:06+00:00  
-Generated UK: 03/06/2026 13:07 BST
+Generated UTC: 2026-06-03T17:43:10+00:00  
+Generated UK: 03/06/2026 18:43 BST
 
 ## Status
 
@@ -14,7 +14,7 @@ This is a controlled-review weekly evidence update. It does not assert final fac
 - Warnings: 1
 - Errors: 0
 - Google Drive files indexed: 18023
-- Repository evidence files indexed: 1431
+- Repository evidence files indexed: 1449
 
 ## Methodological alignment
 
