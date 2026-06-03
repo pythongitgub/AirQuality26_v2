@@ -194,6 +194,15 @@ jobs:
         if: always()
         run: rm -f site_unredacted/.htpasswd site_public/.htpasswd
 
+      - name: Upload safe redaction failure summary
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: aq26-redaction-failure-summary
+          path: outputs/aq26_production/REDACTION_FAILURE_SUMMARY.json
+          if-no-files-found: ignore
+          retention-days: 7
+
       - name: Upload weekly production artifact
         if: ${{ steps.gate.outputs.should_run == 'true' }}
         uses: actions/upload-artifact@v7
