@@ -542,6 +542,10 @@ def cleanup_legacy_public_sensitive_files(ctx: Context) -> None:
         ctx.public_site / "data" / "source_index.jsonl",
         ctx.public_site / "source_records_latest.json",
         ctx.public_site / "source_index.jsonl",
+        ctx.public_site / "downloads" / "AQ26_WEEKLY_EVIDENCE_BUNDLE.zip",
+        ctx.unredacted_site / "downloads" / "AQ26_WEEKLY_EVIDENCE_BUNDLE.zip",
+        ctx.public_site / "downloads" / "AQ26_WEEKLY_PUBLIC_SITE.zip",
+        ctx.unredacted_site / "downloads" / "AQ26_WEEKLY_UNREDACTED_SITE.zip",
     ]
     removed = []
     for path in legacy_names:
@@ -606,7 +610,7 @@ def build_sites(ctx: Context, latest: Dict[str, Any]) -> None:
     write_text(ctx.public_site / "source-records.html", html_page("Source records", src_body, ctx.cfg, "source-records.html"))
     method_body = "<main><h1>Methodology</h1><div class='card'><p>AQ26 uses cautious, controlled-review language. It separates emissions, ambient concentration, exposure potential, health relevance and health outcome evidence. No institutional endorsement is implied.</p></div></main>"
     write_text(ctx.public_site / "methodology.html", html_page("Methodology", method_body, ctx.cfg, "methodology.html"))
-    down_body = "<main><h1>Downloads</h1><p>Weekly evidence ZIP and reports are generated in the controlled bundle. Public downloads are redacted.</p><ul><li><a href='downloads/AQ26_WEEKLY_REPORT.pdf'>Weekly PDF report</a></li><li><a href='downloads/AQ26_WEEKLY_EVIDENCE_BUNDLE.zip'>Evidence ZIP</a></li></ul></main>"
+    down_body = "<main><h1>Downloads</h1><p>Public downloads are deliberately lightweight. The full controlled evidence ZIP is retained as the GitHub Actions artifact and may be distributed by email or Drive after review; it is not committed to the repository or published as a large public website file.</p><ul><li><a href='downloads/AQ26_WEEKLY_REPORT.pdf'>Weekly PDF report</a></li><li><a href='downloads/AQ26_WEEKLY_REPORT.md'>Weekly Markdown report</a></li><li><a href='data/weekly/LATEST_WEEKLYV2.json'>Latest machine-readable summary</a></li><li><a href='data/weekly/evidence_readiness_gates.json'>Evidence readiness gates</a></li></ul></main>"
     write_text(ctx.public_site / "downloads.html", html_page("Downloads", down_body, ctx.cfg, "downloads.html"))
     about_body = "<main><h1>About AQ26</h1><p>AQ26 is building a reproducible evidence platform for facility-level air-quality review, policy interpretation and independent scientific challenge.</p></main>"
     write_text(ctx.public_site / "about.html", html_page("About", about_body, ctx.cfg, "about.html"))
@@ -693,24 +697,47 @@ def zip_dir(src: Path, dest: Path) -> None:
 
 
 def build_final_bundle(ctx: Context) -> Path:
-    # Copy report/downloads into public/unredacted downloads.
+    """Build a lean controlled evidence bundle.
+
+    Earlier versions copied the final ZIP back into site_public/downloads and
+    site_unredacted/downloads, then committed those site folders. That made the
+    repository push fail because GitHub blocks files over 100 MB. The website now
+    publishes the PDF/report/JSON ledgers only; the full evidence ZIP remains a
+    workflow artifact, email attachment, or Drive backup when enabled.
+    """
+    # Copy report/downloads into public/unredacted downloads, but never copy ZIPs.
     for site in [ctx.public_site, ctx.unredacted_site]:
         (site / "downloads").mkdir(parents=True, exist_ok=True)
+        # Remove stale large ZIPs from earlier workflows before validation/commit.
+        for stale_zip in (site / "downloads").glob("*.zip"):
+            try:
+                stale_zip.unlink()
+            except Exception as exc:
+                ctx.warnings.append(f"Could not remove stale site ZIP {stale_zip}: {exc}")
         for name in ["AQ26_WEEKLY_REPORT.md", "AQ26_WEEKLY_REPORT.pdf"]:
             src = ctx.output_root / name
             if src.exists():
                 shutil.copy2(src, site / "downloads" / name)
-    pub_zip = ctx.output_root / "AQ26_WEEKLY_PUBLIC_SITE.zip"
-    unred_zip = ctx.output_root / "AQ26_WEEKLY_UNREDACTED_SITE.zip"
-    zip_dir(ctx.public_site, pub_zip)
-    zip_dir(ctx.unredacted_site, unred_zip)
-    # Place public final ZIP link after final bundle has been made; a copy is made at end.
+        write_text(site / "downloads" / "FULL_EVIDENCE_BUNDLE_NOTICE.txt",
+                   "The full AQ26 controlled evidence ZIP is retained as the GitHub Actions artifact and, when enabled, emailed or uploaded to Google Drive. It is intentionally not committed to the repository or published as a large public website file.\n")
+
     make_ledger(ctx.output_root, ctx.output_root / "AQ26_SHA256_LEDGER.csv")
     final_zip = ctx.output_root / f"AQ26_WEEKLY_VALIDATED_EVIDENCE_BUNDLE_{ctx.run_ts}.zip"
     with zipfile.ZipFile(final_zip, "w", compression=zipfile.ZIP_DEFLATED) as z:
         for p in sorted(ctx.output_root.rglob("*")):
-            if p.is_file() and p.name != final_zip.name and p.name != "AQ26_FINAL_ZIP_LEDGER.csv":
-                z.write(p, p.relative_to(ctx.output_root))
+            if not p.is_file():
+                continue
+            rel = p.relative_to(ctx.output_root)
+            # Do not include recursive final ZIP, final ledger before it is written,
+            # or optional site ZIPs/media packages in the controlled evidence bundle.
+            if p.name == final_zip.name or p.name == "AQ26_FINAL_ZIP_LEDGER.csv":
+                continue
+            if p.suffix.lower() in {".webm", ".mp4", ".mov"}:
+                continue
+            if p.name in {"AQ26_WEEKLY_PUBLIC_SITE.zip", "AQ26_WEEKLY_UNREDACTED_SITE.zip"}:
+                continue
+            z.write(p, rel)
+
     # Ledger of final ZIP contents; intentionally not hashing itself.
     rows = []
     with zipfile.ZipFile(final_zip, "r") as z:
@@ -719,12 +746,11 @@ def build_final_bundle(ctx: Context) -> Path:
                 continue
             rows.append({"path": info.filename, "bytes": info.file_size, "zip_crc": info.CRC})
     write_csv(ctx.output_root / "AQ26_FINAL_ZIP_LEDGER.csv", rows, ["path", "bytes", "zip_crc"])
-    # Rebuild final ZIP including final ledger.
     with zipfile.ZipFile(final_zip, "a", compression=zipfile.ZIP_DEFLATED) as z:
         z.write(ctx.output_root / "AQ26_FINAL_ZIP_LEDGER.csv", "AQ26_FINAL_ZIP_LEDGER.csv")
+
     (ctx.output_root / "latest_bundle_path.txt").write_text(str(final_zip), encoding="utf-8")
-    shutil.copy2(final_zip, ctx.public_site / "downloads" / "AQ26_WEEKLY_EVIDENCE_BUNDLE.zip")
-    shutil.copy2(final_zip, ctx.unredacted_site / "downloads" / "AQ26_WEEKLY_EVIDENCE_BUNDLE.zip")
+    # Do not copy final_zip into site_public/site_unredacted downloads.
     return final_zip
 
 
@@ -915,6 +941,7 @@ def main() -> int:
     latest_root.mkdir(parents=True, exist_ok=True)
     shutil.copy2(output_root / "LATEST_WEEKLYV2.json", latest_root / "LATEST_WEEKLYV2.json")
     (latest_root / "latest_bundle_path.txt").write_text(str(final_zip), encoding="utf-8")
+    (latest_root / "latest_run_dir.txt").write_text(str(output_root), encoding="utf-8")
     print(json.dumps({"ok": True, "run_ts": run_ts, "bundle": str(final_zip), "source_records": len(ctx.source_records)}, indent=2))
     return 0
 
