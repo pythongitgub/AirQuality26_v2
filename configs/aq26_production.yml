@@ -1,0 +1,86 @@
+project:
+  name: AirQuality26
+  canonical_domain: https://sccairquality.com
+  public_base_url: https://sccairquality.com
+  unredacted_path: /unredacted/
+  timezone: Europe/London
+  public_site_root: site_public
+  unredacted_site_root: site_unredacted
+  output_root: outputs/aq26_production
+
+schedule:
+  weekly_day: Monday
+  weekly_hour_uk: 7
+  lookback_days: 7
+  historical_backfill_weeks_per_run: 4
+  historical_archive_weeks: 104
+
+sites:
+  redaction:
+    public_allowed_extensions: [".html", ".css", ".js", ".svg", ".png", ".jpg", ".jpeg", ".webp", ".webm", ".json", ".csv", ".pdf", ".zip", ".txt", ".xml", ".ico", ".webmanifest"]
+    unredacted_username: aq26
+  branding:
+    header_logo: website/assets/air_quality_web.svg
+    favicon: website/assets/logo_web.svg
+    watermark: website/assets/logo_web.svg
+    banner_glob: website/assets/banners/*.webm
+  seo:
+    title: "AirQuality26 — Incinerator air-quality evidence observatory"
+    description: "Validated, provenance-controlled weekly air-quality evidence and historical data around UK incinerators and matched control sites."
+    keywords: "air quality, incinerators, Newhaven ERF, emissions, OpenAQ, UK-AIR, LAQN, Environment Agency, provenance"
+
+focus:
+  reference_facility: Newhaven Energy Recovery Facility
+  reference_permit: BV8067IL
+  pollutants: ["NO2", "PM2.5", "PM10", "SO2", "O3", "CO", "NOx", "HCHO", "CH4", "AER_AI"]
+  cautious_language: true
+
+providers:
+  google_drive:
+    enabled: true
+    max_files: 20000
+    download_large_files: false
+  openaq:
+    enabled: true
+    endpoint: https://api.openaq.org/v3
+  ukair_sos:
+    enabled: true
+    endpoint: https://uk-air.defra.gov.uk/sos-ukair/sos
+  laqn:
+    enabled: true
+    endpoint: https://api.erg.ic.ac.uk/AirQuality
+  metoffice:
+    enabled: true
+    require_wind_fields: true
+  openweather:
+    enabled: true
+  waqi:
+    enabled: true
+  purpleair:
+    enabled: true
+  cdse:
+    enabled: true
+  cams:
+    enabled: true
+  earthdata:
+    enabled: true
+  news:
+    enabled: true
+
+required_bundle_files:
+  - LATEST_WEEKLYV2.json
+  - source_index.jsonl
+  - AQ26_SHA256_LEDGER.csv
+  - AQ26_FINAL_ZIP_LEDGER.csv
+  - redaction_audit.json
+  - gdrive_recursive_inventory.json
+  - missing_date_backfill_plan.json
+  - evidence_priority_scores.json
+  - evidence_readiness_gates.json
+  - official_filing_index.json
+  - satellite_catalogue_metadata.json
+  - anomaly_alerts.json
+  - AQ26_WEEKLY_REPORT.md
+  - AQ26_WEEKLY_REPORT.pdf
+  - AQ26_WEEKLY_PUBLIC_SITE.zip
+  - AQ26_WEEKLY_UNREDACTED_SITE.zip
