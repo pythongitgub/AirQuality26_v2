@@ -526,6 +526,40 @@ def html_page(title: str, body: str, cfg: Dict[str, Any], current: str = "") -> 
 </body></html>"""
 
 
+
+def cleanup_legacy_public_sensitive_files(ctx: Context) -> None:
+    """Remove legacy generated public files that may pre-date the production redaction rules.
+
+    The production workflow publishes redacted source summaries under
+    site_public/data/weekly/source_records_public.json. Older ad-hoc workflows
+    sometimes left source_records_latest.json in site_public/data with provider
+    URLs or secret-bearing query strings. Remove those stale files before the
+    redaction audit and before any deployment/package step.
+    """
+    legacy_names = [
+        ctx.public_site / "data" / "source_records_latest.json",
+        ctx.public_site / "data" / "source_records_unredacted.json",
+        ctx.public_site / "data" / "source_index.jsonl",
+        ctx.public_site / "source_records_latest.json",
+        ctx.public_site / "source_index.jsonl",
+    ]
+    removed = []
+    for path in legacy_names:
+        try:
+            if path.exists() and path.is_file():
+                path.unlink()
+                removed.append(str(path))
+        except Exception as exc:
+            ctx.warnings.append(f"Could not remove legacy public data file {path}: {exc}")
+    if removed:
+        write_json(ctx.output_root / "legacy_public_sensitive_cleanup.json", {
+            "generated_at_utc": ctx.run_dt_utc.isoformat(),
+            "removed_files": removed,
+            "reason": "Removed stale public data files before redaction audit; current redacted records are regenerated under data/weekly/.",
+        })
+
+
+
 def build_sites(ctx: Context, latest: Dict[str, Any]) -> None:
     for site in [ctx.public_site, ctx.unredacted_site]:
         site.mkdir(parents=True, exist_ok=True)
@@ -754,10 +788,11 @@ def main() -> int:
     output_root.mkdir(parents=True, exist_ok=True)
     ctx = Context(repo, cfg, run_ts, run_dt, run_uk, output_root, public_site, unred_site, [], [])
 
-    # Remove deployment-only files early.
+    # Remove deployment-only files and stale public data early.
     for p in [public_site / ".htpasswd", unred_site / ".htpasswd"]:
         if p.exists():
             p.unlink()
+    cleanup_legacy_public_sensitive_files(ctx)
 
     repo_inv = inventory_repo_evidence(ctx)
     drive_inv = google_drive_inventory(ctx)
