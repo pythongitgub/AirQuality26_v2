@@ -275,25 +275,16 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
-      - name: Commit generated public outputs
+      - name: Skip committing generated public outputs
         if: ${{ steps.gate.outputs.should_run == 'true' }}
         run: |
           set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Never commit generated ZIP bundles or deployment-only auth files.
+          echo "Skipping generated-output commit in production workflow."
+          echo "Evidence bundles remain in GitHub Actions artifacts/email/Drive; deployed website is sent by rsync."
+          echo "This avoids dirty-tree failures and GitHub 100MB limits from legacy generated ZIP deletions."
+          rm -f site_unredacted/.htpasswd site_public/.htpasswd
           find site_public site_unredacted -type f -name '*.zip' -delete 2>/dev/null || true
-          git rm -f --ignore-unmatch site_public/downloads/*.zip site_unredacted/downloads/*.zip 2>/dev/null || true
-          git add site_public/ site_unredacted/ outputs/aq26_production/LATEST_WEEKLYV2.json outputs/aq26_production/latest_bundle_path.txt outputs/aq26_production/latest_run_dir.txt || true
-          git reset -- site_unredacted/.htpasswd site_public/.htpasswd 2>/dev/null || true
-          git reset -- site_public/**/*.zip site_unredacted/**/*.zip 2>/dev/null || true
-          if git diff --cached --quiet; then
-            echo "No generated changes to commit."
-          else
-            git commit -m "Build AQ26 weekly production evidence and website"
-            git pull --rebase
-            git push
-          fi
+          git status --short || true
 
       - name: Upload final ZIP to Google Drive
         if: ${{ steps.gate.outputs.should_run == 'true' && inputs.upload_to_drive }}
