@@ -1,0 +1,42 @@
+      - name: Commit and push weekly production outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          echo "Initial git status:"
+          git status --short
+
+          # Stage all generated changes, including deleted ZIP files.
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "No production output changes to commit."
+          else
+            git commit -m "Build AQ26 weekly production evidence and website"
+          fi
+
+          # A second pass catches files created/deleted after the first commit step.
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "No remaining staged changes."
+          else
+            git commit -m "Clean AQ26 weekly production output state"
+          fi
+
+          # This must be clean before rebase, otherwise GitHub Actions fails with:
+          # error: cannot pull with rebase: You have unstaged changes.
+          echo "Pre-rebase git status:"
+          git status --short
+
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Working tree is still dirty before rebase. Refusing to continue."
+            git status --short
+            exit 1
+          fi
+
+          git pull --rebase --autostash origin main
+          git push origin HEAD:main
