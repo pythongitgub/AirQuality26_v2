@@ -167,7 +167,7 @@ jobs:
         if: ${{ steps.gate.outputs.should_run == 'true' && (github.event_name == 'schedule' || inputs.deploy_to_hostinger) }}
         run: |
           sudo apt-get update
-          sudo apt-get install -y sshpass rsync
+          sudo apt-get install -y sshpass rsync netcat-openbsd
 
       - name: Deploy public and unredacted sites to Hostinger
         if: ${{ steps.gate.outputs.should_run == 'true' && (github.event_name == 'schedule' || inputs.deploy_to_hostinger) }}
@@ -179,17 +179,48 @@ jobs:
           : "${SCCAIRQUALITY_SSH_PORT:?SCCAIRQUALITY_SSH_PORT missing}"
           : "${SCCAIRQUALITY_SSH_USERNAME:?SCCAIRQUALITY_SSH_USERNAME missing}"
           : "${SCCAIRQUALITY_SSH_PASSWORD:?SCCAIRQUALITY_SSH_PASSWORD missing}"
+
           REMOTE_ROOT="${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR%/}"
-          SSH_OPTS="-p ${SCCAIRQUALITY_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30 -o ServerAliveInterval=20"
+          SSH_OPTS="-p ${SCCAIRQUALITY_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=45 -o ConnectionAttempts=1 -o ServerAliveInterval=20 -o ServerAliveCountMax=3"
           export SSHPASS="$SCCAIRQUALITY_SSH_PASSWORD"
-          sshpass -e ssh $SSH_OPTS "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "mkdir -p '$REMOTE_ROOT' '$REMOTE_ROOT/unredacted'"
+
+          echo "Hostinger SSH preflight: host/port/user/dir secrets are present. Values remain masked by GitHub."
+          echo "Remote target directory is configured; public deploy preserves /unredacted/."
+
+          retry() {
+            local label="$1"; shift
+            local max_attempts="${AQ26_SSH_RETRY_ATTEMPTS:-8}"
+            local delay="${AQ26_SSH_RETRY_DELAY_SECONDS:-20}"
+            local attempt=1
+            while true; do
+              echo "[$label] attempt $attempt/$max_attempts"
+              if "$@"; then
+                echo "[$label] success"
+                return 0
+              fi
+              rc=$?
+              if [ "$attempt" -ge "$max_attempts" ]; then
+                echo "[$label] failed after $max_attempts attempts with exit code $rc"
+                return "$rc"
+              fi
+              echo "[$label] retrying in ${delay}s..."
+              sleep "$delay"
+              attempt=$((attempt + 1))
+            done
+          }
+
+          echo "Testing TCP reachability to the configured SSH host/port before rsync..."
+          retry "tcp-preflight" nc -vz -w 20 "$SCCAIRQUALITY_SSH_HOST" "$SCCAIRQUALITY_SSH_PORT"
+
+          retry "ssh-mkdir" sshpass -e ssh $SSH_OPTS "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "mkdir -p '$REMOTE_ROOT' '$REMOTE_ROOT/unredacted'"
+
           if [ "${{ github.event.inputs.dry_run || 'false' }}" = "true" ]; then
             echo "DRY RUN: public -> $REMOTE_ROOT and unredacted -> $REMOTE_ROOT/unredacted"
-            sshpass -e rsync -avzn --delete --exclude 'unredacted/***' -e "ssh $SSH_OPTS" site_public/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/"
-            sshpass -e rsync -avzn --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/unredacted/"
+            retry "rsync-public-dry-run" sshpass -e rsync -avzn --delete --exclude 'unredacted/***' -e "ssh $SSH_OPTS" site_public/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/"
+            retry "rsync-unredacted-dry-run" sshpass -e rsync -avzn --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/unredacted/"
           else
-            sshpass -e rsync -avz --delete --exclude 'unredacted/***' -e "ssh $SSH_OPTS" site_public/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/"
-            sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/unredacted/"
+            retry "rsync-public-live" sshpass -e rsync -avz --delete --exclude 'unredacted/***' -e "ssh $SSH_OPTS" site_public/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/"
+            retry "rsync-unredacted-live" sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/unredacted/"
           fi
 
       - name: Remove deployment-only auth files before commit/artifact
