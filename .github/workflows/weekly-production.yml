@@ -2,318 +2,338 @@ name: AQ26 Weekly Production Evidence, Website, Drive and Deploy
 
 on:
   workflow_dispatch:
+    inputs:
+      deploy_to_hostinger:
+        description: "Deploy public + unredacted sites to sccairquality.com"
+        required: true
+        default: false
+        type: boolean
+      dry_run:
+        description: "Dry-run rsync deployment only"
+        required: true
+        default: true
+        type: boolean
+      send_email:
+        description: "Email final evidence bundle/report"
+        required: true
+        default: false
+        type: boolean
+      upload_to_drive:
+        description: "Upload final bundle to Google Drive. Keep false until the service account writes to a Shared Drive folder."
+        required: true
+        default: false
+        type: boolean
+      historical_backfill_weeks:
+        description: "Historical weeks to update/plan this run"
+        required: true
+        default: "4"
+        type: string
   schedule:
-    # Monday 07:00 UK summer time / 06:00 UTC.
-    # During GMT this runs at 06:00 UK; adjust to "0 7 * * 1" in winter if you need exact civil time.
     - cron: "0 6 * * 1"
+    - cron: "0 7 * * 1"
 
 permissions:
-  contents: write
+  contents: read
   actions: read
 
 concurrency:
   group: aq26-weekly-production
   cancel-in-progress: false
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  AQ26_CONFIG: configs/aq26_production.yml
+  PYTHONUNBUFFERED: "1"
+
+  CAMS_API_KEY: ${{ secrets.CAMS_API_KEY }}
+  CDSE_ID: ${{ secrets.CDSE_ID }}
+  CDSE_USERNAME: ${{ secrets.CDSE_USERNAME }}
+  CDSE_PASSWORD: ${{ secrets.CDSE_PASSWORD }}
+  CDSE_SECRET: ${{ secrets.CDSE_SECRET }}
+  EARTHDATA_USERNAME: ${{ secrets.EARTHDATA_USERNAME }}
+  EARTHDATA_PASSWORD: ${{ secrets.EARTHDATA_PASSWORD }}
+  EARTHDATA_TOKEN: ${{ secrets.EARTHDATA_TOKEN }}
+  EARTH_DATA_API_KEY: ${{ secrets.EARTH_DATA_API_KEY }}
+  GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+  GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+  METOFFICE_API_KEY: ${{ secrets.METOFFICE_API_KEY }}
+  MET_OFFICE_API_KEY: ${{ secrets.MET_OFFICE_API_KEY }}
+  MET_OFFICE_LAND_OBSERVATIONS: ${{ secrets.MET_OFFICE_LAND_OBSERVATIONS }}
+  NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+  NEWS_DATA_IO_KEY: ${{ secrets.NEWS_DATA_IO_KEY }}
+  OPENAQ_API_KEY: ${{ secrets.OPENAQ_API_KEY }}
+  OPENWEATHER_KEY: ${{ secrets.OPENWEATHER_KEY }}
+  PURPLE_AIR_API_KEY: ${{ secrets.PURPLE_AIR_API_KEY }}
+  SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
+  WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
+
+  MAIL_FROM: ${{ secrets.MAIL_FROM }}
+  MAIL_TO: ${{ secrets.MAIL_TO }}
+  SMTP_HOST: ${{ secrets.SMTP_HOST }}
+  SMTP_PORT: ${{ secrets.SMTP_PORT }}
+  SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+  SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+
+  AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
+  SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
+  SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
+  SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
+  SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
+  SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+
 jobs:
   weekly-production:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-
-    env:
-      TZ: Europe/London
-      PYTHONUNBUFFERED: "1"
-
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
-          fetch-depth: 0
-          persist-credentials: true
+          fetch-depth: 1
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
+          cache: "pip"
 
-      - name: Install system packages
+      - name: Gate scheduled run to Monday 07:00 UK
+        id: gate
+        shell: bash
         run: |
           set -euo pipefail
-          sudo apt-get update
-          sudo apt-get install -y rsync zip unzip jq
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          import os
+          if os.environ.get("GITHUB_EVENT_NAME") != "schedule":
+              print("should_run=true")
+              print("reason=manual")
+          else:
+              now = datetime.now(ZoneInfo("Europe/London"))
+              ok = now.weekday() == 0 and now.hour == 7
+              print("should_run=" + ("true" if ok else "false"))
+              print("reason=" + now.strftime("%Y-%m-%d_%H:%M_%Z"))
+          PY
 
-      - name: Install Python dependencies
+      - name: Stop duplicate scheduled trigger
+        if: ${{ steps.gate.outputs.should_run != 'true' }}
+        shell: bash
+        run: |
+          echo "Skipped duplicate schedule trigger: ${{ steps.gate.outputs.reason }}"
+
+      - name: Install dependencies
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          fi
-          if [ -f requirements-dev.txt ]; then
-            pip install -r requirements-dev.txt || true
-          fi
-          pip install pandas numpy matplotlib requests pyyaml jinja2 beautifulsoup4 lxml openpyxl || true
+          pip install -r requirements.txt
 
-      - name: Show run context
-        run: |
-          set -euo pipefail
-          echo "Repository: $GITHUB_REPOSITORY"
-          echo "Branch: ${GITHUB_REF_NAME:-unknown}"
-          echo "Run ID: $GITHUB_RUN_ID"
-          date
-          git status --short
-
-      - name: Build AQ26 weekly production evidence and websites
-        run: |
-          set -euo pipefail
-
-          mkdir -p outputs/aq26_production
-          mkdir -p site_public/downloads
-          mkdir -p site_unredacted/downloads
-
-          echo "Starting AQ26 production build..."
-
-          if [ -f scripts/aq26_weekly_production.py ]; then
-            echo "Using scripts/aq26_weekly_production.py"
-            python scripts/aq26_weekly_production.py
-          elif [ -f scripts/aq26_production_build.py ]; then
-            echo "Using scripts/aq26_production_build.py"
-            python scripts/aq26_production_build.py
-          elif [ -f scripts/aq26_weeklyv2_collect.py ] && [ -f scripts/aq26_weeklyv2_build_report.py ]; then
-            echo "Using weekly v2 collect/build scripts"
-            python scripts/aq26_weeklyv2_collect.py
-            python scripts/aq26_weeklyv2_build_report.py
-          elif [ -f Makefile ] && grep -q '^weekly-production:' Makefile; then
-            echo "Using Makefile weekly-production target"
-            make weekly-production
-          elif [ -f Makefile ] && grep -q '^weekly:' Makefile; then
-            echo "Using Makefile weekly target"
-            make weekly
-          else
-            echo "No recognised AQ26 production builder script found."
-            echo "Creating minimal safety notices so the website download area is not broken."
-            cat > site_public/downloads/FULL_EVIDENCE_BUNDLE_NOTICE.txt <<'NOTICE'
-AQ26 evidence bundle notice
-
-The full weekly evidence bundle was not generated by this workflow run because no recognised AQ26 production builder script was found.
-Check the repository scripts and workflow build step.
-NOTICE
-            cp site_public/downloads/FULL_EVIDENCE_BUNDLE_NOTICE.txt site_unredacted/downloads/FULL_EVIDENCE_BUNDLE_NOTICE.txt
-          fi
-
-          date -u +"%Y-%m-%dT%H:%M:%SZ" > outputs/aq26_production/latest_run_dir.txt
-
-      - name: Normalise evidence bundle download files
-        run: |
-          set -euo pipefail
-
-          mkdir -p site_public/downloads
-          mkdir -p site_unredacted/downloads
-
-          # Large ZIP bundles are often better handled as workflow artifacts / Drive copies.
-          # Remove stale tracked ZIPs from the website tree and publish a small notice instead.
-          rm -f site_public/downloads/AQ26_WEEKLY_EVIDENCE_BUNDLE.zip
-          rm -f site_public/downloads/latest-evidence.zip
-          rm -f site_unredacted/downloads/AQ26_WEEKLY_EVIDENCE_BUNDLE.zip
-          rm -f site_unredacted/downloads/latest-evidence.zip
-
-          cat > site_public/downloads/FULL_EVIDENCE_BUNDLE_NOTICE.txt <<'NOTICE'
-AQ26 weekly evidence bundle
-
-The full generated evidence bundle is stored as a GitHub Actions artifact and, where configured, copied to Google Drive.
-This public website publishes the verified pages, summary outputs, and this notice rather than storing large ZIP files in git.
-NOTICE
-
-          cat > site_unredacted/downloads/FULL_EVIDENCE_BUNDLE_NOTICE.txt <<'NOTICE'
-AQ26 weekly evidence bundle
-
-The full generated evidence bundle is stored as a GitHub Actions artifact and, where configured, copied to Google Drive.
-The password-protected unredacted website publishes the reviewed unredacted pages and this notice rather than storing large ZIP files in git.
-NOTICE
-
-      - name: Package evidence artifact
-        run: |
-          set -euo pipefail
-          mkdir -p artifacts
-          rm -f artifacts/AQ26_WEEKLY_EVIDENCE_BUNDLE.zip
-
-          # Include likely production outputs without failing if some folders do not exist.
-          INCLUDE=()
-          for d in outputs site_public site_unredacted reports exports derived; do
-            if [ -e "$d" ]; then
-              INCLUDE+=("$d")
-            fi
-          done
-
-          if [ "${#INCLUDE[@]}" -gt 0 ]; then
-            zip -r artifacts/AQ26_WEEKLY_EVIDENCE_BUNDLE.zip "${INCLUDE[@]}" \
-              -x '*.git*' \
-              -x '*/.htpasswd' \
-              -x '*/node_modules/*' \
-              -x '*/__pycache__/*'
-          else
-            echo "No output folders found to package." > artifacts/NO_OUTPUTS_FOUND.txt
-            zip -r artifacts/AQ26_WEEKLY_EVIDENCE_BUNDLE.zip artifacts/NO_OUTPUTS_FOUND.txt
-          fi
-
-          ls -lh artifacts
-
-      - name: Upload evidence artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: AQ26_WEEKLY_EVIDENCE_BUNDLE
-          path: artifacts/AQ26_WEEKLY_EVIDENCE_BUNDLE.zip
-          if-no-files-found: error
-          retention-days: 30
-
-      - name: Optional Google Drive upload
-        if: ${{ secrets.GDRIVE_SERVICE_ACCOUNT != '' && secrets.GDRIVE_FOLDER_ID != '' }}
+      - name: Build weekly evidence, websites, report and provenance bundle
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
         env:
-          GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
-          GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+          AQ26_HISTORICAL_BACKFILL_WEEKS: ${{ inputs.historical_backfill_weeks }}
         run: |
           set -euo pipefail
-          python - <<'PY'
-import base64
-import json
-import os
-import pathlib
-import subprocess
-import sys
+          if [ -z "${AQ26_HISTORICAL_BACKFILL_WEEKS:-}" ]; then
+            export AQ26_HISTORICAL_BACKFILL_WEEKS="4"
+          fi
+          python scripts/aq26_production_pipeline.py --config "$AQ26_CONFIG"
 
-bundle = pathlib.Path("artifacts/AQ26_WEEKLY_EVIDENCE_BUNDLE.zip")
-if not bundle.exists():
-    print("No evidence bundle found for Drive upload.")
-    sys.exit(0)
-
-try:
-    import google.oauth2.service_account
-    from googleapiclient.discovery import build
-    from googleapiclient.http import MediaFileUpload
-except Exception:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "google-api-python-client", "google-auth"])
-    import google.oauth2.service_account
-    from googleapiclient.discovery import build
-    from googleapiclient.http import MediaFileUpload
-
-raw = os.environ["GDRIVE_SERVICE_ACCOUNT"]
-try:
-    service_account_info = json.loads(raw)
-except json.JSONDecodeError:
-    service_account_info = json.loads(base64.b64decode(raw).decode("utf-8"))
-
-creds = google.oauth2.service_account.Credentials.from_service_account_info(
-    service_account_info,
-    scopes=["https://www.googleapis.com/auth/drive.file"],
-)
-service = build("drive", "v3", credentials=creds)
-
-metadata = {
-    "name": "AQ26_WEEKLY_EVIDENCE_BUNDLE.zip",
-    "parents": [os.environ["GDRIVE_FOLDER_ID"]],
-}
-media = MediaFileUpload(str(bundle), mimetype="application/zip", resumable=True)
-created = service.files().create(body=metadata, media_body=media, fields="id, name").execute()
-print(f"Uploaded to Google Drive: {created}")
-PY
-
-      - name: Validate website folders
+      - name: Create deployment-only unredacted password files
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
         run: |
           set -euo pipefail
-
-          if [ -d site_public ]; then
-            test -f site_public/index.html || echo "WARNING: site_public/index.html missing"
-          else
-            echo "WARNING: site_public folder missing"
+          DO_DEPLOY="${{ inputs.deploy_to_hostinger }}"
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ]; then DO_DEPLOY="true"; fi
+          if [ "$DO_DEPLOY" != "true" ]; then
+            echo "Hostinger deploy disabled for this run; skipping auth-file creation."
+            exit 0
           fi
-
-          if [ -d site_unredacted ]; then
-            test -f site_unredacted/index.html || echo "WARNING: site_unredacted/index.html missing"
-          else
-            echo "WARNING: site_unredacted folder missing"
-          fi
-
-          if find site_public site_unredacted site_test -name .htpasswd -print -quit 2>/dev/null | grep -q .; then
-            echo ".htpasswd found inside generated site folders; refusing to commit/deploy."
-            find site_public site_unredacted site_test -name .htpasswd -print 2>/dev/null
+          sudo apt-get update
+          sudo apt-get install -y apache2-utils
+          rm -f site_unredacted/.htpasswd site_public/.htpasswd
+          if [ -z "${SCC_UNREDACTED_PASSWORD:-}" ]; then
+            echo "SCC_UNREDACTED_PASSWORD is not set; refusing to create weak unredacted auth."
             exit 1
           fi
+          htpasswd -bc site_unredacted/.htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
+          cat > site_unredacted/.htaccess <<'EOF'
+          AuthType Basic
+          AuthName "AQ26 Unredacted Review"
+          AuthUserFile .htpasswd
+          Require valid-user
+          EOF
+          printf 'User-agent: *\nDisallow: /\n' > site_unredacted/robots.txt
 
-      - name: Commit and push weekly production outputs
+      - name: Install deployment tools
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
         run: |
           set -euo pipefail
+          DO_DEPLOY="${{ inputs.deploy_to_hostinger }}"
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ]; then DO_DEPLOY="true"; fi
+          if [ "$DO_DEPLOY" != "true" ]; then
+            echo "Hostinger deploy disabled for this run; skipping deployment tools."
+            exit 0
+          fi
+          sudo apt-get update
+          sudo apt-get install -y sshpass rsync netcat-openbsd
 
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Deploy public and unredacted sites to Hostinger
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          DO_DEPLOY="${{ inputs.deploy_to_hostinger }}"
+          DRY_RUN="${{ inputs.dry_run }}"
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ]; then
+            DO_DEPLOY="true"
+            DRY_RUN="false"
+          fi
+          if [ "$DO_DEPLOY" != "true" ]; then
+            echo "Hostinger deploy disabled for this run."
+            exit 0
+          fi
 
-          echo "Initial git status:"
-          git status --short
+          : "${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR:?AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR missing}"
+          : "${SCCAIRQUALITY_SSH_HOST:?SCCAIRQUALITY_SSH_HOST missing}"
+          : "${SCCAIRQUALITY_SSH_PORT:?SCCAIRQUALITY_SSH_PORT missing}"
+          : "${SCCAIRQUALITY_SSH_USERNAME:?SCCAIRQUALITY_SSH_USERNAME missing}"
+          : "${SCCAIRQUALITY_SSH_PASSWORD:?SCCAIRQUALITY_SSH_PASSWORD missing}"
 
-          # Stage all generated changes, including deleted ZIP files.
-          git add -A
+          REMOTE_ROOT="${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR%/}"
+          SSH_OPTS="-p ${SCCAIRQUALITY_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=45 -o ConnectionAttempts=1 -o ServerAliveInterval=20 -o ServerAliveCountMax=3"
+          export SSHPASS="$SCCAIRQUALITY_SSH_PASSWORD"
 
-          if git diff --cached --quiet; then
-            echo "No production output changes to commit."
+          retry() {
+            label="$1"; shift
+            max_attempts="${AQ26_SSH_RETRY_ATTEMPTS:-8}"
+            delay="${AQ26_SSH_RETRY_DELAY_SECONDS:-20}"
+            attempt=1
+            while true; do
+              echo "[$label] attempt $attempt/$max_attempts"
+              if "$@"; then
+                echo "[$label] success"
+                return 0
+              fi
+              rc=$?
+              if [ "$attempt" -ge "$max_attempts" ]; then
+                echo "[$label] failed after $max_attempts attempts with exit code $rc"
+                return "$rc"
+              fi
+              echo "[$label] retrying in ${delay}s..."
+              sleep "$delay"
+              attempt=$((attempt + 1))
+            done
+          }
+
+          echo "Testing TCP reachability to configured SSH endpoint. Secret values remain masked."
+          retry "tcp-preflight" nc -vz -w 20 "$SCCAIRQUALITY_SSH_HOST" "$SCCAIRQUALITY_SSH_PORT"
+          retry "ssh-mkdir" sshpass -e ssh $SSH_OPTS "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "mkdir -p '$REMOTE_ROOT' '$REMOTE_ROOT/unredacted'"
+
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "DRY RUN: public -> $REMOTE_ROOT and unredacted -> $REMOTE_ROOT/unredacted"
+            retry "rsync-public-dry-run" sshpass -e rsync -avzn --delete --exclude 'unredacted/***' -e "ssh $SSH_OPTS" site_public/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/"
+            retry "rsync-unredacted-dry-run" sshpass -e rsync -avzn --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/unredacted/"
           else
-            git commit -m "Build AQ26 weekly production evidence and website"
+            retry "rsync-public-live" sshpass -e rsync -avz --delete --exclude 'unredacted/***' -e "ssh $SSH_OPTS" site_public/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/"
+            retry "rsync-unredacted-live" sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/unredacted/"
           fi
 
-          # A second pass catches files created/deleted after the first commit step.
-          git add -A
-
-          if git diff --cached --quiet; then
-            echo "No remaining staged changes."
-          else
-            git commit -m "Clean AQ26 weekly production output state"
-          fi
-
-          # This must be clean before rebase, otherwise GitHub Actions fails with:
-          # error: cannot pull with rebase: You have unstaged changes.
-          echo "Pre-rebase git status:"
-          git status --short
-
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "Working tree is still dirty before rebase. Refusing to continue."
-            git status --short
-            exit 1
-          fi
-
-          git pull --rebase --autostash origin main
-          git push origin HEAD:main
-
-      - name: Deploy public website to Hostinger
-        if: ${{ secrets.SCCAIRQUALITY_SSH_HOST != '' && secrets.SCCAIRQUALITY_SSH_USERNAME != '' && secrets.SCCAIRQUALITY_SSH_PASSWORD != '' && secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR != '' }}
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
-          username: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
-          password: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
-          port: ${{ secrets.SCCAIRQUALITY_SSH_PORT || 22 }}
-          source: "site_public/*"
-          target: "${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}"
-          strip_components: 1
-          overwrite: true
-          timeout: 240s
-          command_timeout: 10m
-
-      - name: Deploy unredacted website to Hostinger
-        if: ${{ secrets.SCCAIRQUALITY_SSH_HOST != '' && secrets.SCCAIRQUALITY_SSH_USERNAME != '' && secrets.SCCAIRQUALITY_SSH_PASSWORD != '' && secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR != '' && hashFiles('site_unredacted/**') != '' }}
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
-          username: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
-          password: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
-          port: ${{ secrets.SCCAIRQUALITY_SSH_PORT || 22 }}
-          source: "site_unredacted/*"
-          target: "${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}/unredacted"
-          strip_components: 1
-          overwrite: true
-          timeout: 240s
-          command_timeout: 10m
-
-      - name: Deployment summary
+      - name: Remove deployment-only auth files
         if: always()
+        shell: bash
+        run: |
+          rm -f site_unredacted/.htpasswd site_public/.htpasswd
+
+      - name: Upload safe redaction failure summary
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: aq26-redaction-failure-summary
+          path: outputs/aq26_production/REDACTION_FAILURE_SUMMARY.json
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload safe validation failure summary
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: aq26-validation-failure-summary
+          path: |
+            outputs/aq26_production/**/AQ26_VALIDATION_FAILURE_SUMMARY.json
+            outputs/aq26_production/**/AQ26_VALIDATION_QUARANTINE_SUMMARY.json
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Prepare lean weekly artifact
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
         run: |
           set -euo pipefail
-          echo "AQ26 weekly production run complete with status: ${{ job.status }}"
-          echo "Artifact: AQ26_WEEKLY_EVIDENCE_BUNDLE"
+          rm -rf aq26_artifact_upload
+          mkdir -p aq26_artifact_upload
+          RUN_DIR="$(cat outputs/aq26_production/latest_run_dir.txt)"
+          echo "Preparing lean artifact from $RUN_DIR"
+          cp outputs/aq26_production/LATEST_WEEKLYV2.json aq26_artifact_upload/ 2>/dev/null || true
+          cp outputs/aq26_production/latest_bundle_path.txt aq26_artifact_upload/ 2>/dev/null || true
+          cp outputs/aq26_production/latest_run_dir.txt aq26_artifact_upload/ 2>/dev/null || true
+          cp "$RUN_DIR"/AQ26_WEEKLY_VALIDATED_EVIDENCE_BUNDLE_*.zip aq26_artifact_upload/
+          cp "$RUN_DIR"/AQ26_WEEKLY_REPORT.* aq26_artifact_upload/ 2>/dev/null || true
+          cp "$RUN_DIR"/AQ26_*LEDGER*.csv aq26_artifact_upload/ 2>/dev/null || true
+          cp "$RUN_DIR"/redaction_audit.json aq26_artifact_upload/ 2>/dev/null || true
+          cp "$RUN_DIR"/evidence_readiness_gates.json aq26_artifact_upload/ 2>/dev/null || true
+          cp "$RUN_DIR"/LATEST_WEEKLYV2.json aq26_artifact_upload/LATEST_WEEKLYV2_run.json 2>/dev/null || true
+          du -sh aq26_artifact_upload || true
+
+      - name: Upload weekly production artifact
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: aq26-weekly-production
+          path: aq26_artifact_upload/**
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Skip committing generated public outputs
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "Skipping generated-output commit in production workflow."
+          echo "Evidence bundles remain in GitHub Actions artifacts/email/Drive; deployed website is sent by rsync."
+          rm -f site_unredacted/.htpasswd site_public/.htpasswd
+          find site_public site_unredacted -type f -name '*.zip' -delete 2>/dev/null || true
+          git status --short || true
+
+      - name: Upload final ZIP to Google Drive
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          DO_UPLOAD="${{ inputs.upload_to_drive }}"
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ]; then DO_UPLOAD="false"; fi
+          if [ "$DO_UPLOAD" != "true" ]; then
+            echo "Google Drive upload disabled for this run."
+            exit 0
+          fi
+          python scripts/aq26_upload_to_gdrive.py --latest-path outputs/aq26_production/latest_bundle_path.txt
+
+      - name: Email report and bundle
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          DO_EMAIL="${{ inputs.send_email }}"
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ]; then DO_EMAIL="true"; fi
+          if [ "$DO_EMAIL" != "true" ]; then
+            echo "Email disabled for this run."
+            exit 0
+          fi
+          python scripts/aq26_send_production_email.py --latest-path outputs/aq26_production/latest_bundle_path.txt
