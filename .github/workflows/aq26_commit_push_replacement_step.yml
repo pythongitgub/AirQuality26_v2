@@ -1,4 +1,4 @@
-name: Disabled AQ26 Commit Push Replacement Snippet
+name: AQ26 Disabled Commit Push Snippet Placeholder
 
 on:
   workflow_dispatch:
@@ -7,11 +7,10 @@ permissions:
   contents: read
 
 jobs:
-  disabled:
-    runs-on: ubuntu-latest
+  disabled-placeholder:
+    runs-on: ubuntu-24.04
     steps:
       - name: Disabled placeholder
         run: |
-          echo "This file used to contain a workflow step snippet, not a complete workflow."
-          echo "It is now a valid manual-only placeholder so GitHub Actions YAML validation passes."
-          echo "No production deployment or generated-output commit is performed here."
+          echo "This file was formerly a workflow step snippet and is intentionally disabled."
+          echo "Do not add push, schedule or deployment behaviour here."

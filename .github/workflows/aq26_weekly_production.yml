@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       deploy_to_hostinger:
-        description: "Deploy public + unredacted sites to Hostinger"
+        description: "Deploy public + unredacted sites to sccairquality.com"
         required: true
         default: false
         type: boolean
@@ -16,10 +16,10 @@ on:
       send_email:
         description: "Email final evidence bundle/report"
         required: true
-        default: true
+        default: false
         type: boolean
       upload_to_drive:
-        description: "Upload final bundle to Google Drive. Keep false unless GDRIVE_FOLDER_ID is a Shared Drive folder accessible by the service account."
+        description: "Upload final bundle to Google Drive. Keep false until the service account writes to a Shared Drive folder."
         required: true
         default: false
         type: boolean
@@ -29,12 +29,11 @@ on:
         default: "4"
         type: string
   schedule:
-    # Two UTC triggers; a UK-time gate below lets only Monday 07:00 Europe/London proceed.
     - cron: "0 6 * * 1"
     - cron: "0 7 * * 1"
 
 permissions:
-  contents: write
+  contents: read
   actions: read
 
 concurrency:
@@ -46,7 +45,6 @@ env:
   AQ26_CONFIG: configs/aq26_production.yml
   PYTHONUNBUFFERED: "1"
 
-  # Data/API secrets. These are read by the production script only if present.
   CAMS_API_KEY: ${{ secrets.CAMS_API_KEY }}
   CDSE_ID: ${{ secrets.CDSE_ID }}
   CDSE_USERNAME: ${{ secrets.CDSE_USERNAME }}
@@ -71,7 +69,6 @@ env:
   SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
   WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
 
-  # Email secrets.
   MAIL_FROM: ${{ secrets.MAIL_FROM }}
   MAIL_TO: ${{ secrets.MAIL_TO }}
   SMTP_HOST: ${{ secrets.SMTP_HOST }}
@@ -79,8 +76,6 @@ env:
   SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
   SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
 
-  # Hostinger production deployment secrets for sccairquality.com.
-  # Do not use the older SCCNEXUS_* / HOSTINGER_PUBLIC_HTML_DIR test-domain secrets here.
   AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
   SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
   SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
@@ -113,40 +108,53 @@ jobs:
           from datetime import datetime
           from zoneinfo import ZoneInfo
           import os
-          event = os.environ.get("GITHUB_EVENT_NAME", "")
-          if event != "schedule":
+          if os.environ.get("GITHUB_EVENT_NAME") != "schedule":
               print("should_run=true")
               print("reason=manual")
           else:
               now = datetime.now(ZoneInfo("Europe/London"))
               ok = now.weekday() == 0 and now.hour == 7
-              print(f"should_run={'true' if ok else 'false'}")
-              print(f"reason={now:%Y-%m-%d_%H:%M_%Z}")
+              print("should_run=" + ("true" if ok else "false"))
+              print("reason=" + now.strftime("%Y-%m-%d_%H:%M_%Z"))
           PY
 
       - name: Stop duplicate scheduled trigger
         if: ${{ steps.gate.outputs.should_run != 'true' }}
+        shell: bash
         run: |
           echo "Skipped duplicate schedule trigger: ${{ steps.gate.outputs.reason }}"
 
       - name: Install dependencies
         if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
         run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Build weekly evidence, websites, report, provenance bundle
+      - name: Build weekly evidence, websites, report and provenance bundle
         if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
         env:
-          AQ26_HISTORICAL_BACKFILL_WEEKS: ${{ github.event.inputs.historical_backfill_weeks || '4' }}
+          AQ26_HISTORICAL_BACKFILL_WEEKS: ${{ inputs.historical_backfill_weeks }}
         run: |
           set -euo pipefail
+          if [ -z "${AQ26_HISTORICAL_BACKFILL_WEEKS:-}" ]; then
+            export AQ26_HISTORICAL_BACKFILL_WEEKS="4"
+          fi
           python scripts/aq26_production_pipeline.py --config "$AQ26_CONFIG"
 
       - name: Create deployment-only unredacted password files
-        if: ${{ steps.gate.outputs.should_run == 'true' && (github.event_name == 'schedule' || inputs.deploy_to_hostinger) }}
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
         run: |
           set -euo pipefail
+          DO_DEPLOY="${{ inputs.deploy_to_hostinger }}"
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ]; then DO_DEPLOY="true"; fi
+          if [ "$DO_DEPLOY" != "true" ]; then
+            echo "Hostinger deploy disabled for this run; skipping auth-file creation."
+            exit 0
+          fi
           sudo apt-get update
           sudo apt-get install -y apache2-utils
           rm -f site_unredacted/.htpasswd site_public/.htpasswd
@@ -164,16 +172,35 @@ jobs:
           printf 'User-agent: *\nDisallow: /\n' > site_unredacted/robots.txt
 
       - name: Install deployment tools
-        if: ${{ steps.gate.outputs.should_run == 'true' && (github.event_name == 'schedule' || inputs.deploy_to_hostinger) }}
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
         run: |
+          set -euo pipefail
+          DO_DEPLOY="${{ inputs.deploy_to_hostinger }}"
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ]; then DO_DEPLOY="true"; fi
+          if [ "$DO_DEPLOY" != "true" ]; then
+            echo "Hostinger deploy disabled for this run; skipping deployment tools."
+            exit 0
+          fi
           sudo apt-get update
           sudo apt-get install -y sshpass rsync netcat-openbsd
 
       - name: Deploy public and unredacted sites to Hostinger
-        if: ${{ steps.gate.outputs.should_run == 'true' && (github.event_name == 'schedule' || inputs.deploy_to_hostinger) }}
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
         shell: bash
         run: |
           set -euo pipefail
+          DO_DEPLOY="${{ inputs.deploy_to_hostinger }}"
+          DRY_RUN="${{ inputs.dry_run }}"
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ]; then
+            DO_DEPLOY="true"
+            DRY_RUN="false"
+          fi
+          if [ "$DO_DEPLOY" != "true" ]; then
+            echo "Hostinger deploy disabled for this run."
+            exit 0
+          fi
+
           : "${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR:?AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR missing}"
           : "${SCCAIRQUALITY_SSH_HOST:?SCCAIRQUALITY_SSH_HOST missing}"
           : "${SCCAIRQUALITY_SSH_PORT:?SCCAIRQUALITY_SSH_PORT missing}"
@@ -184,14 +211,11 @@ jobs:
           SSH_OPTS="-p ${SCCAIRQUALITY_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=45 -o ConnectionAttempts=1 -o ServerAliveInterval=20 -o ServerAliveCountMax=3"
           export SSHPASS="$SCCAIRQUALITY_SSH_PASSWORD"
 
-          echo "Hostinger SSH preflight: host/port/user/dir secrets are present. Values remain masked by GitHub."
-          echo "Remote target directory is configured; public deploy preserves /unredacted/."
-
           retry() {
-            local label="$1"; shift
-            local max_attempts="${AQ26_SSH_RETRY_ATTEMPTS:-8}"
-            local delay="${AQ26_SSH_RETRY_DELAY_SECONDS:-20}"
-            local attempt=1
+            label="$1"; shift
+            max_attempts="${AQ26_SSH_RETRY_ATTEMPTS:-8}"
+            delay="${AQ26_SSH_RETRY_DELAY_SECONDS:-20}"
+            attempt=1
             while true; do
               echo "[$label] attempt $attempt/$max_attempts"
               if "$@"; then
@@ -209,12 +233,11 @@ jobs:
             done
           }
 
-          echo "Testing TCP reachability to the configured SSH host/port before rsync..."
+          echo "Testing TCP reachability to configured SSH endpoint. Secret values remain masked."
           retry "tcp-preflight" nc -vz -w 20 "$SCCAIRQUALITY_SSH_HOST" "$SCCAIRQUALITY_SSH_PORT"
-
           retry "ssh-mkdir" sshpass -e ssh $SSH_OPTS "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "mkdir -p '$REMOTE_ROOT' '$REMOTE_ROOT/unredacted'"
 
-          if [ "${{ github.event.inputs.dry_run || 'false' }}" = "true" ]; then
+          if [ "$DRY_RUN" = "true" ]; then
             echo "DRY RUN: public -> $REMOTE_ROOT and unredacted -> $REMOTE_ROOT/unredacted"
             retry "rsync-public-dry-run" sshpass -e rsync -avzn --delete --exclude 'unredacted/***' -e "ssh $SSH_OPTS" site_public/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/"
             retry "rsync-unredacted-dry-run" sshpass -e rsync -avzn --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/unredacted/"
@@ -223,9 +246,11 @@ jobs:
             retry "rsync-unredacted-live" sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/unredacted/"
           fi
 
-      - name: Remove deployment-only auth files before commit/artifact
+      - name: Remove deployment-only auth files
         if: always()
-        run: rm -f site_unredacted/.htpasswd site_public/.htpasswd
+        shell: bash
+        run: |
+          rm -f site_unredacted/.htpasswd site_public/.htpasswd
 
       - name: Upload safe redaction failure summary
         if: failure()
@@ -249,6 +274,7 @@ jobs:
 
       - name: Prepare lean weekly artifact
         if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
         run: |
           set -euo pipefail
           rm -rf aq26_artifact_upload
@@ -277,19 +303,37 @@ jobs:
 
       - name: Skip committing generated public outputs
         if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
         run: |
           set -euo pipefail
           echo "Skipping generated-output commit in production workflow."
           echo "Evidence bundles remain in GitHub Actions artifacts/email/Drive; deployed website is sent by rsync."
-          echo "This avoids dirty-tree failures and GitHub 100MB limits from legacy generated ZIP deletions."
           rm -f site_unredacted/.htpasswd site_public/.htpasswd
           find site_public site_unredacted -type f -name '*.zip' -delete 2>/dev/null || true
           git status --short || true
 
       - name: Upload final ZIP to Google Drive
-        if: ${{ steps.gate.outputs.should_run == 'true' && inputs.upload_to_drive }}
-        run: python scripts/aq26_upload_to_gdrive.py --latest-path outputs/aq26_production/latest_bundle_path.txt
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          DO_UPLOAD="${{ inputs.upload_to_drive }}"
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ]; then DO_UPLOAD="false"; fi
+          if [ "$DO_UPLOAD" != "true" ]; then
+            echo "Google Drive upload disabled for this run."
+            exit 0
+          fi
+          python scripts/aq26_upload_to_gdrive.py --latest-path outputs/aq26_production/latest_bundle_path.txt
 
       - name: Email report and bundle
-        if: ${{ steps.gate.outputs.should_run == 'true' && (github.event_name == 'schedule' || inputs.send_email) }}
-        run: python scripts/aq26_send_production_email.py --latest-path outputs/aq26_production/latest_bundle_path.txt
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          DO_EMAIL="${{ inputs.send_email }}"
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ]; then DO_EMAIL="true"; fi
+          if [ "$DO_EMAIL" != "true" ]; then
+            echo "Email disabled for this run."
+            exit 0
+          fi
+          python scripts/aq26_send_production_email.py --latest-path outputs/aq26_production/latest_bundle_path.txt
