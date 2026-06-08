@@ -163,12 +163,11 @@ jobs:
           if [ "${DRY_RUN}" = "true" ]; then
             python scripts/aq26_deploy_hostinger.py \
               --config configs/aq26_weekly_runtime.yml \
-              --manifest configs/aq26_site_manifest.yml \
-              --dry-run
+              --dry-run true
           else
             python scripts/aq26_deploy_hostinger.py \
               --config configs/aq26_weekly_runtime.yml \
-              --manifest configs/aq26_site_manifest.yml
+              --dry-run false
           fi
 
       - name: Send completion email
