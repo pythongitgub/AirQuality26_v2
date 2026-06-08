@@ -1,16 +1,17 @@
-# AQ26 safety / generated local files
+# AQ26 generated runtime outputs - never commit large weekly bundles
+outputs/
+site_public/downloads/*.zip
+site_public/downloads/*.pdf
+site_public/downloads/*.sha256.txt
+site_unredacted/downloads/*.zip
+site_unredacted/downloads/*.pdf
+site_unredacted/downloads/*.sha256.txt
+site_test/downloads/*.zip
+site_test/downloads/*.pdf
+site_test/downloads/*.sha256.txt
+
+# Python/runtime
 __pycache__/
 *.pyc
+.venv/
 .env
-*.env
-AirQuality.env
-
-# Never commit live auth files
-site_unredacted/.htpasswd
-site_unredacted/**/.htpasswd
-site_public/.htpasswd
-site_public/**/.htpasswd
-
-# Temporary reports
-outputs/housekeeping/
-.aq26_tmp/
