@@ -133,8 +133,7 @@ jobs:
           set -euo pipefail
           if [ -f scripts/aq26_validate_outputs.py ]; then
             python scripts/aq26_validate_outputs.py \
-              --config configs/aq26_weekly_runtime.yml \
-              --manifest configs/aq26_site_manifest.yml
+              --config configs/aq26_weekly_runtime.yml
           else
             echo "scripts/aq26_validate_outputs.py not found; skipping."
           fi
