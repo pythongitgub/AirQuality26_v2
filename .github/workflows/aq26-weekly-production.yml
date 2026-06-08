@@ -1,0 +1,155 @@
+name: AQ26 Weekly Production Evidence, Website, Drive and Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_to_hostinger:
+        description: "Deploy website to Hostinger"
+        required: true
+        default: "true"
+        type: choice
+        options: ["true", "false"]
+      dry_run:
+        description: "Dry run only: build, validate and stage without live deploy/email"
+        required: true
+        default: "true"
+        type: choice
+        options: ["true", "false"]
+      upload_to_drive:
+        description: "Upload evidence bundle to Google Drive"
+        required: true
+        default: "true"
+        type: choice
+        options: ["true", "false"]
+      send_email:
+        description: "Send completion email"
+        required: true
+        default: "false"
+        type: choice
+        options: ["true", "false"]
+  schedule:
+    # Monday 07:00 UK is 06:00 UTC during BST and 07:00 UTC during GMT.
+    # This scheduled run uses 06:00 UTC as the main weekly trigger. Adjust if needed seasonally.
+    - cron: "0 6 * * 1"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aq26-weekly-production
+  cancel-in-progress: false
+
+jobs:
+  weekly-production:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    env:
+      TZ: Europe/London
+      DEPLOY_TO_HOSTINGER: ${{ github.event.inputs.deploy_to_hostinger || 'true' }}
+      DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
+      UPLOAD_TO_DRIVE: ${{ github.event.inputs.upload_to_drive || 'true' }}
+      SEND_EMAIL: ${{ github.event.inputs.send_email || 'false' }}
+
+      AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
+      HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+      SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
+      SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
+      SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
+      SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
+
+      GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+      GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
+
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      MAIL_FROM: ${{ secrets.MAIL_FROM }}
+      MAIL_TO: ${{ secrets.MAIL_TO }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+
+      - name: Display runtime switches
+        run: |
+          echo "DEPLOY_TO_HOSTINGER=$DEPLOY_TO_HOSTINGER"
+          echo "DRY_RUN=$DRY_RUN"
+          echo "UPLOAD_TO_DRIVE=$UPLOAD_TO_DRIVE"
+          echo "SEND_EMAIL=$SEND_EMAIL"
+
+      - name: Build weekly site
+        run: |
+          python scripts/aq26_build_weekly_site.py \
+            --config configs/aq26_weekly_runtime.yml \
+            --manifest configs/aq26_site_manifest.yml
+
+      - name: Make evidence bundle
+        run: |
+          python scripts/aq26_make_evidence_bundle.py \
+            --config configs/aq26_weekly_runtime.yml
+
+      - name: Validate outputs
+        run: |
+          python scripts/aq26_validate_outputs.py \
+            --config configs/aq26_weekly_runtime.yml
+
+      - name: Upload evidence bundle to Google Drive
+        if: env.UPLOAD_TO_DRIVE == 'true'
+        run: |
+          python scripts/aq26_upload_to_drive.py \
+            --config configs/aq26_weekly_runtime.yml \
+            --dry-run "$DRY_RUN"
+
+      - name: Deploy to Hostinger
+        if: env.DEPLOY_TO_HOSTINGER == 'true'
+        run: |
+          python scripts/aq26_deploy_hostinger.py \
+            --config configs/aq26_weekly_runtime.yml \
+            --dry-run "$DRY_RUN"
+
+      - name: Send completion email
+        if: env.SEND_EMAIL == 'true' && env.DRY_RUN == 'false'
+        run: |
+          python scripts/aq26_send_email.py \
+            --config configs/aq26_weekly_runtime.yml
+
+      - name: Commit generated weekly operational files
+        if: env.DRY_RUN == 'false'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add site_public site_unredacted site_test outputs || true
+          if git diff --cached --quiet; then
+            echo "No generated changes to commit."
+          else
+            git commit -m "Build AQ26 weekly production evidence and website"
+            git push
+          fi
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-weekly-production-output
+          path: |
+            site_public
+            site_unredacted
+            site_test
+            outputs
+          if-no-files-found: warn
