@@ -1,0 +1,19 @@
+# Add this near the top level of .github/workflows/aq26-weekly-production.yml,
+# alongside "on:", "jobs:", etc. It prevents two weekly-production runs
+# pushing to main at the same time.
+concurrency:
+  group: aq26-weekly-production-${{ github.ref }}
+  cancel-in-progress: false
+
+# In the checkout step, use fetch-depth: 0:
+- name: Checkout repository
+  uses: actions/checkout@v4
+  with:
+    fetch-depth: 0
+
+# Replace the existing fragile commit step with this:
+- name: Commit generated weekly operational files
+  if: always()
+  run: |
+    set -euo pipefail
+    python scripts/aq26_safe_commit_generated_outputs.py
