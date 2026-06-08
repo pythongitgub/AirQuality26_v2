@@ -1,29 +1,13 @@
-# AQ26 generated weekly heavy artefacts
+# AQ26 generated evidence/download artefacts - do not commit
 outputs/evidence/*.zip
 outputs/evidence/*.pdf
 outputs/evidence/*.tar
 outputs/evidence/*.tar.gz
 outputs/evidence/*.7z
-
 site_public/downloads/*.zip
 site_public/downloads/*.pdf
-site_public/downloads/*.tar
-site_public/downloads/*.tar.gz
-site_public/downloads/*.7z
-
 site_unredacted/downloads/*.zip
 site_unredacted/downloads/*.pdf
-site_unredacted/downloads/*.tar
-site_unredacted/downloads/*.tar.gz
-site_unredacted/downloads/*.7z
-
 site_test/downloads/*.zip
 site_test/downloads/*.pdf
-site_test/downloads/*.tar
-site_test/downloads/*.tar.gz
-site_test/downloads/*.7z
-
-# Local/runner temporary files
 .gdrive_service_account.json
-*.tmp
-*.bak
