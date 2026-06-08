@@ -1,6 +1,63 @@
 {
-  "created_at_utc": "2026-06-01T12:24:33.515069+00:00",
+  "created_at_utc": "2026-06-08T11:33:51.975988+00:00",
   "weeks": [
+    {
+      "run_ts": "BACKFILL_SLOT_2026-06-01_2026-06-08",
+      "date_window": {
+        "start": "2026-06-01",
+        "end": "2026-06-08"
+      },
+      "backfill_status": "not_yet_harvested",
+      "source_record_count": 0,
+      "ok_count": 0,
+      "warning_count": 0,
+      "error_count": 0,
+      "satellite_product_count": 0,
+      "drive_file_count": 0,
+      "high_priority_filings": 0,
+      "medium_priority_filings": 0,
+      "external_submission_ready": false
+    },
+    {
+      "run_ts": "20260608T112552Z",
+      "created_at_utc": "2026-06-08T11:33:51.972817+00:00",
+      "date_window": {
+        "start": "2026-05-25",
+        "end": "2026-06-08"
+      },
+      "source_record_count": 72,
+      "ok_count": 68,
+      "warning_count": 4,
+      "error_count": 0,
+      "skipped_count": 0,
+      "redaction_leak_count": 0,
+      "redaction_ready": true,
+      "external_submission_ready": false,
+      "satellite_product_count": 350,
+      "satellite_extraction_ready": false,
+      "drive_file_count": 5000,
+      "drive_inventory_truncated": true,
+      "high_priority_filings": 100,
+      "medium_priority_filings": 99,
+      "openaq_request_count": 5,
+      "openaq_rate_limit_seen": false,
+      "cams_key_present": true,
+      "cams_data_ready": false,
+      "cdse_download_ready": true,
+      "cdse_sentinelhub_ready": true,
+      "provider_sanitized_files": 0,
+      "news_warning_count": 4,
+      "final_zip_name": "AQ26_WEEKLYV2_EVIDENCE_20260608T113350Z.zip",
+      "final_zip_relpath": "downloads/AQ26_WEEKLYV2_EVIDENCE_20260608T113350Z.zip",
+      "final_zip_status": {
+        "zip_entry_count": 97,
+        "ledger_rows": 96,
+        "ledger_present": true
+      },
+      "github_repository": "pythongitgub/AirQuality26_v2",
+      "github_run_id": "27134396920",
+      "github_sha": "7f03665b8c8dff104e8174ce56a17065336cb4dc"
+    },
     {
       "run_ts": "BACKFILL_SLOT_2026-05-25_2026-06-01",
       "date_window": {
