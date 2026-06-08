@@ -1,0 +1,26 @@
+brand:
+  project: AirQuality26
+  organisation: SCC Nexus
+  strapline: Weekly evidence publishing for air-quality monitoring, public transparency and scientific review.
+
+navigation:
+  - title: Home
+    href: index.html
+  - title: Incinerators
+    href: incinerators.html
+  - title: Weekly update
+    href: weekly-update.html
+  - title: Methodology
+    href: methodology.html
+  - title: Source records
+    href: source-records.html
+  - title: Archive
+    href: archive.html
+  - title: Contact
+    href: contact.html
+
+public_disclaimer: >-
+  This public site is an operational evidence-publishing interface. It publishes validated available outputs and marks missing or incomplete heavy-science backfill as pending Colab/Drive validation. It should not be read as a final epidemiological or regulatory conclusion.
+
+unredacted_disclaimer: >-
+  Password-protected review area. Contents may include operational logs, extended provenance and unredacted reviewer material. Do not redistribute without permission.

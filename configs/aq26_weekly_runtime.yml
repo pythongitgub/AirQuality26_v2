@@ -1,0 +1,74 @@
+# AQ26 weekly operational publishing runtime switches.
+# First dry run:
+#   deploy_to_hostinger: true
+#   dry_run: true
+#   upload_to_drive: true
+#   send_email: false
+# Live run after validation:
+#   deploy_to_hostinger: true
+#   dry_run: false
+#   upload_to_drive: true
+#   send_email: true
+
+site_name: AirQuality26
+run_timezone: Europe/London
+
+# Operational switches. These can be overridden by GitHub workflow_dispatch inputs.
+deploy_to_hostinger: true
+dry_run: true
+upload_to_drive: true
+send_email: false
+
+# Output locations inside the repository/workspace.
+paths:
+  public_site: site_public
+  unredacted_site: site_unredacted
+  test_site: site_test
+  weekly_data: site_public/data/weekly
+  unredacted_weekly_data: site_unredacted/data/weekly
+  downloads_public: site_public/downloads
+  downloads_unredacted: site_unredacted/downloads
+  reports: outputs/reports
+  evidence: outputs/evidence
+  logs: outputs/logs
+
+# Public pages that must exist before deploy.
+required_public_pages:
+  - index.html
+  - incinerators.html
+  - weekly-update.html
+  - methodology.html
+  - source-records.html
+  - readiness.html
+  - archive.html
+  - comparisons.html
+  - historical-comparisons.html
+  - about.html
+  - contact.html
+  - privacy.html
+  - cookies.html
+  - accessibility.html
+  - terms.html
+
+# Basic pages for password-protected unredacted site.
+required_unredacted_pages:
+  - index.html
+  - weekly-update.html
+  - source-records.html
+
+# Hostinger SSH/SFTP deployment.
+hostinger:
+  public_html_secret_name: AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR
+  fallback_public_html_secret_name: HOSTINGER_PUBLIC_HTML_DIR
+  public_subdir: ""
+  unredacted_subdir: unredacted
+  test_subdir: test
+
+# Google Drive upload target.
+google_drive:
+  folder_id_secret_name: GDRIVE_FOLDER_ID
+  service_account_secret_name: GDRIVE_SERVICE_ACCOUNT
+
+# Email settings. MAIL_TO and MAIL_FROM should be GitHub secrets.
+email:
+  subject_prefix: "AQ26 weekly production"
