@@ -1,0 +1,51 @@
+name: AQ26 Hostinger SSH Preflight Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  hostinger-ssh-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
+      SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
+      SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
+      SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
+      AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
+
+    steps:
+      - name: Show masked SSH settings
+        run: |
+          set -euo pipefail
+          echo "Host present: $([[ -n "${SCCAIRQUALITY_SSH_HOST:-}" ]] && echo yes || echo no)"
+          echo "Port present: $([[ -n "${SCCAIRQUALITY_SSH_PORT:-}" ]] && echo yes || echo no)"
+          echo "Username present: $([[ -n "${SCCAIRQUALITY_SSH_USERNAME:-}" ]] && echo yes || echo no)"
+          echo "Password present: $([[ -n "${SCCAIRQUALITY_SSH_PASSWORD:-}" ]] && echo yes || echo no)"
+          echo "Public html dir present: $([[ -n "${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR:-}" ]] && echo yes || echo no)"
+          echo "Expected host should be your Hostinger IP or SSH hostname, with no https:// and no path."
+          echo "Expected port should be numeric only, for example 65002."
+
+      - name: TCP connectivity test
+        run: |
+          set -euo pipefail
+          sudo apt-get update -y
+          sudo apt-get install -y netcat-openbsd
+          echo "Testing TCP connection to masked host/port..."
+          timeout 25 nc -vz "${SCCAIRQUALITY_SSH_HOST}" "${SCCAIRQUALITY_SSH_PORT}"
+
+      - name: SSH banner/authentication test
+        run: |
+          set -euo pipefail
+          sudo apt-get install -y sshpass
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          echo "Testing SSH login..."
+          sshpass -p "${SCCAIRQUALITY_SSH_PASSWORD}" ssh \
+            -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=/dev/null \
+            -o ConnectTimeout=25 \
+            -p "${SCCAIRQUALITY_SSH_PORT}" \
+            "${SCCAIRQUALITY_SSH_USERNAME}@${SCCAIRQUALITY_SSH_HOST}" \
+            'pwd && ls -la && echo SSH_OK'
