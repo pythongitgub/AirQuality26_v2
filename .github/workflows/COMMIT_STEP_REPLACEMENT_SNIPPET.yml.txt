@@ -1,0 +1,7 @@
+# Replace the existing final commit/push step with this exact step:
+- name: Commit generated weekly operational files
+  if: always()
+  continue-on-error: true
+  run: |
+    set -euo pipefail
+    python scripts/aq26_safe_commit_generated_outputs.py
