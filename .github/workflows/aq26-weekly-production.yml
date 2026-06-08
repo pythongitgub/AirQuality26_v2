@@ -4,62 +4,71 @@ on:
   workflow_dispatch:
     inputs:
       deploy_to_hostinger:
-        description: "Deploy website to Hostinger"
+        description: "Deploy built site folders to Hostinger"
         required: true
-        default: "true"
+        default: "false"
         type: choice
-        options: ["true", "false"]
+        options:
+          - "false"
+          - "true"
       dry_run:
-        description: "Dry run only: build, validate and stage without live deploy/email"
+        description: "Dry run only: build/validate but do not make live external changes"
         required: true
         default: "true"
         type: choice
-        options: ["true", "false"]
+        options:
+          - "true"
+          - "false"
       upload_to_drive:
         description: "Upload evidence bundle to Google Drive"
         required: true
-        default: "true"
+        default: "false"
         type: choice
-        options: ["true", "false"]
+        options:
+          - "false"
+          - "true"
       send_email:
         description: "Send completion email"
         required: true
         default: "false"
         type: choice
-        options: ["true", "false"]
+        options:
+          - "false"
+          - "true"
+
   schedule:
-    # Monday 07:00 UK is 06:00 UTC during BST and 07:00 UTC during GMT.
-    # This scheduled run uses 06:00 UTC as the main weekly trigger. Adjust if needed seasonally.
+    # Monday 07:00 UK in summer is 06:00 UTC.
+    # If exact winter/summer handling is needed later, keep manual dispatch available.
     - cron: "0 6 * * 1"
 
-permissions:
-  contents: write
-
 concurrency:
-  group: aq26-weekly-production
+  group: aq26-weekly-production-${{ github.ref }}
   cancel-in-progress: false
+
+permissions:
+  contents: read
 
 jobs:
   weekly-production:
+    name: weekly-production
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
 
     env:
-      TZ: Europe/London
-      DEPLOY_TO_HOSTINGER: ${{ github.event.inputs.deploy_to_hostinger || 'true' }}
-      DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
-      UPLOAD_TO_DRIVE: ${{ github.event.inputs.upload_to_drive || 'true' }}
-      SEND_EMAIL: ${{ github.event.inputs.send_email || 'false' }}
+      DEPLOY_TO_HOSTINGER: ${{ github.event_name == 'schedule' && 'true' || inputs.deploy_to_hostinger }}
+      DRY_RUN: ${{ github.event_name == 'schedule' && 'false' || inputs.dry_run }}
+      UPLOAD_TO_DRIVE: ${{ github.event_name == 'schedule' && 'false' || inputs.upload_to_drive }}
+      SEND_EMAIL: ${{ github.event_name == 'schedule' && 'true' || inputs.send_email }}
 
-      AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
+      GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+      GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
+
       HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+      AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
       SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
       SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
       SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
       SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
-
-      GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
-      GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
 
       SMTP_HOST: ${{ secrets.SMTP_HOST }}
       SMTP_PORT: ${{ secrets.SMTP_PORT }}
@@ -68,88 +77,142 @@ jobs:
       MAIL_FROM: ${{ secrets.MAIL_FROM }}
       MAIL_TO: ${{ secrets.MAIL_TO }}
 
+      OPENAQ_API_KEY: ${{ secrets.OPENAQ_API_KEY }}
+      OPENWEATHER_KEY: ${{ secrets.OPENWEATHER_KEY }}
+      METOFFICE_API_KEY: ${{ secrets.METOFFICE_API_KEY }}
+      MET_OFFICE_API_KEY: ${{ secrets.MET_OFFICE_API_KEY }}
+      MET_OFFICE_LAND_OBSERVATIONS: ${{ secrets.MET_OFFICE_LAND_OBSERVATIONS }}
+      PURPLE_AIR_API_KEY: ${{ secrets.PURPLE_AIR_API_KEY }}
+      WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
+      NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+      NEWS_DATA_IO_KEY: ${{ secrets.NEWS_DATA_IO_KEY }}
+      CAMS_API_KEY: ${{ secrets.CAMS_API_KEY }}
+      EARTHDATA_USERNAME: ${{ secrets.EARTHDATA_USERNAME }}
+      EARTHDATA_PASSWORD: ${{ secrets.EARTHDATA_PASSWORD }}
+      EARTHDATA_TOKEN: ${{ secrets.EARTHDATA_TOKEN }}
+      CDSE_USERNAME: ${{ secrets.CDSE_USERNAME }}
+      CDSE_PASSWORD: ${{ secrets.CDSE_PASSWORD }}
+      CDSE_ID: ${{ secrets.CDSE_ID }}
+      CDSE_SECRET: ${{ secrets.CDSE_SECRET }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      - name: Show selected run mode
+        run: |
+          set -euo pipefail
+          echo "DEPLOY_TO_HOSTINGER=${DEPLOY_TO_HOSTINGER}"
+          echo "DRY_RUN=${DRY_RUN}"
+          echo "UPLOAD_TO_DRIVE=${UPLOAD_TO_DRIVE}"
+          echo "SEND_EMAIL=${SEND_EMAIL}"
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install Python requirements
         run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
           fi
 
-      - name: Display runtime switches
+      - name: Prepare output folders
         run: |
-          echo "DEPLOY_TO_HOSTINGER=$DEPLOY_TO_HOSTINGER"
-          echo "DRY_RUN=$DRY_RUN"
-          echo "UPLOAD_TO_DRIVE=$UPLOAD_TO_DRIVE"
-          echo "SEND_EMAIL=$SEND_EMAIL"
+          set -euo pipefail
+          mkdir -p outputs/evidence outputs/logs
+          mkdir -p site_public site_unredacted site_test
+          mkdir -p site_public/downloads site_unredacted/downloads site_test/downloads
+          mkdir -p site_public/data/weekly site_unredacted/data/weekly site_test/data/weekly
 
-      - name: Build weekly site
+      - name: Build weekly website
         run: |
+          set -euo pipefail
           python scripts/aq26_build_weekly_site.py \
-            --config configs/aq26_weekly_runtime.yml \
-            --manifest configs/aq26_site_manifest.yml
+            --runtime-config configs/aq26_weekly_runtime.yml \
+            --site-manifest configs/aq26_site_manifest.yml
 
-      - name: Make evidence bundle
+      - name: Build evidence bundle
         run: |
+          set -euo pipefail
           python scripts/aq26_make_evidence_bundle.py \
-            --config configs/aq26_weekly_runtime.yml
+            --runtime-config configs/aq26_weekly_runtime.yml
 
-      - name: Validate outputs
+      - name: Validate weekly outputs
         run: |
+          set -euo pipefail
           python scripts/aq26_validate_outputs.py \
-            --config configs/aq26_weekly_runtime.yml
+            --runtime-config configs/aq26_weekly_runtime.yml \
+            --site-manifest configs/aq26_site_manifest.yml
 
       - name: Upload evidence bundle to Google Drive
         if: env.UPLOAD_TO_DRIVE == 'true'
-        run: |
-          python scripts/aq26_upload_to_drive.py \
-            --config configs/aq26_weekly_runtime.yml \
-            --dry-run "$DRY_RUN"
-
-      - name: Deploy to Hostinger
-        if: env.DEPLOY_TO_HOSTINGER == 'true'
-        run: |
-          python scripts/aq26_deploy_hostinger.py \
-            --config configs/aq26_weekly_runtime.yml \
-            --dry-run "$DRY_RUN"
-
-      - name: Send completion email
-        if: env.SEND_EMAIL == 'true' && env.DRY_RUN == 'false'
-        run: |
-          python scripts/aq26_send_email.py \
-            --config configs/aq26_weekly_runtime.yml
-
-      - name: Commit generated weekly operational files
-        if: env.DRY_RUN == 'false'
+        continue-on-error: true
         run: |
           set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add site_public site_unredacted site_test outputs || true
-          if git diff --cached --quiet; then
-            echo "No generated changes to commit."
+          if [ "${DRY_RUN}" = "true" ]; then
+            python scripts/aq26_upload_to_drive.py \
+              --runtime-config configs/aq26_weekly_runtime.yml \
+              --dry-run
           else
-            git commit -m "Build AQ26 weekly production evidence and website"
-            git push
+            python scripts/aq26_upload_to_drive.py \
+              --runtime-config configs/aq26_weekly_runtime.yml
           fi
 
-      - name: Upload workflow artifact
+      - name: Deploy site to Hostinger
+        if: env.DEPLOY_TO_HOSTINGER == 'true'
+        run: |
+          set -euo pipefail
+          if [ "${DRY_RUN}" = "true" ]; then
+            python scripts/aq26_deploy_hostinger.py \
+              --runtime-config configs/aq26_weekly_runtime.yml \
+              --site-manifest configs/aq26_site_manifest.yml \
+              --dry-run
+          else
+            python scripts/aq26_deploy_hostinger.py \
+              --runtime-config configs/aq26_weekly_runtime.yml \
+              --site-manifest configs/aq26_site_manifest.yml
+          fi
+
+      - name: Send completion email
+        if: env.SEND_EMAIL == 'true'
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          if [ "${DRY_RUN}" = "true" ]; then
+            echo "DRY_RUN=true; skipping live email send."
+          else
+            python scripts/aq26_send_email.py \
+              --runtime-config configs/aq26_weekly_runtime.yml
+          fi
+
+      - name: Upload GitHub Actions artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: aq26-weekly-production-output
           path: |
-            site_public
-            site_unredacted
-            site_test
-            outputs
+            outputs/**
+            site_public/**
+            site_unredacted/**
+            site_test/**
+          retention-days: 14
           if-no-files-found: warn
+          compression-level: 6
+
+      - name: Commit generated weekly operational files
+        if: always()
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          echo "Skipping generated output commit."
+          echo "Weekly outputs are deployed to Hostinger and stored as GitHub Actions artifacts."
+          echo "Large ZIP/PDF evidence bundles must not be committed to the repo."
+          echo "This prevents GitHub 100 MB file-limit and non-fast-forward failures."
