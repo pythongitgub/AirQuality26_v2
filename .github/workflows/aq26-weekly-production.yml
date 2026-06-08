@@ -6,19 +6,19 @@ on:
       deploy_to_hostinger:
         description: "Deploy built site folders to Hostinger"
         required: true
-        default: "false"
-        type: choice
-        options:
-          - "false"
-          - "true"
-      dry_run:
-        description: "Dry run only: build/validate but do not make live external changes"
-        required: true
         default: "true"
         type: choice
         options:
           - "true"
           - "false"
+      dry_run:
+        description: "Dry run only: build/validate but do not make live external changes"
+        required: true
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
       upload_to_drive:
         description: "Upload evidence bundle to Google Drive"
         required: true
@@ -30,13 +30,15 @@ on:
       send_email:
         description: "Send completion email"
         required: true
-        default: "false"
+        default: "true"
         type: choice
         options:
-          - "false"
           - "true"
+          - "false"
 
   schedule:
+    # Monday 07:00 UK during BST = 06:00 UTC.
+    # Keep manual dispatch available for testing.
     - cron: "0 6 * * 1"
 
 concurrency:
@@ -74,6 +76,26 @@ jobs:
       SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
       MAIL_FROM: ${{ secrets.MAIL_FROM }}
       MAIL_TO: ${{ secrets.MAIL_TO }}
+
+      OPENAQ_API_KEY: ${{ secrets.OPENAQ_API_KEY }}
+      OPENWEATHER_KEY: ${{ secrets.OPENWEATHER_KEY }}
+      METOFFICE_API_KEY: ${{ secrets.METOFFICE_API_KEY }}
+      MET_OFFICE_API_KEY: ${{ secrets.MET_OFFICE_API_KEY }}
+      MET_OFFICE_LAND_OBSERVATIONS: ${{ secrets.MET_OFFICE_LAND_OBSERVATIONS }}
+      PURPLE_AIR_API_KEY: ${{ secrets.PURPLE_AIR_API_KEY }}
+      WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
+      NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+      NEWS_DATA_IO_KEY: ${{ secrets.NEWS_DATA_IO_KEY }}
+      CAMS_API_KEY: ${{ secrets.CAMS_API_KEY }}
+      EARTHDATA_USERNAME: ${{ secrets.EARTHDATA_USERNAME }}
+      EARTHDATA_PASSWORD: ${{ secrets.EARTHDATA_PASSWORD }}
+      EARTHDATA_TOKEN: ${{ secrets.EARTHDATA_TOKEN }}
+      CDSE_USERNAME: ${{ secrets.CDSE_USERNAME }}
+      CDSE_PASSWORD: ${{ secrets.CDSE_PASSWORD }}
+      CDSE_ID: ${{ secrets.CDSE_ID }}
+      CDSE_SECRET: ${{ secrets.CDSE_SECRET }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
 
     steps:
       - name: Checkout repository
@@ -125,7 +147,7 @@ jobs:
             python scripts/aq26_make_evidence_bundle.py \
               --config configs/aq26_weekly_runtime.yml
           else
-            echo "scripts/aq26_make_evidence_bundle.py not found; skipping."
+            echo "scripts/aq26_make_evidence_bundle.py not found; skipping bundle build."
           fi
 
       - name: Validate weekly outputs
@@ -135,7 +157,7 @@ jobs:
             python scripts/aq26_validate_outputs.py \
               --config configs/aq26_weekly_runtime.yml
           else
-            echo "scripts/aq26_validate_outputs.py not found; skipping."
+            echo "scripts/aq26_validate_outputs.py not found; skipping validation."
           fi
 
       - name: Upload evidence bundle to Google Drive
@@ -160,6 +182,10 @@ jobs:
         if: env.DEPLOY_TO_HOSTINGER == 'true'
         run: |
           set -euo pipefail
+          if [ ! -f scripts/aq26_deploy_hostinger.py ]; then
+            echo "scripts/aq26_deploy_hostinger.py not found."
+            exit 1
+          fi
           if [ "${DRY_RUN}" = "true" ]; then
             python scripts/aq26_deploy_hostinger.py \
               --config configs/aq26_weekly_runtime.yml \
@@ -183,7 +209,7 @@ jobs:
             python scripts/aq26_send_email.py \
               --config configs/aq26_weekly_runtime.yml
           else
-            echo "scripts/aq26_send_email.py not found; skipping."
+            echo "scripts/aq26_send_email.py not found; skipping email."
           fi
 
       - name: Upload GitHub Actions artifact
@@ -200,11 +226,11 @@ jobs:
           if-no-files-found: warn
           compression-level: 6
 
-      - name: Commit generated weekly operational files
+      - name: Skip generated output commit
         if: always()
-        continue-on-error: true
         run: |
           set -euo pipefail
           echo "Skipping generated output commit."
           echo "Weekly outputs are deployed to Hostinger and stored as GitHub Actions artifacts."
           echo "Large ZIP/PDF evidence bundles must not be committed to the repo."
+          echo "This prevents GitHub 100 MB file-limit and non-fast-forward failures."
