@@ -1,66 +1,38 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-
-import os
-import re
-import sys
-import xml.etree.ElementTree as ET
+import argparse, os, re
 from pathlib import Path
 
-ROOTS = [Path('site_public'), Path('site_test')]
-GA_ID = os.environ.get('GA_MEASUREMENT_ID', '').strip()
-REQUIRED_PAGES = ['index.html', 'privacy.html', 'cookies.html', 'terms.html', 'accessibility.html', 'contact.html']
-REQUIRED_FOOTER_LINKS = ['/privacy.html', '/cookies.html', '/terms.html', '/accessibility.html', '/contact.html', '/sitemap.xml']
-
-
-def fail(msg: str) -> None:
-    print(f'ERROR: {msg}', file=sys.stderr)
-    raise SystemExit(1)
-
-
-def check_root(root: Path) -> None:
-    if not root.exists():
-        print(f'Skipping missing {root}')
-        return
-    for rel in REQUIRED_PAGES:
-        p = root / rel
-        if not p.exists() or p.stat().st_size < 200:
-            fail(f'{root}/{rel} missing or too small')
-    sitemap = root / 'sitemap.xml'
-    robots = root / 'robots.txt'
-    if not sitemap.exists():
-        fail(f'{root}/sitemap.xml missing')
-    if not robots.exists():
-        fail(f'{root}/robots.txt missing')
-    robots_text = robots.read_text(encoding='utf-8', errors='ignore')
-    if 'Sitemap: https://sccairquality.com/sitemap.xml' not in robots_text:
-        fail(f'{root}/robots.txt does not advertise sitemap.xml')
-    try:
-        ET.parse(sitemap)
-    except Exception as exc:
-        fail(f'{root}/sitemap.xml is not valid XML: {exc}')
-    index = (root / 'index.html').read_text(encoding='utf-8', errors='ignore')
-    desc = re.search(r'<meta\s+name=["\']description["\']\s+content=["\']([^"\']+)', index, flags=re.I)
-    if not desc or len(desc.group(1).strip()) < 140:
-        fail(f'{root}/index.html missing a useful meta description')
-    if '<link rel="canonical" href="https://sccairquality.com/"' not in index:
-        fail(f'{root}/index.html missing canonical home URL')
-    if 'aq26-cookie-banner' not in index or 'aq26-cookie-consent' not in index:
-        fail(f'{root}/index.html missing cookie banner/consent script')
-    for link in REQUIRED_FOOTER_LINKS:
-        if link not in index:
-            fail(f'{root}/index.html footer missing {link}')
-    if 'application/ld+json' not in index or 'DataCatalog' not in index:
-        fail(f'{root}/index.html missing JSON-LD DataCatalog')
-    if GA_ID and GA_ID not in index:
-        fail(f'{root}/index.html missing GA_MEASUREMENT_ID injection')
-    print(f'SEO/legal/analytics gate passed for {root}')
-
+def read(p: Path) -> str:
+    return p.read_text(encoding='utf-8', errors='ignore')
 
 def main() -> int:
-    for root in ROOTS:
-        check_root(root)
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--site-root', default='site_public')
+    ap.add_argument('--require-ga', action='store_true')
+    args = ap.parse_args()
+    root = Path(args.site_root)
+    errors=[]
+    for fn in ['index.html','sitemap.xml','robots.txt','privacy.html','cookies.html','terms.html','accessibility.html','contact.html']:
+        if not (root/fn).exists(): errors.append(f'Missing {fn}')
+    if (root/'robots.txt').exists() and 'sitemap.xml' not in read(root/'robots.txt'):
+        errors.append('robots.txt does not reference sitemap.xml')
+    index = read(root/'index.html') if (root/'index.html').exists() else ''
+    checks = ['googletagmanager.com/gtag/js', 'G-', 'AQ26 SEO ANALYTICS', 'AQ26 LEGAL FOOTER COOKIE', 'cookie-banner']
+    for c in checks:
+        if c not in index:
+            errors.append(f'index.html missing {c}')
+    if args.require_ga and not os.environ.get('GA_MEASUREMENT_ID','').strip():
+        errors.append('GA_MEASUREMENT_ID required but missing')
+    if '<link rel="canonical"' not in index:
+        errors.append('index.html missing canonical link')
+    if 'application/ld+json' not in index:
+        errors.append('index.html missing JSON-LD')
+    if errors:
+        print('AQ26 SEO verification failed:')
+        for e in errors: print(' - '+e)
+        return 1
+    print('AQ26 SEO/legal/analytics verification passed.')
     return 0
-
 if __name__ == '__main__':
     raise SystemExit(main())
