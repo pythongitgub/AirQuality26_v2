@@ -1,0 +1,343 @@
+name: AQ26 Weekly Production LEAN REVIEW PACK
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_to_hostinger:
+        description: "Deploy public + unredacted sites to sccairquality.com"
+        required: true
+        default: false
+        type: boolean
+      dry_run:
+        description: "Dry-run deployment only"
+        required: true
+        default: true
+        type: boolean
+      send_email:
+        description: "Email final evidence bundle/report"
+        required: true
+        default: false
+        type: boolean
+      upload_to_drive:
+        description: "Upload final bundle to Google Drive. Keep false until Shared Drive service-account quota is fixed."
+        required: true
+        default: false
+        type: boolean
+      upload_full_evidence_artifact:
+        description: "Upload the full evidence ZIP as a separate short-retention artifact. Leave false for normal lean runs."
+        required: true
+        default: false
+        type: boolean
+      historical_backfill_weeks:
+        description: "Historical weeks to update/plan this run"
+        required: true
+        default: "4"
+        type: string
+  schedule:
+    # Two UTC triggers plus a Europe/London gate below gives one real Monday 07:00 UK run in GMT/BST.
+    - cron: "0 6 * * 1"
+    - cron: "0 7 * * 1"
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: aq26-weekly-production-lean
+  cancel-in-progress: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  AQ26_CONFIG: configs/aq26_production.yml
+  AQ26_RUNTIME_CONFIG: configs/aq26_weekly_runtime.yml
+  PYTHONUNBUFFERED: "1"
+
+  CAMS_API_KEY: ${{ secrets.CAMS_API_KEY }}
+  CDSE_ID: ${{ secrets.CDSE_ID }}
+  CDSE_USERNAME: ${{ secrets.CDSE_USERNAME }}
+  CDSE_PASSWORD: ${{ secrets.CDSE_PASSWORD }}
+  CDSE_SECRET: ${{ secrets.CDSE_SECRET }}
+  EARTHDATA_USERNAME: ${{ secrets.EARTHDATA_USERNAME }}
+  EARTHDATA_PASSWORD: ${{ secrets.EARTHDATA_PASSWORD }}
+  EARTHDATA_TOKEN: ${{ secrets.EARTHDATA_TOKEN }}
+  EARTH_DATA_API_KEY: ${{ secrets.EARTH_DATA_API_KEY }}
+  GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+  GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
+  GDRIVE_SERVICE_ACCOUNT_JSON: ${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+  METOFFICE_API_KEY: ${{ secrets.METOFFICE_API_KEY }}
+  MET_OFFICE_API_KEY: ${{ secrets.MET_OFFICE_API_KEY }}
+  MET_OFFICE_LAND_OBSERVATIONS: ${{ secrets.MET_OFFICE_LAND_OBSERVATIONS }}
+  NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+  NEWS_DATA_IO_KEY: ${{ secrets.NEWS_DATA_IO_KEY }}
+  OPENAQ_API_KEY: ${{ secrets.OPENAQ_API_KEY }}
+  OPENWEATHER_KEY: ${{ secrets.OPENWEATHER_KEY }}
+  PURPLE_AIR_API_KEY: ${{ secrets.PURPLE_AIR_API_KEY }}
+  SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
+  WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
+
+  MAIL_FROM: ${{ secrets.MAIL_FROM }}
+  MAIL_TO: ${{ secrets.MAIL_TO }}
+  SMTP_HOST: ${{ secrets.SMTP_HOST }}
+  SMTP_PORT: ${{ secrets.SMTP_PORT }}
+  SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+  SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+
+  HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+  AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
+  SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
+  SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
+  SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
+  SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
+  SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+
+jobs:
+  weekly-production-lean:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Gate scheduled run to Monday 07:00 UK
+        id: gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          import os
+          if os.environ.get("GITHUB_EVENT_NAME") != "schedule":
+              print("should_run=true")
+              print("reason=manual")
+          else:
+              now = datetime.now(ZoneInfo("Europe/London"))
+              ok = now.weekday() == 0 and now.hour == 7
+              print("should_run=" + ("true" if ok else "false"))
+              print("reason=" + now.strftime("%Y-%m-%d_%H:%M_%Z"))
+          PY
+
+      - name: Stop duplicate scheduled trigger
+        if: ${{ steps.gate.outputs.should_run != 'true' }}
+        shell: bash
+        run: |
+          echo "Skipped duplicate schedule trigger: ${{ steps.gate.outputs.reason }}"
+
+      - name: Install dependencies
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+
+      - name: Build weekly evidence, websites, report and provenance bundle
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        env:
+          AQ26_HISTORICAL_BACKFILL_WEEKS: ${{ inputs.historical_backfill_weeks }}
+        run: |
+          set -euo pipefail
+          if [ -z "${AQ26_HISTORICAL_BACKFILL_WEEKS:-}" ]; then
+            export AQ26_HISTORICAL_BACKFILL_WEEKS="4"
+          fi
+          test -f scripts/aq26_production_pipeline.py
+          python scripts/aq26_production_pipeline.py --config "$AQ26_CONFIG"
+
+      - name: Catalogue visual assets and prune heavy website bundles
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/aq26_asset_catalogue.py || true
+          python scripts/aq26_prune_publish_folders.py --max-mb 25
+
+      - name: Create artifact size audit
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/aq26_artifact_size_report.py \
+            --root outputs \
+            --root site_public \
+            --root site_unredacted \
+            --root site_test \
+            --output-dir outputs/aq26_size_audit
+
+      - name: Deploy public, unredacted and test sites to Hostinger
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        env:
+          DEPLOY_TO_HOSTINGER: ${{ inputs.deploy_to_hostinger }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          set -euo pipefail
+          DO_DEPLOY="${DEPLOY_TO_HOSTINGER:-false}"
+          DO_DRY_RUN="${DRY_RUN:-true}"
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ]; then
+            DO_DEPLOY="true"
+            DO_DRY_RUN="false"
+          fi
+          if [ "$DO_DEPLOY" != "true" ]; then
+            echo "Hostinger deploy disabled for this run."
+            exit 0
+          fi
+          test -f scripts/aq26_deploy_hostinger.py
+          test -f "$AQ26_RUNTIME_CONFIG"
+          python scripts/aq26_deploy_hostinger.py \
+            --config "$AQ26_RUNTIME_CONFIG" \
+            --dry-run "$DO_DRY_RUN"
+
+      - name: Remove deployment-only auth files
+        if: always()
+        shell: bash
+        run: |
+          rm -f site_unredacted/.htpasswd site_public/.htpasswd
+
+      - name: Upload safe redaction failure summary
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-redaction-failure-summary
+          path: outputs/aq26_production/REDACTION_FAILURE_SUMMARY.json
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload safe validation failure summary
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-validation-failure-summary
+          path: |
+            outputs/aq26_production/**/AQ26_VALIDATION_FAILURE_SUMMARY.json
+            outputs/aq26_production/**/AQ26_VALIDATION_QUARANTINE_SUMMARY.json
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Prepare small weekly review artifact
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf aq26_artifact_review aq26_artifact_full_evidence
+          mkdir -p aq26_artifact_review/reports aq26_artifact_review/provenance aq26_artifact_review/site-data aq26_artifact_review/size-audit aq26_artifact_review/catalogues
+          printf 'AQ26 weekly lean review pack\nGenerated by AQ26 Weekly Production LEAN REVIEW PACK.\nFull evidence ZIPs are deliberately excluded from this artifact.\n' > aq26_artifact_review/README.txt
+
+          RUN_DIR=""
+          if [ -f outputs/aq26_production/latest_run_dir.txt ]; then
+            RUN_DIR="$(cat outputs/aq26_production/latest_run_dir.txt)"
+          fi
+          BUNDLE_PATH=""
+          if [ -f outputs/aq26_production/latest_bundle_path.txt ]; then
+            BUNDLE_PATH="$(cat outputs/aq26_production/latest_bundle_path.txt)"
+          fi
+
+          cp outputs/aq26_production/LATEST_WEEKLYV2.json aq26_artifact_review/provenance/ 2>/dev/null || true
+          cp outputs/aq26_production/latest_bundle_path.txt aq26_artifact_review/provenance/ 2>/dev/null || true
+          cp outputs/aq26_production/latest_run_dir.txt aq26_artifact_review/provenance/ 2>/dev/null || true
+
+          if [ -n "$RUN_DIR" ] && [ -d "$RUN_DIR" ]; then
+            cp "$RUN_DIR"/AQ26_WEEKLY_REPORT.* aq26_artifact_review/reports/ 2>/dev/null || true
+            cp "$RUN_DIR"/AQ26_*LEDGER*.csv aq26_artifact_review/provenance/ 2>/dev/null || true
+            cp "$RUN_DIR"/redaction_audit.json aq26_artifact_review/provenance/ 2>/dev/null || true
+            cp "$RUN_DIR"/evidence_readiness_gates.json aq26_artifact_review/provenance/ 2>/dev/null || true
+            cp "$RUN_DIR"/LATEST_WEEKLYV2.json aq26_artifact_review/provenance/LATEST_WEEKLYV2_run.json 2>/dev/null || true
+          fi
+
+          cp -r outputs/aq26_size_audit/* aq26_artifact_review/size-audit/ 2>/dev/null || true
+          cp outputs/aq26_asset_catalogue.* aq26_artifact_review/catalogues/ 2>/dev/null || true
+
+          if [ -d site_public/data ]; then
+            find site_public/data -maxdepth 4 -type f \
+              \( -name '*.json' -o -name '*.csv' \) \
+              ! -name '*.zip' \
+              ! -size +10M \
+              -exec cp --parents {} aq26_artifact_review/site-data/ \; 2>/dev/null || true
+          fi
+
+          if [ -n "$BUNDLE_PATH" ] && [ -f "$BUNDLE_PATH" ]; then
+            mkdir -p aq26_artifact_full_evidence
+            cp "$BUNDLE_PATH" aq26_artifact_full_evidence/
+            sha256sum "$BUNDLE_PATH" > aq26_artifact_full_evidence/AQ26_WEEKLY_EVIDENCE_BUNDLE.sha256.txt
+          fi
+
+          echo "Small review artifact size:"
+          du -sh aq26_artifact_review || true
+          echo "Optional full evidence artifact size:"
+          du -sh aq26_artifact_full_evidence 2>/dev/null || true
+
+      - name: Upload small weekly review artifact
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-weekly-review-pack
+          path: aq26_artifact_review/**
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 9
+
+      - name: Upload optional full evidence artifact
+        if: ${{ steps.gate.outputs.should_run == 'true' && inputs.upload_full_evidence_artifact == true }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-full-evidence-bundle-short-retention
+          path: aq26_artifact_full_evidence/**
+          if-no-files-found: error
+          retention-days: 3
+          compression-level: 0
+
+      - name: Skip committing generated public outputs
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "Skipping generated-output commit in production workflow."
+          echo "Evidence bundles remain in GitHub Actions artifacts/email/Drive; deployed website is sent by Hostinger deploy script."
+          rm -f site_unredacted/.htpasswd site_public/.htpasswd
+          find site_public site_unredacted site_test -type f -name '*.zip' -delete 2>/dev/null || true
+          git status --short || true
+
+      - name: Upload final ZIP to Google Drive
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        env:
+          UPLOAD_TO_DRIVE: ${{ inputs.upload_to_drive }}
+        run: |
+          set -euo pipefail
+          DO_UPLOAD="${UPLOAD_TO_DRIVE:-false}"
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ]; then DO_UPLOAD="false"; fi
+          if [ "$DO_UPLOAD" != "true" ]; then
+            echo "Google Drive upload disabled for this run."
+            exit 0
+          fi
+          test -f scripts/aq26_upload_to_gdrive.py
+          python scripts/aq26_upload_to_gdrive.py --latest-path outputs/aq26_production/latest_bundle_path.txt
+
+      - name: Email report and bundle
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        env:
+          SEND_EMAIL: ${{ inputs.send_email }}
+        run: |
+          set -euo pipefail
+          DO_EMAIL="${SEND_EMAIL:-false}"
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ]; then DO_EMAIL="true"; fi
+          if [ "$DO_EMAIL" != "true" ]; then
+            echo "Email disabled for this run."
+            exit 0
+          fi
+          test -f scripts/aq26_send_production_email.py
+          python scripts/aq26_send_production_email.py --latest-path outputs/aq26_production/latest_bundle_path.txt
