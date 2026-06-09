@@ -1,13 +1,43 @@
-# AQ26 generated evidence/download artefacts - do not commit
-outputs/evidence/*.zip
-outputs/evidence/*.pdf
-outputs/evidence/*.tar
-outputs/evidence/*.tar.gz
-outputs/evidence/*.7z
-site_public/downloads/*.zip
-site_public/downloads/*.pdf
-site_unredacted/downloads/*.zip
-site_unredacted/downloads/*.pdf
-site_test/downloads/*.zip
-site_test/downloads/*.pdf
-.gdrive_service_account.json
+# AQ26 generated evidence and heavy outputs
+outputs/
+downloads/
+exports/
+reports/
+evidence/
+artifacts/
+logs/
+*.zip
+*.7z
+*.tar
+*.tar.gz
+*.parquet
+*.mht
+
+# Generated office/report files
+*.pdf
+*.docx
+*.xlsx
+
+# Runtime caches/raw data
+data/raw/
+data/cache/
+.cache/
+tmp/
+temp/
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# Secrets/local-only
+.env
+*.pem
+*.key
+.htpasswd
+.htaccess.local
+GDRIVE_SERVICE_ACCOUNT*.json
+GDRIVE_SERVICE_ACCOUNT*.txt
+GITHUB_TOKEN*.txt
+GITHUB_PAT*.txt
+GIT_TOKEN*.txt
+
