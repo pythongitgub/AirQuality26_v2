@@ -1,0 +1,40 @@
+site:
+  base_url: "https://sccairquality.com"
+  public_root: "site_public"
+  unredacted_root: "site_unredacted"
+  test_root: "site_test"
+  output_root: "outputs/aq26_production"
+  timezone: "Europe/London"
+  title: "Environmental Intelligence Observatory · AQ26"
+  description: "AirQuality26 publishes weekly, provenance-controlled UK incinerator air-quality evidence, source records, historical comparisons and redacted public reports."
+  public_pages:
+    - index.html
+    - dashboard.html
+    - incinerators.html
+    - weekly-archive.html
+    - data-catalog.html
+    - methodology.html
+    - source-records.html
+    - historical-comparisons.html
+    - downloads.html
+    - contact.html
+quality:
+  max_public_file_mb: 25
+  required_public_files:
+    - index.html
+    - dashboard.html
+    - sitemap.xml
+    - robots.txt
+    - assets/aq26_dashboard.js
+    - assets/aq26_nextlevel.css
+    - data/weekly/dashboard_summary.json
+    - data/weekly/facility_status.json
+    - data/weekly/coverage_trend.json
+  forbidden_public_patterns:
+    - "-----BEGIN PRIVATE KEY-----"
+    - "private_key_id"
+    - "client_email"
+    - "ssh-rsa"
+    - "SMTP_PASSWORD="
+    - "SCC_UNREDACTED_PASSWORD="
+    - "SCCAIRQUALITY_SSH_PASSWORD="
