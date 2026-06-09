@@ -5,129 +5,88 @@ import argparse
 import csv
 import hashlib
 import json
-import mimetypes
-from collections import defaultdict
 from pathlib import Path
+from datetime import datetime, timezone
 
-
-def sha256(path: Path, block: int = 1024 * 1024) -> str:
-    h = hashlib.sha256()
-    with path.open('rb') as f:
-        for chunk in iter(lambda: f.read(block), b''):
-            h.update(chunk)
-    return h.hexdigest()
-
-
-def human(n: int) -> str:
-    units = ['B','KB','MB','GB','TB']
-    value = float(n)
-    for unit in units:
-        if value < 1024 or unit == units[-1]:
-            return f'{value:.1f} {unit}' if unit != 'B' else f'{int(value)} B'
-        value /= 1024
-
+def sha256_file(path: Path, max_bytes: int = 64 * 1024 * 1024) -> str | None:
+    """Return SHA256 for files up to max_bytes; skip huge files to keep weekly audit quick."""
+    try:
+        if path.stat().st_size > max_bytes:
+            return None
+        h = hashlib.sha256()
+        with path.open("rb") as f:
+            for chunk in iter(lambda: f.read(1024 * 1024), b""):
+                h.update(chunk)
+        return h.hexdigest()
+    except Exception:
+        return None
 
 def classify(path: Path) -> str:
     suffix = path.suffix.lower()
-    parts = {p.lower() for p in path.parts}
-    if suffix in {'.zip', '.7z', '.tar', '.gz', '.tgz'}:
-        return 'archives'
-    if suffix in {'.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg', '.webm', '.mp4'}:
-        return 'visual_assets'
-    if suffix in {'.json', '.geojson'}:
-        return 'json_metadata'
-    if suffix in {'.csv', '.tsv'}:
-        return 'tables'
-    if suffix in {'.pdf', '.docx', '.md', '.html', '.txt'}:
-        return 'reports_pages'
-    if 'outputs' in parts:
-        return 'generated_outputs'
-    return 'other'
-
+    if suffix in {".zip", ".7z", ".tar", ".gz", ".tgz"}:
+        return "archive"
+    if suffix in {".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".avif"}:
+        return "image"
+    if suffix in {".mp4", ".webm", ".mov"}:
+        return "video"
+    if suffix in {".json", ".csv", ".parquet", ".geojson"}:
+        return "data"
+    if suffix in {".pdf", ".md", ".html", ".txt"}:
+        return "report_or_page"
+    return "other"
 
 def main() -> int:
-    p = argparse.ArgumentParser(description='Create an AQ26 artifact/file-size audit report.')
-    p.add_argument('--root', action='append', default=[], help='Root folder to scan. Repeatable.')
-    p.add_argument('--output-dir', default='outputs/aq26_size_audit')
-    p.add_argument('--top', type=int, default=80)
-    p.add_argument('--hash-files-over-mb', type=float, default=1.0)
-    args = p.parse_args()
-
-    roots = [Path(r) for r in args.root] or [Path('outputs'), Path('site_public'), Path('site_unredacted'), Path('site_test')]
-    files = []
-    by_root = defaultdict(int)
-    by_class = defaultdict(int)
-    by_suffix = defaultdict(int)
-    by_hash = defaultdict(list)
-
-    for root in roots:
-        if not root.exists():
-            continue
-        for path in root.rglob('*'):
-            if not path.is_file():
-                continue
-            try:
-                size = path.stat().st_size
-            except OSError:
-                continue
-            rel = path.as_posix()
-            cat = classify(path)
-            suffix = path.suffix.lower() or '[none]'
-            by_root[root.as_posix()] += size
-            by_class[cat] += size
-            by_suffix[suffix] += size
-            file_hash = ''
-            if size >= args.hash_files_over_mb * 1024 * 1024:
-                file_hash = sha256(path)
-                by_hash[file_hash].append(rel)
-            files.append({
-                'path': rel,
-                'bytes': size,
-                'mb': round(size / 1048576, 3),
-                'class': cat,
-                'suffix': suffix,
-                'mime': mimetypes.guess_type(path.name)[0] or '',
-                'sha256': file_hash,
-            })
-
-    files.sort(key=lambda r: r['bytes'], reverse=True)
-    dupes = []
-    for h, paths in by_hash.items():
-        if h and len(paths) > 1:
-            sizes = [next(f['bytes'] for f in files if f['path'] == p) for p in paths]
-            dupes.append({'sha256': h, 'copies': len(paths), 'bytes_each': sizes[0], 'duplicate_bytes': sizes[0]*(len(paths)-1), 'paths': paths})
-    dupes.sort(key=lambda r: r['duplicate_bytes'], reverse=True)
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--root", action="append", default=[])
+    ap.add_argument("--output-dir", default="outputs/aq26_size_audit")
+    ap.add_argument("--top-n", type=int, default=250)
+    args = ap.parse_args()
 
     out = Path(args.output_dir)
     out.mkdir(parents=True, exist_ok=True)
-    summary = {
-        'total_files': len(files),
-        'total_bytes': sum(f['bytes'] for f in files),
-        'total_human': human(sum(f['bytes'] for f in files)),
-        'by_root': {k: {'bytes': v, 'human': human(v)} for k, v in sorted(by_root.items(), key=lambda x: x[1], reverse=True)},
-        'by_class': {k: {'bytes': v, 'human': human(v)} for k, v in sorted(by_class.items(), key=lambda x: x[1], reverse=True)},
-        'by_suffix': {k: {'bytes': v, 'human': human(v)} for k, v in sorted(by_suffix.items(), key=lambda x: x[1], reverse=True)[:30]},
-        'top_files': files[:args.top],
-        'duplicate_groups': dupes[:30],
-        'duplicate_bytes_potential_saving': sum(d['duplicate_bytes'] for d in dupes),
-        'duplicate_human_potential_saving': human(sum(d['duplicate_bytes'] for d in dupes)),
-    }
-    (out / 'artifact_size_summary.json').write_text(json.dumps(summary, indent=2), encoding='utf-8')
-    with (out / 'artifact_largest_files.csv').open('w', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=['bytes','mb','class','suffix','mime','sha256','path'])
+
+    rows = []
+    totals = {}
+    for root_str in args.root:
+        root = Path(root_str)
+        if not root.exists():
+            continue
+        for p in root.rglob("*"):
+            if not p.is_file():
+                continue
+            try:
+                size = p.stat().st_size
+            except OSError:
+                continue
+            kind = classify(p)
+            rows.append({
+                "root": root_str,
+                "path": p.as_posix(),
+                "size_bytes": size,
+                "size_mb": round(size / 1024 / 1024, 3),
+                "kind": kind,
+                "sha256_if_small": sha256_file(p),
+            })
+            totals[kind] = totals.get(kind, 0) + size
+
+    rows.sort(key=lambda r: r["size_bytes"], reverse=True)
+    with (out / "artifact_largest_files.csv").open("w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=["root","path","size_bytes","size_mb","kind","sha256_if_small"])
         writer.writeheader()
-        writer.writerows(files[:args.top])
-    with (out / 'artifact_duplicate_groups.json').open('w', encoding='utf-8') as f:
-        json.dump(dupes, f, indent=2)
-    print(json.dumps({
-        'output_dir': out.as_posix(),
-        'total': summary['total_human'],
-        'files': len(files),
-        'largest': files[:10],
-        'duplicate_potential_saving': summary['duplicate_human_potential_saving'],
-    }, indent=2))
+        writer.writerows(rows[: args.top_n])
+
+    summary = {
+        "created_utc": datetime.now(timezone.utc).isoformat(),
+        "root_count": len(args.root),
+        "file_count": len(rows),
+        "total_bytes": sum(r["size_bytes"] for r in rows),
+        "total_mb": round(sum(r["size_bytes"] for r in rows) / 1024 / 1024, 3),
+        "by_kind_mb": {k: round(v / 1024 / 1024, 3) for k, v in sorted(totals.items())},
+        "largest_files": rows[:25],
+    }
+    (out / "artifact_size_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
+    print(json.dumps(summary, indent=2)[:4000])
     return 0
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     raise SystemExit(main())
