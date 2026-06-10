@@ -34,7 +34,6 @@ on:
         default: "4"
         type: string
   schedule:
-    # Dual UTC schedule lets the gate hit Monday 07:00 Europe/London in both GMT and BST.
     - cron: "0 6 * * 1"
     - cron: "0 7 * * 1"
 
@@ -150,6 +149,30 @@ jobs:
           fi
           python scripts/aq26_production_pipeline.py --config "$AQ26_CONFIG"
 
+      - name: Apply SEO, legal footer, cookie banner and analytics
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        env:
+          GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
+          AQ26_PUBLIC_URL: https://sccairquality.com
+        run: |
+          set -euo pipefail
+          python scripts/aq26_apply_seo_legal_analytics.py --site-root site_public --domain "${AQ26_PUBLIC_URL}" --ga-id "${GA_MEASUREMENT_ID:-}"
+          if [ -d site_test ]; then
+            python scripts/aq26_apply_seo_legal_analytics.py --site-root site_test --domain "${AQ26_PUBLIC_URL}/test" --ga-id "${GA_MEASUREMENT_ID:-}"
+          fi
+
+      - name: Verify SEO, legal pages, sitemap, robots and analytics hooks
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        env:
+          GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
+        run: |
+          set -euo pipefail
+          REQUIRE_GA=""
+          if [ -n "${GA_MEASUREMENT_ID:-}" ]; then REQUIRE_GA="--require-ga"; fi
+          python scripts/aq26_verify_seo_legal_analytics.py --site-root site_public $REQUIRE_GA
+
       - name: Create deployment-only unredacted password files
         if: ${{ steps.gate.outputs.should_run == 'true' }}
         shell: bash
@@ -161,29 +184,19 @@ jobs:
             echo "Hostinger deploy disabled for this run; skipping auth-file creation."
             exit 0
           fi
-
           sudo apt-get update
           sudo apt-get install -y apache2-utils
-
           rm -f site_unredacted/.htpasswd site_public/.htpasswd
           if [ -z "${SCC_UNREDACTED_PASSWORD:-}" ]; then
             echo "SCC_UNREDACTED_PASSWORD is not set; refusing to create weak unredacted auth."
             exit 1
           fi
-          : "${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR:?AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR missing}"
-
-          REMOTE_ROOT="${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR%/}"
-
           htpasswd -bc site_unredacted/.htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
-          cat > site_unredacted/.htaccess <<EOF
+          cat > site_unredacted/.htaccess <<'EOF'
           AuthType Basic
           AuthName "AQ26 Unredacted Review"
-          AuthUserFile ${REMOTE_ROOT}/unredacted/.htpasswd
+          AuthUserFile .htpasswd
           Require valid-user
-          Options -Indexes
-          <Files ".htpasswd">
-            Require all denied
-          </Files>
           EOF
           printf 'User-agent: *\nDisallow: /\n' > site_unredacted/robots.txt
 
@@ -315,47 +328,26 @@ jobs:
           set -euo pipefail
           rm -rf aq26_artifact_review aq26_artifact_full_evidence
           mkdir -p aq26_artifact_review/reports aq26_artifact_review/provenance aq26_artifact_review/site-data aq26_artifact_review/size-audit
-
-          RUN_DIR="$(cat outputs/aq26_production/latest_run_dir.txt 2>/dev/null || true)"
+          RUN_DIR="$(cat outputs/aq26_production/latest_run_dir.txt)"
           BUNDLE_PATH="$(cat outputs/aq26_production/latest_bundle_path.txt 2>/dev/null || true)"
-
-          {
-            echo "AQ26 weekly review artifact"
-            echo "Created: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            echo "Run dir: ${RUN_DIR:-missing}"
-            echo "Bundle path: ${BUNDLE_PATH:-missing}"
-            echo
-            echo "This artifact intentionally excludes the full outputs tree and website ZIP bundles."
-          } > aq26_artifact_review/README.txt
-
-          echo "Preparing small review artifact from ${RUN_DIR:-missing}"
-
+          echo "Preparing small review artifact from $RUN_DIR"
           cp outputs/aq26_production/LATEST_WEEKLYV2.json aq26_artifact_review/provenance/ 2>/dev/null || true
           cp outputs/aq26_production/latest_bundle_path.txt aq26_artifact_review/provenance/ 2>/dev/null || true
           cp outputs/aq26_production/latest_run_dir.txt aq26_artifact_review/provenance/ 2>/dev/null || true
-
-          if [ -n "$RUN_DIR" ] && [ -d "$RUN_DIR" ]; then
-            cp "$RUN_DIR"/AQ26_WEEKLY_REPORT.* aq26_artifact_review/reports/ 2>/dev/null || true
-            cp "$RUN_DIR"/AQ26_*LEDGER*.csv aq26_artifact_review/provenance/ 2>/dev/null || true
-            cp "$RUN_DIR"/redaction_audit.json aq26_artifact_review/provenance/ 2>/dev/null || true
-            cp "$RUN_DIR"/evidence_readiness_gates.json aq26_artifact_review/provenance/ 2>/dev/null || true
-            cp "$RUN_DIR"/LATEST_WEEKLYV2.json aq26_artifact_review/provenance/LATEST_WEEKLYV2_run.json 2>/dev/null || true
-          fi
-
+          cp "$RUN_DIR"/AQ26_WEEKLY_REPORT.* aq26_artifact_review/reports/ 2>/dev/null || true
+          cp "$RUN_DIR"/AQ26_*LEDGER*.csv aq26_artifact_review/provenance/ 2>/dev/null || true
+          cp "$RUN_DIR"/redaction_audit.json aq26_artifact_review/provenance/ 2>/dev/null || true
+          cp "$RUN_DIR"/evidence_readiness_gates.json aq26_artifact_review/provenance/ 2>/dev/null || true
+          cp "$RUN_DIR"/LATEST_WEEKLYV2.json aq26_artifact_review/provenance/LATEST_WEEKLYV2_run.json 2>/dev/null || true
           cp -r outputs/aq26_size_audit/* aq26_artifact_review/size-audit/ 2>/dev/null || true
-
-          if [ -d site_public/data ]; then
-            find site_public/data -maxdepth 3 -type f \
-              \( -name '*.json' -o -name '*.csv' \) \
-              ! -name '*.zip' -exec cp --parents {} aq26_artifact_review/site-data/ \; 2>/dev/null || true
-          fi
-
+          find site_public/data -maxdepth 3 -type f \
+            \( -name '*.json' -o -name '*.csv' \) \
+            ! -name '*.zip' -exec cp --parents {} aq26_artifact_review/site-data/ \; 2>/dev/null || true
           if [ -n "$BUNDLE_PATH" ] && [ -f "$BUNDLE_PATH" ]; then
             mkdir -p aq26_artifact_full_evidence
             cp "$BUNDLE_PATH" aq26_artifact_full_evidence/
             sha256sum "$BUNDLE_PATH" > aq26_artifact_full_evidence/AQ26_WEEKLY_EVIDENCE_BUNDLE.sha256.txt
           fi
-
           echo "Small review artifact size:"
           du -sh aq26_artifact_review || true
           echo "Optional full evidence artifact size:"
@@ -369,7 +361,6 @@ jobs:
           path: aq26_artifact_review/**
           if-no-files-found: error
           retention-days: 14
-          compression-level: 9
 
       - name: Upload optional full evidence artifact
         if: ${{ steps.gate.outputs.should_run == 'true' && inputs.upload_full_evidence_artifact == true }}
@@ -379,7 +370,6 @@ jobs:
           path: aq26_artifact_full_evidence/**
           if-no-files-found: error
           retention-days: 3
-          compression-level: 0
 
       - name: Skip committing generated public outputs
         if: ${{ steps.gate.outputs.should_run == 'true' }}
