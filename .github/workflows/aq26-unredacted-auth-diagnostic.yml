@@ -46,11 +46,26 @@ jobs:
           : "${SCCAIRQUALITY_SSH_USERNAME:?SCCAIRQUALITY_SSH_USERNAME missing}"
           : "${SCCAIRQUALITY_SSH_PASSWORD:?SCCAIRQUALITY_SSH_PASSWORD missing}"
           export SSHPASS="$SCCAIRQUALITY_SSH_PASSWORD"
-          SSH_OPTS="-p ${SCCAIRQUALITY_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=45"
+          SSH_OPTS="-p ${SCCAIRQUALITY_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=75 -o ServerAliveInterval=15 -o ServerAliveCountMax=4"
+
+          ssh_retry() {
+            local attempt
+            for attempt in 1 2 3 4 5; do
+              echo "SSH attempt $attempt/5" >&2
+              if sshpass -e ssh $SSH_OPTS "$@"; then
+                return 0
+              fi
+              echo "SSH attempt $attempt failed; retrying after short delay" >&2
+              sleep $((attempt * 12))
+            done
+            echo "SSH failed after 5 attempts" >&2
+            return 255
+          }
+
           REMOTE_ROOT="${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR%/}"
           REMOTE_UNRED="${REMOTE_ROOT}/unredacted"
 
-          sshpass -e ssh $SSH_OPTS "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "mkdir -p '$REMOTE_UNRED' && rm -f '$REMOTE_UNRED/.htaccess' '$REMOTE_UNRED/.htpasswd' && cd '$REMOTE_UNRED' && pwd" > /tmp/aq26_remote_pwd.txt
+          ssh_retry "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "mkdir -p '$REMOTE_UNRED' && rm -f '$REMOTE_UNRED/.htaccess' '$REMOTE_UNRED/.htpasswd' && cd '$REMOTE_UNRED' && pwd" > /tmp/aq26_remote_pwd.txt
           REMOTE_PWD="$(tail -n 1 /tmp/aq26_remote_pwd.txt | tr -d '\r')"
           echo "Remote unredacted directory resolved by server: $REMOTE_PWD"
 
@@ -67,17 +82,32 @@ jobs:
           HTPASSWD_B64="$(base64 -w 0 /tmp/aq26_htpasswd)"
           HTACCESS_B64="$(base64 -w 0 /tmp/aq26_htaccess)"
 
-          sshpass -e ssh $SSH_OPTS "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "set -e; printf '%s' '$HTPASSWD_B64' | base64 -d > '$REMOTE_UNRED/.htpasswd'; printf '%s' '$HTACCESS_B64' | base64 -d > '$REMOTE_UNRED/.htaccess'; chmod 640 '$REMOTE_UNRED/.htpasswd'; chmod 644 '$REMOTE_UNRED/.htaccess'; echo 'Remote files written'; ls -la '$REMOTE_UNRED/.htaccess' '$REMOTE_UNRED/.htpasswd'; echo '--- .htaccess ---'; cat '$REMOTE_UNRED/.htaccess'"
+          ssh_retry "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "set -e; printf '%s' '$HTPASSWD_B64' | base64 -d > '$REMOTE_UNRED/.htpasswd'; printf '%s' '$HTACCESS_B64' | base64 -d > '$REMOTE_UNRED/.htaccess'; chmod 640 '$REMOTE_UNRED/.htpasswd'; chmod 644 '$REMOTE_UNRED/.htaccess'; echo 'Remote files written'; ls -la '$REMOTE_UNRED/.htaccess' '$REMOTE_UNRED/.htpasswd'; echo '--- .htaccess ---'; cat '$REMOTE_UNRED/.htaccess'"
 
       - name: Download remote htpasswd and verify it matches the secret
         shell: bash
         run: |
           set -euo pipefail
           export SSHPASS="$SCCAIRQUALITY_SSH_PASSWORD"
-          SSH_OPTS="-p ${SCCAIRQUALITY_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=45"
+          SSH_OPTS="-p ${SCCAIRQUALITY_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=75 -o ServerAliveInterval=15 -o ServerAliveCountMax=4"
+
+          ssh_retry() {
+            local attempt
+            for attempt in 1 2 3 4 5; do
+              echo "SSH attempt $attempt/5" >&2
+              if sshpass -e ssh $SSH_OPTS "$@"; then
+                return 0
+              fi
+              echo "SSH attempt $attempt failed; retrying after short delay" >&2
+              sleep $((attempt * 12))
+            done
+            echo "SSH failed after 5 attempts" >&2
+            return 255
+          }
+
           REMOTE_ROOT="${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR%/}"
           REMOTE_UNRED="${REMOTE_ROOT}/unredacted"
-          sshpass -e ssh $SSH_OPTS "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "base64 -w 0 '$REMOTE_UNRED/.htpasswd'" > /tmp/remote_htpasswd.b64
+          ssh_retry "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "base64 -w 0 '$REMOTE_UNRED/.htpasswd'" > /tmp/remote_htpasswd.b64
           base64 -d /tmp/remote_htpasswd.b64 > /tmp/remote_htpasswd
           htpasswd -vb /tmp/remote_htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
           echo "Remote .htpasswd verifies locally with SCC_UNREDACTED_PASSWORD."
