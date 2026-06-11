@@ -1,0 +1,134 @@
+name: AQ26 Diagnose Unredacted Auth Algorithm
+
+on:
+  workflow_dispatch:
+
+jobs:
+  diagnose-auth-algorithm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install tools
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y apache2-utils sshpass curl
+
+      - name: Build multi-algorithm htpasswd
+        shell: bash
+        env:
+          SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+        run: |
+          set -euo pipefail
+          : "${SCC_UNREDACTED_PASSWORD:?SCC_UNREDACTED_PASSWORD missing}"
+          rm -f /tmp/aq26_htpasswd
+
+          # APR-MD5, the previous method.
+          htpasswd -bcm /tmp/aq26_htpasswd aq26_apr "$SCC_UNREDACTED_PASSWORD"
+
+          # SHA-1, widely understood by older Apache/LiteSpeed-style Basic Auth implementations.
+          htpasswd -bs /tmp/aq26_htpasswd aq26_sha "$SCC_UNREDACTED_PASSWORD"
+
+          # bcrypt, supported on some newer stacks.
+          htpasswd -bB /tmp/aq26_htpasswd aq26_bcrypt "$SCC_UNREDACTED_PASSWORD"
+
+          echo "Local verification checks:"
+          htpasswd -vb /tmp/aq26_htpasswd aq26_apr "$SCC_UNREDACTED_PASSWORD"
+          htpasswd -vb /tmp/aq26_htpasswd aq26_sha "$SCC_UNREDACTED_PASSWORD"
+          htpasswd -vb /tmp/aq26_htpasswd aq26_bcrypt "$SCC_UNREDACTED_PASSWORD"
+          echo "Local multi-algorithm htpasswd generated and verified."
+          awk -F: '{print $1":"substr($2,1,8)"..."}' /tmp/aq26_htpasswd
+
+      - name: Write multi-algorithm auth files over SSH
+        shell: bash
+        env:
+          AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
+          SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
+          SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
+          SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
+          SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
+        run: |
+          set -euo pipefail
+          : "${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR:?AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR missing}"
+          : "${SCCAIRQUALITY_SSH_HOST:?SCCAIRQUALITY_SSH_HOST missing}"
+          : "${SCCAIRQUALITY_SSH_PORT:?SCCAIRQUALITY_SSH_PORT missing}"
+          : "${SCCAIRQUALITY_SSH_USERNAME:?SCCAIRQUALITY_SSH_USERNAME missing}"
+          : "${SCCAIRQUALITY_SSH_PASSWORD:?SCCAIRQUALITY_SSH_PASSWORD missing}"
+          export SSHPASS="$SCCAIRQUALITY_SSH_PASSWORD"
+          SSH_OPTS="-p ${SCCAIRQUALITY_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=75 -o ServerAliveInterval=15 -o ServerAliveCountMax=4"
+
+          ssh_retry() {
+            local attempt
+            for attempt in 1 2 3 4 5; do
+              echo "SSH attempt $attempt/5" >&2
+              if sshpass -e ssh $SSH_OPTS "$@"; then
+                return 0
+              fi
+              echo "SSH attempt $attempt failed; retrying after short delay" >&2
+              sleep $((attempt * 12))
+            done
+            echo "SSH failed after 5 attempts" >&2
+            return 255
+          }
+
+          REMOTE_ROOT="${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR%/}"
+          REMOTE_UNRED="${REMOTE_ROOT}/unredacted"
+
+          ssh_retry "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "mkdir -p '$REMOTE_UNRED' && rm -f '$REMOTE_UNRED/.htaccess' '$REMOTE_UNRED/.htpasswd' && cd '$REMOTE_UNRED' && pwd" > /tmp/aq26_remote_pwd.txt
+          REMOTE_PWD="$(tail -n 1 /tmp/aq26_remote_pwd.txt | tr -d '\r')"
+          echo "Remote unredacted directory resolved by server: $REMOTE_PWD"
+
+          cat > /tmp/aq26_htaccess <<EOF
+AuthType Basic
+AuthName "AQ26 Algorithm Diagnostic"
+AuthBasicProvider file
+AuthUserFile ${REMOTE_PWD}/.htpasswd
+Require valid-user
+Options -Indexes
+EOF
+
+          HTPASSWD_B64="$(base64 -w 0 /tmp/aq26_htpasswd)"
+          HTACCESS_B64="$(base64 -w 0 /tmp/aq26_htaccess)"
+
+          ssh_retry "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "set -e; printf '%s' '$HTPASSWD_B64' | base64 -d > '$REMOTE_UNRED/.htpasswd'; printf '%s' '$HTACCESS_B64' | base64 -d > '$REMOTE_UNRED/.htaccess'; chmod 644 '$REMOTE_UNRED/.htpasswd'; chmod 644 '$REMOTE_UNRED/.htaccess'; echo 'Remote multi-algorithm auth files written'; ls -la '$REMOTE_UNRED/.htaccess' '$REMOTE_UNRED/.htpasswd'; echo '--- .htaccess ---'; cat '$REMOTE_UNRED/.htaccess'; echo '--- .htpasswd user/hash prefixes ---'; awk -F: '{print \$1":"substr(\$2,1,8)"..."}' '$REMOTE_UNRED/.htpasswd'"
+
+      - name: Test each remote algorithm user
+        shell: bash
+        env:
+          SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+        run: |
+          set -euo pipefail
+          : "${SCC_UNREDACTED_PASSWORD:?SCC_UNREDACTED_PASSWORD missing}"
+
+          test_user() {
+            local url="$1"
+            local user="$2"
+            echo ""
+            echo "Testing $url as $user"
+            code=$(curl -k -L -s -o "/tmp/${user}.html" -D "/tmp/${user}.headers" -u "$user:${SCC_UNREDACTED_PASSWORD}" -w "%{http_code}" "$url" || true)
+            echo "Authenticated HTTP status for $user: $code"
+            echo "WWW-Authenticate header, if any:"
+            grep -i '^www-authenticate:' "/tmp/${user}.headers" || true
+            if [ "$code" = "200" ] || [ "$code" = "301" ] || [ "$code" = "302" ]; then
+              echo "RESULT: $user WORKED"
+              return 0
+            fi
+            echo "RESULT: $user failed"
+            return 1
+          }
+
+          overall=1
+          for url in "https://sccairquality.com/unredacted/" "https://www.sccairquality.com/unredacted/"; do
+            unauth_code=$(curl -k -L -s -o /tmp/aq26_unauth.html -D /tmp/aq26_unauth.headers -w "%{http_code}" "$url" || true)
+            echo ""
+            echo "Unauthenticated HTTP status for $url: $unauth_code"
+            grep -i '^www-authenticate:' /tmp/aq26_unauth.headers || true
+            test_user "$url" aq26_apr && overall=0 || true
+            test_user "$url" aq26_sha && overall=0 || true
+            test_user "$url" aq26_bcrypt && overall=0 || true
+          done
+
+          if [ "$overall" -ne 0 ]; then
+            echo "No tested htpasswd algorithm worked remotely. This points to Hostinger/LiteSpeed auth handling or a different hidden protection layer."
+            exit 1
+          fi
+          echo "At least one htpasswd algorithm worked remotely. Use that algorithm for the final aq26 user."
