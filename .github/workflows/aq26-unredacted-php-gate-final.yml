@@ -10,7 +10,7 @@ jobs:
   php-gate:
     name: Check unredacted auth and PHP execution
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     env:
       SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
@@ -23,11 +23,11 @@ jobs:
       UNREDACTED_USER_SECRET: ${{ secrets.SCC_UNREDACTED_USERNAME }}
 
     steps:
-      - name: Install SSH tooling
+      - name: Install required tools
         run: |
           set -euo pipefail
           sudo apt-get update
-          sudo apt-get install -y sshpass curl
+          sudo apt-get install -y sshpass curl apache2-utils
 
       - name: Validate required secrets
         run: |
@@ -64,6 +64,54 @@ jobs:
             exit 1
           fi
 
+      - name: Regenerate unredacted htpasswd and htaccess on server
+        run: |
+          set -euo pipefail
+
+          PUBLIC_HTML="${PUBLIC_HTML_A:-$PUBLIC_HTML_B}"
+          UNREDACTED_USER="${UNREDACTED_USER_SECRET:-aq26}"
+
+          echo "Preparing fresh htpasswd entry for user: $UNREDACTED_USER"
+
+          htpasswd -B -b -c /tmp/aq26-unredacted.htpasswd "$UNREDACTED_USER" "$UNREDACTED_PASSWORD"
+
+          cat > /tmp/aq26-unredacted.htaccess <<EOF
+AuthType Basic
+AuthName "AQ26 Unredacted"
+AuthUserFile $PUBLIC_HTML/unredacted/.htpasswd
+Require valid-user
+
+DirectoryIndex index.html index.php
+Options -Indexes
+EOF
+
+          echo "Ensuring remote unredacted directory exists..."
+
+          sshpass -p "$SSH_PASSWORD" ssh \
+            -p "$SSH_PORT" \
+            -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=/dev/null \
+            "$SSH_USER@$SSH_HOST" \
+            "mkdir -p '$PUBLIC_HTML/unredacted'"
+
+          echo "Uploading regenerated auth files..."
+
+          sshpass -p "$SSH_PASSWORD" scp \
+            -P "$SSH_PORT" \
+            -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=/dev/null \
+            /tmp/aq26-unredacted.htpasswd \
+            "$SSH_USER@$SSH_HOST:$PUBLIC_HTML/unredacted/.htpasswd"
+
+          sshpass -p "$SSH_PASSWORD" scp \
+            -P "$SSH_PORT" \
+            -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=/dev/null \
+            /tmp/aq26-unredacted.htaccess \
+            "$SSH_USER@$SSH_HOST:$PUBLIC_HTML/unredacted/.htaccess"
+
+          echo "Remote .htpasswd and .htaccess regenerated."
+
       - name: Create temporary PHP gate file inside unredacted folder
         run: |
           set -euo pipefail
@@ -73,20 +121,13 @@ jobs:
           REMOTE_FILE="$PUBLIC_HTML/unredacted/aq26-php-gate.php"
 
           cat > /tmp/aq26-php-gate.php <<PHP
-          <?php
-          header('Content-Type: text/plain; charset=utf-8');
-          echo '${TOKEN}';
-          ?>
-          PHP
+<?php
+header('Content-Type: text/plain; charset=utf-8');
+echo '${TOKEN}';
+?>
+PHP
 
-          echo "Uploading temporary PHP gate file to unredacted folder..."
-
-          sshpass -p "$SSH_PASSWORD" ssh \
-            -p "$SSH_PORT" \
-            -o StrictHostKeyChecking=no \
-            -o UserKnownHostsFile=/dev/null \
-            "$SSH_USER@$SSH_HOST" \
-            "mkdir -p '$PUBLIC_HTML/unredacted'"
+          echo "Uploading temporary PHP gate file..."
 
           sshpass -p "$SSH_PASSWORD" scp \
             -P "$SSH_PORT" \
@@ -96,6 +137,37 @@ jobs:
             "$SSH_USER@$SSH_HOST:$REMOTE_FILE"
 
           echo "TOKEN=$TOKEN" >> "$GITHUB_ENV"
+
+      - name: Diagnose remote auth files without exposing hashes
+        run: |
+          set -euo pipefail
+
+          PUBLIC_HTML="${PUBLIC_HTML_A:-$PUBLIC_HTML_B}"
+
+          sshpass -p "$SSH_PASSWORD" ssh \
+            -p "$SSH_PORT" \
+            -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=/dev/null \
+            "$SSH_USER@$SSH_HOST" \
+            "
+            set -e
+            echo '--- unredacted directory ---'
+            ls -la '$PUBLIC_HTML/unredacted' || true
+
+            echo '--- .htaccess ---'
+            if [ -f '$PUBLIC_HTML/unredacted/.htaccess' ]; then
+              cat '$PUBLIC_HTML/unredacted/.htaccess'
+            else
+              echo 'NO .htaccess found'
+            fi
+
+            echo '--- .htpasswd users only ---'
+            if [ -f '$PUBLIC_HTML/unredacted/.htpasswd' ]; then
+              cut -d: -f1 '$PUBLIC_HTML/unredacted/.htpasswd' || true
+            else
+              echo 'NO .htpasswd found'
+            fi
+            "
 
       - name: Check unauthenticated access is blocked
         run: |
