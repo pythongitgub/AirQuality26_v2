@@ -1,0 +1,211 @@
+name: AQ26 Auth One Shot Final
+
+on:
+  workflow_dispatch:
+
+jobs:
+  aq26-auth-one-shot-final:
+    name: Diagnose and fix AQ26 unredacted auth
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Install required tools
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y sshpass apache2-utils curl
+
+      - name: Diagnose accepted htpasswd algorithm and restore aq26 user
+        env:
+          AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
+          SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
+          SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
+          SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
+          SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
+          SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+        run: |
+          set -euo pipefail
+
+          : "${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR:?AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR missing}"
+          : "${SCCAIRQUALITY_SSH_HOST:?SCCAIRQUALITY_SSH_HOST missing}"
+          : "${SCCAIRQUALITY_SSH_PORT:?SCCAIRQUALITY_SSH_PORT missing}"
+          : "${SCCAIRQUALITY_SSH_USERNAME:?SCCAIRQUALITY_SSH_USERNAME missing}"
+          : "${SCCAIRQUALITY_SSH_PASSWORD:?SCCAIRQUALITY_SSH_PASSWORD missing}"
+          : "${SCC_UNREDACTED_PASSWORD:?SCC_UNREDACTED_PASSWORD missing}"
+
+          export SSHPASS="$SCCAIRQUALITY_SSH_PASSWORD"
+          SSH_TARGET="${SCCAIRQUALITY_SSH_USERNAME}@${SCCAIRQUALITY_SSH_HOST}"
+          SSH_OPTS=(
+            -p "$SCCAIRQUALITY_SSH_PORT"
+            -o StrictHostKeyChecking=no
+            -o UserKnownHostsFile=/dev/null
+            -o ConnectTimeout=75
+            -o ServerAliveInterval=15
+            -o ServerAliveCountMax=4
+          )
+
+          ssh_retry() {
+            local attempt
+            for attempt in 1 2 3 4 5; do
+              echo "SSH attempt ${attempt}/5" >&2
+              if sshpass -e ssh "${SSH_OPTS[@]}" "$SSH_TARGET" "$@"; then
+                return 0
+              fi
+              echo "SSH attempt ${attempt} failed; retrying..." >&2
+              sleep $((attempt * 10))
+            done
+            echo "SSH failed after 5 attempts" >&2
+            return 255
+          }
+
+          remote_write_file() {
+            local local_file="$1"
+            local remote_file="$2"
+            local encoded
+            encoded="$(base64 -w 0 "$local_file")"
+            ssh_retry "set -e; printf '%s' '$encoded' | base64 -d > '$remote_file'; chmod 644 '$remote_file'; ls -l '$remote_file'"
+          }
+
+          TMPDIR="$(mktemp -d)"
+          trap 'rm -rf "$TMPDIR"' EXIT
+
+          REMOTE_ROOT="${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR%/}"
+          REMOTE_UNRED="${REMOTE_ROOT}/unredacted"
+
+          echo "Resolving remote unredacted directory..."
+          ssh_retry "mkdir -p '$REMOTE_UNRED' && cd '$REMOTE_UNRED' && pwd" > "$TMPDIR/remote_pwd.txt"
+          REMOTE_PWD="$(tail -n 1 "$TMPDIR/remote_pwd.txt" | tr -d '\r')"
+          echo "Remote unredacted directory resolved by server: ${REMOTE_PWD}"
+
+          echo "Building temporary multi-algorithm .htpasswd..."
+          htpasswd -nbm aq26_apr "$SCC_UNREDACTED_PASSWORD" > "$TMPDIR/.htpasswd.multi"
+          htpasswd -nbs aq26_sha "$SCC_UNREDACTED_PASSWORD" >> "$TMPDIR/.htpasswd.multi"
+          if htpasswd -nbB -C 10 aq26_bcrypt "$SCC_UNREDACTED_PASSWORD" >> "$TMPDIR/.htpasswd.multi"; then
+            echo "bcrypt test user generated."
+          else
+            echo "bcrypt test user could not be generated; continuing without it."
+          fi
+
+          echo "Local htpasswd verification before upload..."
+          htpasswd -vb "$TMPDIR/.htpasswd.multi" aq26_apr "$SCC_UNREDACTED_PASSWORD"
+          htpasswd -vb "$TMPDIR/.htpasswd.multi" aq26_sha "$SCC_UNREDACTED_PASSWORD"
+          if grep -q '^aq26_bcrypt:' "$TMPDIR/.htpasswd.multi"; then
+            htpasswd -vb "$TMPDIR/.htpasswd.multi" aq26_bcrypt "$SCC_UNREDACTED_PASSWORD"
+          fi
+
+          printf '%s\n' \
+            'AuthType Basic' \
+            'AuthName "AQ26 Algorithm Diagnostic"' \
+            'AuthBasicProvider file' \
+            "AuthUserFile ${REMOTE_PWD}/.htpasswd" \
+            'Require valid-user' \
+            'Options -Indexes' \
+            > "$TMPDIR/.htaccess.diag"
+
+          echo "Writing temporary diagnostic auth files..."
+          ssh_retry "rm -f '$REMOTE_UNRED/.htaccess' '$REMOTE_UNRED/.htpasswd'"
+          remote_write_file "$TMPDIR/.htpasswd.multi" "$REMOTE_UNRED/.htpasswd"
+          remote_write_file "$TMPDIR/.htaccess.diag" "$REMOTE_UNRED/.htaccess"
+
+          echo "Remote diagnostic users present:"
+          ssh_retry "set -e; cut -d: -f1 '$REMOTE_UNRED/.htpasswd'"
+
+          PRIMARY_URL="https://sccairquality.com/unredacted/"
+          WWW_URL="https://www.sccairquality.com/unredacted/"
+
+          echo "Checking unauthenticated status on primary URL..."
+          unauth_code="$(curl -k -L -s -o "$TMPDIR/unauth.html" -w '%{http_code}' "$PRIMARY_URL" || true)"
+          echo "Unauthenticated HTTP status: ${unauth_code}"
+
+          test_user() {
+            local user="$1"
+            local code
+            code="$(curl -k -L -s -o "$TMPDIR/${user}.html" -w '%{http_code}' -u "${user}:${SCC_UNREDACTED_PASSWORD}" "$PRIMARY_URL" || true)"
+            echo "RESULT: ${user} HTTP ${code}"
+            case "$code" in
+              200|301|302) return 0 ;;
+              *) return 1 ;;
+            esac
+          }
+
+          APR_WORKED=0
+          SHA_WORKED=0
+          BCRYPT_WORKED=0
+
+          if test_user aq26_apr; then APR_WORKED=1; fi
+          if test_user aq26_sha; then SHA_WORKED=1; fi
+          if grep -q '^aq26_bcrypt:' "$TMPDIR/.htpasswd.multi"; then
+            if test_user aq26_bcrypt; then BCRYPT_WORKED=1; fi
+          fi
+
+          CHOSEN=""
+          if [ "$SHA_WORKED" = "1" ]; then
+            CHOSEN="sha"
+          elif [ "$BCRYPT_WORKED" = "1" ]; then
+            CHOSEN="bcrypt"
+          elif [ "$APR_WORKED" = "1" ]; then
+            CHOSEN="apr"
+          fi
+
+          if [ -z "$CHOSEN" ]; then
+            echo "No tested htpasswd algorithm worked through the live web server."
+            echo "Apache/LiteSpeed is reading .htaccess, but file-auth is still being rejected."
+            echo "This points to a Hostinger-side auth restriction or override."
+            exit 1
+          fi
+
+          echo "Chosen working algorithm for real aq26 user: ${CHOSEN}"
+
+          case "$CHOSEN" in
+            sha)
+              htpasswd -nbs aq26 "$SCC_UNREDACTED_PASSWORD" > "$TMPDIR/.htpasswd.final"
+              ;;
+            bcrypt)
+              htpasswd -nbB -C 10 aq26 "$SCC_UNREDACTED_PASSWORD" > "$TMPDIR/.htpasswd.final"
+              ;;
+            apr)
+              htpasswd -nbm aq26 "$SCC_UNREDACTED_PASSWORD" > "$TMPDIR/.htpasswd.final"
+              ;;
+          esac
+
+          htpasswd -vb "$TMPDIR/.htpasswd.final" aq26 "$SCC_UNREDACTED_PASSWORD"
+
+          printf '%s\n' \
+            'AuthType Basic' \
+            'AuthName "AQ26 Unredacted Review"' \
+            'AuthBasicProvider file' \
+            "AuthUserFile ${REMOTE_PWD}/.htpasswd" \
+            'Require valid-user' \
+            'Options -Indexes' \
+            > "$TMPDIR/.htaccess.final"
+
+          echo "Restoring final auth files for user aq26..."
+          remote_write_file "$TMPDIR/.htpasswd.final" "$REMOTE_UNRED/.htpasswd"
+          remote_write_file "$TMPDIR/.htaccess.final" "$REMOTE_UNRED/.htaccess"
+
+          echo "Final remote user present:"
+          ssh_retry "set -e; cut -d: -f1 '$REMOTE_UNRED/.htpasswd'"
+
+          final_unauth="$(curl -k -L -s -o "$TMPDIR/final_unauth.html" -w '%{http_code}' "$PRIMARY_URL" || true)"
+          final_auth="$(curl -k -L -s -o "$TMPDIR/final_auth.html" -w '%{http_code}' -u "aq26:${SCC_UNREDACTED_PASSWORD}" "$PRIMARY_URL" || true)"
+          final_www_auth="$(curl -k -L -s -o "$TMPDIR/final_www_auth.html" -w '%{http_code}' -u "aq26:${SCC_UNREDACTED_PASSWORD}" "$WWW_URL" || true)"
+
+          echo "Final unauthenticated HTTP status: ${final_unauth}"
+          echo "Final authenticated HTTP status: ${final_auth}"
+          echo "Final authenticated WWW HTTP status: ${final_www_auth}"
+
+          if [ "$final_unauth" != "401" ]; then
+            echo "Final failure: unauthenticated access should be 401."
+            exit 1
+          fi
+
+          case "$final_auth" in
+            200|301|302)
+              echo "AQ26 unredacted Basic Auth is fixed for user aq26 using algorithm: ${CHOSEN}"
+              ;;
+            *)
+              echo "Final failure: aq26 still cannot authenticate after choosing ${CHOSEN}."
+              exit 1
+              ;;
+          esac
