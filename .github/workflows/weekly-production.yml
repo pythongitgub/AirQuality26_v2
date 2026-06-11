@@ -324,6 +324,7 @@ jobs:
           : "${SCC_UNREDACTED_PASSWORD:?SCC_UNREDACTED_PASSWORD missing}"
           REMOTE_ROOT="${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR%/}"
           SSH_OPTS="-p ${SCCAIRQUALITY_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=45"
+          SCP_OPTS="-P ${SCCAIRQUALITY_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=45"
           export SSHPASS="$SCCAIRQUALITY_SSH_PASSWORD"
 
           # Resolve the actual absolute filesystem path on Hostinger. Secrets often contain
@@ -342,8 +343,8 @@ jobs:
             'Options -Indexes' > /tmp/aq26_unredacted_htaccess
           printf 'User-agent: *\nDisallow: /\n' > /tmp/aq26_unredacted_robots.txt
 
-          sshpass -e scp $SSH_OPTS /tmp/aq26_unredacted_htaccess "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/unredacted/.htaccess"
-          sshpass -e scp $SSH_OPTS /tmp/aq26_unredacted_robots.txt "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/unredacted/robots.txt"
+          sshpass -e scp $SCP_OPTS /tmp/aq26_unredacted_htaccess "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/unredacted/.htaccess"
+          sshpass -e scp $SCP_OPTS /tmp/aq26_unredacted_robots.txt "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/unredacted/robots.txt"
           sshpass -e ssh $SSH_OPTS "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "set -e; chmod 644 '$REMOTE_ROOT/unredacted/.htaccess'; chmod 640 '$REMOTE_ROOT/unredacted/.htpasswd'; test -s '$REMOTE_ROOT/unredacted/.htpasswd'; grep -q 'AuthUserFile ' '$REMOTE_ROOT/unredacted/.htaccess'"
           echo "Remote unredacted auth files verified."
 
