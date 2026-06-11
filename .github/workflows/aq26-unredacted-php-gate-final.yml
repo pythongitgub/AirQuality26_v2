@@ -1,229 +1,171 @@
-name: AQ26 Install PHP Gate For Unredacted
+name: AQ26 Unredacted PHP Gate Final
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/aq26-unredacted-php-gate-final.yml"
 
 jobs:
-  install-php-gate:
-    name: Install and test PHP auth gate
+  php-gate:
+    name: Check unredacted auth and PHP execution
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
+      SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
+      SSH_USER: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
+      SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
+      PUBLIC_HTML_A: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
+      PUBLIC_HTML_B: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+      UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+      UNREDACTED_USER_SECRET: ${{ secrets.SCC_UNREDACTED_USERNAME }}
+
     steps:
-      - name: Install sshpass
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y sshpass
-
-      - name: Build PHP gate files locally
-        shell: bash
-        env:
-          SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+      - name: Install SSH tooling
         run: |
           set -euo pipefail
-          : "${SCC_UNREDACTED_PASSWORD:?SCC_UNREDACTED_PASSWORD missing}"
+          sudo apt-get update
+          sudo apt-get install -y sshpass curl
 
-          mkdir -p /tmp/aq26_gate
-
-          python3 - <<'PYCFG'
-import hashlib, os, secrets
-password = os.environ['SCC_UNREDACTED_PASSWORD']
-salt = secrets.token_hex(16)
-digest = hashlib.sha256((salt + '\0' + password).encode('utf-8')).hexdigest()
-config = "<?php\n"
-config += "return [\n"
-config += "  'username' => 'aq26',\n"
-config += f"  'salt' => '{salt}',\n"
-config += f"  'digest' => '{digest}',\n"
-config += "  'realm' => 'AQ26 Unredacted Review',\n"
-config += "];\n"
-open('/tmp/aq26_gate/.aq26_auth.php', 'w', encoding='utf-8').write(config)
-PYCFG
-
-          cat > /tmp/aq26_gate/gate.php <<'PHPGATE'
-<?php
-$config = require __DIR__ . '/.aq26_auth.php';
-
-function aq26_get_basic_credentials(): array {
-    $user = $_SERVER['PHP_AUTH_USER'] ?? null;
-    $pass = $_SERVER['PHP_AUTH_PW'] ?? null;
-    if ($user !== null && $pass !== null) {
-        return [$user, $pass];
-    }
-
-    $header = $_SERVER['HTTP_AUTHORIZATION']
-        ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION']
-        ?? $_SERVER['Authorization']
-        ?? '';
-
-    if (stripos($header, 'Basic ') === 0) {
-        $decoded = base64_decode(substr($header, 6), true);
-        if ($decoded !== false && strpos($decoded, ':') !== false) {
-            [$user, $pass] = explode(':', $decoded, 2);
-            return [$user, $pass];
-        }
-    }
-
-    return [null, null];
-}
-
-function aq26_deny(string $realm): void {
-    header('WWW-Authenticate: Basic realm="' . str_replace('"', '', $realm) . '"');
-    header('HTTP/1.1 401 Unauthorized');
-    header('X-Robots-Tag: noindex, nofollow, noarchive');
-    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
-    header('Pragma: no-cache');
-    echo "AQ26 unredacted review area requires authentication.\n";
-    exit;
-}
-
-[$user, $pass] = aq26_get_basic_credentials();
-$expected = hash('sha256', $config['salt'] . "\0" . (string)$pass);
-if ($user !== $config['username'] || !hash_equals($config['digest'], $expected)) {
-    aq26_deny($config['realm']);
-}
-
-$base = realpath(__DIR__);
-$requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
-$scriptDir = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/unredacted/gate.php')), '/');
-if ($scriptDir !== '' && $scriptDir !== '/' && strpos($requestPath, $scriptDir) === 0) {
-    $relative = substr($requestPath, strlen($scriptDir));
-} else {
-    $relative = $requestPath;
-}
-$relative = ltrim($relative, '/');
-if ($relative === '' || substr($relative, -1) === '/') {
-    $relative .= 'index.html';
-}
-
-if (preg_match('/(^|\\/)\.(ht|aq26_auth\.php)/i', $relative) || basename($relative) === 'gate.php') {
-    header('HTTP/1.1 403 Forbidden');
-    echo "Forbidden\n";
-    exit;
-}
-
-$target = realpath($base . DIRECTORY_SEPARATOR . $relative);
-if ($target === false || strpos($target, $base . DIRECTORY_SEPARATOR) !== 0 || !is_file($target)) {
-    header('HTTP/1.1 404 Not Found');
-    header('X-Robots-Tag: noindex, nofollow, noarchive');
-    echo "Not found\n";
-    exit;
-}
-
-$ext = strtolower(pathinfo($target, PATHINFO_EXTENSION));
-$types = [
-    'html' => 'text/html; charset=utf-8',
-    'htm'  => 'text/html; charset=utf-8',
-    'css'  => 'text/css; charset=utf-8',
-    'js'   => 'application/javascript; charset=utf-8',
-    'json' => 'application/json; charset=utf-8',
-    'txt'  => 'text/plain; charset=utf-8',
-    'csv'  => 'text/csv; charset=utf-8',
-    'pdf'  => 'application/pdf',
-    'zip'  => 'application/zip',
-    'png'  => 'image/png',
-    'jpg'  => 'image/jpeg',
-    'jpeg' => 'image/jpeg',
-    'gif'  => 'image/gif',
-    'svg'  => 'image/svg+xml',
-    'webp' => 'image/webp',
-    'ico'  => 'image/x-icon',
-    'woff' => 'font/woff',
-    'woff2'=> 'font/woff2',
-];
-
-header('Content-Type: ' . ($types[$ext] ?? 'application/octet-stream'));
-header('Content-Length: ' . filesize($target));
-header('X-Robots-Tag: noindex, nofollow, noarchive');
-header('Cache-Control: private, no-store, no-cache, must-revalidate, max-age=0');
-readfile($target);
-PHPGATE
-
-          cat > /tmp/aq26_gate/.htaccess <<'HTACCESS'
-Options -Indexes
-DirectoryIndex gate.php index.php index.html
-SetEnvIf Authorization "(.+)" HTTP_AUTHORIZATION=$1
-RewriteEngine On
-RewriteRule ^gate\.php$ - [L]
-RewriteRule ^\.aq26_auth\.php$ - [F,L]
-RewriteRule ^\.ht - [F,L]
-RewriteRule ^.*$ gate.php [L,QSA]
-HTACCESS
-
-          echo "Built gate files:"
-          ls -la /tmp/aq26_gate
-
-      - name: Upload PHP gate to Hostinger and test
-        shell: bash
-        env:
-          AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
-          SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
-          SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
-          SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
-          SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
-          SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+      - name: Validate required secrets
         run: |
           set -euo pipefail
-          : "${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR:?AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR missing}"
-          : "${SCCAIRQUALITY_SSH_HOST:?SCCAIRQUALITY_SSH_HOST missing}"
-          : "${SCCAIRQUALITY_SSH_PORT:?SCCAIRQUALITY_SSH_PORT missing}"
-          : "${SCCAIRQUALITY_SSH_USERNAME:?SCCAIRQUALITY_SSH_USERNAME missing}"
-          : "${SCCAIRQUALITY_SSH_PASSWORD:?SCCAIRQUALITY_SSH_PASSWORD missing}"
-          : "${SCC_UNREDACTED_PASSWORD:?SCC_UNREDACTED_PASSWORD missing}"
 
-          export SSHPASS="$SCCAIRQUALITY_SSH_PASSWORD"
-          SSH_OPTS="-p ${SCCAIRQUALITY_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=75 -o ServerAliveInterval=15 -o ServerAliveCountMax=4"
+          missing=0
 
-          ssh_retry() {
-            local attempt
-            for attempt in 1 2 3 4 5; do
-              echo "SSH attempt ${attempt}/5" >&2
-              if sshpass -e ssh $SSH_OPTS "$@"; then
-                return 0
-              fi
-              echo "SSH attempt ${attempt} failed; retrying" >&2
-              sleep $((attempt * 12))
-            done
-            return 255
+          check_secret() {
+            name="$1"
+            value="$2"
+            if [ -z "$value" ]; then
+              echo "Missing required secret: $name"
+              missing=1
+            else
+              echo "Secret present: $name"
+            fi
           }
 
-          remote_put_b64() {
-            local local_file="$1"
-            local remote_file="$2"
-            local encoded
-            encoded="$(base64 -w 0 "$local_file")"
-            ssh_retry "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "mkdir -p '$REMOTE_UNRED' && printf '%s' '$encoded' | base64 -d > '$remote_file' && chmod 644 '$remote_file' && ls -la '$remote_file'"
-          }
+          check_secret "SCCAIRQUALITY_SSH_HOST" "$SSH_HOST"
+          check_secret "SCCAIRQUALITY_SSH_PORT" "$SSH_PORT"
+          check_secret "SCCAIRQUALITY_SSH_USERNAME" "$SSH_USER"
+          check_secret "SCCAIRQUALITY_SSH_PASSWORD" "$SSH_PASSWORD"
+          check_secret "SCC_UNREDACTED_PASSWORD" "$UNREDACTED_PASSWORD"
 
-          REMOTE_ROOT="${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR%/}"
-          REMOTE_UNRED="${REMOTE_ROOT}/unredacted"
+          PUBLIC_HTML="${PUBLIC_HTML_A:-$PUBLIC_HTML_B}"
+          if [ -z "$PUBLIC_HTML" ]; then
+            echo "Missing required secret: AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR or HOSTINGER_PUBLIC_HTML_DIR"
+            missing=1
+          else
+            echo "Public HTML path present"
+          fi
 
-          echo "Installing PHP gate in: ${REMOTE_UNRED}"
-          ssh_retry "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "mkdir -p '$REMOTE_UNRED' && rm -f '$REMOTE_UNRED/.htpasswd' && true"
-          remote_put_b64 /tmp/aq26_gate/.aq26_auth.php "$REMOTE_UNRED/.aq26_auth.php"
-          remote_put_b64 /tmp/aq26_gate/gate.php "$REMOTE_UNRED/gate.php"
-          remote_put_b64 /tmp/aq26_gate/.htaccess "$REMOTE_UNRED/.htaccess"
-
-          echo "Remote gate files present:"
-          ssh_retry "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "cd '$REMOTE_UNRED' && ls -la .htaccess .aq26_auth.php gate.php index.html 2>/dev/null || ls -la .htaccess .aq26_auth.php gate.php"
-
-          echo "Testing primary URL..."
-          unauth_code=$(curl -k -L -s -o /tmp/aq26_phpgate_unauth.html -w "%{http_code}" "https://sccairquality.com/unredacted/" || true)
-          auth_code=$(curl -k -L -s -u "aq26:${SCC_UNREDACTED_PASSWORD}" -o /tmp/aq26_phpgate_auth.html -w "%{http_code}" "https://sccairquality.com/unredacted/" || true)
-          echo "Unauthenticated HTTP status: ${unauth_code}"
-          echo "Authenticated HTTP status: ${auth_code}"
-          echo "Authenticated body preview:"
-          head -c 300 /tmp/aq26_phpgate_auth.html || true
-          echo
-
-          if [ "$unauth_code" != "401" ]; then
-            echo "Expected unauthenticated status 401, got ${unauth_code}"
+          if [ "$missing" -ne 0 ]; then
             exit 1
           fi
-          case "$auth_code" in
-            200|301|302)
-              echo "AQ26 PHP gate authentication passed for user aq26."
-              ;;
-            *)
-              echo "AQ26 PHP gate authentication failed."
-              exit 1
-              ;;
-          esac
+
+      - name: Create temporary PHP gate file inside unredacted folder
+        run: |
+          set -euo pipefail
+
+          PUBLIC_HTML="${PUBLIC_HTML_A:-$PUBLIC_HTML_B}"
+          TOKEN="AQ26_PHP_GATE_${GITHUB_RUN_ID}_${GITHUB_RUN_ATTEMPT}"
+          REMOTE_FILE="$PUBLIC_HTML/unredacted/aq26-php-gate.php"
+
+          cat > /tmp/aq26-php-gate.php <<PHP
+          <?php
+          header('Content-Type: text/plain; charset=utf-8');
+          echo '${TOKEN}';
+          ?>
+          PHP
+
+          echo "Uploading temporary PHP gate file to unredacted folder..."
+
+          sshpass -p "$SSH_PASSWORD" ssh \
+            -p "$SSH_PORT" \
+            -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=/dev/null \
+            "$SSH_USER@$SSH_HOST" \
+            "mkdir -p '$PUBLIC_HTML/unredacted'"
+
+          sshpass -p "$SSH_PASSWORD" scp \
+            -P "$SSH_PORT" \
+            -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=/dev/null \
+            /tmp/aq26-php-gate.php \
+            "$SSH_USER@$SSH_HOST:$REMOTE_FILE"
+
+          echo "TOKEN=$TOKEN" >> "$GITHUB_ENV"
+
+      - name: Check unauthenticated access is blocked
+        run: |
+          set -euo pipefail
+
+          URL="https://sccairquality.com/unredacted/aq26-php-gate.php"
+
+          code="$(curl -k -L -s -o /tmp/aq26-unauth.txt -w "%{http_code}" "$URL" || true)"
+
+          echo "Unauthenticated HTTP status: $code"
+
+          if [ "$code" != "401" ]; then
+            echo "Expected 401 for unauthenticated unredacted PHP gate file."
+            echo "Response preview:"
+            head -40 /tmp/aq26-unauth.txt || true
+            exit 1
+          fi
+
+          echo "Unauthenticated access is correctly blocked."
+
+      - name: Check authenticated PHP execution
+        run: |
+          set -euo pipefail
+
+          URL="https://sccairquality.com/unredacted/aq26-php-gate.php"
+          UNREDACTED_USER="${UNREDACTED_USER_SECRET:-aq26}"
+
+          code="$(curl -k -L -s \
+            -u "$UNREDACTED_USER:$UNREDACTED_PASSWORD" \
+            -o /tmp/aq26-auth.txt \
+            -w "%{http_code}" \
+            "$URL" || true)"
+
+          echo "Authenticated HTTP status: $code"
+
+          if [ "$code" != "200" ]; then
+            echo "Expected 200 for authenticated unredacted PHP gate file."
+            echo "Response preview:"
+            head -40 /tmp/aq26-auth.txt || true
+            exit 1
+          fi
+
+          if ! grep -q "$TOKEN" /tmp/aq26-auth.txt; then
+            echo "PHP gate token was not returned."
+            echo "This may mean PHP is not executing, the wrong file was served, or auth reached the wrong location."
+            echo "Response preview:"
+            head -40 /tmp/aq26-auth.txt || true
+            exit 1
+          fi
+
+          if grep -q "<?php" /tmp/aq26-auth.txt; then
+            echo "PHP source appears to be exposed. Refusing to pass."
+            exit 1
+          fi
+
+          echo "Authenticated PHP execution passed."
+
+      - name: Remove temporary PHP gate file
+        if: always()
+        run: |
+          set -euo pipefail
+
+          PUBLIC_HTML="${PUBLIC_HTML_A:-$PUBLIC_HTML_B}"
+          REMOTE_FILE="$PUBLIC_HTML/unredacted/aq26-php-gate.php"
+
+          if [ -n "${SSH_HOST:-}" ] && [ -n "${SSH_PORT:-}" ] && [ -n "${SSH_USER:-}" ] && [ -n "${SSH_PASSWORD:-}" ]; then
+            sshpass -p "$SSH_PASSWORD" ssh \
+              -p "$SSH_PORT" \
+              -o StrictHostKeyChecking=no \
+              -o UserKnownHostsFile=/dev/null \
+              "$SSH_USER@$SSH_HOST" \
+              "rm -f '$REMOTE_FILE'" || true
+          fi
