@@ -1,0 +1,64 @@
+name: AQ26 Unredacted PHP Gate Final
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/aq26-unredacted-php-gate-final.yml"
+
+jobs:
+  php-gate:
+    name: Check unredacted auth and PHP execution
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
+      SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
+      SSH_USER: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
+      SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
+      PUBLIC_HTML_A: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
+      PUBLIC_HTML_B: ${{ secrets.HOSTINGER_PUBLIC_HTML_DIR }}
+      UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+      UNREDACTED_USER_SECRET: ${{ secrets.SCC_UNREDACTED_USERNAME }}
+    steps:
+      - name: Regenerate auth and test PHP gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y sshpass curl apache2-utils
+          PUBLIC_HTML="${PUBLIC_HTML_A:-$PUBLIC_HTML_B}"
+          UNREDACTED_USER="${UNREDACTED_USER_SECRET:-aq26}"
+          test -n "${SSH_HOST:-}" || { echo "Missing SCCAIRQUALITY_SSH_HOST"; exit 1; }
+          test -n "${SSH_PORT:-}" || { echo "Missing SCCAIRQUALITY_SSH_PORT"; exit 1; }
+          test -n "${SSH_USER:-}" || { echo "Missing SCCAIRQUALITY_SSH_USERNAME"; exit 1; }
+          test -n "${SSH_PASSWORD:-}" || { echo "Missing SCCAIRQUALITY_SSH_PASSWORD"; exit 1; }
+          test -n "${PUBLIC_HTML:-}" || { echo "Missing public_html secret"; exit 1; }
+          test -n "${UNREDACTED_PASSWORD:-}" || { echo "Missing SCC_UNREDACTED_PASSWORD"; exit 1; }
+          htpasswd -B -b -c /tmp/aq26.htpasswd "$UNREDACTED_USER" "$UNREDACTED_PASSWORD"
+          echo "AuthType Basic" > /tmp/aq26.htaccess
+          echo "AuthName \"AQ26 Unredacted\"" >> /tmp/aq26.htaccess
+          echo "AuthUserFile $PUBLIC_HTML/unredacted/.htpasswd" >> /tmp/aq26.htaccess
+          echo "Require valid-user" >> /tmp/aq26.htaccess
+          echo "" >> /tmp/aq26.htaccess
+          echo "DirectoryIndex index.html index.php" >> /tmp/aq26.htaccess
+          echo "Options -Indexes" >> /tmp/aq26.htaccess
+          TOKEN="AQ26_PHP_GATE_${GITHUB_RUN_ID}_${GITHUB_RUN_ATTEMPT}"
+          echo "<?php" > /tmp/aq26-php-gate.php
+          echo "header('Content-Type: text/plain; charset=utf-8');" >> /tmp/aq26-php-gate.php
+          echo "echo '$TOKEN';" >> /tmp/aq26-php-gate.php
+          echo "?>" >> /tmp/aq26-php-gate.php
+          sshpass -p "$SSH_PASSWORD" ssh -p "$SSH_PORT" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "$SSH_USER@$SSH_HOST" "mkdir -p '$PUBLIC_HTML/unredacted'"
+          sshpass -p "$SSH_PASSWORD" scp -P "$SSH_PORT" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /tmp/aq26.htpasswd "$SSH_USER@$SSH_HOST:$PUBLIC_HTML/unredacted/.htpasswd"
+          sshpass -p "$SSH_PASSWORD" scp -P "$SSH_PORT" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /tmp/aq26.htaccess "$SSH_USER@$SSH_HOST:$PUBLIC_HTML/unredacted/.htaccess"
+          sshpass -p "$SSH_PASSWORD" scp -P "$SSH_PORT" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /tmp/aq26-php-gate.php "$SSH_USER@$SSH_HOST:$PUBLIC_HTML/unredacted/aq26-php-gate.php"
+          URL="https://sccairquality.com/unredacted/aq26-php-gate.php"
+          unauth_code="$(curl -k -L -s -o /tmp/aq26-unauth.txt -w "%{http_code}" "$URL" || true)"
+          echo "Unauthenticated HTTP status: $unauth_code"
+          test "$unauth_code" = "401" || { head -40 /tmp/aq26-unauth.txt || true; exit 1; }
+          auth_code="$(curl -k -L -s -u "$UNREDACTED_USER:$UNREDACTED_PASSWORD" -o /tmp/aq26-auth.txt -w "%{http_code}" "$URL" || true)"
+          echo "Authenticated HTTP status: $auth_code"
+          test "$auth_code" = "200" || { head -40 /tmp/aq26-auth.txt || true; exit 1; }
+          grep -q "$TOKEN" /tmp/aq26-auth.txt || { echo "PHP token was not returned"; head -40 /tmp/aq26-auth.txt || true; exit 1; }
+          ! grep -q "<?php" /tmp/aq26-auth.txt || { echo "PHP source was exposed"; exit 1; }
+          sshpass -p "$SSH_PASSWORD" ssh -p "$SSH_PORT" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "$SSH_USER@$SSH_HOST" "rm -f '$PUBLIC_HTML/unredacted/aq26-php-gate.php'" || true
+          echo "AQ26 unredacted auth and PHP gate passed."
