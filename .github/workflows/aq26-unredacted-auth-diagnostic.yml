@@ -1,15 +1,11 @@
-name: AQ26 Diagnose Unredacted Auth
+name: AQ26 Refresh Unredacted Password Only
 
 on:
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 jobs:
-  diagnose-auth:
+  refresh-password:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
     env:
       AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
       SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
@@ -19,14 +15,12 @@ jobs:
       SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
     steps:
       - name: Install tools
-        shell: bash
         run: |
           set -euo pipefail
           sudo apt-get update
           sudo apt-get install -y apache2-utils sshpass curl coreutils
 
-      - name: Build and locally verify htpasswd
-        shell: bash
+      - name: Build and verify local htpasswd
         run: |
           set -euo pipefail
           : "${SCC_UNREDACTED_PASSWORD:?SCC_UNREDACTED_PASSWORD missing}"
@@ -34,10 +28,8 @@ jobs:
           htpasswd -bcm /tmp/aq26_htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
           htpasswd -vb /tmp/aq26_htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
           echo "Local htpasswd verification passed for user aq26."
-          echo "Local htpasswd entry starts: $(cut -d: -f1 /tmp/aq26_htpasswd):<hash hidden>"
 
-      - name: Rewrite remote unredacted auth files without scp
-        shell: bash
+      - name: Write unredacted auth files over SSH without SCP
         run: |
           set -euo pipefail
           : "${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR:?AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR missing}"
@@ -47,7 +39,6 @@ jobs:
           : "${SCCAIRQUALITY_SSH_PASSWORD:?SCCAIRQUALITY_SSH_PASSWORD missing}"
           export SSHPASS="$SCCAIRQUALITY_SSH_PASSWORD"
           SSH_OPTS="-p ${SCCAIRQUALITY_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=75 -o ServerAliveInterval=15 -o ServerAliveCountMax=4"
-
           ssh_retry() {
             local attempt
             for attempt in 1 2 3 4 5; do
@@ -61,14 +52,11 @@ jobs:
             echo "SSH failed after 5 attempts" >&2
             return 255
           }
-
           REMOTE_ROOT="${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR%/}"
           REMOTE_UNRED="${REMOTE_ROOT}/unredacted"
-
           ssh_retry "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "mkdir -p '$REMOTE_UNRED' && rm -f '$REMOTE_UNRED/.htaccess' '$REMOTE_UNRED/.htpasswd' && cd '$REMOTE_UNRED' && pwd" > /tmp/aq26_remote_pwd.txt
           REMOTE_PWD="$(tail -n 1 /tmp/aq26_remote_pwd.txt | tr -d '\r')"
           echo "Remote unredacted directory resolved by server: $REMOTE_PWD"
-
           cat > /tmp/aq26_htaccess <<EOF
           AuthType Basic
           AuthName "AQ26 Unredacted Review"
@@ -78,42 +66,23 @@ jobs:
           Options -Indexes
           EOF
           sed -i 's/^          //' /tmp/aq26_htaccess
-
           HTPASSWD_B64="$(base64 -w 0 /tmp/aq26_htpasswd)"
           HTACCESS_B64="$(base64 -w 0 /tmp/aq26_htaccess)"
+          ssh_retry "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "set -e; printf '%s' '$HTPASSWD_B64' | base64 -d > '$REMOTE_UNRED/.htpasswd'; printf '%s' '$HTACCESS_B64' | base64 -d > '$REMOTE_UNRED/.htaccess'; chmod 644 '$REMOTE_UNRED/.htpasswd'; chmod 644 '$REMOTE_UNRED/.htaccess'; echo 'Remote auth files written with web-readable permissions'; ls -la '$REMOTE_UNRED/.htaccess' '$REMOTE_UNRED/.htpasswd'; echo '--- .htaccess ---'; cat '$REMOTE_UNRED/.htaccess'"
 
-          ssh_retry "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "set -e; printf '%s' '$HTPASSWD_B64' | base64 -d > '$REMOTE_UNRED/.htpasswd'; printf '%s' '$HTACCESS_B64' | base64 -d > '$REMOTE_UNRED/.htaccess'; chmod 640 '$REMOTE_UNRED/.htpasswd'; chmod 644 '$REMOTE_UNRED/.htaccess'; echo 'Remote files written'; ls -la '$REMOTE_UNRED/.htaccess' '$REMOTE_UNRED/.htpasswd'; echo '--- .htaccess ---'; cat '$REMOTE_UNRED/.htaccess'"
-
-      - name: Download remote htpasswd and verify it matches the secret
-        shell: bash
+      - name: Verify remote htpasswd by downloading through SSH
         run: |
           set -euo pipefail
           export SSHPASS="$SCCAIRQUALITY_SSH_PASSWORD"
           SSH_OPTS="-p ${SCCAIRQUALITY_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=75 -o ServerAliveInterval=15 -o ServerAliveCountMax=4"
-
-          ssh_retry() {
-            local attempt
-            for attempt in 1 2 3 4 5; do
-              echo "SSH attempt $attempt/5" >&2
-              if sshpass -e ssh $SSH_OPTS "$@"; then
-                return 0
-              fi
-              echo "SSH attempt $attempt failed; retrying after short delay" >&2
-              sleep $((attempt * 12))
-            done
-            echo "SSH failed after 5 attempts" >&2
-            return 255
-          }
-
           REMOTE_ROOT="${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR%/}"
           REMOTE_UNRED="${REMOTE_ROOT}/unredacted"
-          ssh_retry "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "base64 -w 0 '$REMOTE_UNRED/.htpasswd'" > /tmp/remote_htpasswd.b64
+          sshpass -e ssh $SSH_OPTS "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "base64 -w 0 '$REMOTE_UNRED/.htpasswd'" > /tmp/remote_htpasswd.b64
           base64 -d /tmp/remote_htpasswd.b64 > /tmp/remote_htpasswd
           htpasswd -vb /tmp/remote_htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
           echo "Remote .htpasswd verifies locally with SCC_UNREDACTED_PASSWORD."
 
-      - name: HTTP Basic Auth tests with headers
-        shell: bash
+      - name: Test live HTTP Basic Auth
         run: |
           set -euo pipefail
           test_url() {
@@ -131,4 +100,3 @@ jobs:
             case "$auth_code" in 200|301|302) echo "HTTP Basic Auth passed for $url" ;; *) echo "HTTP Basic Auth failed for $url"; return 1 ;; esac
           }
           test_url "https://sccairquality.com/unredacted/"
-          test_url "https://www.sccairquality.com/unredacted/"
