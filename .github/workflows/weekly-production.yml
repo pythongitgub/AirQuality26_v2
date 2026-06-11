@@ -301,7 +301,7 @@ jobs:
             retry "rsync-unredacted-live" sshpass -e rsync -avz --delete -e "ssh $SSH_OPTS" site_unredacted/ "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST:$REMOTE_ROOT/unredacted/"
           fi
 
-      - name: Verify remote unredacted auth files
+      - name: Fix and verify remote unredacted auth files
         if: ${{ steps.gate.outputs.should_run == 'true' }}
         shell: bash
         run: |
@@ -321,11 +321,48 @@ jobs:
           : "${SCCAIRQUALITY_SSH_PORT:?SCCAIRQUALITY_SSH_PORT missing}"
           : "${SCCAIRQUALITY_SSH_USERNAME:?SCCAIRQUALITY_SSH_USERNAME missing}"
           : "${SCCAIRQUALITY_SSH_PASSWORD:?SCCAIRQUALITY_SSH_PASSWORD missing}"
+          : "${SCC_UNREDACTED_PASSWORD:?SCC_UNREDACTED_PASSWORD missing}"
           REMOTE_ROOT="${AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR%/}"
           SSH_OPTS="-p ${SCCAIRQUALITY_SSH_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=45"
           export SSHPASS="$SCCAIRQUALITY_SSH_PASSWORD"
-          sshpass -e ssh $SSH_OPTS "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "test -f '$REMOTE_ROOT/unredacted/.htaccess' && test -f '$REMOTE_ROOT/unredacted/.htpasswd' && grep -q 'AuthUserFile $REMOTE_ROOT/unredacted/.htpasswd' '$REMOTE_ROOT/unredacted/.htaccess'"
+
+          # Resolve the actual absolute filesystem path on Hostinger. Secrets often contain
+          # a relative path such as domains/sccairquality.com/public_html, which Apache
+          # cannot use in AuthUserFile. This step rewrites .htaccess remotely using pwd.
+          sshpass -e ssh $SSH_OPTS "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" "set -e; mkdir -p '$REMOTE_ROOT/unredacted'; ABS_UNREDACTED=\$(cd '$REMOTE_ROOT/unredacted' && pwd); printf '%s
+' 'AuthType Basic' 'AuthName "AQ26 Unredacted Review"' "AuthUserFile \$ABS_UNREDACTED/.htpasswd" 'Require valid-user' 'Options -Indexes' > '$REMOTE_ROOT/unredacted/.htaccess'; printf 'User-agent: *
+Disallow: /
+' > '$REMOTE_ROOT/unredacted/robots.txt'; chmod 644 '$REMOTE_ROOT/unredacted/.htaccess'; chmod 640 '$REMOTE_ROOT/unredacted/.htpasswd'; test -s '$REMOTE_ROOT/unredacted/.htpasswd'; grep -q "AuthUserFile \$ABS_UNREDACTED/.htpasswd" '$REMOTE_ROOT/unredacted/.htaccess'; echo "Remote absolute AuthUserFile path: \$ABS_UNREDACTED/.htpasswd""
           echo "Remote unredacted auth files verified."
+
+      - name: HTTP test unredacted Basic Auth
+        if: ${{ steps.gate.outputs.should_run == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          DO_DEPLOY="${{ inputs.deploy_to_hostinger }}"
+          DRY_RUN="${{ inputs.dry_run }}"
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ]; then
+            DO_DEPLOY="true"
+            DRY_RUN="false"
+          fi
+          if [ "$DO_DEPLOY" != "true" ] || [ "$DRY_RUN" = "true" ]; then
+            echo "Skipping HTTP auth test because this was not a live deployment."
+            exit 0
+          fi
+          : "${SCC_UNREDACTED_PASSWORD:?SCC_UNREDACTED_PASSWORD missing}"
+          url="https://sccairquality.com/unredacted/"
+          noauth_code=$(curl -k -L -s -o /tmp/aq26_noauth.html -w "%{http_code}" "$url" || true)
+          auth_code=$(curl -k -L -s -o /tmp/aq26_auth.html -w "%{http_code}" --user "aq26:${SCC_UNREDACTED_PASSWORD}" "$url" || true)
+          echo "Unauthenticated HTTP status: $noauth_code"
+          echo "Authenticated HTTP status: $auth_code"
+          if [ "$noauth_code" != "401" ]; then
+            echo "Warning: unauthenticated /unredacted/ did not return 401. Check whether protection is already cached or redirected."
+          fi
+          case "$auth_code" in
+            200|301|302) echo "HTTP Basic Auth test passed." ;;
+            *) echo "HTTP Basic Auth test failed. The server rejected the current SCC_UNREDACTED_PASSWORD for user aq26."; exit 1 ;;
+          esac
 
       - name: Remove deployment-only auth files
         if: always()
