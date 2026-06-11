@@ -1,0 +1,51 @@
+name: AQ26 Fix Unredacted Auth Path
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aq26-fix-unredacted-auth
+  cancel-in-progress: false
+
+jobs:
+  patch-workflow:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Patch weekly-production.yml
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/aq26_patch_unredacted_auth_hostinger.py
+
+      - name: Show workflow diff
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff -- .github/workflows/weekly-production.yml || true
+
+      - name: Commit patched weekly workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet; then
+            echo "No changes to commit. weekly-production.yml already patched."
+            exit 0
+          fi
+          git add .github/workflows/weekly-production.yml scripts/aq26_patch_unredacted_auth_hostinger.py
+          git commit -m "Fix AQ26 unredacted Hostinger auth path"
+          git push
