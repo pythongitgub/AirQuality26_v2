@@ -1,11 +1,11 @@
-name: AQ26 Auth One Shot Final
+name: AQ26 Auth One Shot Final Key Auth
 
 on:
   workflow_dispatch:
 
 jobs:
-  aq26-auth-one-shot-final:
-    name: Diagnose and fix AQ26 unredacted auth
+  aq26-auth-one-shot-final-key:
+    name: Diagnose and fix AQ26 unredacted auth using SSH key
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -17,7 +17,7 @@ jobs:
         run: |
           set -euo pipefail
           sudo apt-get update
-          sudo apt-get install -y sshpass apache2-utils curl netcat-openbsd
+          sudo apt-get install -y apache2-utils curl netcat-openbsd openssh-client
 
       - name: Check required secrets
         env:
@@ -25,7 +25,7 @@ jobs:
           SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
           SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
           SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
-          SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
+          SCCAIRQUALITY_SSH_PRIVATE_KEY: ${{ secrets.SCCAIRQUALITY_SSH_PRIVATE_KEY }}
           SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
         run: |
           set -euo pipefail
@@ -33,10 +33,21 @@ jobs:
           test -n "$SCCAIRQUALITY_SSH_HOST"
           test -n "$SCCAIRQUALITY_SSH_PORT"
           test -n "$SCCAIRQUALITY_SSH_USERNAME"
-          test -n "$SCCAIRQUALITY_SSH_PASSWORD"
+          test -n "$SCCAIRQUALITY_SSH_PRIVATE_KEY"
           test -n "$SCC_UNREDACTED_PASSWORD"
           echo "Required secrets are present."
-          echo "Unredacted directory secret is set."
+
+      - name: Prepare SSH key
+        env:
+          SCCAIRQUALITY_SSH_PRIVATE_KEY: ${{ secrets.SCCAIRQUALITY_SSH_PRIVATE_KEY }}
+          SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
+          SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SCCAIRQUALITY_SSH_PRIVATE_KEY" > ~/.ssh/aq26_hostinger_key
+          chmod 600 ~/.ssh/aq26_hostinger_key
+          ssh-keyscan -p "$SCCAIRQUALITY_SSH_PORT" "$SCCAIRQUALITY_SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
 
       - name: TCP port check
         env:
@@ -44,7 +55,6 @@ jobs:
           SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
         run: |
           set -euo pipefail
-          echo "Checking TCP reachability to SSH host and port..."
           nc -vz -w 20 "$SCCAIRQUALITY_SSH_HOST" "$SCCAIRQUALITY_SSH_PORT"
 
       - name: Verify SSH connectivity first
@@ -52,17 +62,15 @@ jobs:
           SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
           SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
           SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
-          SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
         run: |
           set -euo pipefail
-          export SSHPASS="$SCCAIRQUALITY_SSH_PASSWORD"
-          sshpass -e ssh \
+          ssh -i ~/.ssh/aq26_hostinger_key \
             -p "$SCCAIRQUALITY_SSH_PORT" \
             -o StrictHostKeyChecking=no \
             -o UserKnownHostsFile=/dev/null \
             -o ConnectTimeout=20 \
             "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" \
-            'echo SSH_OK && pwd && whoami'
+            'echo SSH_KEY_OK && pwd && whoami'
 
       - name: Create local auth files
         env:
@@ -80,10 +88,7 @@ AuthUserFile ${AIRQUALITY_HOSTINGER_PUBLIC_UNREDACTED_DIR}/.htpasswd
 Require valid-user
 Options -Indexes
 EOF
-          echo "Local htpasswd verification..."
           htpasswd -vb auth_upload/.htpasswd aq26 "$SCC_UNREDACTED_PASSWORD"
-          echo "Local files prepared:"
-          ls -la auth_upload
 
       - name: Backup existing remote auth files
         env:
@@ -91,11 +96,9 @@ EOF
           SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
           SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
           SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
-          SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
         run: |
           set -euo pipefail
-          export SSHPASS="$SCCAIRQUALITY_SSH_PASSWORD"
-          sshpass -e ssh \
+          ssh -i ~/.ssh/aq26_hostinger_key \
             -p "$SCCAIRQUALITY_SSH_PORT" \
             -o StrictHostKeyChecking=no \
             -o UserKnownHostsFile=/dev/null \
@@ -112,11 +115,9 @@ EOF
           SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
           SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
           SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
-          SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
         run: |
           set -euo pipefail
-          export SSHPASS="$SCCAIRQUALITY_SSH_PASSWORD"
-          sshpass -e scp \
+          scp -i ~/.ssh/aq26_hostinger_key \
             -P "$SCCAIRQUALITY_SSH_PORT" \
             -o StrictHostKeyChecking=no \
             -o UserKnownHostsFile=/dev/null \
@@ -129,20 +130,16 @@ EOF
           SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
           SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
           SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
-          SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
         run: |
           set -euo pipefail
-          export SSHPASS="$SCCAIRQUALITY_SSH_PASSWORD"
-          sshpass -e ssh \
+          ssh -i ~/.ssh/aq26_hostinger_key \
             -p "$SCCAIRQUALITY_SSH_PORT" \
             -o StrictHostKeyChecking=no \
             -o UserKnownHostsFile=/dev/null \
             "$SCCAIRQUALITY_SSH_USERNAME@$SCCAIRQUALITY_SSH_HOST" \
             "cd '$AIRQUALITY_HOSTINGER_PUBLIC_UNREDACTED_DIR' &&
              ls -la .htpasswd .htaccess &&
-             echo '--- .htaccess ---' &&
              cat .htaccess &&
-             echo '--- .htpasswd users ---' &&
              cut -d: -f1 .htpasswd"
 
       - name: HTTP auth test
@@ -156,15 +153,6 @@ EOF
           echo "Authenticated HTTP status: $auth_code"
           test "$unauth_code" = "401"
           case "$auth_code" in
-            200|301|302)
-              echo "HTTP Basic Auth test passed for user aq26."
-              ;;
-            *)
-              echo "HTTP Basic Auth failed for user aq26."
-              echo "--- unauth page preview ---"
-              head -40 /tmp/aq26_unauth.html || true
-              echo "--- auth page preview ---"
-              head -40 /tmp/aq26_auth.html || true
-              exit 1
-              ;;
+            200|301|302) echo "HTTP Basic Auth test passed for user aq26." ;;
+            *) echo "HTTP Basic Auth failed for user aq26."; exit 1 ;;
           esac
