@@ -1,0 +1,31 @@
+name: AQ26 Website Quality Gate
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [ main ]
+    paths:
+      - 'site_public/**'
+      - 'site_unredacted/**'
+      - 'scripts/aq26_site_quality_gate.py'
+      - '.github/workflows/aq26-site-quality-gate.yml'
+
+jobs:
+  quality-gate:
+    name: Validate AQ26 static website
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Build if generator is available
+        run: |
+          set -euo pipefail
+          if [ -f scripts/aq26_build_overhauled_site.py ]; then python scripts/aq26_build_overhauled_site.py; fi
+      - name: Run quality gate
+        run: |
+          set -euo pipefail
+          python scripts/aq26_site_quality_gate.py
