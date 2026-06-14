@@ -1,0 +1,139 @@
+{
+  "site_name": "Environmental Intelligence Observatory \u00b7 AQ26",
+  "short_name": "AQ26",
+  "public_base_url": "https://sccairquality.com",
+  "unredacted_base_url": "https://sccairquality.com/unredacted",
+  "organization": "SCC Nexus",
+  "contact_email": "contact@sccnexus.com",
+  "analytics_secret": "GA_MEASUREMENT_ID",
+  "search_console_secret": "GOOGLE_SITE_VERIFICATION",
+  "public_pages": [
+    [
+      "index.html",
+      "Overview",
+      "Public redacted overview of the AQ26 evidence observatory."
+    ],
+    [
+      "weekly-update.html",
+      "Weekly update",
+      "Current weekly redacted publication status, alerts and evidence summary."
+    ],
+    [
+      "incinerators.html",
+      "Incinerators",
+      "Incinerator screening pages and cautious public context."
+    ],
+    [
+      "newhaven.html",
+      "Newhaven ERF",
+      "Public redacted Newhaven ERF reference page."
+    ],
+    [
+      "historical.html",
+      "Historical",
+      "Historical backfill plan, archive status and published week index."
+    ],
+    [
+      "sources.html",
+      "Sources",
+      "Public-safe source register and provenance approach."
+    ],
+    [
+      "methodology.html",
+      "Methodology",
+      "Methods, caveats, redaction policy and review workflow."
+    ],
+    [
+      "downloads.html",
+      "Downloads",
+      "Public evidence downloads and weekly bundles."
+    ],
+    [
+      "about.html",
+      "About",
+      "About AQ26 and the SCC Nexus evidence workflow."
+    ],
+    [
+      "privacy.html",
+      "Privacy",
+      "Privacy policy."
+    ],
+    [
+      "terms.html",
+      "Terms",
+      "Terms of use."
+    ],
+    [
+      "cookies.html",
+      "Cookies",
+      "Cookie and analytics notice."
+    ],
+    [
+      "accessibility.html",
+      "Accessibility",
+      "Accessibility statement."
+    ],
+    [
+      "contact.html",
+      "Contact",
+      "Contact and corrections."
+    ]
+  ],
+  "unredacted_pages": [
+    [
+      "index.html",
+      "Unredacted overview",
+      "Protected operational review area."
+    ],
+    [
+      "newhaven.html",
+      "Newhaven deep dive",
+      "Protected detailed Newhaven ERF evidence and diagnostics landing page."
+    ],
+    [
+      "weekly-update.html",
+      "Weekly update",
+      "Protected weekly evidence status."
+    ],
+    [
+      "evidence.html",
+      "Evidence library",
+      "Protected evidence catalogue and internal downloads."
+    ],
+    [
+      "candidates.html",
+      "Candidate review",
+      "Protected anomaly and candidate review page."
+    ],
+    [
+      "diagnostics.html",
+      "Diagnostics",
+      "Protected operational diagnostics and QA checks."
+    ],
+    [
+      "methodology.html",
+      "Methods and QA",
+      "Protected methodology details and internal QA."
+    ],
+    [
+      "archive.html",
+      "Archive",
+      "Protected historic archive and backfill tracking."
+    ],
+    [
+      "downloads.html",
+      "Downloads",
+      "Protected downloads."
+    ],
+    [
+      "privacy.html",
+      "Privacy",
+      "Privacy notice."
+    ],
+    [
+      "terms.html",
+      "Terms",
+      "Terms."
+    ]
+  ]
+}
