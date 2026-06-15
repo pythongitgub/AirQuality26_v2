@@ -1,52 +1,56 @@
 #!/usr/bin/env python3
 """
-AQ26 public-site scrubber.
+AQ26 public protected-file scrub.
 
 Purpose:
-- Keep protected/unredacted evidence bundles out of site_public.
-- Preserve public pages and public-safe data.
-- Leave site_unredacted untouched.
+  The public site must never contain protected evidence bundles or reviewer
+  archives. This script runs after the evidence builder and before deployment.
 
-Run after the AQ26 evidence builder and before artifact upload/deployment.
+Policy:
+  - Remove all archive files from site_public/downloads.
+  - Remove obviously protected archive files anywhere under site_public.
+  - Never touch site_unredacted.
 """
-from __future__ import annotations
 
 from pathlib import Path
-import shutil
 
-ROOT = Path.cwd()
-PUBLIC = ROOT / "site_public"
-DOWNLOADS = PUBLIC / "downloads"
+PUBLIC = Path("site_public")
 
-# Files/patterns that must never be shipped from the public surface.
-PROTECTED_PATTERNS = [
-    "AQ26_WEEKLY_EVIDENCE_BUNDLE.zip",
-    "*UNREDACTED*.zip",
-    "*unredacted*.zip",
-    "*reviewer*.zip",
-    "*reviewer_notes*",
-    "*source_index_unredacted*",
-    ".htaccess",
-    ".htpasswd",
-]
+ARCHIVE_SUFFIXES = {
+    ".zip", ".7z", ".rar", ".tar", ".gz", ".tgz", ".bz2", ".xz"
+}
 
-removed: list[str] = []
+PROTECTED_NAME_MARKERS = {
+    "unredacted",
+    "protected",
+    "reviewer",
+    "private",
+    "evidence_bundle",
+    "weekly_evidence_bundle",
+    "latest-evidence",
+    "latest_evidence",
+    "aq26_weekly_evidence_bundle",
+}
+
+removed = []
+
+def should_remove(path: Path) -> bool:
+    lower_name = path.name.lower()
+    lower_posix = path.as_posix().lower()
+
+    if path.suffix.lower() in ARCHIVE_SUFFIXES and lower_posix.startswith("site_public/downloads/"):
+        return True
+
+    if path.suffix.lower() in ARCHIVE_SUFFIXES and any(marker in lower_name for marker in PROTECTED_NAME_MARKERS):
+        return True
+
+    return False
 
 if PUBLIC.exists():
-    for pattern in PROTECTED_PATTERNS:
-        for path in PUBLIC.rglob(pattern):
-            if path.is_dir():
-                shutil.rmtree(path)
-            else:
-                path.unlink(missing_ok=True)
-            removed.append(str(path.relative_to(ROOT)))
-
-DOWNLOADS.mkdir(parents=True, exist_ok=True)
-(DOWNLOADS / "README_PUBLIC_DOWNLOADS.txt").write_text(
-    "Public downloads are deliberately limited to redacted/public-safe material.\n"
-    "Protected reviewer bundles are available only in /unredacted/ behind HTTP Basic Auth.\n",
-    encoding="utf-8",
-)
+    for path in sorted(PUBLIC.rglob("*")):
+        if path.is_file() and should_remove(path):
+            path.unlink()
+            removed.append(path.as_posix())
 
 print("AQ26 public protected-file scrub complete.")
 if removed:
@@ -54,4 +58,4 @@ if removed:
     for item in removed:
         print(f" - {item}")
 else:
-    print("No protected public files found.")
+    print("No protected public archive files found.")

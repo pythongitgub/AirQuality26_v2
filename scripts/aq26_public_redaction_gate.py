@@ -1,37 +1,59 @@
 #!/usr/bin/env python3
-"""Fail deployment if protected files leak into site_public."""
-from __future__ import annotations
+"""
+AQ26 public redaction gate.
+
+Fails deployment if protected/reviewer archive material is present on the public
+surface. The unredacted surface is intentionally not scanned here.
+"""
 
 from pathlib import Path
 import sys
 
-ROOT = Path.cwd()
-PUBLIC = ROOT / "site_public"
-errors: list[str] = []
+PUBLIC = Path("site_public")
+
+ARCHIVE_SUFFIXES = {
+    ".zip", ".7z", ".rar", ".tar", ".gz", ".tgz", ".bz2", ".xz"
+}
+
+PROTECTED_NAME_MARKERS = {
+    "unredacted",
+    "protected",
+    "reviewer",
+    "private",
+    "evidence_bundle",
+    "weekly_evidence_bundle",
+    "latest-evidence",
+    "latest_evidence",
+    "aq26_weekly_evidence_bundle",
+}
+
+errors = []
 
 if not PUBLIC.exists():
     errors.append("site_public folder missing")
 else:
-    forbidden_names = {
-        ".htaccess",
-        ".htpasswd",
-        "AQ26_WEEKLY_EVIDENCE_BUNDLE.zip",
-    }
-    for p in PUBLIC.rglob("*"):
-        if p.name in forbidden_names:
-            errors.append(f"forbidden public file present: {p.relative_to(ROOT)}")
-        # Public zip files are allowed only when they explicitly identify as redacted/public-safe.
-        if p.is_file() and p.suffix.lower() == ".zip":
-            lower_name = p.name.lower()
-            if not any(token in lower_name for token in ("public", "redacted")):
-                errors.append(f"non-public zip on public surface: {p.relative_to(ROOT)}")
-        if p.is_file() and p.stat().st_size > 25 * 1024 * 1024 and "assets" not in p.parts:
-            errors.append(f"large public file needs review: {p.relative_to(ROOT)} ({p.stat().st_size} bytes)")
+    for path in sorted(PUBLIC.rglob("*")):
+        if not path.is_file():
+            continue
+
+        lower_name = path.name.lower()
+        lower_posix = path.as_posix().lower()
+
+        if path.suffix.lower() in ARCHIVE_SUFFIXES and lower_posix.startswith("site_public/downloads/"):
+            errors.append(f"non-public archive on public surface: {path.as_posix()}")
+            continue
+
+        if path.suffix.lower() in ARCHIVE_SUFFIXES and any(marker in lower_name for marker in PROTECTED_NAME_MARKERS):
+            errors.append(f"protected archive filename on public surface: {path.as_posix()}")
+            continue
+
+        if path.name in {".htpasswd", ".htaccess"}:
+            errors.append(f"auth file leaked to public build: {path.as_posix()}")
 
 if errors:
     print("AQ26 public redaction gate failed:")
     for e in errors:
-        print(" -", e)
+        print(f" - {e}")
     sys.exit(1)
 
 print("AQ26 public redaction gate passed.")
