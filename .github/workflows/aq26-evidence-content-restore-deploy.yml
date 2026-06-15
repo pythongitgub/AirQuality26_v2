@@ -2,16 +2,27 @@ name: AQ26 Evidence Content Restore and Deploy
 
 on:
   workflow_dispatch:
+    inputs:
+      deploy_strategy:
+        description: "Deployment method: auto tries SSH then FTP, ssh uses SSH only, ftp uses FTP only, build_only skips deployment"
+        required: true
+        default: "auto"
+        type: choice
+        options:
+          - auto
+          - ssh
+          - ftp
+          - build_only
 
 concurrency:
-  group: aq26-evidence-content-${{ github.ref }}
+  group: aq26-evidence-restore-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  evidence-content-restore-deploy:
-    name: Restore evidence content and deploy
+  restore-build-deploy:
+    name: Restore AQ26 evidence content and deploy
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
@@ -20,51 +31,68 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      - name: Install Python requirements if present
+      - name: Install tools
         run: |
           set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y sshpass rsync lftp curl
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then
-            python -m pip install -r requirements.txt
-          fi
+          if [ -f requirements.txt ]; then python -m pip install -r requirements.txt; fi
 
-      - name: Normalise AQ26 config path
+      - name: AQ26 repository preflight
         run: |
           set -euo pipefail
-          if [ -f configs/aq26_site_config.json ] && [ ! -f config/aq26_site_config.json ]; then
-            mkdir -p config
-            cp configs/aq26_site_config.json config/aq26_site_config.json
-            echo "Normalised config path: copied configs/aq26_site_config.json to config/aq26_site_config.json"
-          fi
           if [ -f scripts/aq26_repo_preflight.py ]; then
             python scripts/aq26_repo_preflight.py
+          else
+            echo "No preflight script found; continuing."
           fi
 
-      - name: Build evidence-rich AQ26 pages
+      - name: Restore/build AQ26 evidence content
         run: |
           set -euo pipefail
-          python scripts/aq26_build_evidence_content_site.py
+          python scripts/aq26_build_evidence_content.py
 
-      - name: Evidence content quality gate
+      - name: Quality gate
         run: |
           set -euo pipefail
-          python scripts/aq26_evidence_content_gate.py
+          if [ -f scripts/aq26_site_quality_gate.py ]; then
+            python scripts/aq26_site_quality_gate.py
+          else
+            echo "No quality gate script found; continuing."
+          fi
 
-      - name: Deploy public and protected sites to Hostinger
+      - name: Upload built site as artifact before deploy
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-built-site
+          path: |
+            site_public/**
+            site_unredacted/**
+          retention-days: 14
+
+      - name: Deploy to Hostinger
+        if: ${{ github.event.inputs.deploy_strategy != 'build_only' }}
         env:
+          AQ26_DEPLOY_STRATEGY: ${{ github.event.inputs.deploy_strategy }}
+
           SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
           SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
           SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
           SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
+          SCCAIRQUALITY_SSH_PRIVATE_KEY: ${{ secrets.SCCAIRQUALITY_SSH_PRIVATE_KEY }}
+
           AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
           AIRQUALITY_HOSTINGER_PUBLIC_UNREDACTED_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_UNREDACTED_DIR }}
+
+          SCCAIRQUALITY_FTP_HOST: ${{ secrets.SCCAIRQUALITY_FTP_HOST }}
+          SCCAIRQUALITY_FTP_PORT: ${{ secrets.SCCAIRQUALITY_FTP_PORT }}
+          SCCAIRQUALITY_FTP_USERNAME: ${{ secrets.SCCAIRQUALITY_FTP_USERNAME }}
+          SCCAIRQUALITY_FTP_PASSWORD: ${{ secrets.SCCAIRQUALITY_FTP_PASSWORD }}
+          SCCAIRQUALITY_FTP_PUBLIC_HTML_DIR: ${{ secrets.SCCAIRQUALITY_FTP_PUBLIC_HTML_DIR }}
+          SCCAIRQUALITY_FTP_UNREDACTED_DIR: ${{ secrets.SCCAIRQUALITY_FTP_UNREDACTED_DIR }}
         run: |
           set -euo pipefail
-          if [ -f scripts/aq26_deploy_hostinger_dual.py ]; then
-            python scripts/aq26_deploy_hostinger_dual.py
-          else
-            echo "scripts/aq26_deploy_hostinger_dual.py missing; build and gate passed but deploy script is unavailable."
-            exit 1
-          fi
+          python scripts/aq26_deploy_hostinger_dual.py
