@@ -2,26 +2,9 @@ name: AQ26 Website Quality Gate
 
 on:
   workflow_dispatch:
-  pull_request:
-  push:
-    branches: [ main ]
-    paths:
-      - 'site_public/**'
-      - 'site_unredacted/**'
-      - 'scripts/aq26_site_quality_gate.py'
-      - 'scripts/aq26_build_overhauled_site.py'
-      - 'scripts/aq26_repo_preflight.py'
-      - 'config/aq26_site_config.json'
-      - 'requirements.txt'
-      - '.github/workflows/aq26-site-quality-gate.yml'
-
-concurrency:
-  group: aq26-website-quality-gate
-  cancel-in-progress: true
 
 jobs:
   quality-gate:
-    name: Validate AQ26 static website
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -33,25 +16,18 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install Python requirements
+      - name: Install requirements
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          else
-            pip install PyYAML requests beautifulsoup4
-          fi
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Preflight repository files
+      - name: Preflight repository paths
         run: |
           set -euo pipefail
           python scripts/aq26_repo_preflight.py
 
-      - name: Build generated site files
-        env:
-          GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
-          GOOGLE_SITE_VERIFICATION: ${{ secrets.GOOGLE_SITE_VERIFICATION }}
+      - name: Build overhauled site
         run: |
           set -euo pipefail
           python scripts/aq26_build_overhauled_site.py

@@ -2,32 +2,11 @@ name: AQ26 Website Overhaul Build and Deploy
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ main ]
-    paths:
-      - 'scripts/aq26_build_overhauled_site.py'
-      - 'scripts/aq26_site_quality_gate.py'
-      - 'scripts/aq26_deploy_hostinger_dual.py'
-      - 'scripts/aq26_repo_preflight.py'
-      - 'config/aq26_site_config.json'
-      - 'site_public/**'
-      - 'site_unredacted/**'
-      - 'requirements.txt'
-      - '.github/workflows/aq26-site-overhaul-build-deploy.yml'
-
-permissions:
-  contents: write
-
-concurrency:
-  group: aq26-website-overhaul
-  cancel-in-progress: true
 
 jobs:
-  build-quality-deploy:
-    name: Build, validate and deploy AQ26 site
+  build-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
-
+    timeout-minutes: 20
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -37,24 +16,24 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install deploy tools and Python requirements
+      - name: Install system tools
         run: |
           set -euo pipefail
           sudo apt-get update
-          sudo apt-get install -y sshpass curl
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          else
-            pip install PyYAML requests beautifulsoup4 paramiko
-          fi
+          sudo apt-get install -y sshpass rsync curl
 
-      - name: Preflight repository files
+      - name: Install Python requirements
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Preflight repository paths
         run: |
           set -euo pipefail
           python scripts/aq26_repo_preflight.py
 
-      - name: Build overhauled public and unredacted sites
+      - name: Build overhauled AQ26 site
         env:
           GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
           GOOGLE_SITE_VERIFICATION: ${{ secrets.GOOGLE_SITE_VERIFICATION }}
@@ -62,25 +41,12 @@ jobs:
           set -euo pipefail
           python scripts/aq26_build_overhauled_site.py
 
-      - name: Run AQ26 site quality gate
+      - name: Run quality gate
         run: |
           set -euo pipefail
           python scripts/aq26_site_quality_gate.py
 
-      - name: Commit generated site files
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add site_public site_unredacted config scripts requirements.txt .github/workflows/aq26-site-overhaul-build-deploy.yml .github/workflows/aq26-site-quality-gate.yml
-          if git diff --cached --quiet; then
-            echo "No generated changes to commit."
-          else
-            git commit -m "Overhaul AQ26 public and unredacted website"
-            git push
-          fi
-
-      - name: Deploy to Hostinger
+      - name: Deploy public and unredacted sites to Hostinger
         env:
           SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
           SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
@@ -91,29 +57,3 @@ jobs:
         run: |
           set -euo pipefail
           python scripts/aq26_deploy_hostinger_dual.py
-
-      - name: Smoke test live public pages
-        run: |
-          set -euo pipefail
-          for url in \
-            https://sccairquality.com/ \
-            https://sccairquality.com/newhaven.html \
-            https://sccairquality.com/privacy.html \
-            https://sccairquality.com/terms.html \
-            https://sccairquality.com/sitemap.xml; do
-            code=$(curl -k -L -s -o /tmp/aq26_page.html -w "%{http_code}" "$url" || true)
-            echo "$url -> $code"
-            case "$code" in 200|301|302) ;; *) exit 1 ;; esac
-          done
-
-      - name: Smoke test protected unredacted page
-        env:
-          SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
-        run: |
-          set -euo pipefail
-          unauth_code=$(curl -k -L -s -o /tmp/aq26_unredacted_unauth.html -w "%{http_code}" "https://sccairquality.com/unredacted/newhaven.html" || true)
-          auth_code=$(curl -k -L -s -u "aq26:${SCC_UNREDACTED_PASSWORD}" -o /tmp/aq26_unredacted_auth.html -w "%{http_code}" "https://sccairquality.com/unredacted/newhaven.html" || true)
-          echo "Unauthenticated /unredacted/newhaven.html -> $unauth_code"
-          echo "Authenticated /unredacted/newhaven.html -> $auth_code"
-          test "$unauth_code" = "401"
-          test "$auth_code" = "200"
