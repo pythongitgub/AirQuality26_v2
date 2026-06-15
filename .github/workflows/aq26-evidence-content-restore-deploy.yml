@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       deploy_strategy:
-        description: "Deployment strategy: build_only, ssh, ftp, or auto"
+        description: "Deployment strategy"
         required: true
         default: "build_only"
         type: choice
@@ -15,16 +15,15 @@ on:
           - ftp
 
 concurrency:
-  group: aq26-${{ github.workflow }}-${{ github.ref }}
+  group: aq26-evidence-content-restore-${{ github.ref }}
   cancel-in-progress: true
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Check out repository
