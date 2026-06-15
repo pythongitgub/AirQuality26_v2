@@ -3,50 +3,45 @@ name: AQ26 Website Overhaul Build and Deploy
 on:
   workflow_dispatch:
 
+concurrency:
+  group: aq26-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
-      - name: Install system tools
+      - name: Install tools
         run: |
           set -euo pipefail
           sudo apt-get update
           sudo apt-get install -y sshpass rsync curl
-
       - name: Install Python requirements
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name: Preflight repository paths
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install beautifulsoup4 PyYAML requests; fi
+      - name: Preflight
         run: |
           set -euo pipefail
           python scripts/aq26_repo_preflight.py
-
-      - name: Build overhauled AQ26 site
+      - name: Build site
         env:
           GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
           GOOGLE_SITE_VERIFICATION: ${{ secrets.GOOGLE_SITE_VERIFICATION }}
         run: |
           set -euo pipefail
           python scripts/aq26_build_overhauled_site.py
-
-      - name: Run quality gate
+      - name: Quality gate
         run: |
           set -euo pipefail
           python scripts/aq26_site_quality_gate.py
-
-      - name: Deploy public and unredacted sites to Hostinger
+      - name: Deploy to Hostinger
         env:
           SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
           SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
