@@ -99,7 +99,11 @@ def header(active: str="") -> str:
     links = [
         ("/", "Home"), ("/newhaven.html", "Newhaven"), ("/source-records.html", "Sources"), ("/weekly-update.html", "Weekly update"), ("/archive.html", "Archive"), ("/methodology.html", "Methodology"), ("/contact.html", "Contact"), ("/unredacted/", "Unredacted")
     ]
-    nav = "".join(f'<a href="{u}"{' aria-current="page"' if t == active else ''}>{t}</a>' for u, t in links)
+    parts = []
+    for u, t in links:
+        current = ' aria-current="page"' if t == active else ''
+        parts.append(f'<a href="{u}"{current}>{t}</a>')
+    nav = "".join(parts)
     return f'''<body><header><div class="wrap bar"><a class="brand" href="/">{esc(SHORT)}<small>Environmental Intelligence Observatory</small></a><button class="menu" onclick="toggleMenu()">☰ Menu</button><nav id="nav">{nav}</nav></div></header>'''
 
 def footer() -> str:
