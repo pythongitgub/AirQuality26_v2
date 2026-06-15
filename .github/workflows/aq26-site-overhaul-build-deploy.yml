@@ -8,11 +8,19 @@ on:
       - 'scripts/aq26_build_overhauled_site.py'
       - 'scripts/aq26_site_quality_gate.py'
       - 'scripts/aq26_deploy_hostinger_dual.py'
+      - 'scripts/aq26_repo_preflight.py'
       - 'config/aq26_site_config.json'
+      - 'site_public/**'
+      - 'site_unredacted/**'
+      - 'requirements.txt'
       - '.github/workflows/aq26-site-overhaul-build-deploy.yml'
 
 permissions:
   contents: write
+
+concurrency:
+  group: aq26-website-overhaul
+  cancel-in-progress: true
 
 jobs:
   build-quality-deploy:
@@ -29,13 +37,22 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install deploy tools
+      - name: Install deploy tools and Python requirements
         run: |
           set -euo pipefail
           sudo apt-get update
           sudo apt-get install -y sshpass curl
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install PyYAML requests beautifulsoup4 paramiko
+          fi
+
+      - name: Preflight repository files
+        run: |
+          set -euo pipefail
+          python scripts/aq26_repo_preflight.py
 
       - name: Build overhauled public and unredacted sites
         env:
@@ -55,7 +72,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add site_public site_unredacted config scripts requirements.txt .github/workflows/aq26-site-overhaul-build-deploy.yml
+          git add site_public site_unredacted config scripts requirements.txt .github/workflows/aq26-site-overhaul-build-deploy.yml .github/workflows/aq26-site-quality-gate.yml
           if git diff --cached --quiet; then
             echo "No generated changes to commit."
           else

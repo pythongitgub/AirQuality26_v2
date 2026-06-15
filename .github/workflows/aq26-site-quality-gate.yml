@@ -9,7 +9,15 @@ on:
       - 'site_public/**'
       - 'site_unredacted/**'
       - 'scripts/aq26_site_quality_gate.py'
+      - 'scripts/aq26_build_overhauled_site.py'
+      - 'scripts/aq26_repo_preflight.py'
+      - 'config/aq26_site_config.json'
+      - 'requirements.txt'
       - '.github/workflows/aq26-site-quality-gate.yml'
+
+concurrency:
+  group: aq26-website-quality-gate
+  cancel-in-progress: true
 
 jobs:
   quality-gate:
@@ -17,14 +25,37 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Build if generator is available
+
+      - name: Install Python requirements
         run: |
           set -euo pipefail
-          if [ -f scripts/aq26_build_overhauled_site.py ]; then python scripts/aq26_build_overhauled_site.py; fi
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install PyYAML requests beautifulsoup4
+          fi
+
+      - name: Preflight repository files
+        run: |
+          set -euo pipefail
+          python scripts/aq26_repo_preflight.py
+
+      - name: Build generated site files
+        env:
+          GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
+          GOOGLE_SITE_VERIFICATION: ${{ secrets.GOOGLE_SITE_VERIFICATION }}
+        run: |
+          set -euo pipefail
+          python scripts/aq26_build_overhauled_site.py
+
       - name: Run quality gate
         run: |
           set -euo pipefail
