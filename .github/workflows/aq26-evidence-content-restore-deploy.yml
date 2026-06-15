@@ -4,24 +4,28 @@ on:
   workflow_dispatch:
     inputs:
       deploy_strategy:
-        description: "Deployment strategy: build_only, ssh, ftp, auto"
+        description: "Deployment strategy: build_only, ssh, ftp, or auto"
         required: true
         default: "build_only"
         type: choice
         options:
           - build_only
+          - auto
           - ssh
           - ftp
-          - auto
 
 concurrency:
-  group: aq26-evidence-content-restore-${{ github.ref }}
+  group: aq26-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -46,7 +50,20 @@ jobs:
         run: |
           set -euo pipefail
           test -f scripts/aq26_build_evidence_content.py
+          python -m py_compile scripts/aq26_build_evidence_content.py
           python scripts/aq26_build_evidence_content.py
+
+      - name: Scrub protected files from public site
+        run: |
+          set -euo pipefail
+          test -f scripts/aq26_scrub_public_protected_files.py
+          python scripts/aq26_scrub_public_protected_files.py
+
+      - name: Public redaction gate
+        run: |
+          set -euo pipefail
+          test -f scripts/aq26_public_redaction_gate.py
+          python scripts/aq26_public_redaction_gate.py
 
       - name: Upload built site artifact
         uses: actions/upload-artifact@v4
@@ -60,7 +77,7 @@ jobs:
       - name: Deploy to Hostinger
         if: ${{ github.event.inputs.deploy_strategy != 'build_only' }}
         env:
-          DEPLOY_STRATEGY: ${{ github.event.inputs.deploy_strategy }}
+          AQ26_DEPLOY_STRATEGY: ${{ github.event.inputs.deploy_strategy }}
           SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
           SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
           SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
@@ -75,9 +92,5 @@ jobs:
           SCCAIRQUALITY_FTP_UNREDACTED_DIR: ${{ secrets.SCCAIRQUALITY_FTP_UNREDACTED_DIR }}
         run: |
           set -euo pipefail
-          if [ -f scripts/aq26_deploy_hostinger_dual.py ]; then
-            python scripts/aq26_deploy_hostinger_dual.py
-          else
-            echo "scripts/aq26_deploy_hostinger_dual.py missing. Build artifact has still been created."
-            exit 1
-          fi
+          test -f scripts/aq26_deploy_hostinger_dual.py
+          python scripts/aq26_deploy_hostinger_dual.py
