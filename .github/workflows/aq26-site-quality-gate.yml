@@ -3,10 +3,15 @@ name: AQ26 Website Quality Gate
 on:
   workflow_dispatch:
 
+concurrency:
+  group: aq26-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   quality-gate:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -14,20 +19,27 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      - name: Install requirements
+      - name: Install Python requirements
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f requirements.txt ]; then
+            python -m pip install -r requirements.txt
+          else
+            python -m pip install PyYAML beautifulsoup4 requests
+          fi
 
       - name: Preflight repository paths
         run: |
           set -euo pipefail
           python scripts/aq26_repo_preflight.py
 
-      - name: Build overhauled site
+      - name: Build overhauled AQ26 site
+        env:
+          GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
+          GOOGLE_SITE_VERIFICATION: ${{ secrets.GOOGLE_SITE_VERIFICATION }}
         run: |
           set -euo pipefail
           python scripts/aq26_build_overhauled_site.py
