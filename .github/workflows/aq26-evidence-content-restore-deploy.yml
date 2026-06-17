@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       deploy_strategy:
-        description: "Deployment strategy"
+        description: "Deployment mode"
         required: true
         default: "build_only"
         type: choice
@@ -19,14 +19,28 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  evidence-content-restore:
+    name: Build, gate and optionally deploy AQ26 evidence site
     runs-on: ubuntu-latest
     timeout-minutes: 20
+
     env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      DEPLOY_STRATEGY: ${{ inputs.deploy_strategy }}
       GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
       GOOGLE_SITE_VERIFICATION: ${{ secrets.GOOGLE_SITE_VERIFICATION }}
-      AQ26_CONTACT_EMAIL: ${{ vars.AQ26_CONTACT_EMAIL || secrets.AQ26_CONTACT_EMAIL || 'enquiries@sccairquality.com' }}
+      AQ26_CONTACT_EMAIL: ${{ secrets.AQ26_CONTACT_EMAIL }}
+      SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
+      SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
+      SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
+      SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
+      AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
+      AIRQUALITY_HOSTINGER_PUBLIC_UNREDACTED_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_UNREDACTED_DIR }}
+      SCCAIRQUALITY_FTP_HOST: ${{ secrets.SCCAIRQUALITY_FTP_HOST }}
+      SCCAIRQUALITY_FTP_PORT: ${{ secrets.SCCAIRQUALITY_FTP_PORT }}
+      SCCAIRQUALITY_FTP_USERNAME: ${{ secrets.SCCAIRQUALITY_FTP_USERNAME }}
+      SCCAIRQUALITY_FTP_PASSWORD: ${{ secrets.SCCAIRQUALITY_FTP_PASSWORD }}
+      SCCAIRQUALITY_FTP_PUBLIC_HTML_DIR: ${{ secrets.SCCAIRQUALITY_FTP_PUBLIC_HTML_DIR }}
+      SCCAIRQUALITY_FTP_UNREDACTED_DIR: ${{ secrets.SCCAIRQUALITY_FTP_UNREDACTED_DIR }}
 
     steps:
       - name: Check out repository
@@ -43,31 +57,33 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y sshpass lftp rsync
 
-      - name: Install Python requirements if present
+      - name: Install Python requirements
         run: |
           set -euo pipefail
-          if [ -f requirements.txt ]; then python -m pip install -r requirements.txt; fi
+          if [ -f requirements.txt ]; then
+            python -m pip install --upgrade pip
+            python -m pip install -r requirements.txt
+          fi
 
-      - name: Build AQ26 evidence content with SEO and analytics
+      - name: Build evidence content pages
         run: |
           set -euo pipefail
           test -f scripts/aq26_build_evidence_content.py
-          python -m py_compile scripts/aq26_build_evidence_content.py
           python scripts/aq26_build_evidence_content.py
 
-      - name: Scrub protected files from public site
+      - name: Scrub protected files from public surface
         run: |
           set -euo pipefail
           test -f scripts/aq26_scrub_public_protected_files.py
           python scripts/aq26_scrub_public_protected_files.py
 
-      - name: Public redaction gate
+      - name: Run public redaction gate
         run: |
           set -euo pipefail
           test -f scripts/aq26_public_redaction_gate.py
           python scripts/aq26_public_redaction_gate.py
 
-      - name: SEO footer and analytics gate
+      - name: Run SEO footer analytics gate
         run: |
           set -euo pipefail
           test -f scripts/aq26_seo_footer_analytics_gate.py
@@ -80,24 +96,10 @@ jobs:
           path: |
             site_public
             site_unredacted
-          if-no-files-found: error
+          retention-days: 7
 
       - name: Deploy to Hostinger
-        if: ${{ github.event.inputs.deploy_strategy != 'build_only' }}
-        env:
-          AQ26_DEPLOY_STRATEGY: ${{ github.event.inputs.deploy_strategy }}
-          SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
-          SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
-          SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
-          SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
-          AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
-          AIRQUALITY_HOSTINGER_PUBLIC_UNREDACTED_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_UNREDACTED_DIR }}
-          SCCAIRQUALITY_FTP_HOST: ${{ secrets.SCCAIRQUALITY_FTP_HOST }}
-          SCCAIRQUALITY_FTP_PORT: ${{ secrets.SCCAIRQUALITY_FTP_PORT }}
-          SCCAIRQUALITY_FTP_USERNAME: ${{ secrets.SCCAIRQUALITY_FTP_USERNAME }}
-          SCCAIRQUALITY_FTP_PASSWORD: ${{ secrets.SCCAIRQUALITY_FTP_PASSWORD }}
-          SCCAIRQUALITY_FTP_PUBLIC_HTML_DIR: ${{ secrets.SCCAIRQUALITY_FTP_PUBLIC_HTML_DIR }}
-          SCCAIRQUALITY_FTP_UNREDACTED_DIR: ${{ secrets.SCCAIRQUALITY_FTP_UNREDACTED_DIR }}
+        if: ${{ inputs.deploy_strategy != 'build_only' }}
         run: |
           set -euo pipefail
           test -f scripts/aq26_deploy_hostinger_dual.py
