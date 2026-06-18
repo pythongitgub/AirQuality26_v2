@@ -27,15 +27,23 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
+      - name: Patch builder nav f-string syntax
+        run: |
+          set -euo pipefail
+          test -f scripts/aq26_build_evidence_content.py
+          python -m py_compile scripts/aq26_patch_builder_nav_syntax.py
+          python scripts/aq26_patch_builder_nav_syntax.py
+          python -m py_compile scripts/aq26_build_evidence_content.py
+
       - name: Build real evidence content from repository outputs
         env:
           GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
           AQ26_CONTACT_EMAIL: enquiries@sccairquality.com
         run: |
           set -euo pipefail
-          test -f scripts/aq26_build_evidence_content.py
-          python -m py_compile scripts/aq26_build_evidence_content.py
           python scripts/aq26_build_evidence_content.py
+
       - name: Upload built website artifact
         uses: actions/upload-artifact@v4
         with:
@@ -44,6 +52,7 @@ jobs:
             site_public
             site_unredacted
           retention-days: 14
+
       - name: Deploy if requested
         if: ${{ inputs.deploy_strategy != 'build_only' }}
         env:
