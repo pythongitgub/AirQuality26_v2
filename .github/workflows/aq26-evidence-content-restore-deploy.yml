@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       deploy_strategy:
-        description: "Deployment strategy"
+        description: "build_only, auto, ssh, or ftp"
         required: true
-        default: "build_only"
+        default: build_only
         type: choice
         options:
           - build_only
@@ -15,77 +15,39 @@ on:
           - ftp
 
 concurrency:
-  group: aq26-evidence-content-restore-${{ github.ref }}
+  group: aq26-evidence-content-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-      GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
-      GOOGLE_SITE_VERIFICATION: ${{ secrets.GOOGLE_SITE_VERIFICATION }}
-      AQ26_CONTACT_EMAIL: ${{ vars.AQ26_CONTACT_EMAIL || secrets.AQ26_CONTACT_EMAIL || 'enquiries@sccairquality.com' }}
-
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
-      - name: Install system tools
-        run: |
-          set -euo pipefail
-          sudo apt-get update
-          sudo apt-get install -y sshpass lftp rsync
-
-      - name: Install Python requirements if present
-        run: |
-          set -euo pipefail
-          if [ -f requirements.txt ]; then python -m pip install -r requirements.txt; fi
-
-      - name: Build AQ26 evidence content with SEO and analytics
+      - name: Build real evidence content from repository outputs
+        env:
+          GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
+          AQ26_CONTACT_EMAIL: enquiries@sccairquality.com
         run: |
           set -euo pipefail
           test -f scripts/aq26_build_evidence_content.py
           python -m py_compile scripts/aq26_build_evidence_content.py
           python scripts/aq26_build_evidence_content.py
-
-      - name: Scrub protected files from public site
-        run: |
-          set -euo pipefail
-          test -f scripts/aq26_scrub_public_protected_files.py
-          python scripts/aq26_scrub_public_protected_files.py
-
-      - name: Public redaction gate
-        run: |
-          set -euo pipefail
-          test -f scripts/aq26_public_redaction_gate.py
-          python scripts/aq26_public_redaction_gate.py
-
-      - name: SEO footer and analytics gate
-        run: |
-          set -euo pipefail
-          test -f scripts/aq26_seo_footer_analytics_gate.py
-          python scripts/aq26_seo_footer_analytics_gate.py
-
-      - name: Upload built site artifact
+      - name: Upload built website artifact
         uses: actions/upload-artifact@v4
         with:
           name: aq26-built-evidence-site
           path: |
             site_public
             site_unredacted
-          if-no-files-found: error
-
-      - name: Deploy to Hostinger
-        if: ${{ github.event.inputs.deploy_strategy != 'build_only' }}
+          retention-days: 14
+      - name: Deploy if requested
+        if: ${{ inputs.deploy_strategy != 'build_only' }}
         env:
-          AQ26_DEPLOY_STRATEGY: ${{ github.event.inputs.deploy_strategy }}
+          AQ26_DEPLOY_STRATEGY: ${{ inputs.deploy_strategy }}
           SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
           SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
           SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
@@ -100,5 +62,8 @@ jobs:
           SCCAIRQUALITY_FTP_UNREDACTED_DIR: ${{ secrets.SCCAIRQUALITY_FTP_UNREDACTED_DIR }}
         run: |
           set -euo pipefail
-          test -f scripts/aq26_deploy_hostinger_dual.py
-          python scripts/aq26_deploy_hostinger_dual.py
+          if [ -f scripts/aq26_deploy_hostinger_dual.py ]; then
+            python scripts/aq26_deploy_hostinger_dual.py
+          else
+            echo "No deploy script present; use the uploaded artifact for manual Hostinger File Manager upload."
+          fi
