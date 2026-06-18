@@ -1,0 +1,102 @@
+/* AQ26 moving banners enforcement layer
+   Safe visual movement only: animated hero shimmer + evidence ticker.
+   Respects reduced-motion preferences. */
+:root{
+  --aq26-navy:#061a2f;
+  --aq26-blue:#0e4f8f;
+  --aq26-cyan:#10b7d4;
+  --aq26-green:#22c55e;
+  --aq26-amber:#f59e0b;
+  --aq26-white:#ffffff;
+  --aq26-soft:#f4f9fc;
+}
+.aq26-motion-hero,
+.hero,
+.aq26-hero{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+}
+.aq26-motion-hero::before,
+.hero::before,
+.aq26-hero::before{
+  content:"";
+  position:absolute;
+  inset:-45%;
+  z-index:-2;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(16,183,212,.42), transparent 28%),
+    radial-gradient(circle at 80% 0%, rgba(34,197,94,.30), transparent 28%),
+    radial-gradient(circle at 50% 95%, rgba(245,158,11,.20), transparent 30%),
+    linear-gradient(135deg,#061a2f 0%,#0b315a 46%,#0e4f8f 100%);
+  animation: aq26GradientDrift 18s ease-in-out infinite alternate;
+}
+.aq26-motion-hero::after,
+.hero::after,
+.aq26-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:linear-gradient(100deg, transparent 0%, rgba(255,255,255,.18) 48%, transparent 70%);
+  transform:translateX(-120%);
+  animation: aq26Sweep 7s ease-in-out infinite;
+}
+@keyframes aq26GradientDrift{
+  0%{transform:translate3d(-1.5%, -1%,0) rotate(0deg) scale(1)}
+  100%{transform:translate3d(1.5%, 1%,0) rotate(4deg) scale(1.05)}
+}
+@keyframes aq26Sweep{
+  0%,18%{transform:translateX(-120%)}
+  48%,100%{transform:translateX(120%)}
+}
+.aq26-moving-banner{
+  width:100%;
+  overflow:hidden;
+  background:linear-gradient(90deg,#061a2f,#0e4f8f,#064e3b,#061a2f);
+  color:#fff;
+  border-top:1px solid rgba(255,255,255,.12);
+  border-bottom:1px solid rgba(255,255,255,.12);
+  box-shadow:0 10px 28px rgba(6,26,47,.18);
+}
+.aq26-moving-banner__track{
+  display:flex;
+  gap:2.5rem;
+  width:max-content;
+  padding:.72rem 0;
+  animation: aq26Ticker 32s linear infinite;
+}
+.aq26-moving-banner__item{
+  display:inline-flex;
+  align-items:center;
+  gap:.45rem;
+  white-space:nowrap;
+  font-weight:750;
+  letter-spacing:.02em;
+  font-size:.94rem;
+}
+.aq26-moving-banner__dot{
+  width:.55rem;height:.55rem;border-radius:999px;background:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.18)
+}
+@keyframes aq26Ticker{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+.aq26-pulse-card{
+  position:relative;
+  overflow:hidden;
+}
+.aq26-pulse-card::after{
+  content:"";
+  position:absolute; inset:0;
+  background:linear-gradient(100deg, transparent, rgba(16,183,212,.10), transparent);
+  transform:translateX(-130%);
+  animation: aq26CardSweep 9s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes aq26CardSweep{0%,30%{transform:translateX(-130%)}70%,100%{transform:translateX(130%)}}
+@media (prefers-reduced-motion: reduce){
+  .aq26-motion-hero::before,.hero::before,.aq26-hero::before,
+  .aq26-motion-hero::after,.hero::after,.aq26-hero::after,
+  .aq26-moving-banner__track,.aq26-pulse-card::after{animation:none!important;transform:none!important}
+}
