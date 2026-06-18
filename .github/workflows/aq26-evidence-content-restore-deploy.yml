@@ -21,20 +21,22 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Patch builder nav f-string syntax
+      - name: Patch builder nav syntax if needed
         run: |
           set -euo pipefail
-          test -f scripts/aq26_build_evidence_content.py
-          python -m py_compile scripts/aq26_patch_builder_nav_syntax.py
-          python scripts/aq26_patch_builder_nav_syntax.py
-          python -m py_compile scripts/aq26_build_evidence_content.py
+          if [ -f scripts/aq26_patch_builder_nav_syntax.py ]; then
+            python scripts/aq26_patch_builder_nav_syntax.py
+          else
+            echo "No optional nav syntax patcher present; continuing."
+          fi
 
       - name: Build real evidence content from repository outputs
         env:
@@ -42,6 +44,8 @@ jobs:
           AQ26_CONTACT_EMAIL: enquiries@sccairquality.com
         run: |
           set -euo pipefail
+          test -f scripts/aq26_build_evidence_content.py
+          python -m py_compile scripts/aq26_build_evidence_content.py
           python scripts/aq26_build_evidence_content.py
 
       - name: Upload built website artifact
@@ -52,6 +56,15 @@ jobs:
             site_public
             site_unredacted
           retention-days: 14
+
+      - name: Install deploy tools
+        if: ${{ inputs.deploy_strategy != 'build_only' }}
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y sshpass lftp openssh-client
+          command -v sshpass
+          command -v lftp
 
       - name: Deploy if requested
         if: ${{ inputs.deploy_strategy != 'build_only' }}
@@ -75,4 +88,5 @@ jobs:
             python scripts/aq26_deploy_hostinger_dual.py
           else
             echo "No deploy script present; use the uploaded artifact for manual Hostinger File Manager upload."
+            exit 1
           fi
