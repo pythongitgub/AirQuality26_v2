@@ -1,43 +1,10 @@
-# AQ26 generated evidence and heavy outputs
-outputs/
-downloads/
-exports/
-reports/
-evidence/
-artifacts/
-logs/
-*.zip
-*.7z
-*.tar
-*.tar.gz
-*.parquet
-*.mht
-
-# Generated office/report files
-*.pdf
-*.docx
-*.xlsx
-
-# Runtime caches/raw data
-data/raw/
-data/cache/
-.cache/
-tmp/
-temp/
-__pycache__/
-*.pyc
-.venv/
-.ipynb_checkpoints/
-
-# Secrets/local-only
-.env
+# AQ26 safety additions
+public_html/
+site_public/downloads/*.zip
+site_unredacted/downloads/*.zip
+site_unredacted/.htpasswd
+**/.htpasswd
+**/.env
 *.pem
-*.key
-.htpasswd
-.htaccess.local
-GDRIVE_SERVICE_ACCOUNT*.json
-GDRIVE_SERVICE_ACCOUNT*.txt
-GITHUB_TOKEN*.txt
-GITHUB_PAT*.txt
-GIT_TOKEN*.txt
-
+id_rsa
+id_ed25519
