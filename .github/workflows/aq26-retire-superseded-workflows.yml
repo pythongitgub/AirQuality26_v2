@@ -1,0 +1,36 @@
+name: AQ26 Retire Superseded Workflows
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: "Type RETIRE to move old AQ26 one-off workflows out of .github/workflows"
+        required: true
+        default: "NO"
+
+permissions:
+  contents: write
+
+jobs:
+  retire:
+    if: inputs.confirm == 'RETIRE'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Move superseded workflow files
+        run: python scripts/aq26_disable_superseded_workflows.py
+      - name: Commit workflow retirement
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/workflows .github/workflows_disabled outputs/AQ26_DISABLED_WORKFLOWS.txt
+          if git diff --cached --quiet; then
+            echo "No workflow changes to commit."
+          else
+            git commit -m "Retire superseded AQ26 one-off workflows"
+            git push
+          fi
