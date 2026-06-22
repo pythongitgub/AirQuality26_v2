@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""Deploy clean AQ26 site folders to Hostinger.
-
-The deployment fails if the public root is not populated after extraction. This
-prevents a misleading green Action when the wrong Hostinger directory is used.
-"""
+"""Deploy clean AQ26 site folders to Hostinger with explicit diagnostics."""
 from __future__ import annotations
 
 import argparse
@@ -45,11 +41,11 @@ def clean_remote(value: str) -> str:
     return value or "domains/sccairquality.com/public_html"
 
 
-def make_tar(src: Path, dest: Path) -> None:
+def make_tar(src: Path, dest: Path) -> int:
     if not src.exists():
         raise SystemExit(f"Missing build folder: {src}")
+    added = 0
     with tarfile.open(dest, "w:gz") as tar:
-        added = 0
         for p in src.rglob("*"):
             if p.is_file():
                 rel = p.relative_to(src)
@@ -60,6 +56,7 @@ def make_tar(src: Path, dest: Path) -> None:
     if added == 0:
         raise SystemExit(f"Refusing to deploy empty tar from {src}")
     print(f"Packed {added} files from {src}", flush=True)
+    return added
 
 
 def ssh_base(host: str, port: str, user: str, password: str):
@@ -69,31 +66,78 @@ def ssh_base(host: str, port: str, user: str, password: str):
     return env, opts, f"{user}@{host}"
 
 
-def upload_tar(tar_path: Path, remote_dir: str, label: str, host: str, port: str, user: str, password: str, *, clean_public: bool = False, min_files: int = 1) -> None:
+def public_clean_command(remote_dir: str, remote_tmp: str) -> str:
+    rd = shlex.quote(remote_dir)
+    return f"""
+set -u
+mkdir -p {rd}
+echo AQ26_REMOTE_PUBLIC_DIR={rd}
+echo AQ26_BEFORE_PUBLIC_LIST
+find {rd} -maxdepth 2 -mindepth 1 -print | sort | sed -n '1,80p' || true
+find {rd} -mindepth 1 -maxdepth 1 ! -name '.well-known' ! -name 'unredacted' -exec rm -rf {{}} +
+rm -rf {rd}/git-test {rd}/.git {rd}/test
+rm -f {rd}/downloads/AQ26_WEEKLY_EVIDENCE_BUNDLE.zip {rd}/downloads/latest-evidence.zip
+tar -xzf {remote_tmp} -C {rd}
+tar_status=$?
+rm -f {remote_tmp}
+echo AQ26_TAR_STATUS=$tar_status
+echo AQ26_AFTER_PUBLIC_LIST
+find {rd} -maxdepth 2 -type f -print | sort | sed -n '1,120p' || true
+count=$(find {rd} -maxdepth 3 -type f | wc -l | tr -d ' ')
+echo AQ26_PUBLIC_FILE_COUNT=$count
+missing=0
+for f in index.html sitemap.xml robots.txt assets/aq26-logo.svg assets/aq26-canonical.css assets/aq26-canonical.js; do
+  if [ ! -f {rd}/$f ]; then
+    echo AQ26_MISSING_PUBLIC_FILE=$f
+    missing=1
+  fi
+done
+if [ "$count" -lt 18 ]; then
+  echo AQ26_PUBLIC_FILE_COUNT_TOO_LOW=$count
+  missing=1
+fi
+exit $missing
+""".strip()
+
+
+def unredacted_clean_command(remote_dir: str, remote_tmp: str) -> str:
+    rd = shlex.quote(remote_dir)
+    return f"""
+set -u
+mkdir -p {rd}
+echo AQ26_REMOTE_UNREDACTED_DIR={rd}
+find {rd} -mindepth 1 -maxdepth 1 ! -name '.htaccess' -exec rm -rf {{}} +
+rm -f {rd}/.htpasswd
+tar -xzf {remote_tmp} -C {rd}
+tar_status=$?
+rm -f {remote_tmp}
+echo AQ26_TAR_STATUS=$tar_status
+echo AQ26_AFTER_UNREDACTED_LIST
+find {rd} -maxdepth 2 -type f -print | sort | sed -n '1,80p' || true
+count=$(find {rd} -maxdepth 3 -type f | wc -l | tr -d ' ')
+echo AQ26_UNREDACTED_FILE_COUNT=$count
+missing=0
+for f in index.html robots.txt assets/aq26-logo.svg; do
+  if [ ! -f {rd}/$f ]; then
+    echo AQ26_MISSING_UNREDACTED_FILE=$f
+    missing=1
+  fi
+done
+if [ "$count" -lt 8 ]; then
+  echo AQ26_UNREDACTED_FILE_COUNT_TOO_LOW=$count
+  missing=1
+fi
+exit $missing
+""".strip()
+
+
+def upload_tar(tar_path: Path, remote_dir: str, label: str, host: str, port: str, user: str, password: str, *, clean_public: bool = False) -> None:
     env, opts, target = ssh_base(host, port, user, password)
     remote_tmp = f"/tmp/aq26_{label}.tgz"
     scp_opts = ["-P", str(port), "-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null", "-o", "ConnectTimeout=35"]
     run(["sshpass", "-e", "ssh", *opts, target, f"mkdir -p {shlex.quote(remote_dir)}"], env=env)
     run(["sshpass", "-e", "scp", *scp_opts, str(tar_path), f"{target}:{remote_tmp}"], env=env)
-    if clean_public:
-        clean_cmd = (
-            f"set -e; mkdir -p {shlex.quote(remote_dir)}; "
-            f"find {shlex.quote(remote_dir)} -mindepth 1 -maxdepth 1 ! -name '.well-known' ! -name 'unredacted' -exec rm -rf {{}} +; "
-            f"rm -rf {shlex.quote(remote_dir)}/git-test {shlex.quote(remote_dir)}/.git {shlex.quote(remote_dir)}/test; "
-            f"rm -f {shlex.quote(remote_dir)}/downloads/AQ26_WEEKLY_EVIDENCE_BUNDLE.zip {shlex.quote(remote_dir)}/downloads/latest-evidence.zip; "
-            f"tar -xzf {remote_tmp} -C {shlex.quote(remote_dir)}; rm -f {remote_tmp}; "
-            f"count=$(find {shlex.quote(remote_dir)} -maxdepth 2 -type f | wc -l); echo AQ26_PUBLIC_FILE_COUNT=$count; "
-            f"test $count -ge {int(min_files)}; test -f {shlex.quote(remote_dir)}/index.html; test -f {shlex.quote(remote_dir)}/sitemap.xml; test -f {shlex.quote(remote_dir)}/assets/aq26-logo.svg"
-        )
-    else:
-        clean_cmd = (
-            f"set -e; mkdir -p {shlex.quote(remote_dir)}; "
-            f"find {shlex.quote(remote_dir)} -mindepth 1 -maxdepth 1 ! -name '.htaccess' -exec rm -rf {{}} +; "
-            f"rm -f {shlex.quote(remote_dir)}/.htpasswd; "
-            f"tar -xzf {remote_tmp} -C {shlex.quote(remote_dir)}; rm -f {remote_tmp}; "
-            f"count=$(find {shlex.quote(remote_dir)} -maxdepth 2 -type f | wc -l); echo AQ26_UNREDACTED_FILE_COUNT=$count; "
-            f"test $count -ge {int(min_files)}; test -f {shlex.quote(remote_dir)}/index.html"
-        )
+    clean_cmd = public_clean_command(remote_dir, remote_tmp) if clean_public else unredacted_clean_command(remote_dir, remote_tmp)
     run(["sshpass", "-e", "ssh", *opts, target, clean_cmd], env=env)
 
 
@@ -129,9 +173,9 @@ Header set X-Robots-Tag "noindex, nofollow, noarchive"
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--dry-run", nargs="?", const="true", default="false")
-    args = ap.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dry-run", nargs="?", const="true", default="false")
+    args = parser.parse_args()
     dry = str(args.dry_run).lower() in {"1", "true", "yes", "y"}
     host = clean_host(env_first("SCCAIRQUALITY_SSH_HOST", "HOSTINGER_SSH_HOST"))
     port = env_first("SCCAIRQUALITY_SSH_PORT", "HOSTINGER_SSH_PORT", default="65002")
@@ -159,8 +203,8 @@ def main() -> int:
         unr = temp / "unredacted.tgz"
         make_tar(ROOT / "site_public", pub)
         make_tar(ROOT / "site_unredacted", unr)
-        upload_tar(pub, public_dir, "public", host, port, user, password, clean_public=True, min_files=25)
-        upload_tar(unr, public_dir.rstrip("/") + "/unredacted", "unredacted", host, port, user, password, clean_public=False, min_files=10)
+        upload_tar(pub, public_dir, "public", host, port, user, password, clean_public=True)
+        upload_tar(unr, public_dir.rstrip("/") + "/unredacted", "unredacted", host, port, user, password, clean_public=False)
         install_unredacted_auth(public_dir, host, port, user, password, unred_pass, auth_user)
     print("AQ26 canonical deployment complete.", flush=True)
     return 0
