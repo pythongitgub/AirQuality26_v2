@@ -1,0 +1,138 @@
+site:
+  public_base_url: "https://sccairquality.com"
+  unredacted_base_url: "https://sccairquality.com/unredacted"
+  name: "AQ26"
+  long_name: "AirQuality26 Environmental Intelligence Observatory"
+  organisation: "SCC Nexus"
+  contact_email: "enquiries@sccairquality.com"
+  ga_secret: "GA_MEASUREMENT_ID"
+  search_console_secret: "GOOGLE_SITE_VERIFICATION"
+
+public_pages:
+  - slug: index.html
+    title: "AQ26 Environmental Intelligence Observatory"
+    nav: "Home"
+    description: "Public redacted air-quality evidence observatory for Newhaven ERF and wider UK incinerator context."
+    priority: "1.0"
+  - slug: newhaven.html
+    title: "Newhaven ERF evidence page"
+    nav: "Newhaven"
+    description: "Cautious public evidence context for Newhaven Energy Recovery Facility, BV8067IL and surrounding air-quality review."
+    priority: "0.9"
+  - slug: weekly-update.html
+    title: "Weekly AQ26 update"
+    nav: "Weekly update"
+    description: "Latest public redacted weekly AQ26 evidence status, readiness gates and publication notes."
+    priority: "0.9"
+  - slug: readiness.html
+    title: "Evidence readiness dashboard"
+    nav: "Readiness"
+    description: "AQ26 readiness gates for redaction, provenance, source records, ground context, satellite catalogue and external submission status."
+    priority: "0.8"
+  - slug: source-records.html
+    title: "Source records"
+    nav: "Sources"
+    description: "Public-safe AQ26 source record summaries, provenance policy and evidence-status notes."
+    priority: "0.8"
+  - slug: downloads.html
+    title: "Public downloads"
+    nav: "Downloads"
+    description: "Public redacted AQ26 reports and safe downloads. Protected evidence bundles remain in the unredacted area."
+    priority: "0.7"
+  - slug: archive.html
+    title: "Weekly archive"
+    nav: "Archive"
+    description: "AQ26 weekly archive index and historical publication notes."
+    priority: "0.7"
+  - slug: methodology.html
+    title: "Methodology and caveats"
+    nav: "Methodology"
+    description: "AQ26 methodology, redaction policy, data-source caveats, wind-sector requirements and no-attribution publication rules."
+    priority: "0.8"
+  - slug: incinerators.html
+    title: "UK incinerator context"
+    nav: "Incinerators"
+    description: "Cautious national incinerator screening context and monitoring-site review caveats."
+    priority: "0.7"
+  - slug: comparisons.html
+    title: "Comparisons"
+    nav: "Comparisons"
+    description: "Public-safe comparison notes for contextual, control and background air-quality review."
+    priority: "0.6"
+  - slug: historical.html
+    title: "Historical backfill"
+    nav: "Historical"
+    description: "Historical AQ26 backfill status, archive-normalisation notes and evidence limitations."
+    priority: "0.6"
+  - slug: about.html
+    title: "About AQ26"
+    nav: "About"
+    description: "About AQ26, SCC Nexus and the provenance-led weekly evidence workflow."
+    priority: "0.5"
+  - slug: contact.html
+    title: "Contact and corrections"
+    nav: "Contact"
+    description: "Contact AQ26 with corrections, missing evidence, accessibility issues or source updates."
+    priority: "0.5"
+  - slug: privacy.html
+    title: "Privacy policy"
+    nav: "Privacy"
+    description: "AQ26 privacy policy and public website data handling information."
+    priority: "0.4"
+  - slug: terms.html
+    title: "Terms of use"
+    nav: "Terms"
+    description: "AQ26 terms of use, limitations and cautious evidence-publication conditions."
+    priority: "0.4"
+  - slug: cookies.html
+    title: "Cookies and analytics"
+    nav: "Cookies"
+    description: "AQ26 cookie and analytics notice."
+    priority: "0.4"
+  - slug: accessibility.html
+    title: "Accessibility statement"
+    nav: "Accessibility"
+    description: "AQ26 accessibility statement and issue-reporting route."
+    priority: "0.4"
+
+unredacted_pages:
+  - slug: index.html
+    title: "Protected AQ26 evidence review"
+    nav: "Review home"
+    description: "Password-protected AQ26 unredacted evidence review area."
+  - slug: newhaven.html
+    title: "Unredacted Newhaven review"
+    nav: "Newhaven"
+    description: "Protected Newhaven ERF evidence review page."
+  - slug: weekly-update.html
+    title: "Unredacted weekly update"
+    nav: "Weekly update"
+    description: "Protected weekly evidence and operational status."
+  - slug: source-records.html
+    title: "Unredacted source records"
+    nav: "Source records"
+    description: "Protected source records and provenance notes."
+  - slug: evidence.html
+    title: "Evidence bundle"
+    nav: "Evidence"
+    description: "Protected evidence bundle downloads and manifest notes."
+  - slug: candidates.html
+    title: "Candidate anomalies"
+    nav: "Candidates"
+    description: "Protected candidate review area; no causal claims unless gates pass."
+  - slug: diagnostics.html
+    title: "Diagnostics"
+    nav: "Diagnostics"
+    description: "Protected pipeline diagnostics and issue summary."
+  - slug: history.html
+    title: "Historical evidence"
+    nav: "History"
+    description: "Protected historic evidence archive."
+  - slug: downloads.html
+    title: "Protected downloads"
+    nav: "Downloads"
+    description: "Password-protected AQ26 evidence bundles and reports."
+  - slug: methodology.html
+    title: "Protected methodology"
+    nav: "Methodology"
+    description: "Reviewer methodology, caveats and gates."
