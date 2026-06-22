@@ -43,11 +43,9 @@ jobs:
       SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
       - name: Install dependencies
         run: |
           set -euo pipefail
@@ -55,28 +53,18 @@ jobs:
           sudo apt-get install -y sshpass
           python -m pip install --upgrade pip
           python -m pip install pyyaml
-
-      - name: Build one clean canonical site
-        run: |
-          set -euo pipefail
-          python scripts/aq26_build_canonical_site.py
-
+      - name: Build publication-grade canonical site
+        run: python scripts/aq26_build_canonical_site.py
       - name: Audit generated public and protected sites
-        run: |
-          set -euo pipefail
-          python scripts/aq26_site_full_audit.py
-
+        run: python scripts/aq26_site_full_audit.py
       - name: Deploy canonical site to Hostinger
         if: env.DEPLOY_TO_HOSTINGER == 'true'
-        run: |
-          set -euo pipefail
-          python scripts/aq26_deploy_canonical_hostinger.py --dry-run "${DRY_RUN}"
-
+        run: python scripts/aq26_deploy_canonical_hostinger.py --dry-run "${DRY_RUN}"
       - name: Upload audit artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: aq26-canonical-site-output
+          name: aq26-publication-site-output
           path: |
             site_public/**
             site_unredacted/**
