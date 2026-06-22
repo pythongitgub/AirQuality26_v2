@@ -1,0 +1,72 @@
+name: AQ26 Drive Forensic Evidence Audit
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_files:
+        description: "Maximum Drive items to inventory"
+        required: true
+        default: "25000"
+      max_depth:
+        description: "Maximum folder recursion depth"
+        required: true
+        default: "12"
+      fail_if_truncated:
+        description: "Fail if Drive inventory reaches max_files"
+        required: true
+        type: boolean
+        default: false
+  schedule:
+    - cron: "25 6 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  drive-forensic-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+      GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
+      MAX_FILES: ${{ github.event.inputs.max_files || '25000' }}
+      MAX_DEPTH: ${{ github.event.inputs.max_depth || '12' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Drive audit dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install google-api-python-client google-auth google-auth-httplib2
+
+      - name: Run AQ26 Drive forensic evidence audit
+        run: |
+          set -euo pipefail
+          args=(
+            --max-files "${MAX_FILES}"
+            --max-depth "${MAX_DEPTH}"
+            --output-root outputs/drive_forensic_audit
+            --site-public site_public
+            --site-unredacted site_unredacted
+          )
+          if [ "${{ github.event.inputs.fail_if_truncated || 'false' }}" = "true" ]; then
+            args+=(--fail-if-truncated)
+          fi
+          python scripts/aq26_drive_forensic_evidence_audit.py "${args[@]}"
+
+      - name: Upload public Drive forensic audit artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-drive-forensic-evidence-audit-public
+          if-no-files-found: error
+          retention-days: 30
+          path: |
+            outputs/drive_forensic_audit/aq26_drive_inventory_public.csv
+            outputs/drive_forensic_audit/aq26_drive_forensic_summary_public.json
+            site_public/data/drive_forensic_summary.json
