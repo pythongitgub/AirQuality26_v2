@@ -60,14 +60,16 @@ jobs:
       - name: Deploy canonical site to Hostinger
         if: env.DEPLOY_TO_HOSTINGER == 'true'
         run: python scripts/aq26_deploy_canonical_hostinger.py --dry-run "${DRY_RUN}"
-      - name: Upload audit artifact
+      - name: Upload minimal public audit artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: aq26-publication-site-output
+          name: aq26-publication-site-audit
           path: |
-            site_public/**
-            site_unredacted/**
             outputs/AQ26_SITE_AUDIT.json
-          retention-days: 14
+            site_public/sitemap.xml
+            site_public/robots.txt
+            site_public/site.webmanifest
+            site_public/data/*.json
+          retention-days: 7
           if-no-files-found: warn
