@@ -1,0 +1,85 @@
+name: AQ26 Canonical Site Build, Audit and Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_to_hostinger:
+        description: "Deploy to sccairquality.com after build and audit"
+        required: true
+        default: "true"
+        type: choice
+        options: ["true", "false"]
+      dry_run:
+        description: "Build/audit only; do not upload"
+        required: true
+        default: "false"
+        type: choice
+        options: ["false", "true"]
+  schedule:
+    - cron: "15 6 * * 1"
+
+concurrency:
+  group: aq26-canonical-site-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-audit-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      DEPLOY_TO_HOSTINGER: ${{ github.event_name == 'schedule' && 'true' || inputs.deploy_to_hostinger }}
+      DRY_RUN: ${{ github.event_name == 'schedule' && 'false' || inputs.dry_run }}
+      GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
+      GOOGLE_SITE_VERIFICATION: ${{ secrets.GOOGLE_SITE_VERIFICATION }}
+      SCCAIRQUALITY_SSH_HOST: ${{ secrets.SCCAIRQUALITY_SSH_HOST }}
+      SCCAIRQUALITY_SSH_PORT: ${{ secrets.SCCAIRQUALITY_SSH_PORT }}
+      SCCAIRQUALITY_SSH_USERNAME: ${{ secrets.SCCAIRQUALITY_SSH_USERNAME }}
+      SCCAIRQUALITY_SSH_PASSWORD: ${{ secrets.SCCAIRQUALITY_SSH_PASSWORD }}
+      AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
+      SCC_UNREDACTED_USERNAME: ${{ secrets.SCC_UNREDACTED_USERNAME }}
+      SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+          python -m pip install --upgrade pip
+          python -m pip install pyyaml
+
+      - name: Build one clean canonical site
+        run: |
+          set -euo pipefail
+          python scripts/aq26_build_canonical_site.py
+
+      - name: Audit generated public and protected sites
+        run: |
+          set -euo pipefail
+          python scripts/aq26_site_full_audit.py
+
+      - name: Deploy canonical site to Hostinger
+        if: env.DEPLOY_TO_HOSTINGER == 'true'
+        run: |
+          set -euo pipefail
+          python scripts/aq26_deploy_canonical_hostinger.py --dry-run "${DRY_RUN}"
+
+      - name: Upload audit artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aq26-canonical-site-output
+          path: |
+            site_public/**
+            site_unredacted/**
+            outputs/AQ26_SITE_AUDIT.json
+          retention-days: 14
+          if-no-files-found: warn
