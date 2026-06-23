@@ -77,26 +77,36 @@ jobs:
         run: |
           set -euo pipefail
           python - <<'PY'
+          import re
+          import shutil
           from pathlib import Path
-          stamp = 'aq26-visual-20260623c'
-          favicon = (
-              f'<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg?v={stamp}">'
-              f'<link rel="shortcut icon" type="image/svg+xml" href="/assets/favicon.svg?v={stamp}">'
-          )
+          stamp = 'aq26-visual-20260623d'
           for root_name in ['site_public', 'site_unredacted', 'site_test']:
               root = Path(root_name)
               if not root.exists():
                   continue
+              assets = root / 'assets'
+              header_asset = assets / 'air_quality_web_header.svg'
+              if not header_asset.exists():
+                  fallback = assets / 'logo_web.svg'
+                  if fallback.exists():
+                      shutil.copy2(fallback, header_asset)
+              favicon_name = 'favicon.png' if (assets / 'favicon.png').exists() else 'favicon.svg'
+              favicon = (
+                  f'<link rel="icon" href="/assets/{favicon_name}?v={stamp}">'
+                  f'<link rel="shortcut icon" href="/assets/{favicon_name}?v={stamp}">'
+                  f'<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v={stamp}">'
+              )
               for html in root.rglob('*.html'):
                   s = html.read_text(encoding='utf-8')
-                  s = s.replace('src="/assets/logo_web.svg"', f'src="/assets/logo_web.svg?v={stamp}"')
-                  s = s.replace('src="/assets/aq26-logo.svg"', f'src="/assets/aq26-logo.svg?v={stamp}"')
-                  s = s.replace('href="/assets/aq26-brand.css"', f'href="/assets/aq26-brand.css?v={stamp}"')
-                  s = s.replace('src="/assets/aq26-brand.js"', f'src="/assets/aq26-brand.js?v={stamp}"')
+                  s = re.sub(r'src="/assets/logo_web\.svg(?:\?v=[^"]*)?"', f'src="/assets/air_quality_web_header.svg?v={stamp}"', s)
+                  s = re.sub(r'src="/assets/aq26-logo\.svg(?:\?v=[^"]*)?"', f'src="/assets/aq26-logo.svg?v={stamp}"', s)
+                  s = re.sub(r'href="/assets/aq26-brand\.css(?:\?v=[^"]*)?"', f'href="/assets/aq26-brand.css?v={stamp}"', s)
+                  s = re.sub(r'src="/assets/aq26-brand\.js(?:\?v=[^"]*)?"', f'src="/assets/aq26-brand.js?v={stamp}"', s)
                   if 'rel="icon"' not in s:
                       s = s.replace('</title>', '</title>' + favicon, 1)
                   html.write_text(s, encoding='utf-8')
-          print(f'Cache-busted AQ26 logo, CSS, JS and favicon with {stamp}')
+          print(f'Cache-busted AQ26 header logo, CSS, JS and favicon with {stamp}')
           PY
       - name: Audit generated public and protected sites
         run: python scripts/aq26_site_full_audit.py
