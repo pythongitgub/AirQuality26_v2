@@ -1,0 +1,7 @@
+/* AQ26 compatibility stylesheet.
+   The restored visual site uses aq26-brand.css / operational banner styles.
+   The audit and deploy guard still require this canonical filename. */
+@import url('./aq26-brand.css');
+@import url('./aq26_operational.css');
+@import url('./aq26_webm_banners.css');
+@import url('./aq26_moving_banners.css');
