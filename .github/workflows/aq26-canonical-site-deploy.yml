@@ -57,7 +57,7 @@ jobs:
         run: python scripts/aq26_build_canonical_site.py
       - name: Audit generated public and protected sites
         run: python scripts/aq26_site_full_audit.py
-      - name: Patch Hostinger tar compatibility
+      - name: Patch Hostinger tar and branded asset verification
         if: env.DEPLOY_TO_HOSTINGER == 'true'
         run: |
           set -euo pipefail
@@ -66,8 +66,9 @@ jobs:
           p = Path('scripts/aq26_deploy_canonical_hostinger.py')
           s = p.read_text(encoding='utf-8')
           s = s.replace('tar -xzf {remote_tmp} -C {rd}', 'cd {rd} && tar -xzf {remote_tmp}')
+          s = s.replace('assets/aq26-canonical.css assets/aq26-canonical.js', 'assets/aq26-brand.css assets/aq26-brand.js')
           p.write_text(s, encoding='utf-8')
-          print('Patched deploy script to use cd target before tar extraction')
+          print('Patched deploy script for Hostinger tar extraction and restored branded asset checks')
           PY
       - name: Deploy canonical site to Hostinger
         if: env.DEPLOY_TO_HOSTINGER == 'true'
