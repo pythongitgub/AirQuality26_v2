@@ -53,6 +53,24 @@ jobs:
           sudo apt-get install -y sshpass
           python -m pip install --upgrade pip
           python -m pip install pyyaml
+      - name: Patch AQ26 builder asset precedence
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('scripts/aq26_build_canonical_site.py')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace(
+              'ASSET_SOURCE_DIRS = [ROOT / "assets", ROOT / "website" / "assets"]',
+              'ASSET_SOURCE_DIRS = [ROOT / "website" / "assets", ROOT / "assets"]'
+          )
+          s = s.replace(
+              'if not p.is_file():\n                continue',
+              'if not p.is_file() or p.stat().st_size == 0:\n                continue'
+          )
+          p.write_text(s, encoding='utf-8')
+          print('Patched builder so restored root assets override legacy website/assets and empty assets are skipped')
+          PY
       - name: Build publication-grade canonical site
         run: python scripts/aq26_build_canonical_site.py
       - name: Cache-bust restored AQ26 visual assets
@@ -60,7 +78,7 @@ jobs:
           set -euo pipefail
           python - <<'PY'
           from pathlib import Path
-          stamp = 'aq26-visual-20260623b'
+          stamp = 'aq26-visual-20260623c'
           favicon = (
               f'<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg?v={stamp}">'
               f'<link rel="shortcut icon" type="image/svg+xml" href="/assets/favicon.svg?v={stamp}">'
