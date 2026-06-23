@@ -96,11 +96,15 @@ def audit_public(base: Path, errors: list[str]) -> None:
     required = [
         "index.html", "newhaven.html", "weekly-update.html", "source-records.html", "readiness.html", "methodology.html",
         "downloads.html", "privacy.html", "terms.html", "cookies.html", "accessibility.html", "contact.html",
-        "sitemap.xml", "robots.txt", "site.webmanifest", "assets/aq26-logo.svg", "assets/aq26-canonical.css",
+        "sitemap.xml", "robots.txt", "site.webmanifest", "assets/logo_web.svg", "assets/aq26-logo.svg",
+        "assets/aq26-brand.css", "assets/aq26-brand.js", "assets/air_quality_web.svg",
     ]
     for rel in required:
         if not (base / rel).exists():
             errors.append(f"Missing public required file: {rel}")
+    # Branded restoration should include either the video banner itself or a safe SVG fallback.
+    if not (base / "assets" / "desktop_banner_1.webm").exists() and not (base / "assets" / "banners" / "desktop_banner_1.webm").exists():
+        errors.append("Missing public required visual banner: desktop_banner_1.webm")
     robots = (base / "robots.txt").read_text(encoding="utf-8", errors="ignore") if (base / "robots.txt").exists() else ""
     if "Disallow: /unredacted/" not in robots:
         errors.append("robots.txt must disallow /unredacted/")
