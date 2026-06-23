@@ -1,3 +1,17 @@
+outputs/
+site_public/
+site_unredacted/
+site_test/
+public_html/
+website/
+*_EVIDENCE_BUNDLE.zip
+latest-evidence.zip
+.htpasswd
+.env
+.env.*
+
+
+
 .env
 .env.*
 *.log
