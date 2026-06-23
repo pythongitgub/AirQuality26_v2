@@ -55,6 +55,31 @@ jobs:
           python -m pip install pyyaml
       - name: Build publication-grade canonical site
         run: python scripts/aq26_build_canonical_site.py
+      - name: Cache-bust restored AQ26 visual assets
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          stamp = 'aq26-visual-20260623b'
+          favicon = (
+              f'<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg?v={stamp}">'
+              f'<link rel="shortcut icon" type="image/svg+xml" href="/assets/favicon.svg?v={stamp}">'
+          )
+          for root_name in ['site_public', 'site_unredacted', 'site_test']:
+              root = Path(root_name)
+              if not root.exists():
+                  continue
+              for html in root.rglob('*.html'):
+                  s = html.read_text(encoding='utf-8')
+                  s = s.replace('src="/assets/logo_web.svg"', f'src="/assets/logo_web.svg?v={stamp}"')
+                  s = s.replace('src="/assets/aq26-logo.svg"', f'src="/assets/aq26-logo.svg?v={stamp}"')
+                  s = s.replace('href="/assets/aq26-brand.css"', f'href="/assets/aq26-brand.css?v={stamp}"')
+                  s = s.replace('src="/assets/aq26-brand.js"', f'src="/assets/aq26-brand.js?v={stamp}"')
+                  if 'rel="icon"' not in s:
+                      s = s.replace('</title>', '</title>' + favicon, 1)
+                  html.write_text(s, encoding='utf-8')
+          print(f'Cache-busted AQ26 logo, CSS, JS and favicon with {stamp}')
+          PY
       - name: Audit generated public and protected sites
         run: python scripts/aq26_site_full_audit.py
       - name: Patch Hostinger tar and branded asset verification
