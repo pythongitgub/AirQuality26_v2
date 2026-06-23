@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Build AQ26 publication-grade public, protected and test sites.
+"""Build AQ26 publication site with restored branded header, video banner and assets.
 
-Single source of truth for formatting, horizontal header logo, pages,
-banners, SEO, Google Analytics hooks, sitemap/robots and public/protected
-separation.
+This keeps the clean publication/readiness-gated structure, but restores the
+AQ26/SCC Nexus visual system from the proven public site: horizontal header logo,
+video hero/banner, cards, ticker, footer, sitemap/robots and protected pages.
 """
 from __future__ import annotations
 
@@ -25,6 +25,7 @@ CONFIG_PATH = ROOT / "configs" / "aq26_canonical_site.yml"
 PUBLIC = ROOT / "site_public"
 UNREDACTED = ROOT / "site_unredacted"
 TEST = ROOT / "site_test"
+ASSET_SOURCE_DIRS = [ROOT / "assets", ROOT / "website" / "assets"]
 
 PUBLIC_CLAIM_NOTE = (
     "AQ26 publishes provenance-led environmental evidence screening and operational readiness notes. "
@@ -32,147 +33,133 @@ PUBLIC_CLAIM_NOTE = (
 )
 
 PAGES = [
-    ("index.html", "Home", "AQ26 environmental intelligence and evidence observatory for Newhaven and surrounding communities."),
-    ("newhaven.html", "Newhaven ERF", "Public redacted Newhaven ERF / BV8067IL evidence hub and review status."),
-    ("weekly-update.html", "Weekly Update", "Latest public weekly AQ26 evidence summary and publication status."),
-    ("source-records.html", "Source Records", "Public-safe source records, provenance notes and evidence categories."),
-    ("readiness.html", "Readiness Gates", "Evidence readiness, QA gates and publication boundaries."),
-    ("official-filings.html", "Official Filings", "Official-document candidates and relevance controls for Newhaven/BV8067IL."),
-    ("monitoring.html", "Monitoring and Meteorology", "Ground monitoring, station role and meteorology context."),
-    ("satellite.html", "Satellite and Models", "Satellite catalogue, Earthdata, CAMS and model-readiness status."),
+    ("index.html", "Home", "Weekly public-interest air-quality intelligence for Newhaven and surrounding communities."),
+    ("newhaven.html", "Newhaven", "Public redacted Newhaven ERF / BV8067IL evidence hub and review status."),
+    ("source-records.html", "Sources", "Public-safe source records, provenance notes and evidence categories."),
+    ("weekly-update.html", "Weekly update", "Latest public weekly AQ26 evidence summary and publication status."),
+    ("readiness.html", "Readiness", "Evidence readiness, QA gates and publication boundaries."),
     ("methodology.html", "Methodology", "AQ26 methods, caveats, redaction policy and review workflow."),
     ("downloads.html", "Downloads", "Public-safe downloads and audit outputs."),
     ("archive.html", "Archive", "Historical weekly archive and backfill status."),
     ("about.html", "About", "About AQ26 and the publication workflow."),
     ("privacy.html", "Privacy", "Privacy policy for AQ26."),
     ("terms.html", "Terms", "Terms of use for AQ26."),
-    ("cookies.html", "Cookies", "Cookie and analytics notice."),
+    ("cookies.html", "Cookies", "Cookie notice for AQ26."),
     ("accessibility.html", "Accessibility", "Accessibility statement."),
     ("contact.html", "Contact", "Contact, corrections and source-update enquiries."),
 ]
 
 UNREDACTED_PAGES = [
-    ("index.html", "Protected Review Home", "Protected AQ26 reviewer evidence area."),
-    ("evidence.html", "Evidence Library", "Protected source-led evidence library and controlled-review index."),
-    ("source-records.html", "Unredacted Source Records", "Protected source records and review traceability."),
-    ("readiness.html", "Protected Readiness", "Protected readiness gates and internal review status."),
-    ("downloads.html", "Protected Downloads", "Protected evidence downloads and review material."),
-    ("methodology.html", "Protected Methodology", "Internal methodology, limitations and reviewer controls."),
-    ("contact.html", "Protected Contact", "Reviewer Contact",),
+    ("index.html", "Protected review", "Protected AQ26 reviewer evidence area."),
+    ("evidence.html", "Evidence library", "Protected source-led evidence library and controlled-review index."),
+    ("source-records.html", "Unredacted sources", "Protected source records and review traceability."),
+    ("readiness.html", "Protected readiness", "Protected readiness gates and internal review status."),
+    ("downloads.html", "Protected downloads", "Protected evidence downloads and review material."),
+    ("methodology.html", "Protected methodology", "Internal methodology, limitations and reviewer controls."),
+    ("contact.html", "Protected contact", "Reviewer contact and correction route."),
 ]
 
 READINESS = {
-    "redaction_ready": "ready",
-    "provenance_ready": "ready",
-    "source_records_ready": "ready",
-    "official_filing_relevance_ready": "needs strict filtering",
-    "ground_aq_ready": "context only",
-    "monitor_role_classification_ready": "required before interpretation",
-    "wind_sector_ready": "not ready",
-    "satellite_catalogue_ready": "ready when latest bundle present",
-    "satellite_extraction_ready": "not ready",
-    "earthdata_cmr_ready": "partial / parser must count granules",
-    "cams_ready": "not ready unless endpoint configured",
-    "external_submission_ready": "not ready",
+    "Redaction gate": "ready",
+    "Provenance/source records": "ready",
+    "Official filing relevance": "needs strict filtering",
+    "Ground monitoring": "context only until monitor role/wind-sector checks pass",
+    "Satellite catalogue": "catalogue ready; extraction/interpretation gated",
+    "CAMS/model context": "not ready unless endpoint configured",
+    "External submission": "not ready",
 }
 
 
 def load_config() -> dict[str, Any]:
     if CONFIG_PATH.exists():
         return yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8")) or {}
-    return {"site": {"public_base_url": "https://sccairquality.com", "unredacted_base_url": "https://sccairquality.com/unredacted", "organisation": "SCC Nexus"}}
+    return {"site": {"public_base_url": "https://sccairquality.com", "unredacted_base_url": "https://sccairquality.com/unredacted", "organisation": "SCC Nexus", "contact_email": "enquiries@sccairquality.com"}}
 
 
-def now_iso() -> str:
-    try:
-        from zoneinfo import ZoneInfo
-        return dt.datetime.now(ZoneInfo("Europe/London")).isoformat()
-    except Exception:
-        return dt.datetime.utcnow().isoformat() + "Z"
-
-
-def clean_dir(path: Path) -> None:
+def clean(path: Path) -> None:
     if path.exists():
         shutil.rmtree(path)
     path.mkdir(parents=True, exist_ok=True)
-
-
-def read_json(path: Path) -> Any:
-    if not path.exists():
-        return None
-    try:
-        return json.loads(path.read_text(encoding="utf-8", errors="ignore"))
-    except Exception:
-        return None
-
-
-def load_drive_summary() -> dict[str, Any]:
-    candidates = [
-        ROOT / "outputs" / "drive_forensic_audit" / "aq26_drive_forensic_summary_public.json",
-        ROOT / "site_public" / "data" / "drive_forensic_summary.json",
-        ROOT / "data" / "drive_forensic_summary.json",
-    ]
-    for path in candidates:
-        value = read_json(path)
-        if isinstance(value, dict):
-            return value
-    return {}
 
 
 def esc(value: Any) -> str:
     return html.escape(str(value), quote=True)
 
 
-def css() -> str:
-    return """
-:root{--bg:#f4f8fb;--ink:#0d1b2a;--muted:#5d6d7e;--line:#d9e5ef;--brand:#06364d;--blue:#0ea5e9;--green:#059669;--amber:#d97706;--red:#b42318;--card:#fff;--max:1210px}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.58;overflow-x:hidden}a{color:#075985}a:focus,button:focus,input:focus{outline:3px solid #f59e0b;outline-offset:3px}.skip{position:absolute;left:-999px}.skip:focus{left:1rem;top:1rem;background:#fff;padding:.75rem;z-index:100}.wrap{max-width:var(--max);margin:auto;padding:0 1rem}.site-header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.98);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}.bar{display:flex;align-items:center;gap:1rem;padding:.48rem 1rem}.brand{display:flex;align-items:center;text-decoration:none;color:var(--ink);font-weight:950;min-width:0}.brand img{display:block;width:min(335px,58vw);height:76px;object-fit:contain;object-position:left center}.brand span{position:absolute;left:-9999px}.menu{margin-left:auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:.62rem .88rem;font-weight:950;box-shadow:0 7px 24px rgba(16,32,51,.08)}.nav{display:none;position:absolute;left:1rem;right:1rem;top:80px;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 20px 45px rgba(16,32,51,.18);padding:.75rem}.nav[data-open=true]{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.25rem}.nav a{padding:.68rem .78rem;border-radius:12px;text-decoration:none;color:var(--ink);font-weight:850}.nav a:hover,.nav a[aria-current=page]{background:#e0f2fe}.hero{background:radial-gradient(circle at 82% 15%,rgba(103,232,249,.33),transparent 28%),linear-gradient(135deg,#061522,#0a3550 56%,#053f3a);color:#fff;overflow:hidden}.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:2rem;align-items:center;padding:4.4rem 1rem}.eyebrow{display:inline-flex;padding:.36rem .7rem;border:1px solid rgba(255,255,255,.38);border-radius:999px;font-weight:950;color:#dff7ff}.hero h1{font-size:clamp(2.05rem,5vw,4.65rem);line-height:1.03;margin:.9rem 0}.hero p{font-size:clamp(1.04rem,2vw,1.28rem);color:#d8e9f7}.hero-card{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.22);border-radius:30px;padding:1rem;box-shadow:0 25px 75px rgba(0,0,0,.30)}.hero-card img{width:100%;height:auto;border-radius:23px;background:#fff}.ticker{white-space:nowrap;overflow:hidden;border-top:1px solid rgba(255,255,255,.16);border-bottom:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.16)}.ticker span{display:inline-block;padding:.68rem 0;animation:ticker 32s linear infinite;color:#dff7ff;font-weight:850}@keyframes ticker{from{transform:translateX(35%)}to{transform:translateX(-100%)}}main{padding:2rem 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1rem}.grid.two{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:1.18rem;box-shadow:0 10px 30px rgba(16,32,51,.07)}.card h2,.card h3{margin-top:0}.warn{border-left:6px solid var(--amber);background:#fffbeb}.danger{border-left:6px solid var(--red);background:#fff1f2}.ok{border-left:6px solid var(--green);background:#ecfdf5}.button{display:inline-flex;margin:.25rem .35rem .25rem 0;padding:.72rem 1rem;border-radius:999px;text-decoration:none;background:var(--brand);color:#fff;font-weight:950}.button.alt{background:#e0f2fe;color:#0c4a6e}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:#fff}table{width:100%;border-collapse:collapse;min-width:720px}th,td{text-align:left;padding:.78rem;border-bottom:1px solid var(--line);vertical-align:top}th{background:#eef6ff}.muted{color:var(--muted)}.site-footer{background:#07111f;color:#dbeafe;margin-top:3rem}.footgrid{display:grid;grid-template-columns:1.15fr repeat(3,.7fr);gap:1.5rem;padding:2.4rem 1rem}.site-footer a{color:#bdefff}.copyright{border-top:1px solid rgba(255,255,255,.14);padding:1rem;color:#b7c9dc;text-align:center}.searchbox{width:100%;padding:1rem;border-radius:16px;border:1px solid var(--line);font-size:1rem;margin:.5rem 0 1rem}.kpi{font-size:2rem;font-weight:950;color:#06364d}.small{font-size:.92rem}.status-ready{color:#047857;font-weight:900}.status-partial{color:#b45309;font-weight:900}.status-not{color:#b42318;font-weight:900}@media(max-width:820px){.hero-grid{grid-template-columns:1fr;padding-top:3rem}.hero-card{display:none}.footgrid{grid-template-columns:1fr}.bar{padding:.44rem .8rem}.brand img{width:min(250px,60vw);height:62px}.menu{padding:.56rem .72rem}.nav{top:66px}.grid.two{grid-template-columns:1fr}table{min-width:620px}}
-""".strip()
+def now_iso() -> str:
+    try:
+        from zoneinfo import ZoneInfo
+        return dt.datetime.now(ZoneInfo("Europe/London")).strftime("%Y-%m-%d %H:%M %Z")
+    except Exception:
+        return dt.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
 
 
-def js() -> str:
-    return """(function(){const b=document.querySelector('[data-menu-button]'),n=document.querySelector('#nav');if(b&&n)b.addEventListener('click',()=>{const o=n.getAttribute('data-open')==='true';n.setAttribute('data-open',String(!o));b.setAttribute('aria-expanded',String(!o));});const y=document.querySelector('[data-year]');if(y)y.textContent=new Date().getFullYear();const q=document.querySelector('[data-filter]');if(q)q.addEventListener('input',()=>{const t=q.value.toLowerCase();document.querySelectorAll('[data-filter-item]').forEach(e=>{e.style.display=e.textContent.toLowerCase().includes(t)?'':'none'});});})();"""
-
-
-def write_assets(out: Path) -> None:
+def copy_assets(out: Path) -> None:
     assets = out / "assets"
     assets.mkdir(parents=True, exist_ok=True)
-    wordmark = assets / "aq26-logo.svg"
-    wordmark.write_text(
-        '<svg xmlns="http://www.w3.org/2000/svg" width="820" height="190" viewBox="0 0 820 190" role="img" aria-label="AirQuality26 Environmental Intelligence Observatory">'
-        '<rect width="820" height="190" rx="28" fill="white"/>'
-        '<g transform="translate(28 29)"><path d="M62 7 116 38 116 100 62 131 8 100 8 38Z" fill="none" stroke="#0f4c81" stroke-width="16" stroke-linejoin="round"/>'
-        '<path d="M35 94 68 112 98 94M31 45 64 63 95 45" fill="none" stroke="#0e7490" stroke-width="13" stroke-linecap="round"/><path d="M62 12v114" stroke="#38bdf8" stroke-width="10" stroke-linecap="round"/></g>'
-        '<text x="174" y="78" font-family="Inter,Arial,sans-serif" font-size="52" font-weight="900" fill="#0d1b2a">AirQuality26</text>'
-        '<text x="177" y="119" font-family="Inter,Arial,sans-serif" font-size="23" font-weight="800" fill="#0f4c81">Environmental Intelligence Observatory</text>'
-        '<text x="178" y="151" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="700" fill="#64748b">AQ26 · provenance-led air-quality evidence</text></svg>',
-        encoding="utf-8",
-    )
-    shutil.copy2(wordmark, assets / "logo_web.svg")
-    (assets / "favicon.svg").write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320"><rect width="320" height="320" rx="64" fill="#061522"/><path d="M160 42 258 99v122l-98 57-98-57V99Z" fill="none" stroke="#38bdf8" stroke-width="28" stroke-linejoin="round"/></svg>', encoding="utf-8")
-    (assets / "apple-touch-icon.png").write_bytes(b"\x89PNG\r\n\x1a\n")
-    (assets / "air_quality_web.svg").write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760"><defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#061522"/><stop offset=".55" stop-color="#0c4a6e"/><stop offset="1" stop-color="#0f766e"/></linearGradient></defs><rect width="1400" height="760" fill="url(#g)"/><path d="M0 545 C210 395 420 610 650 485 S1030 360 1400 455 V760 H0Z" fill="#5eead4" opacity=".28"/><text x="92" y="190" fill="white" font-family="Arial,sans-serif" font-size="88" font-weight="900">AirQuality26</text><text x="98" y="254" fill="#dff7ff" font-family="Arial,sans-serif" font-size="35" font-weight="700">Environmental Intelligence Observatory</text><text x="100" y="312" fill="#cbd5e1" font-family="Arial,sans-serif" font-size="26">Public-interest evidence · cautious claims · protected reviewer traceability</text></svg>', encoding="utf-8")
-    (assets / "aq26-canonical.css").write_text(css(), encoding="utf-8")
-    (assets / "aq26-canonical.js").write_text(js(), encoding="utf-8")
-    (out / "site.webmanifest").write_text(json.dumps({"name": "AirQuality26 Environmental Intelligence Observatory", "short_name": "AQ26", "start_url": "/", "display": "standalone", "background_color": "#f4f8fb", "theme_color": "#06364d", "icons": []}, indent=2), encoding="utf-8")
+    copied = 0
+    for src in ASSET_SOURCE_DIRS:
+        if not src.exists():
+            continue
+        for p in src.rglob("*"):
+            if not p.is_file():
+                continue
+            if any(part in {".git", "node_modules", "__pycache__"} for part in p.parts):
+                continue
+            rel = p.relative_to(src)
+            dest = assets / rel
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(p, dest)
+            copied += 1
+    if copied == 0:
+        write_fallback_assets(assets)
+    # Always make sure these compatibility names exist.
+    if not (assets / "logo_web.svg").exists() and (assets / "aq26-logo.svg").exists():
+        shutil.copy2(assets / "aq26-logo.svg", assets / "logo_web.svg")
+    if not (assets / "aq26-logo.svg").exists() and (assets / "logo_web.svg").exists():
+        shutil.copy2(assets / "logo_web.svg", assets / "aq26-logo.svg")
+    if not (assets / "aq26-brand.css").exists():
+        (assets / "aq26-brand.css").write_text(default_css(), encoding="utf-8")
+    if not (assets / "aq26-brand.js").exists():
+        (assets / "aq26-brand.js").write_text(default_js(), encoding="utf-8")
+    (out / "site.webmanifest").write_text(json.dumps({"name": "AirQuality26 Environmental Intelligence Observatory", "short_name": "AQ26", "start_url": "/", "display": "standalone", "background_color": "#f5f8fc", "theme_color": "#0f4c81", "icons": []}, indent=2), encoding="utf-8")
+
+
+def write_fallback_assets(assets: Path) -> None:
+    (assets / "logo_web.svg").write_text('<svg xmlns="http://www.w3.org/2000/svg" width="820" height="190" viewBox="0 0 820 190"><rect width="820" height="190" rx="28" fill="white"/><text x="40" y="82" font-family="Arial,sans-serif" font-size="54" font-weight="900" fill="#102033">AirQuality26</text><text x="42" y="124" font-family="Arial,sans-serif" font-size="24" font-weight="800" fill="#0f4c81">Environmental Intelligence Observatory</text><text x="42" y="154" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#5f6b7a">SCC Nexus · AQ26</text></svg>', encoding="utf-8")
+    shutil.copy2(assets / "logo_web.svg", assets / "aq26-logo.svg")
+    (assets / "air_quality_web.svg").write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760"><defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#071728"/><stop offset=".55" stop-color="#0f4c81"/><stop offset="1" stop-color="#2cb7df"/></linearGradient></defs><rect width="1400" height="760" fill="url(#g)"/><text x="90" y="210" fill="white" font-family="Arial,sans-serif" font-size="92" font-weight="900">AirQuality26</text><text x="96" y="278" fill="#dff7ff" font-family="Arial,sans-serif" font-size="36" font-weight="700">Environmental Intelligence Observatory</text></svg>', encoding="utf-8")
+
+
+def default_css() -> str:
+    return r'''
+:root{--ink:#102033;--muted:#5f6b7a;--line:#d8e0ea;--blue:#0f4c81;--deep:#102033;--cyan:#0e7490;--bg:#f5f8fc;--card:#fff;--shadow:0 18px 45px rgba(16,32,51,.13)}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.62}a{color:#0f4c81}img{max-width:100%;height:auto}.wrap{max-width:1180px;margin:0 auto;padding:0 22px}.site-header{background:rgba(255,255,255,.97);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50;backdrop-filter:blur(12px)}.bar{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:88px}.brand{display:flex;align-items:center;text-decoration:none;color:var(--ink);gap:12px}.brand img{height:68px;width:auto;display:block}.brand-title{display:none}.nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.nav a{text-decoration:none;color:var(--ink);font-weight:800;font-size:.95rem;padding:10px 12px;border-radius:12px}.nav a:hover,.nav a[aria-current="page"]{background:#eef4fb}.menu{display:none;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 13px;font-weight:900;box-shadow:0 4px 14px rgba(16,32,51,.06)}.hero{position:relative;min-height:430px;color:#fff;background:#0b2744;overflow:hidden}.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0b2744 url('/assets/air_quality_web.svg') center/cover no-repeat;transform:scale(1.01)}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,25,45,.86),rgba(8,40,74,.58) 50%,rgba(132,28,68,.43));z-index:1}.hero-inner{position:relative;z-index:2;padding:88px 0 84px;max-width:900px}.badge{display:inline-flex;background:rgba(255,255,255,.17);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:7px 14px;font-weight:900;font-size:.82rem;text-transform:uppercase;letter-spacing:.045em}h1{font-size:clamp(2.5rem,6vw,5.2rem);line-height:1.02;margin:.55em 0 .25em;letter-spacing:-.055em}h2{font-size:clamp(1.55rem,3vw,2.35rem);line-height:1.12;letter-spacing:-.025em}.hero p{font-size:clamp(1.05rem,1.7vw,1.36rem);max-width:820px}.ticker{position:absolute;bottom:0;left:0;right:0;z-index:3;background:rgba(9,25,43,.96);color:#fff;white-space:nowrap;overflow:hidden;font-weight:900}.ticker span{display:inline-block;padding:12px 0;animation:aq26ticker 28s linear infinite}@keyframes aq26ticker{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}main{padding:36px 0 54px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.two{display:grid;grid-template-columns:minmax(0,2fr) minmax(280px,1fr);gap:22px}.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:var(--shadow)}.muted{color:var(--muted)}.kpi{font-size:2.1rem;font-weight:950;color:#0f4c81;line-height:1}.pill{display:inline-block;border-radius:999px;padding:4px 10px;font-size:.8rem;font-weight:900;background:#eef4fb}.pill.public{background:#ecfdf5;color:#166534}.pill.protected{background:#fff7ed;color:#7c2d12}.btnrow{display:flex;gap:12px;flex-wrap:wrap}.button{display:inline-flex;align-items:center;justify-content:center;background:#0f4c81;color:#fff;text-decoration:none;border-radius:14px;padding:12px 15px;font-weight:900}.button.secondary{background:#102033}.table-wrap{overflow:auto}table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}th,td{text-align:left;vertical-align:top;border-bottom:1px solid var(--line);padding:12px}th{background:#eaf2fb}footer{background:#102033;color:#fff;margin-top:26px;padding:34px 0 24px}.footgrid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:24px}footer a{color:#dbeafe}.footer-logo img{height:60px}.copyright{border-top:1px solid rgba(255,255,255,.18);margin-top:26px;padding-top:20px;color:#e5eef8}@media(max-width:900px){.brand img{height:52px}.menu{display:block}.nav{display:none;width:100%;flex-direction:column;align-items:stretch;padding-bottom:16px}.nav.open{display:flex}.bar{flex-wrap:wrap;align-items:center}.nav a{padding:12px 14px}.hero{min-height:390px}.hero-inner{padding:66px 0 70px}.two,.grid,.footgrid{grid-template-columns:1fr}}@media(max-width:520px){.wrap{padding:0 16px}.brand img{height:44px}.hero{min-height:340px}.card{border-radius:20px;padding:18px}.bar{min-height:68px}}
+'''.strip()
+
+
+def default_js() -> str:
+    return """(function(){const b=document.querySelector('[data-menu-button]'),n=document.querySelector('#nav');if(b&&n)b.addEventListener('click',()=>{const open=n.classList.toggle('open');b.setAttribute('aria-expanded',String(open));});})();"""
 
 
 def analytics(ga: str) -> str:
     if not ga:
         return "<!-- GA disabled: set GA_MEASUREMENT_ID secret. -->"
     g = esc(ga)
-    return f'<script async src="https://www.googletagmanager.com/gtag/js?id={g}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag("js",new Date());gtag("config","{g}",{{anonymize_ip:true}});</script>'
+    return f'<script async src="https://www.googletagmanager.com/gtag/js?id={g}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}};gtag(\'js\',new Date());gtag(\'config\',\'{g}\');</script>'
 
 
 def page_url(base: str, slug: str) -> str:
     return base.rstrip("/") + ("/" if slug == "index.html" else "/" + slug)
 
 
-def nav_html(pages: list[tuple[str, str, str]], current: str) -> str:
-    links: list[str] = []
-    for slug, title, _ in pages:
+def nav_html(pages: list[tuple[str, str, str]], current: str, unredacted: bool) -> str:
+    links = []
+    for slug, label, _ in pages[:8]:
         href = "./" if slug == "index.html" else slug
         current_attr = ' aria-current="page"' if slug == current else ""
-        links.append(f'<a href="{esc(href)}"{current_attr}>{esc(title)}</a>')
+        links.append(f'<a href="{esc(href)}"{current_attr}>{esc(label)}</a>')
+    if not unredacted:
+        links.append('<a href="/unredacted/" rel="nofollow">Unredacted</a>')
     return "".join(links)
 
 
@@ -180,127 +167,88 @@ def jsonld(cfg: dict[str, Any], title: str, desc: str, slug: str, unredacted: bo
     site = cfg.get("site", {})
     public_base = site.get("public_base_url", "https://sccairquality.com")
     base = site.get("unredacted_base_url", public_base.rstrip("/") + "/unredacted") if unredacted else public_base
-    graph: list[dict[str, Any]] = [
-        {"@type": "Organization", "name": site.get("organisation", "SCC Nexus"), "url": public_base},
-        {"@type": "WebSite", "name": site.get("long_name", "AirQuality26 Environmental Intelligence Observatory"), "url": public_base},
-        {"@type": "WebPage", "url": page_url(base, slug), "name": title, "description": desc, "inLanguage": "en-GB"},
-        {"@type": "Dataset", "name": "AQ26 public redacted evidence index", "description": "Readiness-gated, public-safe evidence index and provenance records for environmental air-quality review."},
-        {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "AQ26", "item": public_base}, {"@type": "ListItem", "position": 2, "name": title, "item": page_url(base, slug)}]},
-    ]
-    if slug == "newhaven.html":
-        graph.append({"@type": "Place", "name": "Newhaven Energy Recovery Facility evidence focus", "address": {"@type": "PostalAddress", "addressLocality": "Newhaven", "addressRegion": "East Sussex", "addressCountry": "GB"}, "additionalProperty": [{"@type": "PropertyValue", "name": "Permit reference", "value": "BV8067IL"}]})
-    return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False) + "</script>"
+    data = {"@context": "https://schema.org", "@type": "WebPage", "name": f"{title} · AQ26", "url": page_url(base, slug), "description": desc, "publisher": {"@type": "Organization", "name": site.get("organisation", "SCC Nexus")}, "inLanguage": "en-GB"}
+    return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + '</script>'
 
 
 def head(cfg: dict[str, Any], slug: str, title: str, desc: str, unredacted: bool, ga: str, gsc: str) -> str:
     site = cfg.get("site", {})
     public_base = site.get("public_base_url", "https://sccairquality.com")
     base = site.get("unredacted_base_url", public_base.rstrip("/") + "/unredacted") if unredacted else public_base
-    robots = "noindex,nofollow,noarchive" if unredacted else "index,follow,max-image-preview:large"
-    verify = f'<meta name="google-site-verification" content="{esc(gsc)}">' if (gsc and not unredacted) else ""
-    title_full = f"{title} · AQ26"
+    full_title = f"{title} · AQ26"
     url = page_url(base, slug)
-    return (
-        f'<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title_full)}</title>'
-        f'<meta name="description" content="{esc(desc)}"><meta name="robots" content="{robots}"><link rel="canonical" href="{esc(url)}">'
-        f'<meta property="og:type" content="website"><meta property="og:title" content="{esc(title_full)}"><meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{esc(url)}"><meta property="og:site_name" content="AQ26">'
-        f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{esc(title_full)}"><meta name="twitter:description" content="{esc(desc)}">'
-        f'<meta name="theme-color" content="#06364d"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="manifest" href="site.webmanifest"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><link rel="stylesheet" href="assets/aq26-canonical.css">'
-        f'{verify}{jsonld(cfg, title, desc, slug, unredacted)}{analytics(ga) if not unredacted else ""}'
-    )
+    robots = "noindex,nofollow,noarchive" if unredacted else "index,follow"
+    verify = f'<meta name="google-site-verification" content="{esc(gsc)}">' if (gsc and not unredacted) else ""
+    return f'''<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{esc(full_title)}</title><meta name="description" content="{esc(desc)}"><meta name="robots" content="{robots}"><link rel="canonical" href="{esc(url)}"><meta property="og:title" content="{esc(full_title)}"><meta property="og:description" content="{esc(desc)}"><meta property="og:type" content="website"><meta property="og:url" content="{esc(url)}"><meta property="og:image" content="{esc(public_base.rstrip('/'))}/assets/air_quality_web.svg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{esc(full_title)}"><meta name="twitter:description" content="{esc(desc)}"><meta name="twitter:image" content="{esc(public_base.rstrip('/'))}/assets/air_quality_web.svg">{jsonld(cfg,title,desc,slug,unredacted)}{verify}{analytics(ga) if not unredacted else ""}<link rel="stylesheet" href="/assets/aq26-brand.css">'''
 
 
 def readiness_table() -> str:
-    rows = []
-    for key, value in READINESS.items():
-        low = value.lower()
-        cls = "status-ready"
-        if "not" in low or "required" in low:
-            cls = "status-not"
-        elif "needs" in low or "partial" in low or "context" in low:
-            cls = "status-partial"
-        rows.append(f'<tr><td>{esc(key.replace("_", " ").title())}</td><td><span class="{cls}">{esc(value)}</span></td></tr>')
-    return '<div class="table-wrap"><table><thead><tr><th>Gate</th><th>Status / publication meaning</th></tr></thead><tbody>' + "".join(rows) + "</tbody></table></div>"
+    rows = "".join(f"<tr><td>{esc(k)}</td><td>{esc(v)}</td></tr>" for k, v in READINESS.items())
+    return '<div class="table-wrap"><table><thead><tr><th>Gate</th><th>Status</th></tr></thead><tbody>' + rows + '</tbody></table></div>'
 
 
-def page_body(slug: str, data: dict[str, Any], unredacted: bool) -> str:
-    total = data.get("total_items", "Drive audit pending")
-    official = data.get("newhaven_official_candidate_count", "pending")
+def body_for(slug: str, unredacted: bool) -> str:
+    protected = '<span class="pill protected">Protected reviewer evidence</span>' if unredacted else '<span class="pill public">Public redaction gate active</span>'
     if slug == "index.html":
-        return f'<div class="grid two"><section class="card"><h2>Environmental-forensic evidence portal</h2><p>AQ26 tracks public-interest air-quality evidence around Newhaven, incinerator context, monitoring records, official filings, satellite/model context and historical source material.</p><p>Public pages are deliberately redacted and cautious. Protected pages support reviewer traceability and controlled evidence review.</p><p><a class="button" href="newhaven.html">Open Newhaven hub</a><a class="button alt" href="readiness.html">View readiness gates</a></p></section><aside class="card ok"><h3>Latest Drive audit</h3><p class="kpi">{esc(total)}</p><p class="muted">Inventoried evidence-lake items. Newhaven official candidates: {esc(official)}.</p></aside></div>'
+        return f'''<div class="two"><section class="card"><h2>Public-interest air-quality intelligence</h2><p>AQ26 tracks weekly public-interest evidence around Newhaven, incinerator context, monitoring records and historical source material. Public pages are deliberately redacted and cautious.</p><p>Use the public pages for readable summaries. Use the protected evidence area for reviewer traceability and unredacted evidence libraries.</p><div class="btnrow"><a class="button" href="/newhaven.html">Open Newhaven hub</a><a class="button secondary" href="/unredacted/" rel="nofollow">Protected evidence area</a></div></section><aside class="card"><h3>Evidence status</h3><p class="muted">Public summaries avoid exposing private reviewer material, direct protected links or credentials.</p><p>{protected}</p><p><span class="pill public">SEO and analytics active</span></p></aside></div><section class="grid" style="margin-top:22px"><div class="card"><div class="kpi">AQ26</div><strong>Evidence observatory</strong><p class="muted">Source records, readiness gates and weekly evidence tracking.</p></div><div class="card"><div class="kpi">0</div><strong>public leak target</strong><p class="muted">Protected files remain behind authentication.</p></div><div class="card"><div class="kpi">✓</div><strong>canonical deployment</strong><p class="muted">Single build path for public and protected pages.</p></div></section>'''
     if slug == "readiness.html":
-        return '<section class="card"><h2>Evidence readiness gates</h2><p>These gates control what AQ26 may say publicly. Strong claims remain locked until the relevant evidence, QA, comparator, meteorology and review controls pass.</p>' + readiness_table() + '</section>'
+        return '<section class="card"><h2>Readiness gates</h2><p>Public wording remains cautious until source, QA, comparator, meteorology and review gates support stronger interpretation.</p>' + readiness_table() + '</section>'
     if slug == "newhaven.html":
-        return '<section class="card"><h2>Newhaven ERF / BV8067IL evidence hub</h2><p>This page organises public-safe Newhaven evidence candidates. It does not assert breach, health impact or causal attribution.</p><div class="grid"><div class="card ok"><h3>Official-document focus</h3><p>Annual/performance reports, permit records and regulatory candidates are separated from general web search results.</p></div><div class="card warn"><h3>Claim lock</h3><p>Interpretation requires source review, measurement units, station role, wind-sector and comparator checks.</p></div></div></section>'
-    if slug in {"official-filings.html", "source-records.html"}:
-        return f'<section class="card"><h2>Source and filing control</h2><p>AQ26 separates high-value Newhaven/BV8067IL official candidates from contextual or irrelevant material. Public citation requires manual source checking.</p><p class="kpi">{esc(official)}</p><p class="muted">Newhaven official-document candidates reported by the Drive forensic audit, subject to manual relevance review.</p></section>'
-    if slug in {"monitoring.html", "satellite.html", "methodology.html"}:
-        return '<section class="card"><h2>Method and interpretation discipline</h2><p>Ground monitors, weather, wind-sector, satellite catalogues and model outputs are context layers until QA and comparator gates pass. AQ26 avoids causal claims unless evidence gates support them.</p></section>'
+        return '<section class="card"><h2>Newhaven ERF / BV8067IL evidence hub</h2><p>This page organises public-safe Newhaven evidence candidates. It does not assert breach, health impact or causal attribution.</p><p><span class="pill public">Official-document focus</span> <span class="pill public">Claim lock active</span></p></section>'
     if slug == "downloads.html":
-        return '<section class="card"><h2>Public-safe downloads</h2><p>Only redacted, public-safe summaries should appear here. Full evidence bundles and raw archives belong in the protected review area.</p><p class="muted">The audit blocks public full ZIP bundle leaks.</p></section>'
-    return '<section class="card"><h2>' + esc(slug.replace(".html", "").replace("-", " ").title()) + '</h2><p>This AQ26 page is generated through the canonical publication template with consistent header, logo, metadata, analytics hooks, caveats and redaction controls.</p><p>' + esc(PUBLIC_CLAIM_NOTE) + '</p></section>'
-
-
-def directory(pages: list[tuple[str, str, str]]) -> str:
-    items = []
-    for slug, title, desc in pages:
-        items.append(f'<article class="card" data-filter-item><h3><a href="{esc(slug)}">{esc(title)}</a></h3><p>{esc(desc)}</p></article>')
-    return '<section class="card"><h2>Page directory</h2><input class="searchbox" data-filter placeholder="Filter AQ26 pages"><div class="grid">' + "".join(items) + '</div></section>'
+        return '<section class="card"><h2>Public-safe downloads</h2><p>Only redacted, public-safe summaries should appear here. Full evidence bundles and raw archives belong in the protected review area.</p></section>'
+    return '<section class="card"><h2>' + esc(slug.replace('.html','').replace('-',' ').title()) + '</h2><p>' + esc(PUBLIC_CLAIM_NOTE) + '</p></section>'
 
 
 def hero(title: str, desc: str, unredacted: bool) -> str:
-    label = "Protected reviewer evidence" if unredacted else "Redacted public evidence portal"
-    ticker = "public output · protected reviewer evidence · SEO and analytics · source records · redaction gates · no causal attribution unless evidence gates pass"
-    return f'<section class="hero"><div class="wrap hero-grid"><div><span class="eyebrow">{esc(label)}</span><h1>{esc(title)}</h1><p>{esc(desc)}</p><p><a class="button" href="readiness.html">Readiness gates</a><a class="button alt" href="methodology.html">Methodology</a></p></div><div class="hero-card"><img src="assets/air_quality_web.svg" alt="AQ26 air-quality evidence visual"></div></div><div class="ticker"><span>{esc(ticker)} &nbsp; · &nbsp; {esc(ticker)}</span></div></section>'
+    badge = "Protected site" if unredacted else "Public site"
+    video = '<video class="hero-video" data-aq26-hero-video autoplay muted loop playsinline poster="/assets/air_quality_web.svg"><source src="/assets/desktop_banner_1.webm" type="video/webm"></video>'
+    ticker = "Weekly AQ26 update • Newhaven ERF context • source records • redacted public output • protected reviewer evidence • SEO and analytics active • corrections welcome • "
+    return f'<section class="hero">{video}<div class="wrap hero-inner"><span class="badge">{esc(badge)}</span><h1>{esc("AirQuality26" if title == "Home" else title)}</h1><p>{esc(desc)}</p></div><div class="ticker"><span>{esc(ticker)}</span></div></section>'
 
 
 def footer(cfg: dict[str, Any]) -> str:
     email = cfg.get("site", {}).get("contact_email", "enquiries@sccairquality.com")
-    return f'<footer class="site-footer"><div class="wrap footgrid"><div><h2>AQ26</h2><p>Environmental Intelligence Observatory. Public outputs are redacted, cautious and readiness-gated.</p><p class="small">{esc(PUBLIC_CLAIM_NOTE)}</p></div><div><h3>Evidence</h3><p><a href="readiness.html">Readiness</a><br><a href="source-records.html">Sources</a><br><a href="methodology.html">Methodology</a></p></div><div><h3>Publication</h3><p><a href="downloads.html">Downloads</a><br><a href="archive.html">Archive</a><br><a href="/unredacted/" rel="nofollow">Protected review</a></p></div><div><h3>Governance</h3><p><a href="privacy.html">Privacy</a><br><a href="terms.html">Terms</a><br><a href="accessibility.html">Accessibility</a><br><a href="mailto:{esc(email)}">Corrections</a></p></div></div><div class="copyright">© <span data-year></span> AQ26 / SCC Nexus. Redacted public evidence screening only.</div></footer>'
+    return f'''<footer><div class="wrap footgrid"><div><span class="footer-logo"><img src="/assets/logo_web.svg" alt="SCC Nexus Air Quality Report"></span><br><strong>Environmental Intelligence Observatory · AQ26</strong><p>Weekly evidence tracking, public-interest transparency and protected reviewer material where appropriate.</p><p class="muted">Last rebuilt {esc(now_iso())}.</p></div><div><strong>Legal</strong><br><a href="/privacy.html">Privacy</a><br><a href="/terms.html">Terms</a><br><a href="/cookies.html">Cookies</a><br><a href="/accessibility.html">Accessibility</a></div><div><strong>Site</strong><br><a href="/contact.html">Contact</a><br><a href="mailto:{esc(email)}">{esc(email)}</a><br><a href="/sitemap.xml">Sitemap</a><br><a href="/unredacted/" rel="nofollow">Protected evidence</a></div></div><div class="wrap"><p class="copyright">© 2026 SCC Nexus · AQ26. All rights reserved. Corrections welcome.</p></div></footer>'''
 
 
-def render_page(cfg: dict[str, Any], page: tuple[str, str, str], pages: list[tuple[str, str, str]], data: dict[str, Any], unredacted: bool, ga: str, gsc: str) -> str:
+def render_page(cfg: dict[str, Any], page: tuple[str, str, str], pages: list[tuple[str, str, str]], unredacted: bool, ga: str, gsc: str) -> str:
     slug, title, desc = page
-    home = "./" if slug == "index.html" else "index.html"
-    body = page_body(slug, data, unredacted) + directory(pages)
-    return f'<!doctype html><html lang="en-GB"><head>{head(cfg, slug, title, desc, unredacted, ga, gsc)}</head><body><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="wrap bar"><a class="brand" href="{home}"><img src="assets/aq26-logo.svg" alt="AirQuality26 Environmental Intelligence Observatory"><span>AQ26</span></a><button class="menu" data-menu-button aria-expanded="false" aria-controls="nav">☰ Menu</button><nav id="nav" class="nav" data-open="false">{nav_html(pages, slug)}</nav></div></header>{hero(title, desc, unredacted)}<main id="main" class="wrap">{body}</main>{footer(cfg)}<script src="assets/aq26-canonical.js"></script></body></html>'
+    nav = nav_html(pages, slug, unredacted)
+    return f'''<!doctype html><html lang="en-GB"><head>{head(cfg, slug, title, desc, unredacted, ga, gsc)}</head><body><header class="site-header"><div class="wrap bar"><a class="brand" href="/"><img src="/assets/logo_web.svg" alt="SCC Nexus Air Quality Report"><span class="brand-title">AQ26<small>Environmental Intelligence Observatory</small></span></a><button class="menu" data-menu-button aria-expanded="false" aria-controls="nav">☰ Menu</button><nav class="nav" id="nav">{nav}</nav></div></header>{hero(title, desc, unredacted)}<main class="wrap">{body_for(slug, unredacted)}</main>{footer(cfg)}<script src="/assets/aq26-brand.js"></script></body></html>'''
 
 
-def write_site(out: Path, pages: list[tuple[str, str, str]], cfg: dict[str, Any], data: dict[str, Any], unredacted: bool, ga: str, gsc: str) -> None:
-    write_assets(out)
+def write_site(out: Path, pages: list[tuple[str, str, str]], cfg: dict[str, Any], unredacted: bool, ga: str, gsc: str) -> None:
+    copy_assets(out)
     for page in pages:
-        (out / page[0]).write_text(render_page(cfg, page, pages, data, unredacted, ga, gsc), encoding="utf-8")
+        (out / page[0]).write_text(render_page(cfg, page, pages, unredacted, ga, gsc), encoding="utf-8")
+    downloads = out / "downloads"
+    downloads.mkdir(exist_ok=True)
+    (downloads / "README_PUBLIC_DOWNLOADS.txt").write_text("Public-safe downloads only. Full evidence ZIP bundles belong in the protected review area.\n", encoding="utf-8")
     if unredacted:
         (out / "robots.txt").write_text("User-agent: *\nDisallow: /\n", encoding="utf-8")
         (out / ".htaccess").write_text('AuthType Basic\nAuthName "AQ26 Protected Evidence"\nRequire valid-user\nOptions -Indexes\nHeader set X-Robots-Tag "noindex, nofollow, noarchive"\n', encoding="utf-8")
     else:
         base = cfg.get("site", {}).get("public_base_url", "https://sccairquality.com").rstrip("/")
-        locs = []
-        for slug, _, _ in pages:
-            locs.append(f"  <url><loc>{base + ('/' if slug == 'index.html' else '/' + slug)}</loc></url>")
+        locs = [f"  <url><loc>{base + ('/' if slug == 'index.html' else '/' + slug)}</loc></url>" for slug, _, _ in pages]
         (out / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "\n".join(locs) + '\n</urlset>\n', encoding="utf-8")
         (out / "robots.txt").write_text(f"User-agent: *\nDisallow: /unredacted/\nDisallow: /test/\nSitemap: {base}/sitemap.xml\n", encoding="utf-8")
         data_dir = out / "data"
         data_dir.mkdir(parents=True, exist_ok=True)
-        (data_dir / "publication_marker.json").write_text(json.dumps({"generated": now_iso(), "builder": "aq26_canonical_publication", "header_logo": "assets/aq26-logo.svg"}, indent=2), encoding="utf-8")
-    downloads = out / "downloads"
-    downloads.mkdir(exist_ok=True)
-    (downloads / "README_PUBLIC_DOWNLOADS.txt").write_text("Public-safe downloads only. Full evidence ZIP bundles belong in the protected review area.\n", encoding="utf-8")
+        (data_dir / "publication_marker.json").write_text(json.dumps({"generated": now_iso(), "builder": "aq26_restored_branded_publication", "visual_system": "aq26-brand.css + video banner + logo_web.svg"}, indent=2), encoding="utf-8")
 
 
 def main() -> int:
     cfg = load_config()
-    data = load_drive_summary()
     ga = os.getenv("GA_MEASUREMENT_ID", "").strip()
     gsc = os.getenv("GOOGLE_SITE_VERIFICATION", "").strip()
-    clean_dir(PUBLIC)
-    clean_dir(UNREDACTED)
-    clean_dir(TEST)
-    write_site(PUBLIC, PAGES, cfg, data, False, ga, gsc)
-    write_site(UNREDACTED, UNREDACTED_PAGES, cfg, data, True, "", "")
+    for folder in (PUBLIC, UNREDACTED, TEST):
+        clean(folder)
+    write_site(PUBLIC, PAGES, cfg, False, ga, gsc)
+    write_site(UNREDACTED, UNREDACTED_PAGES, cfg, True, "", "")
     shutil.copytree(PUBLIC, TEST, dirs_exist_ok=True)
     (TEST / "robots.txt").write_text("User-agent: *\nDisallow: /\n", encoding="utf-8")
-    print("Built publication-grade AQ26 canonical site_public, site_unredacted and site_test.")
+    print("Built restored branded AQ26 site_public, site_unredacted and site_test.")
     return 0
 
 
