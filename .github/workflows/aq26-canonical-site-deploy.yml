@@ -41,91 +41,46 @@ jobs:
       AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR: ${{ secrets.AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR }}
       SCC_UNREDACTED_USERNAME: ${{ secrets.SCC_UNREDACTED_USERNAME }}
       SCC_UNREDACTED_PASSWORD: ${{ secrets.SCC_UNREDACTED_PASSWORD }}
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
       - name: Install dependencies
         run: |
           set -euo pipefail
           sudo apt-get update
-          sudo apt-get install -y sshpass
+          sudo apt-get install -y sshpass openssl curl
           python -m pip install --upgrade pip
           python -m pip install pyyaml
-      - name: Patch AQ26 builder asset precedence
-        run: |
-          set -euo pipefail
-          python - <<'PY'
-          from pathlib import Path
-          p = Path('scripts/aq26_build_canonical_site.py')
-          s = p.read_text(encoding='utf-8')
-          s = s.replace(
-              'ASSET_SOURCE_DIRS = [ROOT / "assets", ROOT / "website" / "assets"]',
-              'ASSET_SOURCE_DIRS = [ROOT / "website" / "assets", ROOT / "assets"]'
-          )
-          s = s.replace(
-              'if not p.is_file():\n                continue',
-              'if not p.is_file() or p.stat().st_size == 0:\n                continue'
-          )
-          p.write_text(s, encoding='utf-8')
-          print('Patched builder so restored root assets override legacy website/assets and empty assets are skipped')
-          PY
+
       - name: Build publication-grade canonical site
         run: python scripts/aq26_build_canonical_site.py
-      - name: Cache-bust restored AQ26 visual assets
-        run: |
-          set -euo pipefail
-          python - <<'PY'
-          import re
-          import shutil
-          from pathlib import Path
-          stamp = 'aq26-visual-20260623d'
-          for root_name in ['site_public', 'site_unredacted', 'site_test']:
-              root = Path(root_name)
-              if not root.exists():
-                  continue
-              assets = root / 'assets'
-              header_asset = assets / 'air_quality_web_header.svg'
-              if not header_asset.exists():
-                  fallback = assets / 'logo_web.svg'
-                  if fallback.exists():
-                      shutil.copy2(fallback, header_asset)
-              favicon_name = 'favicon.png' if (assets / 'favicon.png').exists() else 'favicon.svg'
-              favicon = (
-                  f'<link rel="icon" href="/assets/{favicon_name}?v={stamp}">'
-                  f'<link rel="shortcut icon" href="/assets/{favicon_name}?v={stamp}">'
-                  f'<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v={stamp}">'
-              )
-              for html in root.rglob('*.html'):
-                  s = html.read_text(encoding='utf-8')
-                  s = re.sub(r'src="/assets/logo_web\.svg(?:\?v=[^"]*)?"', f'src="/assets/air_quality_web_header.svg?v={stamp}"', s)
-                  s = re.sub(r'src="/assets/aq26-logo\.svg(?:\?v=[^"]*)?"', f'src="/assets/aq26-logo.svg?v={stamp}"', s)
-                  s = re.sub(r'href="/assets/aq26-brand\.css(?:\?v=[^"]*)?"', f'href="/assets/aq26-brand.css?v={stamp}"', s)
-                  s = re.sub(r'src="/assets/aq26-brand\.js(?:\?v=[^"]*)?"', f'src="/assets/aq26-brand.js?v={stamp}"', s)
-                  if 'rel="icon"' not in s:
-                      s = s.replace('</title>', '</title>' + favicon, 1)
-                  html.write_text(s, encoding='utf-8')
-          print(f'Cache-busted AQ26 header logo, CSS, JS and favicon with {stamp}')
-          PY
+
       - name: Audit generated public and protected sites
         run: python scripts/aq26_site_full_audit.py
-      - name: Patch Hostinger tar and branded asset verification
-        if: env.DEPLOY_TO_HOSTINGER == 'true'
-        run: |
-          set -euo pipefail
-          python - <<'PY'
-          from pathlib import Path
-          p = Path('scripts/aq26_deploy_canonical_hostinger.py')
-          s = p.read_text(encoding='utf-8')
-          s = s.replace('tar -xzf {remote_tmp} -C {rd}', 'cd {rd} && tar -xzf {remote_tmp}')
-          s = s.replace('assets/aq26-canonical.css assets/aq26-canonical.js', 'assets/aq26-brand.css assets/aq26-brand.js')
-          p.write_text(s, encoding='utf-8')
-          print('Patched deploy script for Hostinger tar extraction and restored branded asset checks')
-          PY
+
       - name: Deploy canonical site to Hostinger
         if: env.DEPLOY_TO_HOSTINGER == 'true'
         run: python scripts/aq26_deploy_canonical_hostinger.py --dry-run "${DRY_RUN}"
+
+      - name: Verify unredacted HTTP auth
+        if: env.DEPLOY_TO_HOSTINGER == 'true' && env.DRY_RUN != 'true'
+        run: |
+          set -euo pipefail
+          unauth_code=$(curl -k -L -s -o /tmp/aq26_unauth.html -w "%{http_code}" "https://sccairquality.com/unredacted/" || true)
+          auth_code=$(curl -k -L -s -u "${SCC_UNREDACTED_USERNAME}:${SCC_UNREDACTED_PASSWORD}" -o /tmp/aq26_auth.html -w "%{http_code}" "https://sccairquality.com/unredacted/" || true)
+          echo "Unauthenticated /unredacted/ HTTP status: ${unauth_code}"
+          echo "Authenticated /unredacted/ HTTP status: ${auth_code}"
+          test "${unauth_code}" = "401"
+          case "${auth_code}" in
+            200|301|302) echo "AQ26 unredacted HTTP Basic Auth verification passed." ;;
+            *) echo "AQ26 unredacted HTTP Basic Auth verification failed."; exit 1 ;;
+          esac
+
       - name: Upload minimal public audit artifact
         if: always()
         uses: actions/upload-artifact@v4
