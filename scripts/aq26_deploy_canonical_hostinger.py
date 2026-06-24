@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
-"""Deploy clean AQ26 site folders to Hostinger with explicit diagnostics."""
+"""Deploy AQ26 public and protected site folders to Hostinger.
+
+This version uses Apache APR1 htpasswd hashes for /unredacted/ Basic Auth.
+It writes the password file outside the web root and deploys only the generated
+site_public/site_unredacted folders.
+"""
 from __future__ import annotations
 
 import argparse
-import crypt
 import os
 import shlex
 import subprocess
@@ -47,12 +51,13 @@ def make_tar(src: Path, dest: Path) -> int:
     added = 0
     with tarfile.open(dest, "w:gz") as tar:
         for p in src.rglob("*"):
-            if p.is_file():
-                rel = p.relative_to(src)
-                if rel.name in {".htpasswd", ".env"}:
-                    continue
-                tar.add(p, arcname=str(rel))
-                added += 1
+            if not p.is_file():
+                continue
+            rel = p.relative_to(src)
+            if rel.name in {".htpasswd", ".env"}:
+                continue
+            tar.add(p, arcname=str(rel))
+            added += 1
     if added == 0:
         raise SystemExit(f"Refusing to deploy empty tar from {src}")
     print(f"Packed {added} files from {src}", flush=True)
@@ -62,7 +67,14 @@ def make_tar(src: Path, dest: Path) -> int:
 def ssh_base(host: str, port: str, user: str, password: str):
     env = os.environ.copy()
     env["SSHPASS"] = password
-    opts = ["-p", str(port), "-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null", "-o", "ConnectTimeout=35", "-o", "ServerAliveInterval=10", "-o", "ServerAliveCountMax=3"]
+    opts = [
+        "-p", str(port),
+        "-o", "StrictHostKeyChecking=no",
+        "-o", "UserKnownHostsFile=/dev/null",
+        "-o", "ConnectTimeout=35",
+        "-o", "ServerAliveInterval=10",
+        "-o", "ServerAliveCountMax=3",
+    ]
     return env, opts, f"{user}@{host}"
 
 
@@ -77,16 +89,16 @@ find {rd} -maxdepth 2 -mindepth 1 -print | sort | sed -n '1,80p' || true
 find {rd} -mindepth 1 -maxdepth 1 ! -name '.well-known' ! -name 'unredacted' -exec rm -rf {{}} +
 rm -rf {rd}/git-test {rd}/.git {rd}/test
 rm -f {rd}/downloads/AQ26_WEEKLY_EVIDENCE_BUNDLE.zip {rd}/downloads/latest-evidence.zip
-tar -xzf {remote_tmp} -C {rd}
+cd {rd} && tar -xzf {remote_tmp}
 tar_status=$?
 rm -f {remote_tmp}
 echo AQ26_TAR_STATUS=$tar_status
 echo AQ26_AFTER_PUBLIC_LIST
-find {rd} -maxdepth 2 -type f -print | sort | sed -n '1,120p' || true
+find {rd} -maxdepth 2 -type f -print | sort | sed -n '1,160p' || true
 count=$(find {rd} -maxdepth 3 -type f | wc -l | tr -d ' ')
 echo AQ26_PUBLIC_FILE_COUNT=$count
 missing=0
-for f in index.html sitemap.xml robots.txt assets/aq26-logo.svg assets/aq26-canonical.css assets/aq26-canonical.js; do
+for f in index.html sitemap.xml robots.txt assets/aq26-brand.css assets/aq26-brand.js assets/air_quality_web_header.svg; do
   if [ ! -f {rd}/$f ]; then
     echo AQ26_MISSING_PUBLIC_FILE=$f
     missing=1
@@ -108,16 +120,16 @@ mkdir -p {rd}
 echo AQ26_REMOTE_UNREDACTED_DIR={rd}
 find {rd} -mindepth 1 -maxdepth 1 ! -name '.htaccess' -exec rm -rf {{}} +
 rm -f {rd}/.htpasswd
-tar -xzf {remote_tmp} -C {rd}
+cd {rd} && tar -xzf {remote_tmp}
 tar_status=$?
 rm -f {remote_tmp}
 echo AQ26_TAR_STATUS=$tar_status
 echo AQ26_AFTER_UNREDACTED_LIST
-find {rd} -maxdepth 2 -type f -print | sort | sed -n '1,80p' || true
+find {rd} -maxdepth 2 -type f -print | sort | sed -n '1,120p' || true
 count=$(find {rd} -maxdepth 3 -type f | wc -l | tr -d ' ')
 echo AQ26_UNREDACTED_FILE_COUNT=$count
 missing=0
-for f in index.html robots.txt assets/aq26-logo.svg; do
+for f in index.html robots.txt assets/aq26-brand.css assets/air_quality_web_header.svg; do
   if [ ! -f {rd}/$f ]; then
     echo AQ26_MISSING_UNREDACTED_FILE=$f
     missing=1
@@ -134,42 +146,69 @@ exit $missing
 def upload_tar(tar_path: Path, remote_dir: str, label: str, host: str, port: str, user: str, password: str, *, clean_public: bool = False) -> None:
     env, opts, target = ssh_base(host, port, user, password)
     remote_tmp = f"/tmp/aq26_{label}.tgz"
-    scp_opts = ["-P", str(port), "-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null", "-o", "ConnectTimeout=35"]
+    scp_opts = [
+        "-P", str(port),
+        "-o", "StrictHostKeyChecking=no",
+        "-o", "UserKnownHostsFile=/dev/null",
+        "-o", "ConnectTimeout=35",
+    ]
     run(["sshpass", "-e", "ssh", *opts, target, f"mkdir -p {shlex.quote(remote_dir)}"], env=env)
     run(["sshpass", "-e", "scp", *scp_opts, str(tar_path), f"{target}:{remote_tmp}"], env=env)
     clean_cmd = public_clean_command(remote_dir, remote_tmp) if clean_public else unredacted_clean_command(remote_dir, remote_tmp)
     run(["sshpass", "-e", "ssh", *opts, target, clean_cmd], env=env)
 
 
+def apr1_hash(password: str) -> str:
+    """Return an Apache APR1 htpasswd hash using OpenSSL."""
+    try:
+        return subprocess.check_output(
+            ["openssl", "passwd", "-apr1", password],
+            text=True,
+            stderr=subprocess.STDOUT,
+        ).strip()
+    except FileNotFoundError as exc:
+        raise SystemExit("openssl is required to generate Apache APR1 htpasswd hashes.") from exc
+    except subprocess.CalledProcessError as exc:
+        raise SystemExit(f"openssl failed while generating htpasswd hash: {exc.output}") from exc
+
+
 def install_unredacted_auth(remote_public: str, host: str, port: str, user: str, password: str, unredacted_password: str, auth_user: str) -> None:
     if not unredacted_password:
         print("SCC_UNREDACTED_PASSWORD not set; preserving .htaccess but not changing remote .htpasswd.", flush=True)
         return
+    if not auth_user:
+        raise SystemExit("SCC_UNREDACTED_USERNAME/AQ26_UNREDACTED_USERNAME is empty.")
     env, opts, target = ssh_base(host, port, user, password)
+
     auth_dir = "/home/u288464186/.aq26_auth"
     htpasswd = auth_dir + "/.htpasswd"
-    hashed = crypt.crypt(unredacted_password, crypt.mksalt(crypt.METHOD_SHA512))
+    hashed = apr1_hash(unredacted_password)
+
     local = Path(tempfile.mkdtemp()) / ".htpasswd"
     local.write_text(f"{auth_user}:{hashed}\n", encoding="utf-8")
     scp_opts = ["-P", str(port), "-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null"]
+
     run(["sshpass", "-e", "ssh", *opts, target, f"mkdir -p {auth_dir} && chmod 700 {auth_dir}"], env=env)
     run(["sshpass", "-e", "scp", *scp_opts, str(local), f"{target}:{htpasswd}"], env=env)
     run(["sshpass", "-e", "ssh", *opts, target, f"chmod 600 {htpasswd}"], env=env)
-    htaccess = f'''AuthType Basic
-AuthName "AQ26 Protected Evidence"
-AuthBasicProvider file
-AuthUserFile {htpasswd}
-Require valid-user
-Options -Indexes
-<FilesMatch "^\\.ht">
-  Require all denied
-</FilesMatch>
-Header set X-Robots-Tag "noindex, nofollow, noarchive"
-'''
+
+    htaccess = (
+        'AuthType Basic\n'
+        'AuthName "AQ26 Protected Evidence"\n'
+        'AuthBasicProvider file\n'
+        f'AuthUserFile {htpasswd}\n'
+        'Require valid-user\n'
+        'Options -Indexes\n'
+        '<FilesMatch "^\\.ht">\n'
+        '  Require all denied\n'
+        '</FilesMatch>\n'
+        'Header set X-Robots-Tag "noindex, nofollow, noarchive"\n'
+    )
     tmp = Path(tempfile.mkdtemp()) / ".htaccess"
     tmp.write_text(htaccess, encoding="utf-8")
     remote_unredacted = remote_public.rstrip("/") + "/unredacted"
     run(["sshpass", "-e", "scp", *scp_opts, str(tmp), f"{target}:{remote_unredacted}/.htaccess"], env=env)
+    print(f"AQ26 unredacted auth installed for user '{auth_user}' using Apache APR1 hash.", flush=True)
 
 
 def main() -> int:
@@ -177,6 +216,7 @@ def main() -> int:
     parser.add_argument("--dry-run", nargs="?", const="true", default="false")
     args = parser.parse_args()
     dry = str(args.dry_run).lower() in {"1", "true", "yes", "y"}
+
     host = clean_host(env_first("SCCAIRQUALITY_SSH_HOST", "HOSTINGER_SSH_HOST"))
     port = env_first("SCCAIRQUALITY_SSH_PORT", "HOSTINGER_SSH_PORT", default="65002")
     user = env_first("SCCAIRQUALITY_SSH_USERNAME", "HOSTINGER_SSH_USERNAME")
@@ -184,19 +224,33 @@ def main() -> int:
     public_dir = clean_remote(env_first("AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR", "HOSTINGER_PUBLIC_HTML_DIR", default="domains/sccairquality.com/public_html"))
     unred_pass = env_first("SCC_UNREDACTED_PASSWORD", "AQ26_UNREDACTED_PASSWORD")
     auth_user = env_first("SCC_UNREDACTED_USERNAME", "AQ26_UNREDACTED_USERNAME", default="aq26")
-    missing = [name for name, val in [("SCCAIRQUALITY_SSH_HOST", host), ("SCCAIRQUALITY_SSH_USERNAME", user), ("SCCAIRQUALITY_SSH_PASSWORD", password), ("AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR", public_dir)] if not val]
+
+    missing = [
+        name
+        for name, val in [
+            ("SCCAIRQUALITY_SSH_HOST", host),
+            ("SCCAIRQUALITY_SSH_USERNAME", user),
+            ("SCCAIRQUALITY_SSH_PASSWORD", password),
+            ("AIRQUALITY_HOSTINGER_PUBLIC_HTML_DIR", public_dir),
+        ]
+        if not val
+    ]
     if missing:
         raise SystemExit("Missing required secrets/env: " + ", ".join(missing))
+
     print("AQ26 canonical deploy settings:", flush=True)
     print(f"  host present: {bool(host)}", flush=True)
     print(f"  port: {port}", flush=True)
     print(f"  username present: {bool(user)}", flush=True)
     print(f"  public_html: {public_dir}", flush=True)
+    print(f"  unredacted username present: {bool(auth_user)}", flush=True)
     print(f"  unredacted password present: {bool(unred_pass)}", flush=True)
     print(f"  dry_run: {dry}", flush=True)
+
     if dry:
         print("Dry run only; not uploading.", flush=True)
         return 0
+
     with tempfile.TemporaryDirectory() as td:
         temp = Path(td)
         pub = temp / "public.tgz"
@@ -206,6 +260,7 @@ def main() -> int:
         upload_tar(pub, public_dir, "public", host, port, user, password, clean_public=True)
         upload_tar(unr, public_dir.rstrip("/") + "/unredacted", "unredacted", host, port, user, password, clean_public=False)
         install_unredacted_auth(public_dir, host, port, user, password, unred_pass, auth_user)
+
     print("AQ26 canonical deployment complete.", flush=True)
     return 0
 
